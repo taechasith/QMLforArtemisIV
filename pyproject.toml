@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openqfuel-cislunar"
+version = "0.2.0"
+description = "Open benchmark for classical and quantum ML in crew-constrained cislunar trajectory correction planning"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=2.0",
+  "PyYAML>=6.0",
+  "scipy>=1.13"
+]
+license = { text = "Apache-2.0" }
+authors = [
+  { name = "OpenQFuel-Cislunar Contributors" }
+]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering"
+]
+
+[project.urls]
+Repository = "https://github.com/taechasith/QMLforArtemisIV"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,18 @@
+window_id,role,phase,start_utc,stop_utc,horizon_h,reference_release,selection_rule,exclusions
+C01,calibration,outbound_early,2026-04-03T01:30:00Z,2026-04-03T07:30:00Z,6,latest_historical_vintage,predeclared phase-balanced coast interval,At least 30 minutes from a published burn or OEM-detected state discontinuity
+C02,calibration,outbound_early,2026-04-03T19:00:00Z,2026-04-04T01:00:00Z,6,latest_historical_vintage,predeclared phase-balanced coast interval,At least 30 minutes from a published burn or OEM-detected state discontinuity
+C03,calibration,outbound_mid,2026-04-04T19:00:00Z,2026-04-05T01:00:00Z,6,latest_historical_vintage,predeclared phase-balanced coast interval,At least 30 minutes from a published burn or OEM-detected state discontinuity
+C04,calibration,outbound_mid,2026-04-05T06:00:00Z,2026-04-05T12:00:00Z,6,latest_historical_vintage,predeclared phase-balanced coast interval,At least 30 minutes from a published burn or OEM-detected state discontinuity
+C05,calibration,outbound_late,2026-04-06T04:00:00Z,2026-04-06T10:00:00Z,6,latest_historical_vintage,predeclared phase-balanced coast interval,Starts after the OTC3 exclusion buffer
+C06,calibration,lunar_exit,2026-04-07T02:00:00Z,2026-04-07T08:00:00Z,6,latest_historical_vintage,predeclared phase-balanced coast interval,At least 30 minutes from a published burn or OEM-detected state discontinuity
+C07,calibration,return_mid,2026-04-08T06:00:00Z,2026-04-08T12:00:00Z,6,latest_historical_vintage,predeclared phase-balanced coast interval,At least 30 minutes from a published burn or OEM-detected state discontinuity
+C08,calibration,return_late,2026-04-09T02:00:00Z,2026-04-09T08:00:00Z,6,latest_historical_vintage,predeclared phase-balanced coast interval,At least 30 minutes from a published burn or OEM-detected state discontinuity
+T01,tuning,outbound_early,2026-04-03T08:00:00Z,2026-04-03T14:00:00Z,6,latest_historical_vintage,predeclared disjoint coast interval,No temporal overlap with calibration or validation windows
+T02,tuning,outbound_mid,2026-04-04T02:00:00Z,2026-04-04T08:00:00Z,6,latest_historical_vintage,predeclared disjoint coast interval,No temporal overlap with calibration or validation windows
+T03,tuning,outbound_late,2026-04-05T16:00:00Z,2026-04-05T22:00:00Z,6,latest_historical_vintage,predeclared disjoint coast interval,No temporal overlap with calibration or validation windows
+T04,tuning,return_early,2026-04-07T11:00:00Z,2026-04-07T17:00:00Z,6,latest_historical_vintage,predeclared disjoint coast interval,No temporal overlap with calibration or validation windows
+V01,validation,outbound_mid,2026-04-04T11:00:00Z,2026-04-04T17:00:00Z,6,latest_historical_vintage,frozen before simulator fitting,No temporal overlap; at least 30 minutes from detected discontinuities
+V02,validation,outbound_late,2026-04-06T11:00:00Z,2026-04-06T17:00:00Z,6,latest_historical_vintage,frozen before simulator fitting,No temporal overlap; ends before lunar-approach discontinuity buffer
+V03,validation,lunar_flyby,2026-04-06T19:00:00Z,2026-04-07T01:00:00Z,6,latest_historical_vintage,frozen before simulator fitting,Contains closest approach but no burn or detected discontinuity
+V04,validation,return_mid,2026-04-08T16:00:00Z,2026-04-08T22:00:00Z,6,latest_historical_vintage,frozen before simulator fitting,No temporal overlap; starts after detected discontinuity buffer
+V05,validation,return_late,2026-04-09T12:00:00Z,2026-04-09T18:00:00Z,6,latest_historical_vintage,frozen before simulator fitting,No temporal overlap; at least 30 minutes from detected discontinuities

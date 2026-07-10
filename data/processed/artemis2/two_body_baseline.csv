@@ -1,0 +1,18 @@
+window_id,role,phase,samples,position_rmse_km,position_endpoint_km,velocity_rmse_m_s,velocity_endpoint_m_s,model,earth_mu_km3_s2,integrator,interpretation
+C01,calibration,outbound_early,92,1.296792819,3.138522092,0.185897386,0.374745085,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+C02,calibration,outbound_early,92,6.783594461,15.039642787,0.822682262,1.457720427,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+C03,calibration,outbound_mid,92,18.110726534,40.169552469,2.192192524,3.880217817,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+C04,calibration,outbound_mid,92,29.603341255,65.710323627,3.599388195,6.403813788,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+C05,calibration,outbound_late,92,134.785560107,308.667852876,17.128533543,32.226895872,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+C06,calibration,lunar_exit,92,1431.196527577,2884.730914060,145.680629364,207.156930716,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+C07,calibration,return_mid,92,38.423316276,82.262426370,4.374478681,7.182251298,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+C08,calibration,return_late,92,13.194312289,28.964707349,1.527100837,2.562557512,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+T01,tuning,outbound_early,92,3.547861190,7.914902968,0.438331925,0.790781789,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+T02,tuning,outbound_mid,92,9.201248082,20.366080544,1.112317235,1.964269225,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+T03,tuning,outbound_late,92,50.707663637,114.996240214,6.263399894,11.399150741,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+T04,tuning,return_early,92,203.360536695,431.730121711,22.470323365,35.560583157,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+V01,validation,outbound_mid,92,13.145719923,29.135583816,1.588962171,2.807294082,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+V02,validation,outbound_late,92,348.966629498,823.572407488,47.040638338,94.942964868,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+V03,validation,lunar_flyby,92,3268.162107673,7510.162729757,453.666828559,782.244881282,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+V04,validation,return_mid,92,21.792321075,47.031636338,2.499904631,4.144197210,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator
+V05,validation,return_late,92,8.465546498,18.316592272,0.974071413,1.620392450,Earth point mass only,398600.435507,scipy DOP853 rtol=1e-11 atol=1e-12,weak analytical benchmark; not a mission simulator

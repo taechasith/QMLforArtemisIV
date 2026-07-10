@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this benchmark, cite the archived release and associated paper."
+title: "OpenQFuel-Cislunar"
+type: software
+version: 0.2.0
+date-released: 2026-07-10
+authors:
+  - name: "OpenQFuel-Cislunar Contributors"
+license: Apache-2.0
+repository-code: "https://github.com/taechasith/QMLforArtemisIV"
+abstract: >-
+  An open, flight-ephemeris-calibrated benchmark of classical and quantum
+  machine learning for propellant-efficient, crew-constrained cislunar
+  trajectory-correction planning.

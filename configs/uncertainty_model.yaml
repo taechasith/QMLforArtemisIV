@@ -1,0 +1,168 @@
+schema_version: "0.2.0"
+status: "frozen_gate_2_accepted"
+source_basis: "D006 unless otherwise stated"
+
+interpretation:
+  published_values_are: "3-sigma study inputs"
+  gaussian_replication_rule: "one_sigma_equals_published_value_divided_by_3"
+  operational_authenticity_claimed: false
+  reason: "The public study does not release a complete Artemis II flight covariance or all distributional assumptions."
+
+initial_state_dispersion_3sigma:
+  position_km: 2.0
+  velocity_m_s: 0.20
+  attitude_deg: 0.5
+  attitude_rate_deg_s: 0.01
+
+initial_navigation_uncertainty_3sigma:
+  position_km: 2.0
+  velocity_m_s: 0.02
+  attitude_deg: 0.05
+  attitude_rate_deg_s: 0.01
+
+dsn_measurement_model_3sigma:
+  range_noise_m: 25.0
+  range_rate_noise_m_s: 0.015
+  range_bias_m: 25.0
+  range_rate_bias_m_s: 0.015
+  elevation_mask_deg: 10.0
+  maximum_pass_duration_h: 2.0
+
+accelerometer_3sigma:
+  velocity_random_walk_mm_s_sqrt_s: 0.3
+  bias_micro_g: 84.0
+  derived_bias_m_s2: 0.0008237586
+  scale_factor_ppm: 450.0
+  nonorthogonality_arcsec: 17.0
+  markov_bias_micro_g: 84.0
+  markov_scale_factor_ppm: 450.0
+
+gyro_3sigma:
+  angle_random_walk_deg_sqrt_h: 0.015
+  bias_deg_h: 0.036
+  scale_factor_ppm: 27.0
+  nonorthogonality_arcsec: 19.0
+  markov_bias_deg_h: 0.036
+  markov_scale_factor_ppm: 27.0
+
+star_tracker_3sigma:
+  boresight_noise_arcsec: 72.0
+  cross_boresight_bias_arcsec: 24.0
+  misalignment_deg: 0.5
+
+optical_navigation:
+  naif_body_ids: [301, 399]
+  pass_duration_h: 2.0
+  field_of_view_deg: 20.0
+
+thruster_execution_3sigma:
+  additive_bias_m_s: 0.08
+  additive_noise_m_s: 0.08
+  scale_factor_ppm: 7000.0
+  misalignment_deg: 0.1
+
+disturbance_process_noise:
+  source_unit: "ft^2/s^3"
+  derived_si_unit: "m^2/s^3"
+  conversion_factor: 0.09290304
+  events:
+    pressure_swing_adsorption_sleep:
+      q_source: 2.9859e-8
+      q_si: 2.77399187136e-9
+      duration: "protected sleep periods"
+    pressure_swing_adsorption_awake:
+      q_source: 9.4313e-8
+      q_si: 8.76196441152e-9
+      duration: "awake non-exercise periods"
+    pressure_swing_adsorption_active:
+      q_source: 6.4741e-7
+      q_si: 6.01463571264e-8
+      duration: "exercise periods"
+    wastewater_vent:
+      q_source: 4.9546e-7
+      q_si: 4.60297401984e-8
+      duration_min: 8.6
+      occurrences_per_day: 4
+    ammonia_boiler:
+      q_source: 8.5488e-5
+      q_si: 7.94209508352e-6
+      duration_min: 45
+      start_before_entry_interface_h: 1
+    attitude_deadbanding:
+      q_source: 3.4319e-13
+      q_si: 3.18833942976e-14
+      duration: "entire on-orbit phase"
+    attitude_slew:
+      q_source: 1.2122e-10
+      q_si: 1.12617065088e-11
+      duration: "slew events"
+    solar_radiation_pressure:
+      q_source: 8.9704e-14
+      q_si: 8.33377430016e-15
+      duration: "entire on-orbit phase"
+
+sampling_families:
+  gaussian_replication:
+    distribution: "multivariate Gaussian where covariance is defined"
+    truncation_sigma: null
+    role: "direct replication of the public 3-sigma study"
+  bounded_nominal:
+    distribution: "Gaussian truncated at plus_or_minus_3sigma"
+    role: "bounded engineering sensitivity"
+  heavy_tail:
+    distribution: "Student-t"
+    degrees_of_freedom: 5
+    scale_rule: "match Gaussian marginal standard deviation"
+    truncation_sigma_equivalent: 6
+    role: "non-Gaussian tail sensitivity; not claimed operational"
+
+evaluation_strata:
+  - id: U0
+    name: "deterministic nominal"
+    navigation: "none"
+    execution: "none"
+    disturbance: "nominal mean"
+  - id: U1
+    name: "DSN navigation only"
+    navigation: "gaussian_replication"
+    execution: "none"
+    disturbance: "nominal mean"
+  - id: U2
+    name: "execution only"
+    navigation: "none"
+    execution: "gaussian_replication"
+    disturbance: "nominal mean"
+  - id: U3
+    name: "coupled nominal uncertainty"
+    navigation: "gaussian_replication"
+    execution: "gaussian_replication"
+    disturbance: "published process noise"
+  - id: U4
+    name: "bounded coupled uncertainty"
+    navigation: "bounded_nominal"
+    execution: "bounded_nominal"
+    disturbance: "published process noise"
+  - id: U5
+    name: "heavy-tail coupled sensitivity"
+    navigation: "heavy_tail"
+    execution: "heavy_tail"
+    disturbance: "published process noise"
+
+operational_stress_scenarios:
+  communication_hold:
+    durations_min: [0, 15, 120]
+    source_for_120_min_event: "D019"
+    status: "scenario duration; D019 reports an approximately two-hour return-link loss before RTC2, not a burn delay distribution"
+  burn_delay:
+    durations_min: [0, 15, 60]
+    status: "explicit research sensitivity"
+  mass_error_fraction: [0.0, -0.02, 0.02, -0.05, 0.05]
+  main_engine_thrust_lbf: [6000, 6700]
+  main_engine_thrust_source_ids: ["D004", "D023"]
+  propulsion_model_error_fraction: [-0.01, 0.0, 0.01, -0.03, 0.03]
+  propulsion_basis: "D022 reports approximately 1% Artemis I model agreement; 3% is an explicit stress bound"
+
+seed_policy:
+  master_seed: 20260710
+  derive_by: "SHA-256 of master seed plus experiment family plus stratum plus replicate"
+  common_random_numbers_for_model_comparisons: true

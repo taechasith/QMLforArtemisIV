@@ -1,0 +1,73 @@
+schema_version: "0.2.0"
+status: "frozen_gate_2_accepted"
+
+reference_data:
+  source_id: "D001"
+  reference_release: "Artemis_II_OEM_2026_04_10_Post-ICPS-Sep-to-EI.asc"
+  eligible_validation_end_utc: "2026-04-10T03:22:19Z"
+  rule: "Only epochs at or before OEM CREATION_DATE are eligible as historical/reconstructed validation references."
+  future_rows_role: "forecast-consistency analysis only"
+  windows_file: "data/processed/artemis2/validation_windows.csv"
+  calibration_windows: 8
+  tuning_windows: 4
+  untouched_validation_windows: 5
+  horizon_h: 6
+  discontinuity_file: "data/processed/artemis2/oem_detected_discontinuities.csv"
+  coast_exclusion_buffer_min: 30
+
+parser_and_interpolation_checks:
+  state_epochs_strictly_increasing: true
+  header_state_bounds_consistent: true
+  leave_one_out_excludes_detected_discontinuities: true
+  position_p95_upper_km: 0.005
+  velocity_p95_upper_m_s: 0.005
+
+numerical_verification:
+  integrator_convergence:
+    comparison: "tighten relative and absolute tolerances by 100x and halve maximum step"
+    endpoint_position_difference_upper_km: 0.01
+    endpoint_velocity_difference_upper_m_s: 0.001
+    must_pass_each_validation_window: true
+  independent_tool:
+    required: true
+    tool: "NASA GMAT R2026a"
+    source_id: "D028"
+    same_force_model_position_endpoint_difference_upper_km: 0.10
+    same_force_model_velocity_endpoint_difference_upper_m_s: 0.01
+    must_pass_each_validation_window: true
+
+flight_ephemeris_validation:
+  reference_is_not_raw_telemetry: true
+  weak_baseline_file: "data/processed/artemis2/two_body_baseline.csv"
+  weak_baseline: "Earth point mass"
+  required_improvement_fraction_over_weak_baseline: 0.80
+  non_lunar_validation_arcs:
+    window_ids: ["V01", "V02", "V04", "V05"]
+    position_rmse_upper_km: 10.0
+    position_endpoint_upper_km: 20.0
+    velocity_rmse_upper_m_s: 1.0
+    velocity_endpoint_upper_m_s: 2.0
+  lunar_flyby_validation_arc:
+    window_ids: ["V03"]
+    position_rmse_upper_km: 25.0
+    position_endpoint_upper_km: 50.0
+    velocity_rmse_upper_m_s: 2.0
+    velocity_endpoint_upper_m_s: 5.0
+  pass_rule: "Every absolute ceiling and the relative improvement rule must pass on every validation arc."
+
+event_cross_checks:
+  event_registry: "data/artemis2_event_registry.csv"
+  required_events: ["TLI", "OTC3", "RTC1", "RTC2", "RTC3", "lunar closest approach"]
+  timing_tolerance_s: 240
+  qualification: "Event checks validate temporal alignment; rounded public event data are not state-vector truth."
+
+release_revision_experiment:
+  file: "data/processed/artemis2/oem_release_revisions.csv"
+  horizons_h: [0, 6, 24, 48]
+  role: "operational forecast-revision robustness"
+  prohibit_truth_language: true
+
+failure_action:
+  stop_before_ml_training: true
+  publish_validation_failure: true
+  allow_scope_repair_only_after_logged_protocol_deviation: true

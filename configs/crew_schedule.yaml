@@ -1,0 +1,71 @@
+schema_version: "0.2.0"
+status: "frozen_gate_2_accepted"
+time_system: "UTC"
+
+policy:
+  routine_correction_burn_during_sleep_allowed: false
+  blackout_buffer_before_after_min: 30
+  emergency_override_allowed: true
+  override_requires_reason_code: true
+  schedule_is: "public operational schedule, not biomedical telemetry"
+  primary_source_ids: ["D003", "D026", "D027"]
+
+protected_intervals:
+  - id: S01A
+    start_utc: "2026-04-02T07:00:00Z"
+    stop_utc: "2026-04-02T11:00:00Z"
+    duration_h: 4.0
+    source_id: "D027"
+    qualification: "Public update describes a four-hour nap and 7 a.m. EDT wake time."
+  - id: S01B
+    start_utc: "2026-04-02T13:40:00Z"
+    stop_utc: "2026-04-02T18:10:00Z"
+    duration_h: 4.5
+    source_ids: ["D002", "D027"]
+    qualification: "Start is the published 9:40 a.m. EDT sleep resumption; stop is derived from the published 4.5-hour duration."
+  - id: S02
+    start_utc: "2026-04-03T08:05:00Z"
+    stop_utc: "2026-04-03T16:35:00Z"
+    duration_h: 8.5
+    source_id: "D026"
+  - id: S03
+    start_utc: "2026-04-04T08:05:00Z"
+    stop_utc: "2026-04-04T16:35:00Z"
+    duration_h: 8.5
+    source_id: "D026"
+  - id: S04
+    start_utc: "2026-04-05T07:20:00Z"
+    stop_utc: "2026-04-05T15:50:00Z"
+    duration_h: 8.5
+    source_id: "D026"
+  - id: S05
+    start_utc: "2026-04-06T06:20:00Z"
+    stop_utc: "2026-04-06T14:50:00Z"
+    duration_h: 8.5
+    source_id: "D026"
+  - id: S06
+    start_utc: "2026-04-07T06:05:00Z"
+    stop_utc: "2026-04-07T15:35:00Z"
+    duration_h: 9.5
+    source_id: "D026"
+  - id: S07
+    start_utc: "2026-04-08T07:05:00Z"
+    stop_utc: "2026-04-08T15:35:00Z"
+    duration_h: 8.5
+    source_id: "D026"
+  - id: S08
+    start_utc: "2026-04-09T06:54:00Z"
+    stop_utc: "2026-04-09T15:35:00Z"
+    duration_h: 8.6833333333
+    source_id: "D026"
+  - id: S09
+    start_utc: "2026-04-10T07:05:00Z"
+    stop_utc: "2026-04-10T15:35:00Z"
+    duration_h: 8.5
+    source_id: "D026"
+
+future_reference_scenario:
+  daily_sleep_duration_h: 8.5
+  shifted_sleep_sensitivity_h: [8.0, 9.5]
+  preserve_30_min_blackout_buffer: true
+  status: "explicit scenario derived from Artemis II public schedules"

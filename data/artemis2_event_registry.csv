@@ -1,0 +1,13 @@
+event_id,event_name,phase,planned_met_public,actual_utc,status,duration_s,published_delta_v_ft_s,derived_delta_v_m_s,source_ids,time_precision,qualification_note
+E001,Launch,departure,,2026-04-01T22:35:00Z,executed,,,,D021,minute,EDT converted to UTC; minute precision
+E002,Translunar injection,departure,+01/01:37,2026-04-02T23:49:00Z,executed,350,1274,388.3152,D003;D023;D024,minute,EDT converted to UTC; delta-v is an exact SI conversion of the pre-burn planned public value and is not labeled executed telemetry
+E003,Outbound trajectory correction 1,outbound,+02/00:07,,cancelled,,,,D003;D015,decision day,No burn occurred because NASA reported the trajectory was on the right flight path
+E004,Outbound trajectory correction 2,outbound,+03/00:12,,cancelled,,,,D003;D016,decision day,No burn occurred because NASA reported the trajectory remained on track
+E005,Outbound trajectory correction 3,outbound,+04/05:23,2026-04-06T03:03:00Z,executed,17.5,,,D003;D017,minute,EDT converted to UTC; NASA did not publish delta-v or thruster configuration
+E006,Lunar closest approach,lunar_flyby,+05/01:23:20,2026-04-06T23:00:00Z,executed,,,,D003;D014,minute,Live update reports about 4067 miles altitude; values are rounded public event data
+E007,Return trajectory correction 1,return,+06/04:23,2026-04-08T00:03:00Z,executed,15,1.6,0.48768,D003;D018,minute,EDT converted to UTC; SI delta-v is an exact unit conversion of a rounded published value
+E008,Return trajectory correction 2,return,+08/04:33,2026-04-10T02:53:00Z,executed,9,5.3,1.61544,D003;D019,minute,EDT converted to UTC; communications were restored before the burn
+E009,Return trajectory correction 3,return,+08/20:33,2026-04-10T18:53:00Z,executed,8,4.2,1.28016,D003;D020,minute,EDT converted to UTC; SI delta-v is an exact unit conversion of a rounded published value
+E010,Crew module and service module separation,entry,+09/01:13,,planned_reference_only,,,,D003,minute,Public January plan retained for schedule comparison
+E011,Entry interface,entry,+09/01:33,,planned_reference_only,,,,D003,minute,Public January plan retained for schedule comparison; entry guidance is outside optimization scope
+E012,Splashdown,recovery,+09/01:46,,planned_reference_only,,,,D003,minute,Public January plan retained for schedule comparison

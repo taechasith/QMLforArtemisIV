@@ -1,0 +1,191 @@
+schema_version: "0.2.0"
+status: "frozen_gate_2_accepted"
+prepared_date: "2026-07-10"
+
+governance:
+  recommendation: "accept_gate_2_numeric_freeze"
+  human_decision_authority: true
+  deviations_require_log: true
+  freeze_effective_after_gate_2_acceptance: true
+
+mission_scope:
+  calibration_case: "Artemis II public operational ephemeris"
+  future_application: "Artemis IV-relevant Orion cislunar reference scenario"
+  optimized_segment: "post-TLI trajectory corrections through RTC3"
+  operational_mode: "ground-planning advisory"
+  excluded_control_phases:
+    - "launch and ascent"
+    - "TLI execution"
+    - "atmospheric entry"
+    - "landing or splashdown"
+
+source_policy:
+  allowed_status:
+    - "historical_or_reconstructed_operational_ephemeris"
+    - "predicted_operational_ephemeris"
+    - "official_public_specification"
+    - "derived"
+    - "simulated"
+    - "explicit_research_assumption"
+  prohibit_unattributed_imputation: true
+  preserve_raw_sources: true
+  require_source_manifest: true
+  simulated_data_must_not_be_called_telemetry: true
+
+vehicle_reference:
+  crew_count:
+    value: 4
+    source_id: "D004"
+  maximum_reference_mission_duration_day:
+    value: 21
+    source_id: "D004"
+  tli_mass:
+    value_kg: 26308.35746
+    published_value_lb: 58000
+    source_id: "D004"
+  post_tli_mass:
+    value_kg: 25854.76509
+    published_value_lb: 57000
+    source_id: "D004"
+  usable_propellant:
+    value_kg: 8618.25503
+    published_value_lb: 19000
+    source_id: "D004"
+  service_module_mass:
+    value_kg: 15603.577528
+    published_value_lb: 34400
+    source_id: "D004"
+  thrust_classes:
+    main_engine:
+      nominal_thrust_n: 26689.329692
+      published_value_lbf: 6000
+      source_ids: ["D004", "D005"]
+      source_conflict_note: "D023 says up to 6700 lbf; 6000 lbf is retained as the reference-guide nominal and 6700 lbf is a sensitivity bound."
+    auxiliary_engine:
+      count: 8
+      each_thrust_n: 489.304378
+      published_value_lbf: 110
+      source_ids: ["D004", "D005"]
+    reaction_control_thruster:
+      count: 24
+      each_thrust_n: 222.411081
+      published_value_lbf: 50
+      source_ids: ["D004", "D005"]
+  excluded_source_value:
+    field: "Artemis II total change in velocity"
+    reason: "D004 displays a 58000-lb mass value under a delta-v heading; it is internally inconsistent and is not used."
+
+primary_objective:
+  name: "robust_total_correction_delta_v"
+  unit: "m/s"
+  reference_form: "sum_nominal_delta_v_plus_3sigma_from_OTC2_through_RTC3"
+  source_id: "D006"
+  non_gaussian_tail_metric: "CVaR"
+  cvar_alpha: 0.95
+  propellant_mass_role: "secondary_rocket_equation_sensitivity"
+  rationale: "Delta-v is directly supported by public mission constraints; flight-specific Isp and mixture-state data are incomplete."
+
+hard_constraints:
+  total_correction_delta_v:
+    upper_bound_m_s: 20.0
+    coverage: "OTC2 through RTC3 including dispersions"
+    source_id: "D006"
+  lunar_surface_altitude_including_dispersion:
+    lower_bound_km: 100.0
+    source_id: "D006"
+  entry_interface_3sigma_ellipse:
+    source_id: "D006"
+    nominal_sigma_multiplier: 3
+    pairwise_limits:
+      - variables: ["downrange_position_km", "velocity_magnitude_m_s"]
+        limits: [25.6, 5.3]
+        correlation: -0.60
+      - variables: ["downrange_position_km", "flight_path_angle_deg"]
+        limits: [25.6, 0.12]
+        correlation: -0.50
+      - variables: ["cross_track_position_km", "cross_track_velocity_m_s"]
+        limits: [7.0, 8.2]
+        correlation: 0.29
+      - variables: ["velocity_magnitude_m_s", "flight_path_angle_deg"]
+        limits: [5.3, 0.12]
+        correlation: 0.55
+    contingency_case:
+      sigma_multiplier: 2
+      requirement_scale_factor: 2.5
+  burn_timing:
+    earliest_after_tli_h: 3.0
+    latest_before_entry_interface_h: 3.0
+    minimum_between_correction_burns_h: 3.0
+    lunar_flyby_exclusion_before_after_h: 1.0
+    source_id: "D006"
+  protected_crew_periods:
+    config: "configs/crew_schedule.yaml"
+    routine_burns_during_protected_sleep_allowed: false
+    emergency_override: true
+    override_requires_reason_code: true
+  translational_acceleration:
+    config: "configs/human_acceleration_limits.yaml"
+    evaluate_in_crew_body_axes: true
+    unknown_posture_rule: "use most restrictive applicable deconditioned envelope"
+  jerk:
+    status: "not_an_orion_correction_burn_constraint"
+    reason: "The Rev. E jerk table applies to extraterrestrial surface transport vehicles."
+  propellant_reserve:
+    nominal_fraction_of_initial_usable_propellant: 0.10
+    nominal_reserve_kg: 861.825503
+    sensitivity_fractions: [0.05, 0.15]
+    evidence_status: "explicit_research_assumption_not_a_published_nasa_requirement"
+    source_for_usable_propellant: "D004"
+  computation_deadline:
+    planner_wall_clock_s: 900
+    safety_filter_wall_clock_s: 1
+    reference_hardware_required_in_result: true
+    evidence_status: "ground-advisory research requirement"
+  deterministic_fallback_required: true
+  unsafe_candidate_execution_allowed: false
+
+propellant_sensitivity:
+  equation: "Tsiolkovsky rocket equation applied to correction delta-v only"
+  specific_impulse_s: [300, 314, 328]
+  status: "bounded_sensitivity_not_flight_specific_truth"
+  upper_bound_source_id: "D025"
+  lower_and_mid_values_status: "explicit conservative research assumptions"
+
+historical_sanity_checks:
+  published_dsn_baseline_correction_delta_v_m_s: 3.63
+  published_dsn_baseline_source_id: "D006"
+  actual_rtc1_to_rtc3_published_delta_v_lower_bound_m_s: 3.38328
+  actual_lower_bound_source_ids: ["D018", "D019", "D020"]
+  qualification: "OTC3 delta-v was not published, so 3.38328 m/s is a lower bound, not the actual mission total."
+
+practical_significance:
+  prediction_stage_qml_trigger:
+    maximum_relative_primary_error_gap_to_strongest_classical: 0.05
+    require_stable_special_regime: true
+  mission_stage:
+    minimum_absolute_delta_v_improvement_m_s: 0.25
+    minimum_relative_delta_v_improvement: 0.10
+    rule: "95% paired-CI lower bound must exceed the larger threshold"
+    safety_noninferiority_margin_absolute: 0.001
+    compare_against: "strongest tuned classical method"
+    engineering_basis: "D006 reports approximately 1.5 m/s DSN improvement potential; the frozen threshold rejects trivial gains."
+  quantum_advantage_language_allowed_from_classical_simulation: false
+
+algorithm_innovation_gate:
+  candidate_name: "physics-constrained quantum residual surrogate"
+  create_only_if_all_true:
+    - "A QML model is within 5% of the strongest classical model on the primary prediction metric."
+    - "A reproducible residual regime remains after matched preprocessing and parameter controls."
+    - "The regime survives grouped validation and at least 20 seeds."
+  required_comparators:
+    - "parent QML model"
+    - "low-fidelity physics model"
+    - "parameter-matched classical residual model"
+    - "strongest unrestricted classical model"
+  no_trigger_outcome: "Do not invent a new algorithm; report the negative QML result."
+
+validation:
+  acceptance_config: "configs/simulator_acceptance.yaml"
+  uncertainty_config: "configs/uncertainty_model.yaml"
+  compute_config: "configs/compute_budget.yaml"
+  stop_model_training_if_simulator_fails: true

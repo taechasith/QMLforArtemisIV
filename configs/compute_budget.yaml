@@ -1,0 +1,72 @@
+schema_version: "0.2.0"
+status: "frozen_gate_2_accepted"
+
+global_resource_ceiling:
+  cpu_core_hours: 10000
+  gpu_hours: 1000
+  qpu_shots: 50000000
+  persistent_storage_gb: 250
+  wall_clock_days: 30
+  rule: "Exceeding a ceiling requires a logged Gate 2 deviation before inspecting final-test results."
+
+simulation_dataset:
+  f0_analytical_cases: 10000
+  f1_low_fidelity_cases: 50000
+  f2_high_fidelity_initial_cases: 5000
+  f2_active_learning_additional_max: 5000
+  required_boundary_or_tail_fraction: 0.25
+  nonconvergence_cases_retained: true
+
+locked_split:
+  development_fraction: 0.60
+  uncertainty_calibration_fraction: 0.10
+  in_distribution_final_test_fraction: 0.15
+  out_of_distribution_final_test_fraction: 0.15
+  grouping: "mission epoch plus uncertainty family plus base trajectory"
+  final_tests_locked_before_feature_or_model_selection: true
+
+phase_1_prediction_benchmark:
+  learning_curve_sizes: [128, 256, 512, 1024, "full"]
+  classical_model_families: 6
+  qml_model_families: 3
+  qubit_counts_required: [4, 6, 8]
+  qubit_counts_conditional: [10, 12]
+  conditional_qubit_rule: "projected completion remains within 2x the used phase-1 budget before final tests are opened"
+  maximum_tuning_trials_per_family: 30
+  development_seeds_per_configuration: 20
+  finalist_seeds: 30
+  quantum_shots_development: 1024
+  quantum_shots_confirmation: 4096
+  paired_preprocessing_and_split: true
+  parameter_matched_comparators_required: true
+  tuning_objective_fixed: "robust-cost NRMSE with feasibility-constrained regret tie-break"
+
+phase_2_mission_benchmark:
+  strata: ["U0", "U1", "U2", "U3", "U4", "U5"]
+  paired_runs_per_stratum_minimum: 2000
+  sequential_batch_size: 1000
+  paired_runs_per_stratum_maximum: 20000
+  common_random_numbers: true
+  stopping_target_delta_v_ci_half_width_m_s: 0.05
+  stopping_target_fraction_of_strongest_classical_mean: 0.01
+  stopping_rule: "stop only when both precision targets pass or maximum runs are reached"
+  rare_event_zero_count_rule: "report one-sided 95% rule-of-three upper bound"
+
+model_selection_limits:
+  finalists_per_family: 1
+  total_models_entering_locked_mission_test_max: 10
+  novel_algorithm_variants_max: 1
+  novel_algorithm_requires_gate_in_constraints_yaml: true
+  no_post_test_hyperparameter_changes: true
+
+reporting:
+  energy_and_latency_include:
+    - "data encoding"
+    - "circuit execution or simulation"
+    - "shot sampling"
+    - "error mitigation"
+    - "queue and communication time when hardware is used"
+    - "classical optimizer and safety filter"
+  hardware_manifest_required: true
+  software_lockfile_required: true
+  carbon_or_energy_reporting: "best effort with measurement method disclosed"

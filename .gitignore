@@ -1,0 +1,40 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+dist/
+build/
+
+# Public source files are fetched reproducibly and are not committed by default.
+data/raw/*
+!data/raw/.gitkeep
+
+# Derived datasets and full experiment results are generated artifacts.
+data/processed/*
+!data/processed/.gitkeep
+!data/processed/artemis2/
+data/processed/artemis2/*
+!data/processed/artemis2/oem_inventory.csv
+!data/processed/artemis2/oem_release_revisions.csv
+!data/processed/artemis2/oem_detected_discontinuities.csv
+!data/processed/artemis2/validation_windows.csv
+!data/processed/artemis2/two_body_baseline.csv
+results/
+tmp/
+
+# Local environments and credentials.
+.env
+.env.*
+!.env.example
+
+# Editor and operating-system files.
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

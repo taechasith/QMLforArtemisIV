@@ -1,0 +1,47 @@
+schema_version: "0.2.0"
+status: "frozen_gate_2_accepted"
+source_id: "D010"
+source_requirement: "NASA-STD-3001 Volume 2 Revision E, V2 6064, Tables 6.5-1 through 6.5-6"
+unit: "m/s^2"
+applies_to_duration_greater_than_s: 0.5
+
+application_rule:
+  mission_phase: "post-TLI correction burns only"
+  conditioning: "deconditioned envelope for the entire study"
+  posture_unknown: "take the most restrictive applicable seated or standing value by body axis"
+  between_breakpoints: "use the more restrictive adjacent tabulated value"
+  sustained_numeric_duration_s_for_implementation: 10000
+  transform_thrust_acceleration_to_crew_axes: true
+  combine_simultaneous_axis_components: true
+  margin_fraction: 0.10
+  qualification: "This is a conservative research application of the public standard, not NASA certification."
+
+deconditioned_conservative_envelopes:
+  x_axis:
+    upper:
+      duration_s: [0.5, 10, 30, 50, 90, 120, 150, 10000]
+      acceleration_m_s2: [137, 98.1, 78.5, 61.8, 49.0, 42.2, 39.2, 39.2]
+    lower:
+      duration_s: [0.5, 10, 30, 50, 90, 100, 10000]
+      acceleration_m_s2: [-132, -78.5, -58.8, -46.1, -39.7, -39.2, -39.2]
+    source_tables: ["6.5-1", "6.5-4"]
+  y_axis:
+    upper:
+      duration_s: [0.5, 100, 10000]
+      acceleration_m_s2: [19.6, 9.81, 9.81]
+    lower:
+      duration_s: [0.5, 100, 10000]
+      acceleration_m_s2: [-19.6, -9.81, -9.81]
+    source_tables: ["6.5-2", "6.5-5"]
+  z_axis:
+    upper:
+      duration_s: [0.5, 30, 50, 80, 100, 120, 10000]
+      acceleration_m_s2: [9.81, 9.81, 7.85, 6.67, 5.88, 4.90, 4.90]
+    lower:
+      duration_s: [0.5, 10000]
+      acceleration_m_s2: [-0.5, -0.5]
+    source_table: "6.5-6 standing deconditioned envelope"
+
+excluded_jerk_table:
+  source_table: "6.5-11"
+  reason: "It is explicitly for extraterrestrial surface transport vehicles and is outside this spacecraft correction-burn scope."
