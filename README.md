@@ -7,7 +7,8 @@ correction planning.
 ## Status
 
 Decision Gate 1 was accepted on 2026-07-10 and Gate 2 was accepted on
-2026-07-11. Gate 3 simulator credibility work is now in progress. The
+2026-07-11. Gate 3 simulator credibility work is now in progress. The F0/F1/F2
+simulator core was frozen before formal held-out validation on 2026-07-11. The
 repository contains the OEM audit, flown-event registry, leak-resistant
 simulator split, uncertainty model, human constraint envelopes, simulator
 acceptance tests, engineering effect threshold, and compute ceiling. No
@@ -52,6 +53,7 @@ through a dated deviation record.
 - configs/constraints.yaml: machine-readable mission assumptions and gates.
 - configs/uncertainty_model.yaml: public 3-sigma inputs and sensitivity strata.
 - configs/simulator_acceptance.yaml: frozen verification and validation tests.
+- configs/dynamics.yaml: frozen Gate 3 force and numerical model.
 - configs/compute_budget.yaml: fixed experiment and resource ceilings.
 - docs/gate2_data_numeric_freeze.md: Gate 2 evidence and recommendation.
 - docs/research_execution_map.md: work ownership and future decision gates.

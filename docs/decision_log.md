@@ -114,6 +114,19 @@ Date opened: 2026-07-11
 Status: In progress  
 Recommendation: Pending implementation and held-out validation
 
+Checkpoint 3A, 2026-07-11: the F0/F1/F2 force model, DE440s source and
+checksum, integrator settings, impulsive and finite-burn mass models, public
+engine catalog, and crew constraint checks were frozen in versioned code before
+the formal validation pipeline was executed. Machine-learning training remains
+prohibited.
+
+Execution-order disclosure: during local prototyping, a one-off F2 smoke test
+was run on all frozen windows before Checkpoint 3A was committed. No model
+constant, force, threshold, window, or exclusion was fitted or changed after
+viewing that output, and the exploratory output was not retained as research
+evidence. This is recorded as a procedural limitation because it weakens ideal
+blinding; Gate 3 acceptance must explicitly accept or reject this handling.
+
 Decision requested when complete:
 
 Approve or reject the F0/F1/F2 simulator, numerical convergence evidence,
