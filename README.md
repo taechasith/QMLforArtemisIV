@@ -18,8 +18,10 @@ acceptance does not claim that RTC3 was validated. Gate 4 and bounded-literature
 Deviation D002 were accepted on 2026-07-12. A subsequent pre-D003 run generated
 7,000 F0 rows, but the conformance audit found every row invalid; those rows
 are excluded from all model and benchmark use and retained only as failed-run
-evidence. Gate 5 is now executing the authorized D003 generator repair. No
-valid research payload, fitted research model, or benchmark result exists yet.
+evidence. Gate 5 is now executing the authorized D003 generator repair. The
+first corrected nominal F0 group passes strict audit; remaining F0 groups and
+all F1/F2 groups are pending. No fitted research model or benchmark result
+exists yet.
 Both final-test splits remain locked and require a separate unlock commit.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV

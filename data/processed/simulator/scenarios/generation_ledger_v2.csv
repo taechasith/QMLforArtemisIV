@@ -1,0 +1,2 @@
+attempt_id,payload_version,config_sha256,fidelity,split,group_id,records,elapsed_s,sha256,timestamp_utc,schema_valid,source_commit
+9e419234cc8e2054,d003-v1,6bc14cec78214bbf4ef6f714e9b9aee76dd155eadefbca2c42d9178a525056c6,F0,development,G01,500,55.929,ae4ba2176c29a54826c1686646b5fea4ec7324d63befba9bf203a706142cc3b7,2026-07-11T22:47:53.292952+00:00,true,72f99c44db5d8eaa4e241915652c231368ecb4e2

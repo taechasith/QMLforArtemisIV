@@ -388,7 +388,7 @@ broader search, or request a specific revision.
 
 Date opened: 2026-07-12
 Date authorized: 2026-07-12
-Status: **Repair implementation frozen; corrected payload rerun pending**
+Status: **First corrected group qualified; F0 scale-up in progress**
 Authority: Human research lead
 
 Original implementation:
@@ -455,4 +455,15 @@ Human authorization basis: after being informed that the active F1 process
 should stop and the generator required preservation, repair, and graphing, the
 human research lead instructed the assistant to continue after the current run
 stopped and to record all material changes as research-paper graphs.
+
+First-group qualification, 2026-07-12:
+
+- Repair commit `72f99c4` was pushed before corrected generation began.
+- `F0/development/G01` produced 500 D003-v1 rows in 55.929 seconds from source commit `72f99c4`.
+- All 500 rows pass schema and metadata relationships, all 100 decision sets are complete, the exact boundary commitment matches, and the payload checksum matches the v2 ledger.
+- U0 uncertainty conformance passes; no row is non-finite or nonconverged.
+- 400 of 500 candidate rows are feasible, and all 100 decision sets contain at least one feasible numerical reference.
+- No final-test payload was generated or read.
+- RFIG-005 and RFIG-006 record the pre/post validity and reference-laptop runtime changes.
+- Scope: this qualifies only the nominal F0 checkpoint. Non-U0 F0 groups and F1/F2 still require their own audits.
 

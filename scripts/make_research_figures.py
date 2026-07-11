@@ -21,7 +21,9 @@ import numpy as np  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "artifacts/research_figures"
 AUDIT = ROOT / "data/processed/simulator/scenarios/pre_d003_audit.csv"
+POST_G01_AUDIT = ROOT / "data/processed/simulator/scenarios/post_d003_g01_audit.csv"
 LEDGER = ROOT / "data/processed/simulator/scenarios/generation_ledger.csv"
+V2_LEDGER = ROOT / "data/processed/simulator/scenarios/generation_ledger_v2.csv"
 GATES = ROOT / "data/processed/reporting/gate_timeline.csv"
 REGISTRY = OUTPUT / "figure_registry.csv"
 
@@ -232,6 +234,94 @@ def draw_generation_runtime(path: Path) -> None:
     save(fig, path)
 
 
+def draw_g01_pre_post_audit(path: Path) -> None:
+    before = next(row for row in read_csv(AUDIT) if row["group_id"] == "G01")
+    after = read_csv(POST_G01_AUDIT)[0]
+    metrics = ["Schema-invalid\nrows", "Relationship-error\nrows", "No-reference\nsets"]
+
+    def percentages(row: dict[str, str]) -> list[float]:
+        return [
+            100.0 * int(row["schema_error_records"]) / int(row["observed_records"]),
+            100.0
+            * int(row["relationship_error_records"])
+            / int(row["observed_records"]),
+            100.0
+            * int(row["no_reference_feasible_sets"])
+            / int(row["observed_decision_sets"]),
+        ]
+
+    x = np.arange(len(metrics))
+    width = 0.36
+    fig, ax = plt.subplots(figsize=(8.2, 4.3), constrained_layout=True)
+    ax.bar(x - width / 2, percentages(before), width, color=ORANGE, label="Pre-D003")
+    after_values = percentages(after)
+    ax.bar(x + width / 2, after_values, width, color=GREEN, label="D003-v1")
+    ax.scatter(x + width / 2, after_values, marker="D", s=28, color=GREEN, zorder=3)
+    for x_value, value in zip(x + width / 2, after_values):
+        ax.annotate(
+            f"{value:.0f}%",
+            (x_value, value),
+            xytext=(0, 7),
+            textcoords="offset points",
+            ha="center",
+            color=GREEN,
+            fontweight="bold",
+        )
+    ax.set_xticks(x, metrics)
+    ax.set_ylim(0, 110)
+    ax.set_ylabel("Affected rows or decision sets (%)")
+    ax.set_title("F0 G01 qualification audit before and after D003 repair")
+    ax.legend(ncols=2, loc="upper right")
+    ax.text(
+        0.99,
+        0.62,
+        "Post-repair: 500 rows valid\n0/100 sets lack a feasible reference",
+        transform=ax.transAxes,
+        ha="right",
+        color=GREEN,
+        fontweight="bold",
+        bbox={"facecolor": "white", "edgecolor": PALE, "alpha": 0.92, "pad": 5},
+    )
+    save(fig, path)
+
+
+def draw_g01_pre_post_runtime(path: Path) -> None:
+    before_rows = [
+        row
+        for row in read_csv(LEDGER)
+        if row["fidelity"] == "F0" and row["group_id"] == "G01"
+    ]
+    after_rows = [
+        row
+        for row in read_csv(V2_LEDGER)
+        if row["fidelity"] == "F0" and row["group_id"] == "G01"
+    ]
+    values = [float(before_rows[-1]["elapsed_s"]), float(after_rows[-1]["elapsed_s"])]
+    fig, ax = plt.subplots(figsize=(7.2, 4.2), constrained_layout=True)
+    bars = ax.bar(["Pre-D003 invalid", "D003-v1 valid"], values, color=[ORANGE, GREEN])
+    ax.set_ylabel("Wall time (s per 500 rows)")
+    ax.set_title("F0 G01 runtime on the reference laptop")
+    for bar, value in zip(bars, values):
+        ax.annotate(
+            f"{value:.1f} s",
+            (bar.get_x() + bar.get_width() / 2, bar.get_height()),
+            xytext=(0, 5),
+            textcoords="offset points",
+            ha="center",
+            fontweight="bold",
+        )
+    ax.text(
+        0.5,
+        -0.18,
+        "Valid run includes numerical targeting, independent propagation,\n"
+        "schema/relationship checks, and lunar-constraint sampling.",
+        transform=ax.transAxes,
+        ha="center",
+        color=GRAY,
+    )
+    save(fig, path)
+
+
 def specs() -> list[FigureSpec]:
     return [
         FigureSpec(
@@ -281,6 +371,30 @@ def specs() -> list[FigureSpec]:
             "Observed F0 attempt runtime by group on the reference laptop before generator repair.",
             "Hardware timing for an invalid workload; retained only for scheduling and audit.",
             draw_generation_runtime,
+        ),
+        FigureSpec(
+            "RFIG-005",
+            "d003_g01_pre_post_audit",
+            "F0 G01 pre/post D003 qualification audit",
+            "Gate 5 generator repair",
+            "Methods: generator qualification",
+            "repair_validation_development",
+            "data/processed/simulator/scenarios/pre_d003_audit.csv;data/processed/simulator/scenarios/post_d003_g01_audit.csv",
+            "The first D003-v1 checkpoint removed all G01 schema and relationship errors and restored a feasible reference in every decision set.",
+            "Development qualification only; G01 is nominal U0 and does not establish all-family or higher-fidelity validity.",
+            draw_g01_pre_post_audit,
+        ),
+        FigureSpec(
+            "RFIG-006",
+            "d003_g01_pre_post_runtime",
+            "F0 G01 pre/post D003 runtime",
+            "computational methodology",
+            "Methods: compute",
+            "repair_validation_development",
+            "data/processed/simulator/scenarios/generation_ledger.csv;data/processed/simulator/scenarios/generation_ledger_v2.csv",
+            "The corrected 500-row G01 run completed in 55.9 seconds on the reference laptop versus 46.2 seconds for the latest invalid attempt.",
+            "Single-group wall time; the workloads differ and this is not a speed benchmark.",
+            draw_g01_pre_post_runtime,
         ),
     ]
 

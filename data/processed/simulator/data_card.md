@@ -2,7 +2,7 @@
 
 Version: 0.3.0
 Prepared: 2026-07-12
-Status: Gate 4 accepted; D003 generator repair in progress; no valid research payload yet
+Status: Gate 4 accepted; D003 G01 qualified; remaining development generation in progress
 
 ## Intended use
 
@@ -19,7 +19,9 @@ Gate 4 defines the accepted identities, groups, counts, schemas, seeds, and
 cryptographic commitments. A pre-D003 attempt generated 7,000 F0 rows after
 acceptance, but all failed the conformance audit and are prohibited from model
 fitting, tuning, calibration, or benchmark claims. They remain only as
-failed-attempt evidence. No valid research payload has yet been admitted.
+failed-attempt evidence. The corrected D003-v1 F0 development group G01 is the
+first admitted payload: all 500 rows pass strict audit. Other pre-D003 F0
+groups remain invalid until individually replaced and audited.
 `data/locked/phase1/` is ignored and absent; any file there before an explicit
 unlock causes the preparation audit to fail closed.
 
@@ -28,7 +30,7 @@ candidate-plan row identities grouped into 13,000 decision sets of five plans:
 
 | Split | F0 | F1 | F2 | Total | Gate 4 payload state |
 |---|---:|---:|---:|---:|---|
-| Development | 6,000 | 30,000 | 3,000 | 39,000 | Pre-D003 F0 invalid and excluded; corrected payloads pending |
+| Development | 6,000 | 30,000 | 3,000 | 39,000 | Corrected F0 G01 valid (500 rows); other pre-D003 F0 invalid and excluded |
 | Uncertainty calibration | 1,000 | 5,000 | 500 | 6,500 | Pre-D003 F0 invalid and excluded; corrected payloads pending |
 | In-distribution final test | 1,500 | 7,500 | 750 | 9,750 | Locked and not generated |
 | Out-of-distribution final test | 1,500 | 7,500 | 750 | 9,750 | Locked and not generated |
