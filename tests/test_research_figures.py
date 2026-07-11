@@ -48,10 +48,10 @@ def test_pre_d003_audit_is_retained_as_invalid_evidence() -> None:
 
 def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     rows = read_csv(FIGURES / "figure_registry.csv")
-    assert len(rows) >= 9
+    assert len(rows) >= 10
     figure_ids = {row["figure_id"] for row in rows}
     assert len(figure_ids) == len(rows)
-    assert {f"RFIG-{index:03d}" for index in range(1, 10)} <= figure_ids
+    assert {f"RFIG-{index:03d}" for index in range(1, 11)} <= figure_ids
     assert {row["evidence_status"] for row in rows} >= {
         "accepted_decision_record",
         "invalid_failed_attempt",

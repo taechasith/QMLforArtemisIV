@@ -248,6 +248,14 @@ integration of the same trajectory in nominal groups while retaining each
 candidate's timing metadata. It does not cache nonzero burns or distinct
 uncertainty states and therefore changes scheduling cost, not scientific rows.
 
+The first F1 group then required 1,268.159 seconds for 2,500 U0 rows, 22.7
+times the F0 G01 wall time despite the cache. Its strict audit passed. A
+duration- and trajectory-count projection estimates about 13.8 aggregate CPU
+hours for all unlocked F1 groups and about 3.5 hours at four ideally balanced
+workers. The projection controls scheduling only; measured group ledgers and
+RFIG-010 remain the evidence, and four workers are used rather than the
+eight-worker ceiling to limit sustained laptop heat.
+
 ### 6.3 Classical model experiments
 
 Trial-level and model-internal parallelism are not both run at full width.
@@ -346,6 +354,7 @@ and scientific failures because they require different responses.
 | 2026-07-12 | Gate 4 QML scheduling | A full trial-by-seed-by-fold Cartesian run would spend substantial laptop time on configurations that are clearly uncompetitive at small samples | The accepted 30-trial and seed ceilings could be misread as requiring every combination | Froze grouped successive-halving rungs for QML and matched controls, 20 seeds only for selected development configurations, one statevector/GPU job, and resumable checkpoints | Preventive adaptation. Preserve comparisons and randomness while pruning only by a rule registered before outcomes |
 | 2026-07-12 | Gate 5 scenario generation | The first generator produced 7,000 F0 rows before a schema/uncertainty audit and an F1 run stopped on an incorrect DE440s path | Every pre-D003 F0 row is invalid for research use, and 1,020 of 1,400 decision sets lack a feasible reference | Stopped progression, preserved RFIG-002 through RFIG-004, froze D003 in `72f99c4`, qualified G01 with RFIG-005/RFIG-006, then audited all F0 with RFIG-007 through RFIG-009 | F0 resolved: 14/14 groups and 7,000/7,000 rows valid in 542.060 s group work; 319/1,400 no-reference sets are retained limitations. F1/F2 audits remain open |
 | 2026-07-12 | Gate 5 F1 preparation | Nominal decision sets contain multiple zero-delta-v candidates that would repeat the same multi-day propagation thousands of times | The scientifically identical work would waste CPU time before any higher-fidelity evidence was produced | Added a true-state-keyed zero-burn cache after F0 qualification; candidate timing metadata remains distinct and nonzero/distinct-state propagations are never cached | Execution-only adaptation. Unit tests enforce cache identity and timing retention; F1 runtime figures must disclose the optimization |
+| 2026-07-12 | Gate 5 F1 checkpoint | Valid F1 G01 required 1,268.159 s, 22.7 times F0 G01, while using one core and roughly 115 MB RAM | Serial completion of the remaining 47,500 F1 rows would be unnecessarily slow on the 24-core/32-thread reference laptop | Qualified G01 first, projected aggregate work, and added a four-process group scheduler with per-worker thread limits, atomic files, and a locked shared ledger | Open scale-up. CPU, not RAM/VRAM, is limiting; use four workers and preserve actual runtime per group rather than reducing cases or tolerances |
 
 For RTC3 specifically, the qualified OEM predates the event by 15 hours 30
 minutes 41 seconds. A separate post-RTC3 trajectory product was not substituted

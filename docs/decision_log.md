@@ -388,7 +388,7 @@ broader search, or request a specific revision.
 
 Date opened: 2026-07-12
 Date authorized: 2026-07-12
-Status: **All unlocked F0 qualified; F1 first-group qualification pending**
+Status: **F1 first group qualified; controlled parallel F1 scale-up pending**
 Authority: Human research lead
 
 Original implementation:
@@ -486,4 +486,14 @@ candidate's actual-start metadata and does not cache nonzero burns or distinct
 uncertainty states. This is an execution-only laptop adaptation under the
 already frozen compute rule; it does not alter scenario identities, sampled
 inputs, force models, outcomes, constraints, or acceptance criteria.
+
+F1 first-group qualification, 2026-07-12:
+
+- `F1/development/G01` produced 2,500 D003-v1 rows in 1,268.159 seconds from source commit `f124327`.
+- All 2,500 rows pass strict schema, relationship, finite-value, uncertainty, checksum, and decision-set audits.
+- 2,000 candidate rows are feasible; all 500 decision sets retain at least one feasible reference; no row is nonconverged.
+- No final-test payload was generated or read.
+- RFIG-010 records F0/F1 G01 coverage and the 22.7-fold observed F1/F0 wall-time ratio.
+- The remaining F1 CPU requirement is projected at approximately 13.8 hours from G01 duration-normalized work; four independent workers imply about 3.5 hours only under ideal balance, so actual group ledgers remain authoritative.
+- A four-worker group scheduler is authorized only after this audit. It uses process-isolated ephemerides, one numerical-library thread per worker, atomic payload writes, and an exclusive append lock for the shared v2 ledger.
 

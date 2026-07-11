@@ -1,7 +1,7 @@
 # OpenQFuel-Cislunar Research Protocol
 
 Version: 0.3.0
-Status: Gates 1, 2, 3, and 4 accepted; Gate 5 D003 F0 qualified, F1/F2 pending
+Status: Gates 1, 2, 3, and 4 accepted; Gate 5 D003 F0 and F1 G01 qualified
 Prepared: 2026-07-10  
 Updated: 2026-07-12
 Recommended next decision: Accept Gate 5 trigger after reviewing the development-split analysis report
@@ -655,6 +655,11 @@ audits, with no nonconvergence. Of 1,400 decision sets, 319 have no feasible
 reference; they remain included under the preregistered penalty/reporting rule
 and cannot motivate post-result candidate retuning. F1 and F2 require separate
 first-group and full-fidelity audits before model fitting may begin.
+
+The F1 G01 checkpoint adds 2,500 valid U0 rows with no nonconvergence or
+no-reference decision set. Its 1,268.159-second wall time authorizes controlled
+four-process F1 group execution with locked ledger appends; it does not
+authorize reduced rows, tolerances, constraints, or higher worker counts.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

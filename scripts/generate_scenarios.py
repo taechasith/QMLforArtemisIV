@@ -8,9 +8,12 @@ import csv
 import hashlib
 import json
 import logging
+import os
 import subprocess
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping
@@ -45,6 +48,12 @@ OUTPUT_ROOT = ROOT / "data/processed/simulator/scenarios"
 LOCKED_ROOT = ROOT / "data/locked/phase1"
 INVALID_AUDIT = OUTPUT_ROOT / "pre_d003_audit.csv"
 LEDGER = OUTPUT_ROOT / "generation_ledger_v2.csv"
+LEDGER_LOCK = OUTPUT_ROOT / "generation_ledger_v2.lock"
+QUALIFICATION_SUMMARIES = {
+    "F0": OUTPUT_ROOT / "post_d003_f0_audit_summary.json",
+    "F1": OUTPUT_ROOT / "post_d003_f1_g01_audit_summary.json",
+    "F2": OUTPUT_ROOT / "post_d003_f2_g01_audit_summary.json",
+}
 GENERATION_SOURCE_PATHS = (
     "configs/constraints.yaml",
     "configs/crew_schedule.yaml",
@@ -157,9 +166,7 @@ def validate_records(
     observed_ids: set[str] = set()
     decision_sets: dict[str, set[int]] = {}
     boundary_ids: list[str] = []
-    expected_outcomes = set(
-        validator.schema["properties"]["outcomes"]["properties"]
-    )
+    expected_outcomes = set(validator.schema["properties"]["outcomes"]["properties"])
     for index, record in enumerate(records, start=1):
         errors = list(validator.iter_errors(record))
         if errors:
@@ -241,6 +248,37 @@ def current_commit() -> str:
     return result.stdout.strip()
 
 
+@contextmanager
+def exclusive_file_lock(
+    lock_path: Path, timeout_s: float = 60.0, stale_after_s: float = 300.0
+):
+    deadline = time.monotonic() + timeout_s
+    descriptor: int | None = None
+    while descriptor is None:
+        try:
+            descriptor = os.open(lock_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            os.write(
+                descriptor,
+                f"pid={os.getpid()} utc={datetime.now(timezone.utc).isoformat()}".encode(),
+            )
+        except FileExistsError:
+            try:
+                age_s = time.time() - lock_path.stat().st_mtime
+                if age_s > stale_after_s:
+                    lock_path.unlink()
+                    continue
+            except FileNotFoundError:
+                continue
+            if time.monotonic() >= deadline:
+                raise TimeoutError(f"Timed out waiting for ledger lock: {lock_path}")
+            time.sleep(0.05)
+    try:
+        yield
+    finally:
+        os.close(descriptor)
+        lock_path.unlink(missing_ok=True)
+
+
 def assert_generation_sources_committed() -> None:
     result = subprocess.run(
         ["git", "status", "--porcelain=v1", "--", *GENERATION_SOURCE_PATHS],
@@ -282,13 +320,86 @@ def append_ledger(
         "schema_valid": "true",
         "source_commit": current_commit(),
     }
-    exists = LEDGER.exists()
     LEDGER.parent.mkdir(parents=True, exist_ok=True)
-    with LEDGER.open("a", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=LEDGER_FIELDS, lineterminator="\n")
-        if not exists:
-            writer.writeheader()
-        writer.writerow(ledger_row)
+    with exclusive_file_lock(LEDGER_LOCK):
+        exists = LEDGER.exists()
+        with LEDGER.open("a", newline="", encoding="utf-8") as handle:
+            writer = csv.DictWriter(
+                handle, fieldnames=LEDGER_FIELDS, lineterminator="\n"
+            )
+            if not exists:
+                writer.writeheader()
+            writer.writerow(ledger_row)
+
+
+def assert_parallel_qualification(fidelity: str) -> None:
+    path = QUALIFICATION_SUMMARIES[fidelity]
+    if not path.is_file():
+        raise RuntimeError(
+            f"Parallel {fidelity} generation requires a preserved first-group audit: {path}"
+        )
+    summary = json.loads(path.read_text(encoding="utf-8"))
+    if summary.get("status") != "valid" or int(summary.get("invalid_groups", 1)):
+        raise RuntimeError(f"Parallel {fidelity} generation is blocked by {path}")
+
+
+def _campaign_child(
+    row: Mapping[str, str], args: argparse.Namespace
+) -> tuple[Mapping[str, str], subprocess.CompletedProcess[str]]:
+    command = [
+        sys.executable,
+        str(Path(__file__).resolve()),
+        "--fidelity",
+        row["fidelity"],
+        "--split",
+        row["split"],
+        "--group",
+        row["group_id"],
+    ]
+    if args.resume:
+        command.append("--resume")
+    if args.replace_invalid:
+        command.append("--replace-invalid")
+    environment = os.environ.copy()
+    for variable in (
+        "OMP_NUM_THREADS",
+        "OPENBLAS_NUM_THREADS",
+        "MKL_NUM_THREADS",
+        "NUMEXPR_NUM_THREADS",
+    ):
+        environment[variable] = "1"
+    result = subprocess.run(
+        command,
+        cwd=ROOT,
+        env=environment,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    return row, result
+
+
+def run_parallel_campaign(
+    rows: list[dict[str, str]], args: argparse.Namespace, jobs: int
+) -> int:
+    failures = 0
+    with ThreadPoolExecutor(max_workers=jobs) as executor:
+        futures = [executor.submit(_campaign_child, row, args) for row in rows]
+        for future in as_completed(futures):
+            row, result = future.result()
+            label = f"{row['fidelity']} {row['split']} {row['group_id']}"
+            if result.stderr.strip():
+                for line in result.stderr.strip().splitlines():
+                    LOG.info("[%s] %s", label, line)
+            if result.stdout.strip():
+                for line in result.stdout.strip().splitlines():
+                    LOG.info("[%s] %s", label, line)
+            if result.returncode:
+                failures += 1
+                LOG.error("FAILED %s with exit code %s", label, result.returncode)
+            else:
+                LOG.info("COMPLETE %s", label)
+    return 1 if failures else 0
 
 
 def parse_args() -> argparse.Namespace:
@@ -301,6 +412,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--replace-invalid", action="store_true")
     parser.add_argument("--continue-after-first", action="store_true")
+    parser.add_argument("--jobs", type=int, default=1)
     return parser.parse_args()
 
 
@@ -346,6 +458,12 @@ def main() -> int:
             )
         return 0
 
+    if args.jobs < 1:
+        raise ValueError("--jobs must be positive")
+    worker_ceiling = int(generation["compute"]["post_audit_worker_ceiling"])
+    if args.jobs > worker_ceiling:
+        raise ValueError(f"--jobs exceeds the frozen ceiling of {worker_ceiling}")
+
     if args.check:
         failures = 0
         for row in rows:
@@ -359,6 +477,18 @@ def main() -> int:
         return 1 if failures else 0
 
     assert_generation_sources_committed()
+
+    if args.jobs > 1:
+        if not args.continue_after_first:
+            raise RuntimeError(
+                "Parallel scale-up requires --continue-after-first after qualification"
+            )
+        fidelities = {row["fidelity"] for row in rows}
+        if len(fidelities) != 1:
+            raise RuntimeError("Parallel scale-up must select exactly one fidelity")
+        fidelity = next(iter(fidelities))
+        assert_parallel_qualification(fidelity)
+        return run_parallel_campaign(rows, args, args.jobs)
 
     oem_path = resolve_source(ROOT, generation["sources"]["qualified_oem"])
     oem = parse_oem(oem_path)

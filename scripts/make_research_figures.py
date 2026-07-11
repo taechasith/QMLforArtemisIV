@@ -23,6 +23,9 @@ OUTPUT = ROOT / "artifacts/research_figures"
 AUDIT = ROOT / "data/processed/simulator/scenarios/pre_d003_audit.csv"
 POST_G01_AUDIT = ROOT / "data/processed/simulator/scenarios/post_d003_g01_audit.csv"
 POST_F0_AUDIT = ROOT / "data/processed/simulator/scenarios/post_d003_f0_audit.csv"
+POST_F1_G01_AUDIT = (
+    ROOT / "data/processed/simulator/scenarios/post_d003_f1_g01_audit.csv"
+)
 LEDGER = ROOT / "data/processed/simulator/scenarios/generation_ledger.csv"
 V2_LEDGER = ROOT / "data/processed/simulator/scenarios/generation_ledger_v2.csv"
 GATES = ROOT / "data/processed/reporting/gate_timeline.csv"
@@ -429,6 +432,61 @@ def draw_f0_runtime(path: Path) -> None:
     save(fig, path)
 
 
+def draw_g01_fidelity_checkpoint(path: Path) -> None:
+    f0 = next(row for row in read_csv(POST_F0_AUDIT) if row["group_id"] == "G01")
+    f1 = read_csv(POST_F1_G01_AUDIT)[0]
+    runtimes = {
+        row["fidelity"]: float(row["elapsed_s"])
+        for row in read_csv(V2_LEDGER)
+        if row["group_id"] == "G01" and row["fidelity"] in {"F0", "F1"}
+    }
+    fig, (coverage_ax, runtime_ax) = plt.subplots(
+        1, 2, figsize=(9.4, 4.2), constrained_layout=True
+    )
+    labels = ["F0", "F1"]
+    feasible = [100.0 * float(row["feasibility_rate"]) for row in (f0, f1)]
+    no_reference = [
+        100.0 * float(row["no_reference_feasible_rate"]) for row in (f0, f1)
+    ]
+    x = np.arange(2)
+    width = 0.36
+    coverage_ax.bar(
+        x - width / 2, feasible, width, color=BLUE, label="Feasible candidate rows"
+    )
+    coverage_ax.bar(
+        x + width / 2,
+        no_reference,
+        width,
+        color=ORANGE,
+        label="No-reference sets",
+    )
+    coverage_ax.set_xticks(x, labels)
+    coverage_ax.set_ylim(0, 100)
+    coverage_ax.set_ylabel("Rate (%)")
+    coverage_ax.set_title("Strict-audit coverage")
+    coverage_ax.legend(fontsize=8)
+
+    runtime_values = [runtimes[label] for label in labels]
+    bars = runtime_ax.bar(labels, runtime_values, color=[BLUE, GREEN])
+    runtime_ax.set_yscale("log")
+    runtime_ax.set_ylabel("Wall time (s, log scale)")
+    runtime_ax.set_title("Reference-laptop runtime")
+    for bar, value in zip(bars, runtime_values):
+        runtime_ax.annotate(
+            f"{value:.1f} s",
+            (bar.get_x() + bar.get_width() / 2, value),
+            xytext=(0, 5),
+            textcoords="offset points",
+            ha="center",
+            fontweight="bold",
+        )
+    ratio = runtime_values[1] / runtime_values[0]
+    fig.suptitle(
+        f"VALID D003-v1 G01 fidelity checkpoint | F1 is {ratio:.1f}x F0 wall time"
+    )
+    save(fig, path)
+
+
 def specs() -> list[FigureSpec]:
     return [
         FigureSpec(
@@ -538,6 +596,18 @@ def specs() -> list[FigureSpec]:
             "The 14 corrected F0 groups required 542.1 seconds of measured group work on the reference laptop, with 16.4-56.7 seconds per 500 rows.",
             "Serial local wall time for F0 only; it is not a projection of F1/F2 cost.",
             draw_f0_runtime,
+        ),
+        FigureSpec(
+            "RFIG-010",
+            "d003_g01_fidelity_checkpoint",
+            "Valid D003-v1 G01 F0/F1 checkpoint",
+            "Gate 5 scenario generation",
+            "Methods: fidelity and compute",
+            "repair_validation_development",
+            "data/processed/simulator/scenarios/post_d003_f0_audit.csv;data/processed/simulator/scenarios/post_d003_f1_g01_audit.csv;data/processed/simulator/scenarios/generation_ledger_v2.csv",
+            "F0 and F1 G01 both retain feasible references in every decision set, while F1 requires 1,268.2 seconds versus 55.9 seconds for F0 on the reference laptop.",
+            "Nominal U0 development checkpoint only; runtime includes the post-F0 zero-burn cache and does not predict final model performance.",
+            draw_g01_fidelity_checkpoint,
         ),
     ]
 

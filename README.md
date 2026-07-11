@@ -20,8 +20,9 @@ Deviation D002 were accepted on 2026-07-12. A subsequent pre-D003 run generated
 are excluded from all model and benchmark use and retained only as failed-run
 evidence. Gate 5 is now executing the authorized D003 generator repair. The
 corrected F0 campaign now passes strict audit for all 14 unlocked groups and
-7,000 rows; all F1/F2 groups are pending. No fitted research model or benchmark
-result exists yet.
+7,000 rows; the 2,500-row F1 G01 checkpoint also passes strict audit, while
+remaining F1 and all F2 groups are pending. No fitted research model or
+benchmark result exists yet.
 Both final-test splits remain locked and require a separate unlock commit.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
