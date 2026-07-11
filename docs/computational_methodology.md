@@ -1,6 +1,6 @@
 # Computational Methodology and Reference Hardware
 
-Version: 0.1.0  
+Version: 0.2.0
 Hardware snapshot: 2026-07-11  
 Status: published computational-methodology supplement  
 Repository: `taechasith/QMLforArtemisIV`
@@ -22,6 +22,32 @@ If the formal design cannot be completed on the reference workstation after
 safe batching and checkpointing, the study must use additional declared
 compute or request a documented protocol deviation. The experiment must not be
 silently reduced to fit the laptop.
+
+### 1.1 How readers should use this disclosure
+
+The reference workstation is not a minimum specification, recommended build,
+or requirement for reproducing or extending this research. Readers should not
+copy the CPU, GPU, memory, worker count, or local batch sizes merely because
+they appear here.
+
+A reader may use a smaller laptop, a larger workstation, a server, cloud
+compute, or a supported quantum backend. What must be reproduced is the
+scientific configuration: data eligibility, model definition, numerical
+accuracy, splits, seeds, thresholds, budgets, and reporting rules. Worker
+count, chunk size, checkpoint frequency, and storage layout may be adapted to
+the available machine when those changes do not alter the scientific result.
+
+The transferable contribution of this hardware disclosure is therefore:
+
+- visibility into the limitations under which the results were produced;
+- evidence of which bottlenecks and failures occurred in practice;
+- reusable strategies for diagnosing and adapting to those constraints; and
+- a warning not to generalize this laptop's wall time, energy use, or capacity
+  to other hardware.
+
+Readers extending the work should publish their own hardware manifest and
+explain how they handled comparable constraints. They should apply the lessons
+from this project, not treat this workstation as a template to copy.
 
 ## 2. Reference workstation manifest
 
@@ -281,3 +307,53 @@ investigation. It must not be hidden as a harmless performance difference.
 The detailed personal scheduling log remains in the ignored
 `docs/local_compute_guide.md`. This published document contains the stable
 hardware context and methodological rules required to interpret formal results.
+
+## 9. Living record of computational struggles and adaptations
+
+Computational methodology is updated throughout the project, not reconstructed
+only after successful results are known. Each material bottleneck, failed
+approach, diagnostic campaign, and adaptation is retained below. The record
+distinguishes hardware limitations from software defects, source limitations,
+and scientific failures because they require different responses.
+
+| Date | Phase | Struggle observed | Impact | Adaptation and evidence | Status and transferable lesson |
+|---|---|---|---|---|---|
+| 2026-07-11 | Environment bootstrap | `uv` was not initially available on `PATH`, and a registered Python 3.12 launcher entry was stale | The prescribed extraction and verification commands could not start on a fresh local environment | Installed `uv` through the valid local Python installation, synchronized the locked environment, and reran tests and dependency checks | Resolved. Verify executable paths and the actual interpreter before attributing a failure to project code |
+| 2026-07-11 | Local storage planning | The study permits up to 250 GB persistent storage, but only about 53 GB was free on the reference system drive | The global protocol ceiling could not be treated as locally available capacity | Established a 20 GiB free-space floor, a roughly 25 GB reassessment point for new data, compressed chunk outputs, and checksum-verified external storage when needed | Ongoing constraint. Separate study-wide ceilings from measured local capacity |
+| 2026-07-11 | Gate 3 F2 validation | High-accuracy nominal and tightened propagations dominated local wall time | Repeated full validation runs were expensive even though the laptop has many logical processors | Preserved every frozen tolerance and sample, benchmarked the complete path, and limited proposed acceleration to independent-window parallelism, caching, and resumable outputs | Ongoing optimization. Reduce scheduling overhead, never numerical credibility |
+| 2026-07-11 | GMAT integration | GMAT resolved support files from its execution environment rather than the repository-relative location initially assumed | The independent tool could not load DE440s or the custom gravity file from the first generated script | Staged checksum-verified support files in the external GMAT distribution and kept the tracked script portable | Resolved. Cross-tool validation must test path resolution and provenance, not only equations |
+| 2026-07-11 | Gate 3 GMAT comparison | The first independent comparison failed all ten endpoint thresholds by large margins | The simulator gate correctly entered repair analysis instead of allowing ML work to start | Incremental Earth-only, J2-only, and full-force diagnostics isolated the discrepancy to the custom COF `POTFIELD` fixed-column format; Deviation D001 records the repair | Resolved. The fixed COF passes all ten frozen GMAT thresholds without changing physics, windows, or acceptance limits; preserve failed evidence because it shows how the defect was found |
+| 2026-07-11 | Gate 3 event evidence | RTC3 occurs after the frozen OEM creation cutoff | More compute cannot make the event eligible as historical/reconstructed evidence | Retained `not_eligible` in the event and acceptance outputs rather than fabricating a pass | Open source limitation. Hardware adaptation cannot repair missing or ineligible evidence |
+
+The Gate 3 COF episode is especially important for interpretation. The initial
+cross-tool failure was real evidence under the then-executed configuration, but
+its cause was an interface-format defect rather than insufficient CPU/GPU
+capacity or a need to relax thresholds. The repair changed how the same frozen
+constants were transmitted to GMAT. It did not change the Python dynamics,
+force-model physics, validation windows, or acceptance limits. Both the failed
+result and the repaired result remain part of the audit trail.
+
+## 10. Ongoing update rule
+
+After every computational phase, this methodology must be updated when any of
+the following occurs:
+
+1. measured hardware, driver, interpreter, or backend changes materially;
+2. a formal job exceeds its predicted runtime, RAM, VRAM, thermal, or storage
+   envelope;
+3. a run crashes, stalls, pages, throttles, exhausts storage, or cannot resume;
+4. a cross-tool, precision, serialization, path, or file-format defect changes
+   the interpretation of a result;
+5. work moves to external compute or a quantum backend;
+6. an execution adaptation is introduced to finish a frozen experiment; or
+7. a limitation remains unresolved and could affect what readers conclude.
+
+Each update records the observed problem, affected phase, measured impact,
+attempted response, final status, evidence location, and whether any scientific
+quantity changed. Resolved problems are not deleted. Unresolved problems remain
+visible beside the results they qualify.
+
+The public record should teach readers how the project behaved under real
+constraints. It should not imply that the work proceeded without failed
+attempts, and it should not imply that duplicating the reference laptop is the
+correct way to continue the research.
