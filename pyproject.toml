@@ -30,6 +30,12 @@ classifiers = [
 [project.optional-dependencies]
 figures = ["matplotlib>=3.8"]
 
+[dependency-groups]
+dev = [
+  "pytest>=8.3",
+  "pytest-subtests>=0.13",
+]
+
 [project.urls]
 Repository = "https://github.com/taechasith/QMLforArtemisIV"
 

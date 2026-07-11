@@ -1,0 +1,12 @@
+requirement_name,threshold,measured_value,status
+state_epochs_strictly_increasing,True,True,passed
+header_state_bounds_consistent,True,True,passed
+leave_one_out_excludes_detected_discontinuities,True,True,passed
+position_p95_loo_error_upper_km,0.005,0.000226928,passed
+velocity_p95_loo_error_upper_m_s,0.005,0.000013153,passed
+numerical_convergence_position_upper_km,0.01,0.000011129,passed
+numerical_convergence_velocity_upper_m_s,0.001,0.000001106,passed
+flight_ephemeris_rmse_and_ceiling_checks,"V01/V02/V04/V05 <= 10km, 1m/s; V03 <= 25km, 2m/s",See f2_flight_validation.csv,passed
+flight_ephemeris_improvement_over_baseline,>= 0.80,See f2_flight_validation.csv,passed
+event_cross_checks_timing_tolerance_s,240,See event_cross_checks.csv,passed
+independent_gmat_comparison,"0.10 km, 0.01 m/s",pending,pending

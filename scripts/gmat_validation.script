@@ -1,0 +1,55 @@
+% GMAT R2026a validation script for OpenQFuel-Cislunar validation arcs.
+%
+% Integrator: PrinceDormand853 (rtol=1e-11, atol=1e-13 for nominal; tightened is rtol=1e-13, atol=1e-15)
+% Force Model: Earth point mass (mu=398600.435507), Moon point mass (mu=4902.800118), Sun point mass (mu=132712440041.9394)
+% Gravity Field: Earth J2 (using Earth JGM-2 or EGM-96 coefficient; J2=1.08262668e-3)
+% Atmospheric Drag: None
+% Solar Radiation Pressure: None
+%
+% Requirements: endpoint comparison <= 0.10 km and <= 0.01 m/s against Python F2.
+
+Create Spacecraft Orion;
+Orion.DateFormat = UTCGregorian;
+Orion.CoordinateSystem = EarthMJ2000Eq;
+Orion.DisplayStateTimeScale = UTC;
+
+% Define Force Model
+Create ForceModel CislunarForceModel;
+CislunarForceModel.CentralBody = Earth;
+CislunarForceModel.PrimaryBodies = {Earth};
+CislunarForceModel.PointMasses = {Luna, Sun};
+CislunarForceModel.Drag = None;
+CislunarForceModel.SRP = Off;
+CislunarForceModel.ErrorControl = RSSStep;
+CislunarForceModel.GravityField.Earth.Degree = 2;
+CislunarForceModel.GravityField.Earth.Order = 0;
+CislunarForceModel.GravityField.Earth.PotentialFile = 'JGM2.cof';
+
+% Define Integrator
+Create Propagator PrinceDormand853;
+PrinceDormand853.FM = CislunarForceModel;
+PrinceDormand853.Type = PrinceDormand853;
+PrinceDormand853.InitialStepSize = 60;
+PrinceDormand853.Accuracy = 1e-11;
+PrinceDormand853.MinStep = 0.001;
+PrinceDormand853.MaxStep = 300;
+PrinceDormand853.MaxStepAttempts = 50;
+
+% Output setup
+Create ReportFile ReportV01;
+ReportV01.Filename = 'report_v01.txt';
+ReportV01.WriteHeaders = Old;
+ReportV01.Add = {Orion.UTCGregorian, Orion.Earth.X, Orion.Earth.Y, Orion.Earth.Z, Orion.Earth.VX, Orion.Earth.VY, Orion.Earth.VZ};
+
+BeginMissionSequence;
+
+% To run a validation arc, set the initial J2000 state, epoch, and propagate for 21600 seconds.
+% Example for V01:
+% Orion.Epoch = '04 Apr 2026 11:00:00.000';
+% Orion.X = [V01 initial x];
+% Orion.Y = [V01 initial y];
+% Orion.Z = [V01 initial z];
+% Orion.VX = [V01 initial vx];
+% Orion.VY = [V01 initial vy];
+% Orion.VZ = [V01 initial vz];
+% Propagate PrinceDormand853(Orion) {Orion.ElapsedSecs = 21600};
