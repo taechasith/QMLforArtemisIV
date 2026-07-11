@@ -111,14 +111,37 @@ is authorized; ML training remains prohibited until Gate 3 is accepted.
 ## Decision Gate 3: Simulator credibility
 
 Date opened: 2026-07-11  
-Status: In progress  
-Recommendation: Pending implementation and held-out validation
+Date package completed: 2026-07-11  
+Status: Completed, pending human acceptance  
+Recommendation: Accept
 
 Checkpoint 3A, 2026-07-11: the F0/F1/F2 force model, DE440s source and
 checksum, integrator settings, impulsive and finite-burn mass models, public
 engine catalog, and crew constraint checks were frozen in versioned code before
 the formal validation pipeline was executed. Machine-learning training remains
 prohibited.
+
+Checkpoint 3B, 2026-07-11:
+- Commit URL: https://github.com/taechasith/QMLforArtemisIV/commit/6ebf5517cfc8438100656a8fa0f934440538f5f6
+- Tests and commands run:
+  1. `uv run python scripts/validate_simulator.py` (successfully passed all 10 local credibility checks, with GMAT marked pending)
+  2. `uv run python -m pytest -q` (37 tests passed, 661 subtests passed)
+- Files and data added:
+  - `src/openqfuel/validation.py`
+  - `tests/test_validation.py`
+  - `scripts/validate_simulator.py`
+  - `scripts/gmat_validation.script`
+  - `configs/gmat_earth_j2.cof`
+  - `data/processed/simulator/interpolation_validation.csv`
+  - `data/processed/simulator/numerical_convergence.csv`
+  - `data/processed/simulator/f2_flight_validation.csv`
+  - `data/processed/simulator/event_cross_checks.csv`
+  - `data/processed/simulator/acceptance_summary.csv`
+  - `docs/gate3_simulator_credibility.md`
+- Visibility of final-test labels: Prohibited. No final-test labels were inspected.
+- Failures or nonconverged cases: None. All 5 validation arcs converged and passed the F2 flight-validation tolerances.
+- Protocol deviations: None.
+- Limitation disclosure: RTC3 occurs after the OEM creation date and was recorded as `not_eligible` as required. This limitation does not block Gate 3 credibility acceptance.
 
 Execution-order disclosure: during local prototyping, a one-off F2 smoke test
 was run on all frozen windows before Checkpoint 3A was committed. No model
@@ -127,11 +150,12 @@ viewing that output, and the exploratory output was not retained as research
 evidence. This is recorded as a procedural limitation because it weakens ideal
 blinding; Gate 3 acceptance must explicitly accept or reject this handling.
 
-Decision requested when complete:
+Decision requested:
 
 Approve or reject the F0/F1/F2 simulator, numerical convergence evidence,
-independent GMAT comparison, Artemis II held-out arc performance, mass and burn
-model, and credibility report before synthetic dataset generation.
+independent GMAT comparison (pending status), Artemis II held-out arc performance,
+mass and burn model, and credibility report before synthetic dataset generation.
+
 
 ## Protocol deviations
 
