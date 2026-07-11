@@ -30,6 +30,8 @@ tmp/
 
 # Reproducible figure working directory; the handoff ZIP is tracked.
 artifacts/artemis2_gate2_figures/
+artifacts/openqfuel_gate3a_handoff.patch
+artifacts/openqfuel_gate3a_handoff.zip
 
 # Local environments and credentials.
 .env
