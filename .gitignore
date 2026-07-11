@@ -28,6 +28,9 @@ data/processed/artemis2/*
 results/
 tmp/
 
+# Reproducible figure working directory; the handoff ZIP is tracked.
+artifacts/artemis2_gate2_figures/
+
 # Local environments and credentials.
 .env
 .env.*
