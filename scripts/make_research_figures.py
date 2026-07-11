@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "artifacts/research_figures"
 AUDIT = ROOT / "data/processed/simulator/scenarios/pre_d003_audit.csv"
 POST_G01_AUDIT = ROOT / "data/processed/simulator/scenarios/post_d003_g01_audit.csv"
+POST_F0_AUDIT = ROOT / "data/processed/simulator/scenarios/post_d003_f0_audit.csv"
 LEDGER = ROOT / "data/processed/simulator/scenarios/generation_ledger.csv"
 V2_LEDGER = ROOT / "data/processed/simulator/scenarios/generation_ledger_v2.csv"
 GATES = ROOT / "data/processed/reporting/gate_timeline.csv"
@@ -322,6 +323,112 @@ def draw_g01_pre_post_runtime(path: Path) -> None:
     save(fig, path)
 
 
+def draw_f0_pre_post_conformance(path: Path) -> None:
+    before = read_csv(AUDIT)
+    after = read_csv(POST_F0_AUDIT)
+
+    def aggregate(rows: list[dict[str, str]]) -> list[float]:
+        records = sum(int(row["observed_records"]) for row in rows)
+        return [
+            100.0 * sum(int(row["schema_error_records"]) for row in rows) / records,
+            100.0
+            * sum(int(row["relationship_error_records"]) for row in rows)
+            / records,
+            100.0
+            * sum(row["uncertainty_conformance"] != "true" for row in rows)
+            / len(rows),
+        ]
+
+    metrics = [
+        "Schema-invalid\nrows",
+        "Relationship-error\nrows",
+        "Uncertainty-\nnonconformant groups",
+    ]
+    x = np.arange(len(metrics))
+    width = 0.36
+    after_values = aggregate(after)
+    fig, ax = plt.subplots(figsize=(8.4, 4.3), constrained_layout=True)
+    ax.bar(x - width / 2, aggregate(before), width, color=ORANGE, label="Pre-D003")
+    ax.bar(x + width / 2, after_values, width, color=GREEN, label="D003-v1")
+    ax.scatter(x + width / 2, after_values, marker="D", s=28, color=GREEN, zorder=3)
+    for x_value, value in zip(x + width / 2, after_values):
+        ax.annotate(
+            f"{value:.0f}%",
+            (x_value, value),
+            xytext=(0, 7),
+            textcoords="offset points",
+            ha="center",
+            color=GREEN,
+            fontweight="bold",
+        )
+    ax.set_xticks(x, metrics)
+    ax.set_ylim(0, 110)
+    ax.set_ylabel("Affected rows or groups (%)")
+    ax.set_title("All unlocked F0 payloads before and after D003 repair")
+    ax.legend(ncols=2, loc="upper right")
+    ax.text(
+        0.99,
+        0.58,
+        "Post-repair: 14/14 groups valid\n7,000/7,000 rows conformant",
+        transform=ax.transAxes,
+        ha="right",
+        color=GREEN,
+        fontweight="bold",
+        bbox={"facecolor": "white", "edgecolor": PALE, "alpha": 0.92, "pad": 5},
+    )
+    save(fig, path)
+
+
+def draw_f0_feasibility(path: Path) -> None:
+    rows = read_csv(POST_F0_AUDIT)
+    labels = [row["group_id"] for row in rows]
+    feasible = [100.0 * float(row["feasibility_rate"]) for row in rows]
+    no_reference = [100.0 * float(row["no_reference_feasible_rate"]) for row in rows]
+    x = np.arange(len(rows))
+    width = 0.4
+    fig, ax = plt.subplots(figsize=(9.4, 4.5), constrained_layout=True)
+    ax.axvspan(11.5, 13.5, color=PALE, zorder=0)
+    ax.bar(x - width / 2, feasible, width, color=BLUE, label="Feasible candidate rows")
+    ax.bar(
+        x + width / 2,
+        no_reference,
+        width,
+        color=ORANGE,
+        label="Decision sets with no feasible reference",
+    )
+    ax.set_xticks(x, labels)
+    ax.set_ylim(0, 100)
+    ax.set_ylabel("Rate (%)")
+    ax.set_xlabel(
+        "Development G01-G12 | shaded: uncertainty-calibration G13-G14\n"
+        "Overall: 2,339/7,000 feasible rows; 319/1,400 sets lack a feasible reference"
+    )
+    ax.set_title("VALID D003-v1 F0 candidate feasibility coverage")
+    ax.legend(ncols=2, loc="upper center")
+    save(fig, path)
+
+
+def draw_f0_runtime(path: Path) -> None:
+    rows = [row for row in read_csv(V2_LEDGER) if row["fidelity"] == "F0"]
+    labels = [row["group_id"] for row in rows]
+    values = [float(row["elapsed_s"]) for row in rows]
+    colors = [BLUE if row["split"] == "development" else MAGENTA for row in rows]
+    fig, ax = plt.subplots(figsize=(9.4, 4.3), constrained_layout=True)
+    ax.bar(labels, values, color=colors)
+    ax.set_ylabel("Wall time (s per 500 rows)")
+    ax.set_xlabel("G01-G12 development; G13-G14 uncertainty calibration")
+    ax.set_title("D003-v1 F0 generation runtime on the reference laptop")
+    ax.text(
+        0.99,
+        0.95,
+        f"Total: {sum(values):.1f} s | Mean: {np.mean(values):.1f} s/group",
+        transform=ax.transAxes,
+        ha="right",
+        color=GRAY,
+    )
+    save(fig, path)
+
+
 def specs() -> list[FigureSpec]:
     return [
         FigureSpec(
@@ -395,6 +502,42 @@ def specs() -> list[FigureSpec]:
             "The corrected 500-row G01 run completed in 55.9 seconds on the reference laptop versus 46.2 seconds for the latest invalid attempt.",
             "Single-group wall time; the workloads differ and this is not a speed benchmark.",
             draw_g01_pre_post_runtime,
+        ),
+        FigureSpec(
+            "RFIG-007",
+            "d003_f0_pre_post_conformance",
+            "All F0 pre/post D003 conformance",
+            "Gate 5 generator repair",
+            "Methods: generator qualification",
+            "repair_validation_development",
+            "data/processed/simulator/scenarios/pre_d003_audit.csv;data/processed/simulator/scenarios/post_d003_f0_audit.csv",
+            "D003-v1 removed all recorded schema, relationship, and uncertainty-conformance failures across the 7,000 unlocked F0 rows.",
+            "Conformance evidence only; this does not establish model performance or higher-fidelity validity.",
+            draw_f0_pre_post_conformance,
+        ),
+        FigureSpec(
+            "RFIG-008",
+            "d003_f0_feasibility_coverage",
+            "Valid D003-v1 F0 feasibility coverage",
+            "Gate 5 scenario generation",
+            "Methods: scenario coverage",
+            "development_and_calibration_diagnostic",
+            "data/processed/simulator/scenarios/post_d003_f0_audit.csv",
+            "Across valid F0 payloads, 2,339 of 7,000 candidates are feasible and 319 of 1,400 decision sets have no feasible numerical reference.",
+            "Development/calibration diagnostic only; calibration groups are shaded and cannot support model selection.",
+            draw_f0_feasibility,
+        ),
+        FigureSpec(
+            "RFIG-009",
+            "d003_f0_generation_runtime",
+            "D003-v1 F0 generation runtime",
+            "computational methodology",
+            "Methods: compute",
+            "repair_validation_development",
+            "data/processed/simulator/scenarios/generation_ledger_v2.csv",
+            "The 14 corrected F0 groups required 542.1 seconds of measured group work on the reference laptop, with 16.4-56.7 seconds per 500 rows.",
+            "Serial local wall time for F0 only; it is not a projection of F1/F2 cost.",
+            draw_f0_runtime,
         ),
     ]
 

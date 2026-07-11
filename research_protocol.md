@@ -1,7 +1,7 @@
 # OpenQFuel-Cislunar Research Protocol
 
 Version: 0.3.0
-Status: Gates 1, 2, 3, and 4 accepted; Gate 5 D003 generator repair in progress
+Status: Gates 1, 2, 3, and 4 accepted; Gate 5 D003 F0 qualified, F1/F2 pending
 Prepared: 2026-07-10  
 Updated: 2026-07-12
 Recommended next decision: Accept Gate 5 trigger after reviewing the development-split analysis report
@@ -648,6 +648,13 @@ schema and checksum validation, and append-only provenance. Pre-D003 outputs
 are audit-only. Because their diagnostic outcomes
 were visible, no repair choice may be tuned to produce a preferred feasibility
 rate, and pre/post repair figures are mandatory.
+
+The corrected F0 checkpoint contains 7,000 rows in 14 unlocked groups. All
+rows pass schema, relationship, finite-value, checksum, and frozen uncertainty
+audits, with no nonconvergence. Of 1,400 decision sets, 319 have no feasible
+reference; they remain included under the preregistered penalty/reporting rule
+and cannot motivate post-result candidate retuning. F1 and F2 require separate
+first-group and full-fidelity audits before model fitting may begin.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

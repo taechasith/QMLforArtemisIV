@@ -388,7 +388,7 @@ broader search, or request a specific revision.
 
 Date opened: 2026-07-12
 Date authorized: 2026-07-12
-Status: **First corrected group qualified; F0 scale-up in progress**
+Status: **All unlocked F0 qualified; F1 first-group qualification pending**
 Authority: Human research lead
 
 Original implementation:
@@ -466,4 +466,15 @@ First-group qualification, 2026-07-12:
 - No final-test payload was generated or read.
 - RFIG-005 and RFIG-006 record the pre/post validity and reference-laptop runtime changes.
 - Scope: this qualifies only the nominal F0 checkpoint. Non-U0 F0 groups and F1/F2 still require their own audits.
+
+All-F0 qualification, 2026-07-12:
+
+- All 14 unlocked F0 development/calibration groups were replaced and independently audited under D003-v1.
+- All 7,000 rows pass schema and relationship checks; every payload checksum matches its v2 ledger entry; all 14 uncertainty-family checks pass.
+- No row is non-finite or nonconverged. No final-test payload was generated or read.
+- 2,339 of 7,000 candidate rows are feasible. 319 of 1,400 decision sets have no feasible reference and remain retained under the frozen penalty/reporting rule.
+- Measured group work totals 542.060 seconds, with 16.363-56.662 seconds per 500-row group on the reference laptop.
+- RFIG-007 through RFIG-009 record aggregate conformance, valid feasibility coverage, and runtime.
+- Outcome-visibility rule: the 319 no-reference sets are a reportable development limitation and cannot be reduced by post-result candidate retuning under D003.
+- Consequence: F0 repair is qualified. F1 may begin with one group followed by a separate full audit before scale-up; F2 remains pending.
 
