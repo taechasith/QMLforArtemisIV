@@ -199,8 +199,10 @@ Check TLI, OTC3, RTC1, RTC2, RTC3, and lunar closest approach. Use the event
 registry for public timing and clearly label rounded times. Do not turn a rounded
 event article into state truth. If the eligible historical OEM cannot validate
 an event because it is beyond its creation time, record `not_eligible` with the
-reason rather than fabricating a pass. The acceptance report must say whether
-that limitation blocks Gate 3.
+reason rather than fabricating a pass. In every report, define `not_eligible` as
+**not tested with eligible evidence; neither pass nor fail**. State explicitly
+that no validation claim is made for that event. The acceptance report must say
+whether the missing check blocks Gate 3.
 
 #### 4.5 Independent GMAT comparison
 

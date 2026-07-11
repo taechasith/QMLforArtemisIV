@@ -1,6 +1,6 @@
 # Computational Methodology and Reference Hardware
 
-Version: 0.2.0
+Version: 0.2.1
 Hardware snapshot: 2026-07-11  
 Status: published computational-methodology supplement  
 Repository: `taechasith/QMLforArtemisIV`
@@ -323,7 +323,14 @@ and scientific failures because they require different responses.
 | 2026-07-11 | Gate 3 F2 validation | High-accuracy nominal and tightened propagations dominated local wall time | Repeated full validation runs were expensive even though the laptop has many logical processors | Preserved every frozen tolerance and sample, benchmarked the complete path, and limited proposed acceleration to independent-window parallelism, caching, and resumable outputs | Ongoing optimization. Reduce scheduling overhead, never numerical credibility |
 | 2026-07-11 | GMAT integration | GMAT resolved support files from its execution environment rather than the repository-relative location initially assumed | The independent tool could not load DE440s or the custom gravity file from the first generated script | Staged checksum-verified support files in the external GMAT distribution and kept the tracked script portable | Resolved. Cross-tool validation must test path resolution and provenance, not only equations |
 | 2026-07-11 | Gate 3 GMAT comparison | The first independent comparison failed all ten endpoint thresholds by large margins | The simulator gate correctly entered repair analysis instead of allowing ML work to start | Incremental Earth-only, J2-only, and full-force diagnostics isolated the discrepancy to the custom COF `POTFIELD` fixed-column format; Deviation D001 records the repair | Resolved. The fixed COF passes all ten frozen GMAT thresholds without changing physics, windows, or acceptance limits; preserve failed evidence because it shows how the defect was found |
-| 2026-07-11 | Gate 3 event evidence | RTC3 occurs after the frozen OEM creation cutoff | More compute cannot make the event eligible as historical/reconstructed evidence | Retained `not_eligible` in the event and acceptance outputs rather than fabricating a pass | Open source limitation. Hardware adaptation cannot repair missing or ineligible evidence |
+| 2026-07-11 | Gate 3 event evidence | RTC3 occurred at 18:53:00Z, after the qualified OEM was created at 03:22:19Z | Later rows in that OEM are pre-event predictions, not post-event evidence; more compute cannot turn them into historical/reconstructed evidence | Computed no RTC3 timing error and retained `not_eligible`, meaning not tested with eligible evidence, neither pass nor fail | Open source limitation. Gate 3 acceptance does not claim RTC3 validation, and hardware adaptation cannot repair missing evidence |
+
+For RTC3 specifically, the qualified OEM predates the event by 15 hours 30
+minutes 41 seconds. A separate post-RTC3 trajectory product was not substituted
+because its mission-relative epoch, M50 frame realization, and eighth-column
+semantics lack authoritative definitions and it remains quarantined under the
+frozen data rules. This is a source-qualification limit, not a workstation
+performance limit. Faster hardware or a longer run would not resolve it.
 
 The Gate 3 COF episode is especially important for interpretation. The initial
 cross-tool failure was real evidence under the then-executed configuration, but

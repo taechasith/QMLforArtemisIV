@@ -7,12 +7,17 @@ correction planning.
 ## Status
 
 Decision Gate 1 was accepted on 2026-07-10, Gate 2 was accepted on 2026-07-11,
-and Gate 3 simulator credibility was accepted on 2026-07-12 with the documented
-RTC3 eligibility and execution-order limitations. All 67 evaluable Gate 3
-criteria pass; RTC3 remains transparently `not_eligible`. Gate 4 benchmark
-preparation is authorized, but final-test labels remain locked until the Gate 4
-freeze is explicitly approved. No machine-learning result has been generated
-or inspected.
+and Gate 3 simulator credibility was accepted on 2026-07-12 with documented
+source and execution-order limitations. All 67 Gate 3 checks that could be
+evaluated passed. RTC3 was not evaluated because it occurred at
+2026-04-10T18:53:00Z, after the qualified OEM was created at
+2026-04-10T03:22:19Z; later rows in that OEM are pre-RTC3 predictions, not
+post-RTC3 historical evidence. The machine status `not_eligible` therefore
+means **not tested with eligible evidence; neither pass nor fail**. Gate 3
+acceptance does not claim that RTC3 was validated. Gate 4 benchmark preparation
+is authorized, but final-test labels remain locked until the Gate 4 freeze is
+explicitly approved. No machine-learning result has been generated or
+inspected.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 

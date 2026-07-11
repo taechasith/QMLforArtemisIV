@@ -115,7 +115,7 @@ Date package completed: 2026-07-11
 Date GMAT comparison completed: 2026-07-11  
 Date decided: 2026-07-12
 Status: Accepted
-Recommendation: Accept with the documented RTC3 eligibility and execution-order limitations
+Recommendation: Accept while explicitly recording that RTC3 was not tested and is not part of the Gate 3 validation claim
 
 Checkpoint 3A, 2026-07-11: the F0/F1/F2 force model, DE440s source and
 checksum, integrator settings, impulsive and finite-burn mass models, public
@@ -143,7 +143,7 @@ Checkpoint 3B, 2026-07-11:
 - Visibility of final-test labels: Prohibited. No final-test labels were inspected.
 - Failures or nonconverged cases: None. All 5 validation arcs converged and passed the F2 flight-validation tolerances.
 - Protocol deviations: None.
-- Limitation disclosure: RTC3 occurs after the OEM creation date and was recorded as `not_eligible` as required. This limitation does not block Gate 3 credibility acceptance.
+- Limitation disclosure: the RTC3 timing cross-check was not performed. RTC3 occurred at 2026-04-10T18:53:00Z, after the qualified OEM was created at 2026-04-10T03:22:19Z. Later rows in that OEM are pre-event predictions rather than post-event historical/reconstructed evidence. The recorded status `not_eligible` means not tested with eligible evidence; it is neither a pass nor a failure. This limitation does not block Gate 3 credibility acceptance, and acceptance does not claim RTC3 validation.
 
 Execution-order disclosure: during local prototyping, a one-off F2 smoke test
 was run on all frozen windows before Checkpoint 3A was committed. No model
@@ -169,8 +169,8 @@ Checkpoint 3C, 2026-07-11 – GMAT R2026a independent comparison completed:
 | V04 | 5.168 | 0.100 | 0.497 | 0.010 |
 | V05 | 14.094 | 0.100 | 1.402 | 0.010 |
 
-- All non-GMAT checks (parser/interpolation, numerical convergence, flight-ephemeris validation, weak-baseline improvement, event cross-checks) passed their frozen thresholds.
-- RTC3 remains not eligible (occurs after OEM creation cutoff).
+- All evaluable non-GMAT checks (parser/interpolation, numerical convergence, flight-ephemeris validation, weak-baseline improvement, and five event cross-checks) passed their frozen thresholds.
+- RTC3 was not tested because it occurred after the qualified OEM creation time; this is neither a pass nor a failure.
 - No threshold, window, exclusion, or model parameter was changed after viewing these results.
 - Files added in this corrective commit: `data/processed/simulator/gmat_comparison.csv`,
   `scripts/gmat/gate3_same_force_model.script`; modified files update the
@@ -191,10 +191,13 @@ begins.
 Checkpoint 3D, 2026-07-12 – repaired comparison reviewed and Gate 3 accepted:
 
 - Repair commit: https://github.com/taechasith/QMLforArtemisIV/commit/cbd157dcba8449833eedc5b79ae5996da51b9e0f
-- Technical result: 67 criteria passed, 0 failed, and RTC3 remained `not_eligible` under the frozen OEM creation cutoff.
+- Technical result: 67 criteria passed, 0 failed, and the RTC3 event check was not performed.
 - Independent GMAT result: all five position and all five velocity endpoint checks passed their unchanged 0.100 km and 0.010 m/s limits.
 - Maximum GMAT differences: 0.046296 km position and 0.004266 m/s velocity, both on V03.
-- Accepted limitation: RTC3 cannot be treated as eligible historical/reconstructed evidence from the frozen OEM release.
+- RTC3 evidence: the event occurred at 2026-04-10T18:53:00Z, 15 hours 30 minutes 41 seconds after the qualified OEM's 2026-04-10T03:22:19Z creation time. OEM rows after that creation time are pre-event predictions, not post-event historical/reconstructed evidence.
+- Alternative-source check: the separate `2026.04.10 - Post-RTC3 to EI` product remained quarantined because its mission-relative epoch, M50 frame realization, and eighth-column semantics lacked authoritative definitions.
+- Status definition: `not_eligible` means **not tested with eligible evidence; neither pass nor fail**. No RTC3 timing error was computed or inferred.
+- Accepted limitation: Gate 3 acceptance does not claim that RTC3 was validated.
 - Accepted limitation: a pre-freeze one-off F2 smoke computation weakened ideal blinding, but no constant, force, threshold, window, exclusion, or model parameter was changed after viewing it.
 - Human decision: **Accepted**.
 - Decision date: 2026-07-12.
@@ -262,5 +265,5 @@ New COF SHA-256: `3a3ff03505c29f45d7ceadfcd0ad1ba36d1f10b2d28fd07b227939f0876d86
 
 #### Completed follow-up
 
-The fixed COF was used for a complete GMAT rerun in commit `cbd157d`. All 10 independent endpoint thresholds passed without changing the frozen acceptance limits. The human research lead accepted Gate 3 on 2026-07-12 with the RTC3 eligibility and execution-order limitations explicitly retained.
+The fixed COF was used for a complete GMAT rerun in commit `cbd157d`. All 10 independent endpoint thresholds passed without changing the frozen acceptance limits. The human research lead accepted Gate 3 on 2026-07-12 while explicitly retaining RTC3 as not tested, neither pass nor fail, and outside the validation claim.
 

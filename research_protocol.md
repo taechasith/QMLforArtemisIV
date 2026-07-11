@@ -1,6 +1,6 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.2.2
+Version: 0.2.3
 Status: Gates 1, 2, and 3 accepted; Gate 4 preparation authorized
 Prepared: 2026-07-10  
 Updated: 2026-07-12
@@ -570,15 +570,30 @@ Gate 3, Simulator Credibility: accepted by the human research lead on
 Deviation D001 repaired the fixed-column `POTFIELD` serialization supplied to
 GMAT R2026a. The repair did not change force-model physics, Python dynamics,
 validation windows, integrator settings, or acceptance thresholds. All 67
-evaluable criteria pass and no criterion fails. RTC3 remains `not_eligible`
-because it occurs after the frozen OEM creation cutoff.
+criteria that could be evaluated pass and no criterion fails.
+
+RTC3 is the one required Gate 3 event check that was not evaluated. Its public
+event time is 2026-04-10T18:53:00Z, while the frozen qualified CCSDS OEM was
+created at 2026-04-10T03:22:19Z, 15 hours 30 minutes 41 seconds earlier.
+Although that OEM contains later trajectory rows, those rows were predictions
+made before RTC3, not historical or reconstructed evidence produced after the
+event. The separate `2026.04.10 - Post-RTC3 to EI` product was also unavailable
+for this check because its mission-relative epoch, M50 frame realization, and
+eighth-column meaning were not authoritatively defined and the file was
+quarantined under the frozen data rules.
+
+Accordingly, `not_eligible` means **the RTC3 timing check was not performed with
+eligible evidence**. It is neither a pass nor a failure. Gate 3 acceptance
+explicitly accepts this missing source check as nonblocking; it does not claim
+that RTC3 was validated.
 
 All 10 independent GMAT endpoint checks pass. The largest position difference
 is 0.046296 km against the 0.100 km limit, and the largest velocity difference
 is 0.004266 m/s against the 0.010 m/s limit. The technical run recorded
-`pending_external_validation` because RTC3 was `not_eligible`, not because a
-numeric criterion failed. The human decision accepted this nonblocking source
-limitation and the disclosed pre-freeze F2 smoke computation.
+`pending_external_validation` because the RTC3 check could not be performed,
+not because a numeric criterion failed. The human decision accepted this
+nonblocking source limitation and the disclosed pre-freeze F2 smoke
+computation.
 
 Gate 4 preparation is authorized. Final-test labels remain locked until the
 Gate 4 benchmark implementation and analysis plan are frozen and explicitly

@@ -7,13 +7,21 @@ Decision authority: Human research lead
 
 ## Technical summary
 
-Gate 3 is accepted. All 67 evaluable numeric criteria pass, no criterion fails, and the human research lead accepted the documented RTC3 eligibility and execution-order limitations. Gate 4 preparation is authorized, but final-test labels remain locked pending Gate 4 freeze approval.
+Gate 3 is accepted. All 67 checks that could be evaluated pass and no check fails. One additional required event check, RTC3, was not evaluated because the qualified public trajectory evidence predates the event. The human research lead accepted this missing source check and the execution-order limitation as nonblocking. Gate 4 preparation is authorized, but final-test labels remain locked pending Gate 4 freeze approval.
 
-The run evaluated 67 numeric acceptance checks: 0 failed and 1 required checks are pending or not eligible. The public OEM is an operational trajectory solution, not raw telemetry, and all conclusions are limited to the frozen public-data model.
+The gate package therefore records 67 passes, 0 failures, and 1 check not evaluated. The public OEM is an operational trajectory solution, not raw telemetry, and all conclusions are limited to the frozen public-data model.
+
+### Plain-language meaning of the RTC3 status
+
+`not_eligible` means **not tested with eligible evidence; neither pass nor fail**.
+
+RTC3 was publicly recorded at 2026-04-10T18:53:00Z. The newest qualified CCSDS OEM used by Gate 3 was created at 2026-04-10T03:22:19Z, 15 hours 30 minutes 41 seconds before RTC3. Its rows after 03:22:19Z are forecasts made before the event, so they cannot show the reconstructed trajectory response to RTC3. Using those forecast rows as post-event evidence would create a false validation result.
+
+A separate product named `2026.04.10 - Post-RTC3 to EI` exists, but Gate 2 quarantined it because the PROP_MAN mission epoch, M50 frame realization, and eighth-column semantics were not supported by an authoritative definition. No RTC3 timing error was computed. Gate 3 acceptance therefore does not claim that RTC3 was validated; it accepts the absence of a qualified RTC3 cross-check as a disclosed, nonblocking source limitation.
 
 ## Frozen criteria produced a gate decision
 
-| Category | Passed | Failed | Pending/not eligible |
+| Category | Passed | Failed | Not evaluated (`not_eligible`) |
 |---|---|---|---|
 | parser_and_interpolation | 2 | 0 | 0 |
 | numerical_convergence | 10 | 0 | 0 |
@@ -22,7 +30,7 @@ The run evaluated 67 numeric acceptance checks: 0 failed and 1 required checks a
 | event_cross_checks | 5 | 0 | 1 |
 | independent_gmat | 10 | 0 | 0 |
 
-Every criterion and the non-eligible RTC3 event are retained in `data/processed/simulator/acceptance_summary.csv`; thresholds, windows, exclusions, and source roles were not changed after viewing results. The technical run's `pending_external_validation` label reflected RTC3 eligibility and was resolved through the documented human decision, not by changing a numeric result.
+Every criterion and the RTC3 not-evaluated record are retained in `data/processed/simulator/acceptance_summary.csv`; thresholds, windows, exclusions, and source roles were not changed after viewing results. The technical run's `pending_external_validation` label meant that RTC3 lacked eligible source evidence. It was resolved through the documented human decision to accept that limitation, not by changing or inventing a numeric result.
 
 ## Interpolation met its parser-quality thresholds
 
@@ -70,7 +78,7 @@ Burn timing uses the nearest eligible OEM epoch adjacent to a non-nominal cadenc
 | lunar closest approach | 2026-04-06T23:00:46.159111Z | 46.159 | pass |
 | RTC1 | 2026-04-08T00:03:17.084000Z | 17.084 | pass |
 | RTC2 | 2026-04-10T02:53:28.122000Z | 28.122 | pass |
-| RTC3 | not eligible | n/a | not_eligible |
+| RTC3 | not computed | not computed | `not_eligible` (not tested) |
 
 ## GMAT provides the independent same-force comparison
 
@@ -103,11 +111,11 @@ Exact audit tables are used instead of charts because each validation family has
 - The OEM is not raw tracking or spacecraft telemetry.
 - The fixed 2026 UTC-to-TT conversion omits a sub-2 ms periodic TDB term.
 - F2 omits solar-radiation pressure, attitude, and mission-owned force and navigation details.
-- RTC3 cannot be checked against eligible historical/reconstructed rows when it occurs after the OEM creation cutoff.
+- RTC3 was not validated: it occurred after the qualified OEM creation time, and the separate post-RTC3 product remains quarantined pending authoritative format and frame definitions.
 - Passing numerical or cross-tool checks would not establish flight readiness.
 
 ## Required next step
 
 Prepare the Gate 4 prediction-benchmark freeze using the accepted simulator and the frozen compute methodology. Do not open final-test labels or begin confirmatory ML/QML evaluation until the Gate 4 implementation, splits, seeds, tuning budgets, and analysis code are explicitly approved.
 
-Human decision: Gate 3 accepted on 2026-07-12 with the documented RTC3 eligibility and execution-order limitations.
+Human decision: Gate 3 accepted on 2026-07-12 with RTC3 explicitly recorded as not tested, neither pass nor fail. This decision does not claim RTC3 validation.

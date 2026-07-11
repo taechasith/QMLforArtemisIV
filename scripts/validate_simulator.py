@@ -420,10 +420,14 @@ def event_evidence(
         if public_epoch > ephemeris.creation_time:
             status = "not_eligible"
             timing_error = ""
-            method = "event occurs after the frozen OEM creation cutoff"
+            method = "not tested: event occurs after the qualified OEM creation time"
             note = (
-                f"{note} The event is not eligible for historical/reconstructed "
-                "OEM validation and remains unresolved at Gate 3."
+                f"{note} No timing cross-check was performed: the public event at "
+                f"{iso_utc(public_epoch)} occurred after the qualified OEM was created "
+                f"at {iso_utc(ephemeris.creation_time)}. Later OEM rows are pre-event "
+                "predictions rather than post-event historical/reconstructed evidence. "
+                "Status not_eligible means not tested with eligible evidence; it is "
+                "neither a pass nor a failure."
             )
         elif required_name == "lunar closest approach":
             estimated_epoch, distance = closest_lunar_approach(
@@ -679,8 +683,9 @@ def write_report(
             "`failed_repair_required` status. ML and QML work remains prohibited."
         ),
         "pending_external_validation": (
-            "Gate 3 is incomplete because required evidence remains pending. "
-            "ML and QML work remains prohibited."
+            "Gate 3 cannot receive a purely technical pass because required evidence "
+            "is pending or one required check could not be evaluated. ML and QML work "
+            "remains prohibited until the human decision is recorded."
         ),
         "passed_pending_human_acceptance": (
             "All frozen criteria passed; Gate 3 now requires explicit human acceptance "
@@ -688,6 +693,7 @@ def write_report(
         ),
     }[status]
     interpolation_row = interpolation[0]
+    rtc3_row = next(row for row in events if row["required_event"] == "RTC3")
     content = [
         "# Gate 3 simulator credibility validation",
         "",
@@ -700,14 +706,14 @@ def write_report(
         result_text,
         "",
         f"The run evaluated {len(evaluated)} numeric acceptance checks: "
-        f"{len(failed)} failed and {len(pending)} required checks are pending or not eligible. "
+        f"{len(failed)} failed and {len(pending)} required checks are pending or were not evaluated. "
         "The public OEM is an operational trajectory solution, not raw telemetry, and "
         "all conclusions are limited to the frozen public-data model.",
         "",
         "## Frozen criteria produced a gate decision",
         "",
         markdown_table(
-            ["Category", "Passed", "Failed", "Pending/not eligible"],
+            ["Category", "Passed", "Failed", "Pending/not evaluated"],
             [
                 (
                     category,
@@ -719,8 +725,9 @@ def write_report(
             ],
         ),
         "",
-        "Every failed criterion is retained in `data/processed/simulator/acceptance_summary.csv`; "
-        "thresholds, windows, exclusions, and source roles were not changed after viewing results.",
+        "Every criterion, including pending and not-evaluated records, is retained in "
+        "`data/processed/simulator/acceptance_summary.csv`; thresholds, windows, exclusions, "
+        "and source roles were not changed after viewing results.",
         "",
         "## Interpolation met its parser-quality thresholds",
         "",
@@ -790,14 +797,25 @@ def write_report(
         "Lunar closest approach is the OEM-to-DE440s distance minimum inside V03. Rounded public event "
         "times are used only for temporal alignment.",
         "",
+        "`not_eligible` means **not tested with eligible evidence; neither pass nor fail**. "
+        f"RTC3 occurred at {rtc3_row['public_actual_utc']}, after the qualified OEM was created "
+        f"at {rtc3_row['oem_creation_cutoff_utc']}. Later rows in that OEM are pre-event "
+        "predictions, not post-event historical/reconstructed evidence, so no RTC3 timing "
+        "error was computed. The separate post-RTC3 product remains quarantined pending "
+        "authoritative epoch, frame, and column definitions.",
+        "",
         markdown_table(
             ["Event", "Estimated UTC", "Error (s)", "Status"],
             [
                 (
                     row["required_event"],
-                    row["estimated_event_utc"] or "not eligible",
-                    row["timing_error_s"] or "n/a",
-                    row["status"],
+                    row["estimated_event_utc"] or "not computed",
+                    row["timing_error_s"] or "not computed",
+                    (
+                        f"{row['status']} (not tested)"
+                        if row["status"] == "not_eligible"
+                        else row["status"]
+                    ),
                 )
                 for row in events
             ],
@@ -842,7 +860,7 @@ def write_report(
         "- The OEM is not raw tracking or spacecraft telemetry.",
         "- The fixed 2026 UTC-to-TT conversion omits a sub-2 ms periodic TDB term.",
         "- F2 omits solar-radiation pressure, attitude, and mission-owned force and navigation details.",
-        "- RTC3 cannot be checked against eligible historical/reconstructed rows when it occurs after the OEM creation cutoff.",
+        "- RTC3 is not validated when it occurs after the qualified OEM creation time; `not_eligible` means not tested, neither pass nor fail.",
         "- Passing numerical or cross-tool checks would not establish flight readiness.",
         "",
         "## Required next step",
@@ -929,7 +947,11 @@ def main() -> int:
         threshold="pass",
         status=gate_status,
         evidence_file="acceptance_summary.csv",
-        note="Human acceptance is required even when all technical criteria pass.",
+        note=(
+            "Machine-generated technical status only. RTC3 was not tested and is "
+            "neither pass nor fail; the human decision is recorded separately in "
+            "docs/decision_log.md."
+        ),
     )
     write_csv(OUTPUT_DIR / "interpolation_validation.csv", interpolation)
     write_csv(OUTPUT_DIR / "numerical_convergence.csv", convergence)
