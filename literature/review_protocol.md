@@ -1,8 +1,16 @@
 # Systematic Scoping Review Protocol
 
-Version: 0.1.0  
+Version: 0.2.0
 Search cutoff for initial review: 2026-07-10  
-Status: Draft for Protocol Scope Gate
+Status: Gate 4 bounded search executed; full systematic update required before manuscript submission
+
+The 2026-07-12 execution is recorded in `search_log.csv`,
+`screening_log.csv`, `extraction_matrix.csv`, and
+`docs/literature_synthesis.md`. OpenAlex query counts were obtained, but
+metadata export was blocked by persistent HTTP 429 responses. Proposed
+Deviation D002 requests acceptance of the complete NTRS/arXiv retrieval and
+curated primary-source extraction for the Phase 1 freeze only. This execution
+must not be described as the complete systematic review defined below.
 
 ## Objective
 

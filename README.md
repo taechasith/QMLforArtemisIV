@@ -1,4 +1,4 @@
-# QML for ArtemisIV (OpenQFuel)
+# QMLforArtemisIV
 
 An open, flight-ephemeris-calibrated benchmark of classical and quantum machine
 learning for propellant-efficient, crew-constrained cislunar trajectory
@@ -14,10 +14,12 @@ evaluated passed. RTC3 was not evaluated because it occurred at
 2026-04-10T03:22:19Z; later rows in that OEM are pre-RTC3 predictions, not
 post-RTC3 historical evidence. The machine status `not_eligible` therefore
 means **not tested with eligible evidence; neither pass nor fail**. Gate 3
-acceptance does not claim that RTC3 was validated. Gate 4 benchmark preparation
-is authorized, but final-test labels remain locked until the Gate 4 freeze is
-explicitly approved. No machine-learning result has been generated or
-inspected.
+acceptance does not claim that RTC3 was validated. The Gate 4 benchmark-freeze
+candidate is now prepared and awaits the human research lead's decision.
+Scenario identities, model/tuning rules, and analysis code are frozen as a
+candidate, but no research feature payload, label, fitted model, or benchmark
+result has been generated or inspected. Both final-test splits remain locked
+and require a separate post-approval unlock commit.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
@@ -52,6 +54,8 @@ through a dated deviation record.
 - research_protocol.md: master preregistration and analysis plan.
 - literature/review_protocol.md: reproducible evidence-review method.
 - literature/evidence_matrix.csv: seed evidence map.
+- literature/search_log.csv and screening_log.csv: Gate 4 search audit trail.
+- literature/extraction_matrix.csv: curated primary evidence extraction.
 - data/source_registry.csv: public-source provenance and download status.
 - data/artemis2_event_registry.csv: planned-versus-flown mission events.
 - data/processed/artemis2/: reproducible OEM audit and weak-baseline outputs.
@@ -60,9 +64,12 @@ through a dated deviation record.
 - configs/simulator_acceptance.yaml: frozen verification and validation tests.
 - configs/dynamics.yaml: frozen Gate 3 force and numerical model.
 - configs/compute_budget.yaml: fixed experiment and resource ceilings.
+- configs/phase1_benchmark.yaml: Gate 4 scenario, model, tuning, and analysis freeze candidate.
 - docs/computational_methodology.md: published reference hardware and
   hardware-aware execution method.
 - docs/gate2_data_numeric_freeze.md: Gate 2 evidence and recommendation.
+- docs/gate4_phase1_freeze.md: pending Gate 4 decision package and lock audit.
+- docs/model_registry.md and docs/phase1_analysis_plan.md: frozen candidate comparison and statistics.
 - docs/research_execution_map.md: work ownership and future decision gates.
 - docs/decision_log.md: acceptance and deviation history.
 - scripts/fetch_public_data.py: immutable-source downloader.

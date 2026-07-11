@@ -206,6 +206,72 @@ Checkpoint 3D, 2026-07-12 – repaired comparison reviewed and Gate 3 accepted:
 
 
 
+## Decision Gate 4: Phase 1 benchmark freeze
+
+Date opened: 2026-07-12
+Date package completed: 2026-07-12
+Status: Pending human approval
+Recommendation: Accept together with proposed Deviation D002
+
+Decision requested:
+
+Accept, reject, or revise the manifest-only scenario design, grouped splits,
+feature and target schema, model registry, interpretation controls, tuning
+trials, random seeds, QML resource settings, and statistical analysis before
+any research model is fitted.
+
+Evidence package:
+
+- `docs/gate4_phase1_freeze.md`
+- `docs/literature_synthesis.md`
+- `literature/search_log.csv`
+- `literature/screening_log.csv`
+- `literature/extraction_matrix.csv`
+- `data/processed/simulator/data_card.md`
+- `configs/phase1_benchmark.yaml`
+- `data/processed/simulator/scenario_manifest.csv`
+- `data/processed/simulator/final_test_manifest.csv`
+- `data/processed/simulator/seed_manifest.csv`
+- `data/processed/simulator/tuning_manifest.csv`
+- `data/processed/simulator/scenario_schema.json`
+- `docs/model_registry.md`
+- `docs/phase1_analysis_plan.md`
+- `src/openqfuel/gate4.py`
+- `src/openqfuel/models.py`
+- `src/openqfuel/qml.py`
+- `src/openqfuel/phase1_analysis.py`
+
+Freeze facts:
+
+- The compact manifest commits 65,000 candidate-plan identities in 13,000 five-plan decision sets without generating any feature or label payload.
+- The final-test commitment covers 19,500 identities and contains no outcome data.
+- Nine candidate families and one interpretation control each have 30 frozen tuning rows and 30 seed rows.
+- No research scenario, fitted research model, or benchmark metric was generated or inspected.
+- Synthetic smoke tests verify interfaces and lock behavior only.
+- `data/locked/phase1` is absent and ignored.
+
+Recommended decision:
+
+Accept Gate 4 and D002. The package registers conservative classical controls,
+QML ablations, grouped leakage controls, laptop-feasible staging, and a
+fail-closed final-test boundary before outcomes. D002 keeps the incomplete
+literature coverage visible and makes a broader update mandatory before the
+manuscript.
+
+Consequence if accepted:
+
+Development scenario generation and registered tuning may begin. Calibration
+remains unavailable for model selection. Final-test features and labels do not
+open automatically; a separate commit is required after finalists,
+preprocessing, and executable analysis are fixed.
+
+Consequence if rejected or revised:
+
+No research scenario payload or model fit begins. The candidate manifests and
+code are revised without access to final-test outcomes.
+
+Human decision: Pending
+
 ## Protocol deviations
 
 ### Deviation D001 — Gate 3 GMAT COF POTFIELD format repair
@@ -266,4 +332,43 @@ New COF SHA-256: `3a3ff03505c29f45d7ceadfcd0ad1ba36d1f10b2d28fd07b227939f0876d86
 #### Completed follow-up
 
 The fixed COF was used for a complete GMAT rerun in commit `cbd157d`. All 10 independent endpoint thresholds passed without changing the frozen acceptance limits. The human research lead accepted Gate 3 on 2026-07-12 while explicitly retaining RTC3 as not tested, neither pass nor fail, and outside the validation claim.
+
+### Proposed Deviation D002 - bounded Gate 4 literature coverage
+
+Date proposed: 2026-07-12
+Status: Pending human approval with Gate 4
+Authority required: Human research lead
+
+Original rule:
+
+The accepted review protocol anticipated a complete systematic scoping search
+across NTRS, OpenAlex, Crossref, NASA ADS, AIAA/publisher interfaces, standards,
+and connected repositories before the Phase 1 freeze.
+
+Proposed rule:
+
+Use the complete NTRS/arXiv API retrieval, OpenAlex count-only logs, and 23
+fully extracted primary or authoritative records to freeze Phase 1. Label the
+result a bounded scoping synthesis. Complete the broader database update before
+manuscript submission. Literature found after final-test access cannot alter a
+registered model, split, threshold, or analysis except through a new dated
+deviation.
+
+Reason:
+
+All seven OpenAlex queries returned counts, but metadata export was repeatedly
+blocked by HTTP 429 responses. Crossref, NASA ADS, and broad publisher exports
+were not completed in this pass. Claiming complete systematic coverage would
+therefore be inaccurate.
+
+Outcome visibility and likely bias:
+
+No research feature, label, fit, or benchmark result existed when D002 was
+proposed. Missing literature could omit a relevant baseline or negative QML
+study. The freeze mitigates that risk with six diverse classical candidates, a
+matched random-feature control, scale and entanglement ablations, and mandatory
+negative reporting, but cannot prove the missing records are immaterial.
+
+Decision requested: Accept D002 with Gate 4, reject it and hold Gate 4 for a
+broader search, or request a specific revision.
 

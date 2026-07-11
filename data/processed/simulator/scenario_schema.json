@@ -1,0 +1,280 @@
+{
+  "$id": "https://github.com/taechasith/QMLforArtemisIV/tree/main/data/processed/simulator/scenario_schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Schema only. Gate 4 creates no final-test feature or label payload. All records are simulated research scenarios, not telemetry.",
+  "properties": {
+    "base_trajectory": {
+      "pattern": "^[CTV][0-9]{2}$",
+      "type": "string"
+    },
+    "candidate_index": {
+      "maximum": 5,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "decision_set_id": {
+      "pattern": "^F[012]-G[0-9]{2}-D[0-9]{6}$",
+      "type": "string"
+    },
+    "fidelity": {
+      "enum": [
+        "F0",
+        "F1",
+        "F2"
+      ]
+    },
+    "group_id": {
+      "pattern": "^G[0-9]{2}$",
+      "type": "string"
+    },
+    "inputs": {
+      "additionalProperties": false,
+      "properties": {
+        "angular_momentum_km2_s": {
+          "type": "number"
+        },
+        "burn_delay_min": {
+          "type": "number"
+        },
+        "candidate_burn_duration_s": {
+          "type": "number"
+        },
+        "candidate_burn_start_offset_s": {
+          "type": "number"
+        },
+        "candidate_delta_v_x_m_s": {
+          "type": "number"
+        },
+        "candidate_delta_v_y_m_s": {
+          "type": "number"
+        },
+        "candidate_delta_v_z_m_s": {
+          "type": "number"
+        },
+        "communication_hold_min": {
+          "type": "number"
+        },
+        "disturbance_scale": {
+          "type": "number"
+        },
+        "elapsed_since_tli_h": {
+          "type": "number"
+        },
+        "fidelity": {
+          "type": "string"
+        },
+        "initial_mass_kg": {
+          "type": "number"
+        },
+        "initial_vx_km_s": {
+          "type": "number"
+        },
+        "initial_vy_km_s": {
+          "type": "number"
+        },
+        "initial_vz_km_s": {
+          "type": "number"
+        },
+        "initial_x_km": {
+          "type": "number"
+        },
+        "initial_y_km": {
+          "type": "number"
+        },
+        "initial_z_km": {
+          "type": "number"
+        },
+        "low_fidelity_cost_m_s": {
+          "type": "number"
+        },
+        "low_fidelity_terminal_error_km": {
+          "type": "number"
+        },
+        "mass_error_fraction": {
+          "type": "number"
+        },
+        "mission_phase": {
+          "type": "string"
+        },
+        "navigation_dvx_m_s": {
+          "type": "number"
+        },
+        "navigation_dvy_m_s": {
+          "type": "number"
+        },
+        "navigation_dvz_m_s": {
+          "type": "number"
+        },
+        "navigation_dx_km": {
+          "type": "number"
+        },
+        "navigation_dy_km": {
+          "type": "number"
+        },
+        "navigation_dz_km": {
+          "type": "number"
+        },
+        "navigation_mode": {
+          "type": "string"
+        },
+        "pointing_bias_deg": {
+          "type": "number"
+        },
+        "radial_velocity_km_s": {
+          "type": "number"
+        },
+        "radius_km": {
+          "type": "number"
+        },
+        "specific_orbital_energy_km2_s2": {
+          "type": "number"
+        },
+        "speed_km_s": {
+          "type": "number"
+        },
+        "thrust_class": {
+          "type": "string"
+        },
+        "thrust_scale": {
+          "type": "number"
+        },
+        "time_to_entry_interface_h": {
+          "type": "number"
+        },
+        "uncertainty_family": {
+          "type": "string"
+        },
+        "usable_propellant_remaining_kg": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "elapsed_since_tli_h",
+        "time_to_entry_interface_h",
+        "initial_x_km",
+        "initial_y_km",
+        "initial_z_km",
+        "initial_vx_km_s",
+        "initial_vy_km_s",
+        "initial_vz_km_s",
+        "initial_mass_kg",
+        "usable_propellant_remaining_kg",
+        "navigation_dx_km",
+        "navigation_dy_km",
+        "navigation_dz_km",
+        "navigation_dvx_m_s",
+        "navigation_dvy_m_s",
+        "navigation_dvz_m_s",
+        "candidate_burn_start_offset_s",
+        "candidate_burn_duration_s",
+        "candidate_delta_v_x_m_s",
+        "candidate_delta_v_y_m_s",
+        "candidate_delta_v_z_m_s",
+        "thrust_scale",
+        "pointing_bias_deg",
+        "mass_error_fraction",
+        "communication_hold_min",
+        "burn_delay_min",
+        "disturbance_scale",
+        "low_fidelity_cost_m_s",
+        "low_fidelity_terminal_error_km",
+        "radius_km",
+        "speed_km_s",
+        "specific_orbital_energy_km2_s2",
+        "angular_momentum_km2_s",
+        "radial_velocity_km_s",
+        "mission_phase",
+        "uncertainty_family",
+        "navigation_mode",
+        "thrust_class",
+        "fidelity"
+      ],
+      "type": "object"
+    },
+    "outcomes": {
+      "additionalProperties": false,
+      "properties": {
+        "burn_vector_x_m_s": {
+          "type": "number"
+        },
+        "burn_vector_y_m_s": {
+          "type": "number"
+        },
+        "burn_vector_z_m_s": {
+          "type": "number"
+        },
+        "correction_delta_v_m_s": {
+          "type": "number"
+        },
+        "independently_propagated_feasible": {
+          "type": "boolean"
+        },
+        "nonconverged": {
+          "type": "boolean"
+        },
+        "propellant_used_kg": {
+          "type": "number"
+        },
+        "robust_total_correction_delta_v_m_s": {
+          "type": "number"
+        },
+        "terminal_margin": {
+          "type": "number"
+        },
+        "terminal_position_error_km": {
+          "type": "number"
+        },
+        "terminal_velocity_error_m_s": {
+          "type": "number"
+        },
+        "violation_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "robust_total_correction_delta_v_m_s",
+        "independently_propagated_feasible"
+      ],
+      "type": "object"
+    },
+    "scenario_id": {
+      "pattern": "^F[012]-G[0-9]{2}-[0-9]{6}$",
+      "type": "string"
+    },
+    "split": {
+      "enum": [
+        "development",
+        "uncertainty_calibration",
+        "in_distribution_final_test",
+        "out_of_distribution_final_test"
+      ]
+    }
+  },
+  "required": [
+    "scenario_id",
+    "decision_set_id",
+    "candidate_index",
+    "group_id",
+    "base_trajectory",
+    "fidelity",
+    "split",
+    "inputs"
+  ],
+  "title": "QMLforArtemisIV Phase 1 scenario record",
+  "type": "object",
+  "x-gate4-access": {
+    "development": "available only after Gate 4 acceptance",
+    "in_distribution_final_test": "locked and not generated",
+    "out_of_distribution_final_test": "locked and not generated",
+    "uncertainty_calibration": "not for fitting, tuning, or feature selection"
+  },
+  "x-payload-rules": {
+    "development_labeled_record": "outcomes required after authorized generation",
+    "final_feature_record": "outcomes prohibited and stored separately",
+    "final_label_record": "scenario_id plus outcomes in access-controlled evaluator storage"
+  }
+}

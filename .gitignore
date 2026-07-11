@@ -29,6 +29,10 @@ data/processed/artemis2/*
 results/
 tmp/
 
+# Gate 4 final-test payloads are local blind artifacts. Only their manifests
+# and checksums may be committed before the governing gate is accepted.
+data/locked/
+
 # Reproducible figure working directory; the handoff ZIP is tracked.
 artifacts/artemis2_gate2_figures/
 artifacts/openqfuel_gate3a_handoff.patch

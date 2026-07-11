@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.2.3
-Status: Gates 1, 2, and 3 accepted; Gate 4 preparation authorized
+Version: 0.3.0
+Status: Gates 1, 2, and 3 accepted; Gate 4 freeze candidate pending human approval
 Prepared: 2026-07-10  
 Updated: 2026-07-12
-Recommended next decision: Approve the Gate 4 benchmark freeze before final-test labels are opened
+Recommended next decision: Accept Gate 4 with proposed Deviation D002 while retaining a separate final-test unlock
 
 ## 1. Proposed title
 
@@ -595,12 +595,19 @@ not because a numeric criterion failed. The human decision accepted this
 nonblocking source limitation and the disclosed pre-freeze F2 smoke
 computation.
 
-Gate 4 preparation is authorized. Final-test labels remain locked until the
-Gate 4 benchmark implementation and analysis plan are frozen and explicitly
-approved.
+The Gate 4 candidate now freezes 65,000 manifest-only candidate-plan identities
+in 13,000 five-plan decision sets, whole-group splits, schema, seeds, tuning
+trials, nine candidate families, one interpretation control, QML resources,
+and analysis code. No feature payload, label, fitted research model, or
+benchmark outcome has been generated. Gate 4 remains pending the human
+research lead's accept, reject, or revise decision. Both final-test splits also
+require a separate post-approval unlock commit.
 
-Gate 4, Phase 1 Freeze: approve benchmark implementation before opening final
-ML test results.
+Gate 4, Phase 1 Freeze: pending human approval. The recommendation is to accept
+the benchmark with proposed Deviation D002, which records the bounded
+literature-search coverage and requires the full systematic update before
+manuscript submission. Acceptance authorizes development generation and
+tuning, not immediate final-test access.
 
 Gate 5, Algorithm Trigger: authorize or reject development of the proposed new
 model based only on the preregistered trigger.
@@ -620,6 +627,14 @@ diagnostic chain, corrected file checksum, and passing rerun remain preserved
 in repository history and `docs/decision_log.md`. D001 changed serialization
 only; no scientific constant, threshold, split, window, exclusion, or force
 term changed.
+
+Proposed Deviation D002, dated 2026-07-12, would allow the Gate 4 freeze to use
+complete NTRS/arXiv retrieval plus 23 extracted primary or authoritative
+records after OpenAlex metadata export was blocked by HTTP 429 responses. The
+search is labeled a bounded scoping synthesis, not a complete systematic
+review. No research outcome was visible. If accepted, a broader database
+update remains mandatory before manuscript submission and cannot be used to
+change a model after final-test access without a new deviation.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:
