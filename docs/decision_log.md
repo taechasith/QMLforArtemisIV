@@ -175,6 +175,7 @@ Checkpoint 3C, 2026-07-11 – GMAT R2026a independent comparison completed:
   `scripts/gmat/gate3_same_force_model.script`; modified files update the
   credibility report, acceptance summary, and all intermediate validation CSVs
   to reflect the completed GMAT outcome and `failed_repair_required` status.
+- Corrective commit URL: https://github.com/taechasith/QMLforArtemisIV/commit/d29a035
 
 Gate 3 credibility report status: `failed_repair_required`. The full criterion
 table is in `data/processed/simulator/acceptance_summary.csv`.
