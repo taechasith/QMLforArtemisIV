@@ -270,7 +270,18 @@ Consequence if rejected or revised:
 No research scenario payload or model fit begins. The candidate manifests and
 code are revised without access to final-test outcomes.
 
-Human decision: Pending
+Human decision: **Accepted**.
+Decision date: 2026-07-12.
+D002 accepted concurrently.
+
+Consequence: development-split scenario generation, frozen tuning, and calibration
+are authorized as of this entry. The calibration split remains unavailable for model
+selection, feature selection, or fitting. Final-test features and labels are not
+unlocked by this acceptance; a separate commit is required after finalist configurations,
+preprocessing state, and the executable analysis script are fixed.
+
+Claim boundary: no research outcome, model fit, or benchmark metric was inspected before
+or during this acceptance decision.
 
 ## Protocol deviations
 
@@ -336,8 +347,9 @@ The fixed COF was used for a complete GMAT rerun in commit `cbd157d`. All 10 ind
 ### Proposed Deviation D002 - bounded Gate 4 literature coverage
 
 Date proposed: 2026-07-12
-Status: Pending human approval with Gate 4
-Authority required: Human research lead
+Date accepted: 2026-07-12
+Status: **Accepted concurrently with Gate 4**
+Authority: Human research lead
 
 Original rule:
 

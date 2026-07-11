@@ -125,8 +125,14 @@ def tunable_families(config: Mapping[str, Any]) -> list[dict[str, str]]:
 def validate_freeze_config(
     config: Mapping[str, Any], windows: Sequence[Mapping[str, str]]
 ) -> None:
-    if config["status"] != "gate_4_freeze_candidate_pending_human_approval":
-        raise ValueError("Gate 4 configuration must remain pending human approval")
+    _VALID_STATUSES = {
+        "gate_4_freeze_candidate_pending_human_approval",
+        "gate_4_accepted_development_generation_authorized",
+    }
+    if config["status"] not in _VALID_STATUSES:
+        raise ValueError(
+            "Gate 4 configuration status must be a recognised freeze or accepted value"
+        )
 
     scenario = config["scenario_design"]
     fractions = scenario["split_fractions"]

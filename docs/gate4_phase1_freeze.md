@@ -2,7 +2,8 @@
 
 Version: 0.3.0
 Prepared: 2026-07-12
-Status: `pending_human_approval`
+Decision date: 2026-07-12
+Status: `accepted`
 Decision authority: Human research lead
 
 ## Decision requested

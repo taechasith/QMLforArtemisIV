@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
 Version: 0.3.0
-Status: Gates 1, 2, and 3 accepted; Gate 4 freeze candidate pending human approval
+Status: Gates 1, 2, 3, and 4 accepted; Gate 5 development-scenario generation and tuning in progress
 Prepared: 2026-07-10  
 Updated: 2026-07-12
-Recommended next decision: Accept Gate 4 with proposed Deviation D002 while retaining a separate final-test unlock
+Recommended next decision: Accept Gate 5 trigger after reviewing the development-split analysis report
 
 ## 1. Proposed title
 
