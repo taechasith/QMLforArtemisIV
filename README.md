@@ -1,4 +1,4 @@
-# OpenQFuel-Cislunar
+# QML for ArtemisIV
 
 An open, flight-ephemeris-calibrated benchmark of classical and quantum machine
 learning for propellant-efficient, crew-constrained cislunar trajectory
