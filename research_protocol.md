@@ -1,9 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.2.0  
-Status: Gates 1 and 2 accepted; Gate 3 simulator credibility failed – repair required  
+Version: 0.2.1
+Status: Gates 1 and 2 accepted; Gate 3 technical criteria passed; human decision pending
 Prepared: 2026-07-10  
-Recommended decision: Reject current implementation or authorize a documented simulator-repair protocol deviation
+Updated: 2026-07-11
+Recommended decision: Accept Gate 3 with the documented RTC3 eligibility and execution-order limitations
 
 ## 1. Proposed title
 
@@ -564,11 +565,24 @@ Gate 2, Data and Numeric Freeze: accepted on 2026-07-11. The audited source
 set, exact variables, uncertainty ranges, simulator tolerances,
 practical-effect threshold, and compute budget are frozen.
 
-Gate 3, Simulator Credibility: failed – GMAT R2026a independent comparison
-failed all 10 endpoint thresholds (position 1.699–14.094 km, limit 0.100 km;
-velocity 0.141–1.402 m/s, limit 0.010 m/s). Status: failed_repair_required.
-Pending human decision: reject or authorize a documented simulator-repair
-protocol deviation. ML and QML training remain prohibited.
+Gate 3, Simulator Credibility: technical validation completed after the logged
+Deviation D001 repaired the fixed-column `POTFIELD` serialization supplied to
+GMAT R2026a. The repair did not change force-model physics, Python dynamics,
+validation windows, integrator settings, or acceptance thresholds. All 67
+evaluable criteria pass and no criterion fails. RTC3 remains `not_eligible`
+because it occurs after the frozen OEM creation cutoff.
+
+All 10 independent GMAT endpoint checks pass. The largest position difference
+is 0.046296 km against the 0.100 km limit, and the largest velocity difference
+is 0.004266 m/s against the 0.010 m/s limit. Current machine-readable status:
+`pending_external_validation`, reflecting the documented RTC3 eligibility
+limitation and pending human Gate 3 decision rather than a failed numeric
+criterion.
+
+Recommended human decision: accept Gate 3 while explicitly accepting the RTC3
+eligibility limitation and the disclosed pre-freeze F2 smoke computation. ML
+and QML training remain prohibited until that acceptance is recorded and
+published in `docs/decision_log.md`.
 
 Gate 4, Phase 1 Freeze: approve benchmark implementation before opening final
 ML test results.
@@ -583,6 +597,14 @@ Gate 7, Claims and Release: approve paper claims, limitations, repository
 release, and archival package.
 
 ## 20. Protocol deviations
+
+Deviation D001, dated 2026-07-11, corrected the fixed-column formatting of the
+GMAT Earth-J2 COF `POTFIELD` record after an incremental Earth-only diagnostic
+campaign isolated the original cross-tool discrepancy. The failed comparison,
+diagnostic chain, corrected file checksum, and passing rerun remain preserved
+in repository history and `docs/decision_log.md`. D001 changed serialization
+only; no scientific constant, threshold, split, window, exclusion, or force
+term changed.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:
