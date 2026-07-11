@@ -39,6 +39,9 @@ artifacts/openqfuel_gate3a_handoff.zip
 .env.*
 !.env.example
 
+# Personal workstation profile and local-only execution guidance.
+docs/local_compute_guide.md
+
 # Editor and operating-system files.
 .DS_Store
 Thumbs.db

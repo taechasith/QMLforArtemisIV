@@ -55,6 +55,8 @@ through a dated deviation record.
 - configs/simulator_acceptance.yaml: frozen verification and validation tests.
 - configs/dynamics.yaml: frozen Gate 3 force and numerical model.
 - configs/compute_budget.yaml: fixed experiment and resource ceilings.
+- docs/computational_methodology.md: published reference hardware and
+  hardware-aware execution method.
 - docs/gate2_data_numeric_freeze.md: Gate 2 evidence and recommendation.
 - docs/research_execution_map.md: work ownership and future decision gates.
 - docs/decision_log.md: acceptance and deviation history.

@@ -544,6 +544,8 @@ technical authorities.
 - Versioned source registry and checksum manifest.
 - Download scripts instead of undocumented data copies.
 - Environment lock and container definition before final experiments.
+- Published computational methodology and reference hardware manifest in
+  `docs/computational_methodology.md`.
 - Fixed configuration files and seed lists.
 - Automated unit, integration, and numerical regression tests.
 - Machine-readable results and figure-generation scripts.

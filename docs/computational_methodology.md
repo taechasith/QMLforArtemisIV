@@ -1,0 +1,283 @@
+# Computational Methodology and Reference Hardware
+
+Version: 0.1.0  
+Hardware snapshot: 2026-07-11  
+Status: published computational-methodology supplement  
+Repository: `taechasith/QMLforArtemisIV`
+
+## 1. Purpose
+
+This document defines the reference workstation used for local development and
+the hardware-aware execution method for OpenQFuel-Cislunar. It makes compute
+constraints visible so runtime, batching, parallelism, and hardware-dependent
+results can be interpreted and reproduced.
+
+The workstation profile is an execution boundary, not a scientific tuning
+variable. It does not modify any accepted value in `research_protocol.md` or
+`configs/`. Dataset totals, splits, seeds, thresholds, exclusions, model
+families, qubit requirements, shot counts, and stopping rules remain governed
+by the frozen protocol.
+
+If the formal design cannot be completed on the reference workstation after
+safe batching and checkpointing, the study must use additional declared
+compute or request a documented protocol deviation. The experiment must not be
+silently reduced to fit the laptop.
+
+## 2. Reference workstation manifest
+
+The primary local research workstation has the following measured profile:
+
+| Component | Reference specification |
+|---|---|
+| CPU | 13th Gen Intel Core i9-13900HX |
+| CPU topology | 24 physical cores, 32 logical processors |
+| System memory | 32 GiB DDR5-5600, installed as two 16 GiB modules |
+| Discrete GPU | NVIDIA GeForce RTX 4060 Laptop GPU |
+| Discrete GPU memory | 8,188 MiB |
+| GPU driver at snapshot | NVIDIA 592.27 |
+| Integrated GPU | Intel UHD Graphics |
+| Primary storage | Samsung MZVL21T0HDLU-00BH1 NVMe SSD, approximately 1 TB |
+| Available storage at snapshot | Approximately 53.0 GB decimal, or 49.4 GiB |
+| Operating system family | Microsoft Windows |
+| Environment manager at snapshot | `uv 0.11.28` |
+| Project interpreter at snapshot | Python 3.14.6 in `.venv` |
+
+Available storage, software versions, and driver versions are time-dependent.
+Each formal phase must record the values actually used rather than assuming the
+snapshot remains current.
+
+This is a high-performance laptop rather than a server. Its practical
+bottlenecks are sustained cooling, 32 GiB system memory, 8 GiB VRAM, and local
+free storage. Its strengths are independent CPU-case throughput, fast NVMe
+checkpointing, and support for compact GPU workloads.
+
+## 3. Relationship to the frozen compute budget
+
+`configs/compute_budget.yaml` defines study-wide ceilings of 10,000 CPU
+core-hours, 1,000 GPU-hours, 50 million QPU shots, 250 GB persistent storage,
+and 30 wall-clock days. Those are maximum research budgets, not a statement
+that the reference workstation has 250 GB of free local space or can sustain
+all CPU and GPU work concurrently.
+
+The more restrictive limit applies during local execution:
+
+1. the frozen study-wide ceiling limits scientific resource use;
+2. the measured workstation envelope limits safe local scheduling; and
+3. a run proceeds only when it satisfies both.
+
+Exceeding a frozen study ceiling requires the protocol-deviation process.
+Moving a conforming workload to declared external compute does not itself
+change the scientific design, but the external hardware and software manifest
+must be reported.
+
+## 4. Local execution envelope
+
+The following defaults are used to avoid oversubscription and preserve enough
+capacity for Windows, the editor, monitoring, and checkpoint writes.
+
+### 4.1 CPU scheduling
+
+- Eight process workers are the default for independent simulations, seeds, or
+  scenario chunks.
+- Twelve workers are the normal local high-throughput ceiling after a
+  representative benchmark confirms memory and thermal stability.
+- Sixteen workers may be used for a monitored overnight run only after a
+  sustained thermal test.
+- Thirty-two CPU-heavy processes are prohibited as a default. Logical
+  processors are not equivalent to 32 full-performance independent cores, and
+  process plus BLAS oversubscription can reduce throughput.
+- Independent windows, seeds, scenarios, or data chunks may run in parallel.
+  Tasks that mutate a shared result file must remain serialized or use separate
+  atomic chunk files.
+- Numerical libraries use one thread per process during process-parallel work.
+
+The standard thread environment is:
+
+```powershell
+$env:OMP_NUM_THREADS = "1"
+$env:MKL_NUM_THREADS = "1"
+$env:OPENBLAS_NUM_THREADS = "1"
+$env:NUMEXPR_NUM_THREADS = "1"
+$env:OPENQFUEL_MAX_WORKERS = "8"
+```
+
+Formal run manifests record the actual worker count and thread variables.
+
+### 4.2 System-memory scheduling
+
+- At least 8 GiB is reserved for the operating system and supporting tools.
+- The normal aggregate project working-set target is 22-24 GiB.
+- Concurrency is reduced if committed memory approaches 26 GiB.
+- New work is not launched at 28 GiB or during sustained paging.
+- Available memory is checked immediately before a formal run because other
+  applications may already consume a substantial fraction of the 32 GiB.
+- Large scenario, prediction, and seed outputs are streamed in chunks rather
+  than held together in memory.
+
+### 4.3 GPU scheduling
+
+- One GPU training or quantum-simulation process runs at a time.
+- The normal allocation target is at most 6.5 GiB VRAM.
+- Usage from 6.5 to 7.2 GiB triggers batch-size reduction or gradient
+  accumulation before continuing.
+- Jobs are not designed to consume the full reported 8,188 MiB because the
+  driver, display, framework context, and temporary tensors require headroom.
+- Mixed precision may be used only where it preserves the registered metric
+  and numerical method. Final metrics retain their required precision.
+- A backend is counted as GPU work only when execution logs verify that it used
+  CUDA. CPU quantum simulation is reported as simulation cost, not quantum or
+  GPU hardware advantage.
+
+### 4.4 Storage scheduling
+
+- At least 20 GiB remains free on the system drive after projected outputs.
+- Given approximately 53 GB free at the hardware snapshot, no more than about
+  25 GB of new project data is scheduled before storage is reassessed.
+- Storage estimates include raw inputs, environment growth, temporary chunks,
+  checkpoints, failed cases, result tables, logs, and figures.
+- Large numeric outputs use compressed typed formats where permitted by the
+  registered schema.
+- Raw sources, formal evidence, nonconvergence records, and scientifically
+  relevant failures are not deleted automatically to recover space.
+- When the projected free-space floor cannot be met, verified external storage
+  or another declared compute environment is required.
+
+### 4.5 Thermal and power controls
+
+Formal multi-hour runs use AC power and the workstation's performance cooling
+profile. Worker count is reduced when sustained CPU temperature approaches
+95 C, sustained GPU temperature approaches 85 C, or clock collapse indicates
+thermal throttling. These are local operational safeguards, not experiment
+outcomes.
+
+## 5. Hardware-aware execution procedure
+
+Every formal computational phase follows this sequence:
+
+1. Verify that the governing decision gate authorizes the phase.
+2. Synchronize the locked environment and record software and driver versions.
+3. Run unit, integration, compilation, and dependency checks.
+4. Execute a correctness smoke test on development-only data.
+5. Benchmark a representative unlocked workload without reading final-test
+   labels.
+6. Record seconds per case, peak RAM, peak VRAM, output bytes per case, worker
+   count, and thermal behavior.
+7. Estimate formal runtime and storage with at least 25% scheduling and thermal
+   overhead.
+8. Select chunk size and concurrency within the local envelope.
+9. Test interruption and checkpoint resume before an overnight or multi-hour
+   run.
+10. Execute the exact frozen configuration and retain failures.
+11. Validate row counts, schemas, checksums, and acceptance results before
+   merging chunks or publishing conclusions.
+
+The reference runtime estimate is:
+
+```text
+estimated wall time = measured seconds per case * formal cases
+                      / effective workers * 1.25
+```
+
+The factor is increased when throughput or temperature is unstable. Runtime
+estimation changes scheduling only; it does not authorize early termination of
+a frozen experiment.
+
+## 6. Phase-specific implementation method
+
+### 6.1 Simulator verification and validation
+
+NASA GMAT executes serially as the independent comparison tool. Independent
+Python validation windows may run in separate processes only when ephemeris
+access is process-safe and each process writes an isolated result. Nominal and
+tightened integrations remain separately identifiable in evidence tables.
+Integrator tolerances, OEM samples, validation windows, and acceptance limits
+are never loosened to reduce runtime.
+
+Gate 3 remains closed while its state is pending or
+`failed_repair_required`. No ML or QML work may begin merely because the local
+simulator runs quickly.
+
+### 6.2 F0/F1/F2 dataset generation
+
+The accepted totals remain 10,000 F0 cases, 50,000 F1 cases, and an initial
+5,000 F2 cases. Local batching changes only how those totals are executed.
+
+| Fidelity | Initial local chunk | Initial workers | Execution method |
+|---|---:|---:|---|
+| F0 | 1,000-2,500 cases | 8-12 | Verified vectorization and atomic chunk checkpoints |
+| F1 | 500-1,000 cases | 8 | Process-parallel propagation with one numerical-library thread per worker |
+| F2 | 50-100 cases | 4-8 | Profile ephemeris and memory overhead before increasing concurrency |
+
+Each chunk manifest records configuration hash, seed range, requested cases,
+completed cases, failures, runtime, and output checksum. All nonconvergence
+cases remain represented.
+
+### 6.3 Classical model experiments
+
+Trial-level and model-internal parallelism are not both run at full width.
+Tree-model parallelism starts at eight workers, and at most one or two tuning
+trials run concurrently. Memory mapping or streamed arrays are used when
+dataset and model copies would exceed the aggregate memory target.
+
+Hardware scheduling does not alter model families, tuning trials, development
+seeds, finalist seeds, or locked comparison data.
+
+### 6.4 QML experiments
+
+Required 4-, 6-, and 8-qubit experiments remain mandatory after their
+governing gate opens. Ten and twelve qubits remain conditional exactly as
+specified in `configs/compute_budget.yaml`.
+
+Circuit families and seeds are queued through one GPU-backed process at a
+time. Statevector, finite-shot, gradient, and noise-model memory are benchmarked
+separately because temporary tapes and noisy simulation can dominate raw
+statevector storage. Shot batches and seed outputs are checkpointed before any
+request to change a registered shot or seed count.
+
+No result produced by classical simulation on the RTX 4060 is described as a
+quantum hardware speedup or quantum advantage.
+
+### 6.5 Mission Monte Carlo
+
+The minimum 2,000 paired simulations per stratum and frozen 1,000-run
+sequential decision batch remain unchanged. A 1,000-run decision batch may be
+computed as smaller 250-500-case storage chunks, but stopping is evaluated only
+after the complete registered batch. Common random numbers and paired outcomes
+are preserved.
+
+## 7. Required compute reporting
+
+Every published formal result must identify:
+
+- CPU and GPU model;
+- physical and logical CPU count;
+- installed RAM and GPU memory;
+- operating system;
+- GPU driver and relevant runtime/backend;
+- Python version, `uv.lock` identity, and package environment;
+- worker count and numerical-library thread settings;
+- model, circuit, qubit, shot, seed, and batch configuration as applicable;
+- wall-clock time and failed/nonconverged workload counts;
+- peak RAM and VRAM when measurable;
+- hardware queue, communication, encoding, mitigation, and classical
+  post-processing time where applicable; and
+- energy or carbon measurement method on a best-effort basis.
+
+Timing comparisons are interpreted only after confirming equivalent workload,
+precision, preprocessing, and output requirements. Laptop wall time is not
+generalized to server, cloud, QPU, or flight-computer performance.
+
+## 8. Portability and reproducibility boundary
+
+Another machine may reproduce the study with different worker counts, batch
+sizes, or checkpoint intervals when the scientific configuration and numerical
+acceptance criteria are unchanged. Hardware-dependent runtime and energy
+results must be reported separately for each environment.
+
+If a different environment changes numerical outputs beyond frozen convergence
+or acceptance limits, that discrepancy is a validation result requiring
+investigation. It must not be hidden as a harmless performance difference.
+
+The detailed personal scheduling log remains in the ignored
+`docs/local_compute_guide.md`. This published document contains the stable
+hardware context and methodological rules required to interpret formal results.
