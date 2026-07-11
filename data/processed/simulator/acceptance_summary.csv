@@ -1,12 +1,70 @@
-requirement_name,threshold,measured_value,status
-state_epochs_strictly_increasing,True,True,passed
-header_state_bounds_consistent,True,True,passed
-leave_one_out_excludes_detected_discontinuities,True,True,passed
-position_p95_loo_error_upper_km,0.005,0.000226928,passed
-velocity_p95_loo_error_upper_m_s,0.005,0.000013153,passed
-numerical_convergence_position_upper_km,0.01,0.000011129,passed
-numerical_convergence_velocity_upper_m_s,0.001,0.000001106,passed
-flight_ephemeris_rmse_and_ceiling_checks,"V01/V02/V04/V05 <= 10km, 1m/s; V03 <= 25km, 2m/s",See f2_flight_validation.csv,passed
-flight_ephemeris_improvement_over_baseline,>= 0.80,See f2_flight_validation.csv,passed
-event_cross_checks_timing_tolerance_s,240,See event_cross_checks.csv,passed
-independent_gmat_comparison,"0.10 km, 0.01 m/s",pending,pending
+check_id,category,subject,metric,value,unit,comparison,threshold,status,evidence_file,note
+interpolation_position_p95,parser_and_interpolation,latest eligible OEM clean-coast points,position_p95,0.000220474363,km,<=,0.005000000000,pass,interpolation_validation.csv,
+interpolation_velocity_p95,parser_and_interpolation,latest eligible OEM clean-coast points,velocity_p95,0.000013083564,m/s,<=,0.005000000000,pass,interpolation_validation.csv,
+V01_convergence_position,numerical_convergence,V01,endpoint_position_difference,0.000000001094,km,<=,0.010000000000,pass,numerical_convergence.csv,
+V01_convergence_velocity,numerical_convergence,V01,endpoint_velocity_difference,0.000000000023,m/s,<=,0.001000000000,pass,numerical_convergence.csv,
+V01_position_rmse_absolute,flight_ephemeris_validation,V01,position_rmse,0.001952941411,km,<=,10.000000000000,pass,f2_flight_validation.csv,
+V01_position_rmse_improvement,weak_baseline_improvement,V01,position_rmse_improvement_fraction,0.999851438991,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V01_position_endpoint_absolute,flight_ephemeris_validation,V01,position_endpoint,0.004274446559,km,<=,20.000000000000,pass,f2_flight_validation.csv,
+V01_position_endpoint_improvement,weak_baseline_improvement,V01,position_endpoint_improvement_fraction,0.999853291199,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V01_velocity_rmse_absolute,flight_ephemeris_validation,V01,velocity_rmse,0.000230488149,m/s,<=,1.000000000000,pass,f2_flight_validation.csv,
+V01_velocity_rmse_improvement,weak_baseline_improvement,V01,velocity_rmse_improvement_fraction,0.999854944219,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V01_velocity_endpoint_absolute,flight_ephemeris_validation,V01,velocity_endpoint,0.000395702522,m/s,<=,2.000000000000,pass,f2_flight_validation.csv,
+V01_velocity_endpoint_improvement,weak_baseline_improvement,V01,velocity_endpoint_improvement_fraction,0.999859044863,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V02_convergence_position,numerical_convergence,V02,endpoint_position_difference,0.000000029641,km,<=,0.010000000000,pass,numerical_convergence.csv,
+V02_convergence_velocity,numerical_convergence,V02,endpoint_velocity_difference,0.000000015136,m/s,<=,0.001000000000,pass,numerical_convergence.csv,
+V02_position_rmse_absolute,flight_ephemeris_validation,V02,position_rmse,0.001971668943,km,<=,10.000000000000,pass,f2_flight_validation.csv,
+V02_position_rmse_improvement,weak_baseline_improvement,V02,position_rmse_improvement_fraction,0.999994349979,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V02_position_endpoint_absolute,flight_ephemeris_validation,V02,position_endpoint,0.004373429217,km,<=,20.000000000000,pass,f2_flight_validation.csv,
+V02_position_endpoint_improvement,weak_baseline_improvement,V02,position_endpoint_improvement_fraction,0.999994689685,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V02_velocity_rmse_absolute,flight_ephemeris_validation,V02,velocity_rmse,0.000235902254,m/s,<=,1.000000000000,pass,f2_flight_validation.csv,
+V02_velocity_rmse_improvement,weak_baseline_improvement,V02,velocity_rmse_improvement_fraction,0.999994985139,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V02_velocity_endpoint_absolute,flight_ephemeris_validation,V02,velocity_endpoint,0.000417077642,m/s,<=,2.000000000000,pass,f2_flight_validation.csv,
+V02_velocity_endpoint_improvement,weak_baseline_improvement,V02,velocity_endpoint_improvement_fraction,0.999995607072,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V03_convergence_position,numerical_convergence,V03,endpoint_position_difference,0.000011128549,km,<=,0.010000000000,pass,numerical_convergence.csv,
+V03_convergence_velocity,numerical_convergence,V03,endpoint_velocity_difference,0.000001105634,m/s,<=,0.001000000000,pass,numerical_convergence.csv,
+V03_position_rmse_absolute,flight_ephemeris_validation,V03,position_rmse,0.033012822821,km,<=,25.000000000000,pass,f2_flight_validation.csv,
+V03_position_rmse_improvement,weak_baseline_improvement,V03,position_rmse_improvement_fraction,0.999989898658,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V03_position_endpoint_absolute,flight_ephemeris_validation,V03,position_endpoint,0.084854569427,km,<=,50.000000000000,pass,f2_flight_validation.csv,
+V03_position_endpoint_improvement,weak_baseline_improvement,V03,position_endpoint_improvement_fraction,0.999988701367,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V03_velocity_rmse_absolute,flight_ephemeris_validation,V03,velocity_rmse,0.006199496894,m/s,<=,2.000000000000,pass,f2_flight_validation.csv,
+V03_velocity_rmse_improvement,weak_baseline_improvement,V03,velocity_rmse_improvement_fraction,0.999986334692,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V03_velocity_endpoint_absolute,flight_ephemeris_validation,V03,velocity_endpoint,0.011085969120,m/s,<=,5.000000000000,pass,f2_flight_validation.csv,
+V03_velocity_endpoint_improvement,weak_baseline_improvement,V03,velocity_endpoint_improvement_fraction,0.999985828007,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V04_convergence_position,numerical_convergence,V04,endpoint_position_difference,0.000000003543,km,<=,0.010000000000,pass,numerical_convergence.csv,
+V04_convergence_velocity,numerical_convergence,V04,endpoint_velocity_difference,0.000000000055,m/s,<=,0.001000000000,pass,numerical_convergence.csv,
+V04_position_rmse_absolute,flight_ephemeris_validation,V04,position_rmse,0.001960330658,km,<=,10.000000000000,pass,f2_flight_validation.csv,
+V04_position_rmse_improvement,weak_baseline_improvement,V04,position_rmse_improvement_fraction,0.999910044889,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V04_position_endpoint_absolute,flight_ephemeris_validation,V04,position_endpoint,0.004297014795,km,<=,20.000000000000,pass,f2_flight_validation.csv,
+V04_position_endpoint_improvement,weak_baseline_improvement,V04,position_endpoint_improvement_fraction,0.999908635652,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V04_velocity_rmse_absolute,flight_ephemeris_validation,V04,velocity_rmse,0.000231514343,m/s,<=,1.000000000000,pass,f2_flight_validation.csv,
+V04_velocity_rmse_improvement,weak_baseline_improvement,V04,velocity_rmse_improvement_fraction,0.999907390730,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V04_velocity_endpoint_absolute,flight_ephemeris_validation,V04,velocity_endpoint,0.000397931752,m/s,<=,2.000000000000,pass,f2_flight_validation.csv,
+V04_velocity_endpoint_improvement,weak_baseline_improvement,V04,velocity_endpoint_improvement_fraction,0.999903978568,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V05_convergence_position,numerical_convergence,V05,endpoint_position_difference,0.000000002378,km,<=,0.010000000000,pass,numerical_convergence.csv,
+V05_convergence_velocity,numerical_convergence,V05,endpoint_velocity_difference,0.000000000198,m/s,<=,0.001000000000,pass,numerical_convergence.csv,
+V05_position_rmse_absolute,flight_ephemeris_validation,V05,position_rmse,0.001963869243,km,<=,10.000000000000,pass,f2_flight_validation.csv,
+V05_position_rmse_improvement,weak_baseline_improvement,V05,position_rmse_improvement_fraction,0.999768016248,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V05_position_endpoint_absolute,flight_ephemeris_validation,V05,position_endpoint,0.004308745911,km,<=,20.000000000000,pass,f2_flight_validation.csv,
+V05_position_endpoint_improvement,weak_baseline_improvement,V05,position_endpoint_improvement_fraction,0.999764762689,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V05_velocity_rmse_absolute,flight_ephemeris_validation,V05,velocity_rmse,0.000231917681,m/s,<=,1.000000000000,pass,f2_flight_validation.csv,
+V05_velocity_rmse_improvement,weak_baseline_improvement,V05,velocity_rmse_improvement_fraction,0.999761908954,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+V05_velocity_endpoint_absolute,flight_ephemeris_validation,V05,velocity_endpoint,0.000398566726,m/s,<=,2.000000000000,pass,f2_flight_validation.csv,
+V05_velocity_endpoint_improvement,weak_baseline_improvement,V05,velocity_endpoint_improvement_fraction,0.999754030743,fraction,>=,0.800000000000,pass,f2_flight_validation.csv,Applied to each frozen RMSE and endpoint error metric.
+event_tli,event_cross_checks,TLI,absolute_timing_error,29.066,s,<=,240.000,pass,event_cross_checks.csv,EDT converted to UTC; delta-v is an exact SI conversion of the pre-burn planned public value and is not labeled executed telemetry
+event_otc3,event_cross_checks,OTC3,absolute_timing_error,17.084,s,<=,240.000,pass,event_cross_checks.csv,EDT converted to UTC; NASA did not publish delta-v or thruster configuration
+event_lunar_closest_approach,event_cross_checks,lunar closest approach,absolute_timing_error,46.159,s,<=,240.000,pass,event_cross_checks.csv,Live update reports about 4067 miles altitude; values are rounded public event data
+event_rtc1,event_cross_checks,RTC1,absolute_timing_error,17.084,s,<=,240.000,pass,event_cross_checks.csv,EDT converted to UTC; SI delta-v is an exact unit conversion of a rounded published value
+event_rtc2,event_cross_checks,RTC2,absolute_timing_error,28.122,s,<=,240.000,pass,event_cross_checks.csv,EDT converted to UTC; communications were restored before the burn
+event_rtc3,event_cross_checks,RTC3,absolute_timing_error,,s,<=,240.000,not_eligible,event_cross_checks.csv,EDT converted to UTC; SI delta-v is an exact unit conversion of a rounded published value The event is not eligible for historical/reconstructed OEM validation and remains unresolved at Gate 3.
+V01_gmat_position,independent_gmat,V01,endpoint_position_difference,11.276084294437,km,<=,0.100000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V01_gmat_velocity,independent_gmat,V01,endpoint_velocity_difference,0.986380952903,m/s,<=,0.010000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V02_gmat_position,independent_gmat,V02,endpoint_position_difference,2.189901878445,km,<=,0.100000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V02_gmat_velocity,independent_gmat,V02,endpoint_velocity_difference,0.197074914230,m/s,<=,0.010000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V03_gmat_position,independent_gmat,V03,endpoint_position_difference,1.698661383349,km,<=,0.100000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V03_gmat_velocity,independent_gmat,V03,endpoint_velocity_difference,0.141042055373,m/s,<=,0.010000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V04_gmat_position,independent_gmat,V04,endpoint_position_difference,5.167709057523,km,<=,0.100000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V04_gmat_velocity,independent_gmat,V04,endpoint_velocity_difference,0.497374536822,m/s,<=,0.010000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V05_gmat_position,independent_gmat,V05,endpoint_position_difference,14.093528854239,km,<=,0.100000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V05_gmat_velocity,independent_gmat,V05,endpoint_velocity_difference,1.401584593293,m/s,<=,0.010000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+gate3_overall,overall,Gate 3 simulator credibility,all required frozen criteria,,,all,pass,failed_repair_required,acceptance_summary.csv,Human acceptance is required even when all technical criteria pass.

@@ -1,97 +1,112 @@
-# Gate 3 Simulator Credibility Validation Report
+# Gate 3 simulator credibility validation
 
-**Version:** 0.3.0  
-**Date:** 2026-07-11  
-**Status:** Passed (Pending Independent GMAT execution)  
-**Assurance Framework:** NASA-STD-7009B Compliance Model
+Status: `failed_repair_required`  
+Generated: 2026-07-11  
+Decision authority: Human research lead
 
----
+## Technical summary
 
-## 1. Executive Summary
+Gate 3 failed its frozen acceptance criteria and is in `failed_repair_required` status. ML and QML work remains prohibited.
 
-This report documents the formal validation of the **OpenQFuel cislunar orbit propagation and vehicle dynamics simulator (F2)**. The F2 simulator integrates point-mass gravity for Earth, the Moon, and the Sun (using JPL DE440s ephemerides), along with Earth's J2 oblateness, propagated via the DOP853 adaptive numerical integrator.
+The run evaluated 67 numeric acceptance checks: 10 failed and 1 required checks are pending or not eligible. The public OEM is an operational trajectory solution, not raw telemetry, and all conclusions are limited to the frozen public-data model.
 
-All quantitative and qualitative simulator credibility requirements specified in `configs/simulator_acceptance.yaml` have **successfully passed**, with the independent GMAT same-force-model comparison marked as **pending** due to GMAT not being installed in the local execution environment.
+## Frozen criteria produced a gate decision
 
-> [!NOTE]
-> All code changes, raw inputs, baseline models, and target tolerances have been frozen prior to running this validation run (Gate 3A freeze). No fitting or hyperparameter adjustments were performed on the model after viewing the validation metrics.
+| Category | Passed | Failed | Pending/not eligible |
+|---|---|---|---|
+| parser_and_interpolation | 2 | 0 | 0 |
+| numerical_convergence | 10 | 0 | 0 |
+| flight_ephemeris_validation | 20 | 0 | 0 |
+| weak_baseline_improvement | 20 | 0 | 0 |
+| event_cross_checks | 5 | 0 | 1 |
+| independent_gmat | 0 | 10 | 0 |
 
----
+Every failed criterion is retained in `data/processed/simulator/acceptance_summary.csv`; thresholds, windows, exclusions, and source roles were not changed after viewing results.
 
-## 2. Requirement Verification Matrix
+## Interpolation met its parser-quality thresholds
 
-| Requirement ID | Description | Threshold / Criterion | Measured Value | Status |
-| :--- | :--- | :--- | :--- | :--- |
-| **VAL-001** | State epoch ordering | Strictly increasing | Strictly Increasing | **PASSED** |
-| **VAL-002** | Header bounds consistency | Header START/STOP match state times | Consistently Matches | **PASSED** |
-| **VAL-003** | Interpolation exclusions | Exclude state-transition discontinuities | Buffer Exclusions Applied | **PASSED** |
-| **VAL-004** | Interpolation position error | p95 Hermite LOO error $\le$ 5.0 m (0.005 km) | 0.227 meters (0.000227 km) | **PASSED** |
-| **VAL-005** | Interpolation velocity error | p95 Hermite LOO error $\le$ 5.0 mm/s (0.005 m/s) | 0.013 mm/s (0.000013 m/s) | **PASSED** |
-| **VAL-006** | Solver position convergence | 6-h endpoint difference (nominal vs tight) $\le$ 10.0 m (0.01 km) | 0.011 meters (0.000011 km) | **PASSED** |
-| **VAL-007** | Solver velocity convergence | 6-h endpoint difference (nominal vs tight) $\le$ 1.0 mm/s (0.001 m/s) | 0.001 mm/s (0.000001 m/s) | **PASSED** |
-| **VAL-008** | Flight position error (non-lunar) | RMSE $\le$ 10.0 km, Endpoint $\le$ 20.0 km | Max RMSE: 0.002 km, Max End: 0.004 km | **PASSED** |
-| **VAL-009** | Flight velocity error (non-lunar) | RMSE $\le$ 1.0 m/s, Endpoint $\le$ 2.0 m/s | Max RMSE: 0.000 m/s, Max End: 0.000 m/s | **PASSED** |
-| **VAL-010** | Flight position error (lunar V03) | RMSE $\le$ 25.0 km, Endpoint $\le$ 50.0 km | RMSE: 0.033 km, End: 0.085 km | **PASSED** |
-| **VAL-011** | Flight velocity error (lunar V03) | RMSE $\le$ 2.0 m/s, Endpoint $\le$ 5.0 m/s | RMSE: 0.006 m/s, End: 0.011 m/s | **PASSED** |
-| **VAL-012** | Baseline improvement | $\ge$ 80% improvement over Earth-only baseline | 100.0% (all arcs) | **PASSED** |
-| **VAL-013** | Event temporal alignment | Event start within 240 s of OEM discontinuity | Max Diff: 28.1 seconds | **PASSED** |
-| **VAL-014** | Independent GMAT comparison | Endpoint difference $\le$ 0.10 km, $\le$ 0.01 m/s | Pending GMAT installation | **PENDING** |
+Leave-one-out cubic Hermite interpolation used 2369 eligible clean-coast points. Segments touching any frozen 30-minute discontinuity buffer were excluded.
 
----
+| Metric | Observed | Upper bound | Status |
+|---|---|---|---|
+| Position p95 (km) | 0.000220474363 | 0.005000000000 | pass |
+| Velocity p95 (m/s) | 0.000013083564 | 0.005000000000 | pass |
 
-## 3. Detailed Results and Analysis
+## Numerical convergence was checked on every frozen window
 
-### 3.1 Interpolation and Parser
-Leave-one-out Hermite interpolation was evaluated on **2,420 eligible states** from the April 10 CCSDS OEM release. States falling within 30 minutes of the 30 detected state-transition discontinuities were excluded. 
-- **p95 Position Error:** 0.000227 km (0.227 m) - *Margin:* 95.4% under the 5 m cap.
-- **p95 Velocity Error:** 0.000013 m/s (0.013 mm/s) - *Margin:* 99.7% under the 5 mm/s cap.
+Nominal F2 propagation was compared with tolerances tightened by 100x and maximum step halved. The table reports six-hour endpoint differences; full endpoint states and solver settings are in the CSV.
 
-### 3.2 Numerical Solver Convergence (DOP853)
-Propagation differences at the 6-hour endpoint between nominal F2 settings and tightened verification settings (`rtol` and `atol` tightened 100x, `max_step` halved) were quantified for the validation arcs:
-- **Max Position Difference:** 0.000011 km (0.011 m) - *Margin:* 99.9% under the 10 m cap.
-- **Max Velocity Difference:** 0.000001 m/s (0.001 mm/s) - *Margin:* 99.9% under the 1 mm/s cap.
+| Window | Position difference (km) | Velocity difference (m/s) | Status |
+|---|---|---|---|
+| V01 | 0.000000001094 | 0.000000000023 | pass |
+| V02 | 0.000000029641 | 0.000000015136 | pass |
+| V03 | 0.000011128549 | 0.000001105634 | pass |
+| V04 | 0.000000003543 | 0.000000000055 | pass |
+| V05 | 0.000000002378 | 0.000000000198 | pass |
 
-### 3.3 Flight Ephemeris Validation (F2 Force Model)
-F2 force model outputs were evaluated over the 5 frozen validation windows against the eligible reference OEM.
+## Flight-ephemeris validation exposed the F2 result
 
-| Arc ID | Phase | Samples | Position RMSE (km) | Position Endpoint (km) | Velocity RMSE (m/s) | Velocity Endpoint (m/s) | Improvement vs Baseline |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **V01** | Outbound Mid | 92 | 0.002 | 0.004 | 0.000 | 0.000 | 100.0% |
-| **V02** | Outbound Late | 92 | 0.002 | 0.004 | 0.000 | 0.000 | 100.0% |
-| **V03** | Lunar Flyby | 92 | 0.033 | 0.085 | 0.006 | 0.011 | 100.0% |
-| **V04** | Return Mid | 92 | 0.002 | 0.004 | 0.000 | 0.000 | 100.0% |
-| **V05** | Return Late | 92 | 0.002 | 0.004 | 0.000 | 0.000 | 100.0% |
+Each window starts from its OEM state and is compared at every public reference epoch. The 80% weak-baseline improvement rule is applied conservatively to all four error metrics.
 
-All validation arcs achieve a **100.0% error reduction** compared to the weak two-body baseline, validating that the third-body lunar and solar gravity fields are correctly implemented.
+| Window | Position RMSE (km) | Velocity RMSE (m/s) | Overall |
+|---|---|---|---|
+| V01 | 0.001952941411 | 0.000230488149 | pass |
+| V02 | 0.001971668943 | 0.000235902254 | pass |
+| V03 | 0.033012822821 | 0.006199496894 | pass |
+| V04 | 0.001960330658 | 0.000231514343 | pass |
+| V05 | 0.001963869243 | 0.000231917681 | pass |
 
----
+This is a descriptive validation against a public operational ephemeris. It does not establish flight truth, causal model adequacy, or operational certification.
 
-## 4. Event Cross-Checks and Data Limitations
+## Event checks preserve source eligibility
 
-Maneuver and astronomical events were validated against public records.
+Burn timing uses the nearest eligible OEM epoch adjacent to a non-nominal cadence interval. Lunar closest approach is the OEM-to-DE440s distance minimum inside V03. Rounded public event times are used only for temporal alignment.
 
-- **E002 (TLI):** **PASSED** — Event epoch `2026-04-02 23:49:00 UTC` falls within discontinuity interval `X09` (0.0 s difference).
-- **E005 (OTC3):** **PASSED** — Event epoch `2026-04-06 03:03:00 UTC` matches discontinuity `X19` (17.1 s difference).
-- **E006 (Lunar closest approach):** **PASSED** — The closest approach in the OEM occurs at `2026-04-06 22:58:51 UTC` (68.3 s difference from the rounded public report).
-- **E007 (RTC1):** **PASSED** — Event epoch `2026-04-08 00:03:00 UTC` matches discontinuity `X24` (17.1 s difference).
-- **E008 (RTC2):** **PASSED** — Event epoch `2026-04-10 02:53:00 UTC` matches discontinuity `X30` (28.1 s difference).
-- **E009 (RTC3):** **NOT ELIGIBLE** — Event epoch `2026-04-10 18:53:00 UTC` occurs after the creation time of the eligible reference release (`2026-04-10 03:22:19 UTC`).
+| Event | Estimated UTC | Error (s) | Status |
+|---|---|---|---|
+| TLI | 2026-04-02T23:48:30.934000Z | 29.066 | pass |
+| OTC3 | 2026-04-06T03:03:17.084000Z | 17.084 | pass |
+| lunar closest approach | 2026-04-06T23:00:46.159111Z | 46.159 | pass |
+| RTC1 | 2026-04-08T00:03:17.084000Z | 17.084 | pass |
+| RTC2 | 2026-04-10T02:53:28.122000Z | 28.122 | pass |
+| RTC3 | not eligible | n/a | not_eligible |
 
-### Limitation Assessment
-Because the reference OEM release only contains historical/reconstructed data up to its creation date `2026-04-10 03:22:19 UTC`, the final RTC3 burn (executed at `2026-04-10 18:53:00 UTC`) is treated as a future prediction in the file and is therefore ineligible for retrospective validation under our scientific protocols. **This limitation does NOT block Gate 3 credibility acceptance** because the preceding 4 maneuvers and lunar closest approach have been successfully and quantitatively verified.
+## GMAT provides the independent same-force comparison
 
----
+NASA GMAT R2026a console completed the generated same-force script.
 
-## 5. Independent GMAT Comparison Status
+The generated `scripts/gmat/gate3_same_force_model.script` uses DE440s through SPICE, Earth point mass and J2, Luna and Sun point masses, no drag or SRP, and a tight RungeKutta89 propagation. Executable and archive hashes are retained in the comparison CSV.
 
-The GMAT same-force-model comparison has a status of **pending** because NASA GMAT R2026a is not pre-installed in the local sandbox environment. The exact GMAT script verifying the nominal and tightened settings has been successfully generated and saved to [gmat_validation.script](file:///C:/Users/HP%20OMEN/QMLforArtemisIV/scripts/gmat_validation.script).
+| Window | Position difference (km) | Velocity difference (m/s) | Status |
+|---|---|---|---|
+| V01 | 11.276084294437 | 0.986380952903 | fail |
+| V02 | 2.189901878445 | 0.197074914230 | fail |
+| V03 | 1.698661383349 | 0.141042055373 | fail |
+| V04 | 5.167709057523 | 0.497374536822 | fail |
+| V05 | 14.093528854239 | 1.401584593293 | fail |
 
-This script can be executed on a machine with NASA GMAT R2026a installed to verify same-model agreement within $0.10\text{ km}$ and $0.01\text{ m/s}$ at each validation arc endpoint.
+## Scope, data, and metric definitions
 
----
+- Reference release: `Artemis_II_OEM_2026_04_10_Post-ICPS-Sep-to-EI.asc`.
+- Eligible reference cutoff: `2026-04-10T03:22:19Z`.
+- Validation cohort: V01-V05, five frozen six-hour coast windows in UTC.
+- Position errors: Euclidean EME2000/EarthMJ2000Eq differences in kilometres.
+- Velocity errors: Euclidean inertial differences converted to metres per second.
+- Weak baseline: tracked Earth-only DOP853 results in `two_body_baseline.csv`.
+- No calibration, threshold changes, window changes, or post-result exclusions were performed.
 
-## 6. Recommendations and Decision Gate
+Exact audit tables are used instead of charts because each validation family has only five frozen windows and the gate decision depends on per-window thresholds, not a visual trend.
 
-Having satisfied all criteria under local execution, the simulator implementation is deemed **scientifically credible and frozen**. 
+## Limitations and robustness boundaries
 
-The assistant recommends that the human research lead **accept Gate 3**, authorizing the project to transition to Phase 4 (dataset generation and prediction benchmark setup). ML training remains prohibited until the human decision is recorded.
+- The OEM is not raw tracking or spacecraft telemetry.
+- The fixed 2026 UTC-to-TT conversion omits a sub-2 ms periodic TDB term.
+- F2 omits solar-radiation pressure, attitude, and mission-owned force and navigation details.
+- RTC3 cannot be checked against eligible historical/reconstructed rows when it occurs after the OEM creation cutoff.
+- Passing numerical or cross-tool checks would not establish flight readiness.
+
+## Required next step
+
+Publish and review the failed criteria. Any repair requires a dated protocol deviation; do not change thresholds, windows, splits, or exclusions, and do not begin ML or QML training.
+
+Decision requested from the human research lead: reject Gate 3 as currently implemented or authorize a documented simulator-repair protocol deviation.

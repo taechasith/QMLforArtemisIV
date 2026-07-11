@@ -1,0 +1,116 @@
+% OpenQFuel-Cislunar Gate 3 independent comparison
+% Required tool: NASA GMAT R2026a
+% Frame: EarthMJ2000Eq (OEM EME2000-compatible inertial axes)
+% Forces: Earth point mass and J2, Luna point mass, Sun point mass
+% Disabled: drag, SRP, tides, and relativistic correction
+SolarSystem.EphemerisSource = 'SPICE';
+% The runner stages this checked kernel inside the GMAT distribution.
+SolarSystem.SPKFilename = '../data/planetary_ephem/spk/de440s.bsp';
+Luna.Mu = 4902.800118;
+Sun.Mu = 132712440041.9394;
+
+Create Spacecraft V01;
+V01.DateFormat = UTCGregorian;
+V01.Epoch = '04 Apr 2026 11:00:00.000';
+V01.CoordinateSystem = EarthMJ2000Eq;
+V01.DisplayStateType = Cartesian;
+V01.X = -105310.786419770316570;
+V01.Y = -204917.564511674834648;
+V01.Z = -112666.427079640023294;
+V01.VX = -0.217527477574041;
+V01.VY = -1.013501925844821;
+V01.VZ = -0.551216324422650;
+
+Create Spacecraft V02;
+V02.DateFormat = UTCGregorian;
+V02.Epoch = '06 Apr 2026 11:00:00.000';
+V02.CoordinateSystem = EarthMJ2000Eq;
+V02.DisplayStateType = Cartesian;
+V02.X = -123473.365318521042354;
+V02.Y = -327881.273977593053132;
+V02.Z = -179564.848150547797559;
+V02.VX = -0.077744951343820;
+V02.VY = -0.477316822334027;
+V02.VZ = -0.260364623315346;
+
+Create Spacecraft V03;
+V03.DateFormat = UTCGregorian;
+V03.Epoch = '06 Apr 2026 19:00:00.000';
+V03.CoordinateSystem = EarthMJ2000Eq;
+V03.DisplayStateType = Cartesian;
+V03.X = -127082.919390262773959;
+V03.Y = -340320.553841453627683;
+V03.Z = -186479.865814456337830;
+V03.VX = -0.218885647120912;
+V03.VY = -0.361219338355598;
+V03.VZ = -0.211082154739265;
+
+Create Spacecraft V04;
+V04.DateFormat = UTCGregorian;
+V04.Epoch = '08 Apr 2026 16:00:00.000';
+V04.CoordinateSystem = EarthMJ2000Eq;
+V04.DisplayStateType = Cartesian;
+V04.X = -92413.225552026284277;
+V04.Y = -271307.572034138662275;
+V04.Z = -158396.785464085376589;
+V04.VX = 0.415546991615234;
+V04.VY = 0.649835134198337;
+V04.VZ = 0.305078729153615;
+
+Create Spacecraft V05;
+V05.DateFormat = UTCGregorian;
+V05.Epoch = '09 Apr 2026 12:00:00.000';
+V05.CoordinateSystem = EarthMJ2000Eq;
+V05.DisplayStateType = Cartesian;
+V05.X = -59208.364762297889683;
+V05.Y = -215571.264066372357775;
+V05.Z = -131081.618473723501666;
+V05.VX = 0.509058371349951;
+V05.VY = 0.921015478630093;
+V05.VZ = 0.468182876758491;
+
+Create ForceModel F2ForceModel;
+F2ForceModel.CentralBody = Earth;
+F2ForceModel.PrimaryBodies = {Earth};
+F2ForceModel.PointMasses = {Luna, Sun};
+F2ForceModel.Drag = None;
+F2ForceModel.SRP = Off;
+F2ForceModel.RelativisticCorrection = Off;
+F2ForceModel.ErrorControl = RSSStep;
+F2ForceModel.GravityField.Earth.Degree = 2;
+F2ForceModel.GravityField.Earth.Order = 0;
+F2ForceModel.GravityField.Earth.PotentialFile = 'openqfuel_earth_j2.cof';
+F2ForceModel.GravityField.Earth.TideModel = 'None';
+
+Create Propagator F2Propagator;
+F2Propagator.FM = F2ForceModel;
+F2Propagator.Type = RungeKutta89;
+F2Propagator.InitialStepSize = 60;
+F2Propagator.Accuracy = 1e-13;
+F2Propagator.MinStep = 0.001;
+F2Propagator.MaxStep = 150;
+F2Propagator.MaxStepAttempts = 50;
+F2Propagator.StopIfAccuracyIsViolated = true;
+
+Create ReportFile EndpointReport;
+EndpointReport.Filename = 'gate3_gmat_endpoints.txt';
+EndpointReport.Precision = 16;
+EndpointReport.WriteHeaders = false;
+Create Variable WindowIndex;
+
+BeginMissionSequence;
+Propagate F2Propagator(V01) {V01.ElapsedSecs = 21600.0};
+WindowIndex = 1;
+Report EndpointReport WindowIndex V01.ElapsedSecs V01.EarthMJ2000Eq.X V01.EarthMJ2000Eq.Y V01.EarthMJ2000Eq.Z V01.EarthMJ2000Eq.VX V01.EarthMJ2000Eq.VY V01.EarthMJ2000Eq.VZ;
+Propagate F2Propagator(V02) {V02.ElapsedSecs = 21600.0};
+WindowIndex = 2;
+Report EndpointReport WindowIndex V02.ElapsedSecs V02.EarthMJ2000Eq.X V02.EarthMJ2000Eq.Y V02.EarthMJ2000Eq.Z V02.EarthMJ2000Eq.VX V02.EarthMJ2000Eq.VY V02.EarthMJ2000Eq.VZ;
+Propagate F2Propagator(V03) {V03.ElapsedSecs = 21600.0};
+WindowIndex = 3;
+Report EndpointReport WindowIndex V03.ElapsedSecs V03.EarthMJ2000Eq.X V03.EarthMJ2000Eq.Y V03.EarthMJ2000Eq.Z V03.EarthMJ2000Eq.VX V03.EarthMJ2000Eq.VY V03.EarthMJ2000Eq.VZ;
+Propagate F2Propagator(V04) {V04.ElapsedSecs = 21600.0};
+WindowIndex = 4;
+Report EndpointReport WindowIndex V04.ElapsedSecs V04.EarthMJ2000Eq.X V04.EarthMJ2000Eq.Y V04.EarthMJ2000Eq.Z V04.EarthMJ2000Eq.VX V04.EarthMJ2000Eq.VY V04.EarthMJ2000Eq.VZ;
+Propagate F2Propagator(V05) {V05.ElapsedSecs = 21600.0};
+WindowIndex = 5;
+Report EndpointReport WindowIndex V05.ElapsedSecs V05.EarthMJ2000Eq.X V05.EarthMJ2000Eq.Y V05.EarthMJ2000Eq.Z V05.EarthMJ2000Eq.VX V05.EarthMJ2000Eq.VY V05.EarthMJ2000Eq.VZ;

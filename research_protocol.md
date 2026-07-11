@@ -1,9 +1,9 @@
 # OpenQFuel-Cislunar Research Protocol
 
 Version: 0.2.0  
-Status: Gates 1 and 2 accepted; Gate 3 simulator credibility in progress  
+Status: Gates 1 and 2 accepted; Gate 3 simulator credibility failed – repair required  
 Prepared: 2026-07-10  
-Recommended decision: Accept
+Recommended decision: Reject current implementation or authorize a documented simulator-repair protocol deviation
 
 ## 1. Proposed title
 
@@ -562,8 +562,11 @@ Gate 2, Data and Numeric Freeze: accepted on 2026-07-11. The audited source
 set, exact variables, uncertainty ranges, simulator tolerances,
 practical-effect threshold, and compute budget are frozen.
 
-Gate 3, Simulator Credibility: in progress; approve calibration and held-out
-validation before dataset generation.
+Gate 3, Simulator Credibility: failed – GMAT R2026a independent comparison
+failed all 10 endpoint thresholds (position 1.699–14.094 km, limit 0.100 km;
+velocity 0.141–1.402 m/s, limit 0.010 m/s). Status: failed_repair_required.
+Pending human decision: reject or authorize a documented simulator-repair
+protocol deviation. ML and QML training remain prohibited.
 
 Gate 4, Phase 1 Freeze: approve benchmark implementation before opening final
 ML test results.

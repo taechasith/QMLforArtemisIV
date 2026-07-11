@@ -112,8 +112,9 @@ is authorized; ML training remains prohibited until Gate 3 is accepted.
 
 Date opened: 2026-07-11  
 Date package completed: 2026-07-11  
-Status: Completed, pending human acceptance  
-Recommendation: Accept
+Date GMAT comparison completed: 2026-07-11  
+Status: Failed – repair required; pending human decision  
+Recommendation: Reject current implementation or authorize a documented simulator-repair protocol deviation
 
 Checkpoint 3A, 2026-07-11: the F0/F1/F2 force model, DE440s source and
 checksum, integrator settings, impulsive and finite-burn mass models, public
@@ -150,11 +151,40 @@ viewing that output, and the exploratory output was not retained as research
 evidence. This is recorded as a procedural limitation because it weakens ideal
 blinding; Gate 3 acceptance must explicitly accept or reject this handling.
 
+Checkpoint 3C, 2026-07-11 – GMAT R2026a independent comparison completed:
+- Tool: NASA GMAT R2026a (official release, https://github.com/nasa/GMAT/releases/tag/R2026a)
+- GMAT executable SHA-256: `36c880ad6c3f5e69b2e7e90c9d9cec4086eced9c1073fc5b289966d54db15f5f`
+- GMAT archive SHA-256: `f7b00bdeb51e75f5f0a93380a97109f0505e75396f69a43cd5583c21f5fed9fc`
+- Script: `scripts/gmat/gate3_same_force_model.script` (DE440s/SPICE; Earth point mass + J2; Luna and Sun point masses; no drag/SRP; RungeKutta89 accuracy=1e-13 max_step=150 s)
+- Result data: `data/processed/simulator/gmat_comparison.csv`
+- Frozen thresholds: position ≤ 0.100 km, velocity ≤ 0.010 m/s (both from configs/simulator_acceptance.yaml; not changed)
+- All 10 independent endpoint thresholds failed:
+
+| Window | Position difference (km) | Limit (km) | Velocity difference (m/s) | Limit (m/s) |
+|---|---|---|---|---|
+| V01 | 11.276 | 0.100 | 0.986 | 0.010 |
+| V02 | 2.190 | 0.100 | 0.197 | 0.010 |
+| V03 | 1.699 | 0.100 | 0.141 | 0.010 |
+| V04 | 5.168 | 0.100 | 0.497 | 0.010 |
+| V05 | 14.094 | 0.100 | 1.402 | 0.010 |
+
+- All non-GMAT checks (parser/interpolation, numerical convergence, flight-ephemeris validation, weak-baseline improvement, event cross-checks) passed their frozen thresholds.
+- RTC3 remains not eligible (occurs after OEM creation cutoff).
+- No threshold, window, exclusion, or model parameter was changed after viewing these results.
+- Files added in this corrective commit: `data/processed/simulator/gmat_comparison.csv`,
+  `scripts/gmat/gate3_same_force_model.script`; modified files update the
+  credibility report, acceptance summary, and all intermediate validation CSVs
+  to reflect the completed GMAT outcome and `failed_repair_required` status.
+
+Gate 3 credibility report status: `failed_repair_required`. The full criterion
+table is in `data/processed/simulator/acceptance_summary.csv`.
+
 Decision requested:
 
-Approve or reject the F0/F1/F2 simulator, numerical convergence evidence,
-independent GMAT comparison (pending status), Artemis II held-out arc performance,
-mass and burn model, and credibility report before synthetic dataset generation.
+Reject Gate 3 as currently implemented (stopping ML/QML work pending a
+documented repair), or authorize a dated protocol-deviation entry authorizing a
+specific simulator-repair action before any dataset generation or ML training
+begins.
 
 
 ## Protocol deviations

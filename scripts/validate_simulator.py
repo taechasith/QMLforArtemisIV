@@ -494,6 +494,7 @@ def detect_gmat_console(requested: Path | None) -> Path | None:
 
 def gmat_evidence(
     console: Path | None,
+    kernel_path: Path,
     windows: list[ValidationWindow],
     ephemeris: OemEphemeris,
     python_endpoints: dict[str, np.ndarray],
@@ -518,6 +519,20 @@ def gmat_evidence(
         archive = console.parent.parent.with_suffix(".zip")
         if archive.is_file():
             archive_sha = sha256_file(archive)
+        gmat_root = console.parent.parent
+        staged_kernel = gmat_root / "data/planetary_ephem/spk/de440s.bsp"
+        staged_gravity = gmat_root / "data/gravity/earth/openqfuel_earth_j2.cof"
+        staged_kernel.parent.mkdir(parents=True, exist_ok=True)
+        staged_gravity.parent.mkdir(parents=True, exist_ok=True)
+        if staged_kernel.is_file() and sha256_file(staged_kernel) != sha256_file(kernel_path):
+            raise ValueError("The existing GMAT DE440s staging copy has a different checksum")
+        if not staged_kernel.is_file():
+            shutil.copy2(kernel_path, staged_kernel)
+        gravity_source = ROOT / "configs/gmat_earth_j2.cof"
+        if staged_gravity.is_file() and sha256_file(staged_gravity) != sha256_file(gravity_source):
+            raise ValueError("The existing GMAT Earth-J2 staging copy has a different checksum")
+        if not staged_gravity.is_file():
+            shutil.copy2(gravity_source, staged_gravity)
         output_path = console.parent.parent / "output/gate3_gmat_endpoints.txt"
         output_path.unlink(missing_ok=True)
         completed = subprocess.run(
@@ -538,7 +553,12 @@ def gmat_evidence(
                 tool_note = "NASA GMAT R2026a console completed the generated same-force script."
         else:
             diagnostic = (completed.stderr or completed.stdout).strip().splitlines()
-            detail = diagnostic[-1] if diagnostic else f"exit code {completed.returncode}"
+            detail = next(
+                (line.strip() for line in reversed(diagnostic) if "**** ERROR" in line),
+                diagnostic[-1] if diagnostic else f"exit code {completed.returncode}",
+            )
+            detail = detail.replace(str(ROOT), "<repository_root>")
+            detail = detail.replace(str(console.parent.parent), "<gmat_root>")
             tool_note = f"GMAT execution did not produce endpoint evidence: {detail}"
 
     rows: list[dict[str, Any]] = []
@@ -888,6 +908,7 @@ def main() -> int:
         events = event_evidence(ephemeris, jpl, windows, acceptance, summary)
     gmat, gmat_note = gmat_evidence(
         detect_gmat_console(args.gmat_console),
+        args.kernel,
         windows,
         ephemeris,
         python_endpoints,
