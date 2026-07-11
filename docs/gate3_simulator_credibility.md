@@ -1,12 +1,13 @@
 # Gate 3 simulator credibility validation
 
-Status: `pending_external_validation`  
+Status: `accepted` by the human research lead on 2026-07-12
 Generated: 2026-07-11  
+Decision recorded: 2026-07-12
 Decision authority: Human research lead
 
 ## Technical summary
 
-Gate 3 is incomplete because required evidence remains pending. ML and QML work remains prohibited.
+Gate 3 is accepted. All 67 evaluable numeric criteria pass, no criterion fails, and the human research lead accepted the documented RTC3 eligibility and execution-order limitations. Gate 4 preparation is authorized, but final-test labels remain locked pending Gate 4 freeze approval.
 
 The run evaluated 67 numeric acceptance checks: 0 failed and 1 required checks are pending or not eligible. The public OEM is an operational trajectory solution, not raw telemetry, and all conclusions are limited to the frozen public-data model.
 
@@ -21,7 +22,7 @@ The run evaluated 67 numeric acceptance checks: 0 failed and 1 required checks a
 | event_cross_checks | 5 | 0 | 1 |
 | independent_gmat | 10 | 0 | 0 |
 
-Every failed criterion is retained in `data/processed/simulator/acceptance_summary.csv`; thresholds, windows, exclusions, and source roles were not changed after viewing results.
+Every criterion and the non-eligible RTC3 event are retained in `data/processed/simulator/acceptance_summary.csv`; thresholds, windows, exclusions, and source roles were not changed after viewing results. The technical run's `pending_external_validation` label reflected RTC3 eligibility and was resolved through the documented human decision, not by changing a numeric result.
 
 ## Interpolation met its parser-quality thresholds
 
@@ -107,6 +108,6 @@ Exact audit tables are used instead of charts because each validation family has
 
 ## Required next step
 
-Resolve the pending independent or source-eligibility evidence before a Gate 3 decision. Do not begin ML or QML training.
+Prepare the Gate 4 prediction-benchmark freeze using the accepted simulator and the frozen compute methodology. Do not open final-test labels or begin confirmatory ML/QML evaluation until the Gate 4 implementation, splits, seeds, tuning budgets, and analysis code are explicitly approved.
 
-Decision requested from the human research lead: keep Gate 3 open pending the listed evidence.
+Human decision: Gate 3 accepted on 2026-07-12 with the documented RTC3 eligibility and execution-order limitations.

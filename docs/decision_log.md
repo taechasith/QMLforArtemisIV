@@ -113,8 +113,9 @@ is authorized; ML training remains prohibited until Gate 3 is accepted.
 Date opened: 2026-07-11  
 Date package completed: 2026-07-11  
 Date GMAT comparison completed: 2026-07-11  
-Status: Failed – repair required; pending human decision  
-Recommendation: Reject current implementation or authorize a documented simulator-repair protocol deviation
+Date decided: 2026-07-12
+Status: Accepted
+Recommendation: Accept with the documented RTC3 eligibility and execution-order limitations
 
 Checkpoint 3A, 2026-07-11: the F0/F1/F2 force model, DE440s source and
 checksum, integrator settings, impulsive and finite-burn mass models, public
@@ -180,12 +181,25 @@ Checkpoint 3C, 2026-07-11 – GMAT R2026a independent comparison completed:
 Gate 3 credibility report status: `failed_repair_required`. The full criterion
 table is in `data/processed/simulator/acceptance_summary.csv`.
 
-Decision requested:
+Decision requested before D001 repair:
 
 Reject Gate 3 as currently implemented (stopping ML/QML work pending a
 documented repair), or authorize a dated protocol-deviation entry authorizing a
 specific simulator-repair action before any dataset generation or ML training
 begins.
+
+Checkpoint 3D, 2026-07-12 – repaired comparison reviewed and Gate 3 accepted:
+
+- Repair commit: https://github.com/taechasith/QMLforArtemisIV/commit/cbd157dcba8449833eedc5b79ae5996da51b9e0f
+- Technical result: 67 criteria passed, 0 failed, and RTC3 remained `not_eligible` under the frozen OEM creation cutoff.
+- Independent GMAT result: all five position and all five velocity endpoint checks passed their unchanged 0.100 km and 0.010 m/s limits.
+- Maximum GMAT differences: 0.046296 km position and 0.004266 m/s velocity, both on V03.
+- Accepted limitation: RTC3 cannot be treated as eligible historical/reconstructed evidence from the frozen OEM release.
+- Accepted limitation: a pre-freeze one-off F2 smoke computation weakened ideal blinding, but no constant, force, threshold, window, exclusion, or model parameter was changed after viewing it.
+- Human decision: **Accepted**.
+- Decision date: 2026-07-12.
+- Consequence: Gate 3 is closed as accepted and Gate 4 benchmark preparation is authorized. Final-test labels remain locked until the Gate 4 freeze is explicitly approved.
+- Claim boundary: acceptance establishes research-simulator credibility only within the public-data model and tested domain; it does not establish flight readiness or operational approval.
 
 
 
@@ -194,7 +208,7 @@ begins.
 ### Deviation D001 — Gate 3 GMAT COF POTFIELD format repair
 
 Date: 2026-07-11  
-Status: Applied (pending re-run of Gate 3 GMAT comparison)  
+Status: Applied, independently rerun, and accepted
 Authority: Human research lead (user instruction: "continue")  
 Scope: Repair of `configs/gmat_earth_j2.cof` only — no threshold, model constant, window, or Python dynamics change.
 
@@ -246,7 +260,7 @@ New COF SHA-256: `3a3ff03505c29f45d7ceadfcd0ad1ba36d1f10b2d28fd07b227939f0876d86
 - Integrator settings — unchanged
 - Force model physics — unchanged (same J2 physics, now correctly transmitted to GMAT)
 
-#### Required follow-up
+#### Completed follow-up
 
-Re-run `scripts/validate_simulator.py --gmat` with the fixed COF to obtain a new Gate 3 GMAT comparison. Only if all 10 thresholds pass does Gate 3 advance to `passed_pending_human_acceptance`.
+The fixed COF was used for a complete GMAT rerun in commit `cbd157d`. All 10 independent endpoint thresholds passed without changing the frozen acceptance limits. The human research lead accepted Gate 3 on 2026-07-12 with the RTC3 eligibility and execution-order limitations explicitly retained.
 

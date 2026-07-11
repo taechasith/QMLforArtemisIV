@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.2.1
-Status: Gates 1 and 2 accepted; Gate 3 technical criteria passed; human decision pending
+Version: 0.2.2
+Status: Gates 1, 2, and 3 accepted; Gate 4 preparation authorized
 Prepared: 2026-07-10  
-Updated: 2026-07-11
-Recommended decision: Accept Gate 3 with the documented RTC3 eligibility and execution-order limitations
+Updated: 2026-07-12
+Recommended next decision: Approve the Gate 4 benchmark freeze before final-test labels are opened
 
 ## 1. Proposed title
 
@@ -565,7 +565,8 @@ Gate 2, Data and Numeric Freeze: accepted on 2026-07-11. The audited source
 set, exact variables, uncertainty ranges, simulator tolerances,
 practical-effect threshold, and compute budget are frozen.
 
-Gate 3, Simulator Credibility: technical validation completed after the logged
+Gate 3, Simulator Credibility: accepted by the human research lead on
+2026-07-12. Technical validation completed after the logged
 Deviation D001 repaired the fixed-column `POTFIELD` serialization supplied to
 GMAT R2026a. The repair did not change force-model physics, Python dynamics,
 validation windows, integrator settings, or acceptance thresholds. All 67
@@ -574,15 +575,14 @@ because it occurs after the frozen OEM creation cutoff.
 
 All 10 independent GMAT endpoint checks pass. The largest position difference
 is 0.046296 km against the 0.100 km limit, and the largest velocity difference
-is 0.004266 m/s against the 0.010 m/s limit. Current machine-readable status:
-`pending_external_validation`, reflecting the documented RTC3 eligibility
-limitation and pending human Gate 3 decision rather than a failed numeric
-criterion.
+is 0.004266 m/s against the 0.010 m/s limit. The technical run recorded
+`pending_external_validation` because RTC3 was `not_eligible`, not because a
+numeric criterion failed. The human decision accepted this nonblocking source
+limitation and the disclosed pre-freeze F2 smoke computation.
 
-Recommended human decision: accept Gate 3 while explicitly accepting the RTC3
-eligibility limitation and the disclosed pre-freeze F2 smoke computation. ML
-and QML training remain prohibited until that acceptance is recorded and
-published in `docs/decision_log.md`.
+Gate 4 preparation is authorized. Final-test labels remain locked until the
+Gate 4 benchmark implementation and analysis plan are frozen and explicitly
+approved.
 
 Gate 4, Phase 1 Freeze: approve benchmark implementation before opening final
 ML test results.

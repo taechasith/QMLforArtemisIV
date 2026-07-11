@@ -6,13 +6,13 @@ correction planning.
 
 ## Status
 
-Decision Gate 1 was accepted on 2026-07-10 and Gate 2 was accepted on
-2026-07-11. Gate 3 simulator credibility work is now in progress. The F0/F1/F2
-simulator core was frozen before formal held-out validation on 2026-07-11. The
-repository contains the OEM audit, flown-event registry, leak-resistant
-simulator split, uncertainty model, human constraint envelopes, simulator
-acceptance tests, engineering effect threshold, and compute ceiling. No
-machine-learning result has been generated or inspected.
+Decision Gate 1 was accepted on 2026-07-10, Gate 2 was accepted on 2026-07-11,
+and Gate 3 simulator credibility was accepted on 2026-07-12 with the documented
+RTC3 eligibility and execution-order limitations. All 67 evaluable Gate 3
+criteria pass; RTC3 remains transparently `not_eligible`. Gate 4 benchmark
+preparation is authorized, but final-test labels remain locked until the Gate 4
+freeze is explicitly approved. No machine-learning result has been generated
+or inspected.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
