@@ -57,14 +57,14 @@ event_lunar_closest_approach,event_cross_checks,lunar closest approach,absolute_
 event_rtc1,event_cross_checks,RTC1,absolute_timing_error,17.084,s,<=,240.000,pass,event_cross_checks.csv,EDT converted to UTC; SI delta-v is an exact unit conversion of a rounded published value
 event_rtc2,event_cross_checks,RTC2,absolute_timing_error,28.122,s,<=,240.000,pass,event_cross_checks.csv,EDT converted to UTC; communications were restored before the burn
 event_rtc3,event_cross_checks,RTC3,absolute_timing_error,,s,<=,240.000,not_eligible,event_cross_checks.csv,EDT converted to UTC; SI delta-v is an exact unit conversion of a rounded published value The event is not eligible for historical/reconstructed OEM validation and remains unresolved at Gate 3.
-V01_gmat_position,independent_gmat,V01,endpoint_position_difference,11.276084294437,km,<=,0.100000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
-V01_gmat_velocity,independent_gmat,V01,endpoint_velocity_difference,0.986380952903,m/s,<=,0.010000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
-V02_gmat_position,independent_gmat,V02,endpoint_position_difference,2.189901878445,km,<=,0.100000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
-V02_gmat_velocity,independent_gmat,V02,endpoint_velocity_difference,0.197074914230,m/s,<=,0.010000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
-V03_gmat_position,independent_gmat,V03,endpoint_position_difference,1.698661383349,km,<=,0.100000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
-V03_gmat_velocity,independent_gmat,V03,endpoint_velocity_difference,0.141042055373,m/s,<=,0.010000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
-V04_gmat_position,independent_gmat,V04,endpoint_position_difference,5.167709057523,km,<=,0.100000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
-V04_gmat_velocity,independent_gmat,V04,endpoint_velocity_difference,0.497374536822,m/s,<=,0.010000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
-V05_gmat_position,independent_gmat,V05,endpoint_position_difference,14.093528854239,km,<=,0.100000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
-V05_gmat_velocity,independent_gmat,V05,endpoint_velocity_difference,1.401584593293,m/s,<=,0.010000000000,fail,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
-gate3_overall,overall,Gate 3 simulator credibility,all required frozen criteria,,,all,pass,failed_repair_required,acceptance_summary.csv,Human acceptance is required even when all technical criteria pass.
+V01_gmat_position,independent_gmat,V01,endpoint_position_difference,0.000016009865,km,<=,0.100000000000,pass,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V01_gmat_velocity,independent_gmat,V01,endpoint_velocity_difference,0.000001536565,m/s,<=,0.010000000000,pass,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V02_gmat_position,independent_gmat,V02,endpoint_position_difference,0.002096010002,km,<=,0.100000000000,pass,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V02_gmat_velocity,independent_gmat,V02,endpoint_velocity_difference,0.000274731022,m/s,<=,0.010000000000,pass,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V03_gmat_position,independent_gmat,V03,endpoint_position_difference,0.046295674715,km,<=,0.100000000000,pass,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V03_gmat_velocity,independent_gmat,V03,endpoint_velocity_difference,0.004265624643,m/s,<=,0.010000000000,pass,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V04_gmat_position,independent_gmat,V04,endpoint_position_difference,0.000026930045,km,<=,0.100000000000,pass,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V04_gmat_velocity,independent_gmat,V04,endpoint_velocity_difference,0.000002358270,m/s,<=,0.010000000000,pass,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V05_gmat_position,independent_gmat,V05,endpoint_position_difference,0.000011039964,km,<=,0.100000000000,pass,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+V05_gmat_velocity,independent_gmat,V05,endpoint_velocity_difference,0.000001035949,m/s,<=,0.010000000000,pass,gmat_comparison.csv,NASA GMAT R2026a console completed the generated same-force script.
+gate3_overall,overall,Gate 3 simulator credibility,all required frozen criteria,,,all,pass,pending_external_validation,acceptance_summary.csv,Human acceptance is required even when all technical criteria pass.

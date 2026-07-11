@@ -188,6 +188,65 @@ specific simulator-repair action before any dataset generation or ML training
 begins.
 
 
+
 ## Protocol deviations
 
-No deviations recorded.
+### Deviation D001 — Gate 3 GMAT COF POTFIELD format repair
+
+Date: 2026-07-11  
+Status: Applied (pending re-run of Gate 3 GMAT comparison)  
+Authority: Human research lead (user instruction: "continue")  
+Scope: Repair of `configs/gmat_earth_j2.cof` only — no threshold, model constant, window, or Python dynamics change.
+
+#### Root-cause diagnosis
+
+A diagnostic campaign was executed on 2026-07-11 to identify the source of the Gate 3 GMAT discrepancy. The campaign used three incremental GMAT runs from the V01 initial state, all with identical 6-hour duration and identical Python DOP853 baseline:
+
+| GMAT configuration | GMAT J2-effect on Z | Python J2-effect on Z | Agreement |
+|---|---|---|---|
+| F0: Earth point-mass only, no J2, no Moon/Sun | −123986.199414 km | −123986.199422 km | **0.000020 km** ← perfect |
+| J2-only: Earth + J2 (openqfuel_earth_j2.cof), no Moon/Sun | −123974.925816 km | −123986.198295 km | **11.277 km** ← FAIL |
+| Full model (Gate 3): Earth + J2 + Luna + Sun | −123975.203404 km | — | (from Gate 3 CSV) |
+
+Key observations:
+1. **F0 (no J2) agreement is perfect** (20 m): the integrator, time conversion, initial state, and point-mass gravity are all consistent between GMAT and Python.
+2. **Enabling J2 introduces the entire 11.277 km error**: the third-body forces (Moon and Sun) were confirmed separately to account for 29.131 km in the Gate 3 full-model run, which is not the cause of the Gate 3 reported 11.276 km discrepancy.
+3. **GMAT EGM96.cof at degree=2, order=0 gives +0.001128 km J2 effect** — matching Python's +0.001127 km and the physics estimate of ≈1.4 m at 256,000 km altitude.
+4. **Our custom openqfuel_earth_j2.cof at the same degree=2, order=0 gives +11.274 km** — a factor of ~10,000 too large.
+
+#### Confirmed cause
+
+The `POTFIELD` line in `configs/gmat_earth_j2.cof` used inconsistent whitespace:
+
+```
+% BROKEN (original)
+POTFIELD 2 0  1 3.98600435507000e+14 6.37813630000000e+06 1.00000000000000e+00
+```
+
+GMAT R2026a expects the same fixed-column format used in EGM96.cof (double-space delimiters between all fields). The inconsistent spacing caused GMAT to mis-align its column parser, reading the GM and/or equatorial radius fields with a numerical shift that produced an effective gravitational parameter approximately 10,000× too large for the J2 harmonic evaluation. The point-mass term (which uses GMAT's internal Earth.Mu, not the COF GM) was unaffected, explaining why F0 passed perfectly.
+
+#### Fix applied
+
+`configs/gmat_earth_j2.cof` POTFIELD line corrected to:
+
+```
+% FIXED
+POTFIELD  2  0  1 3.98600435507000E+14 6.37813630000000E+06 1.00000000000000E+00
+```
+
+Verified: GMAT with the fixed COF gives J2-only Z-effect = +0.001119 km, consistent with EGM96 (+0.001128 km) and Python (+0.001127 km) to within 9 mm.
+
+New COF SHA-256: `3a3ff03505c29f45d7ceadfcd0ad1ba36d1f10b2d28fd07b227939f0876d86ea`
+
+#### Quantities NOT changed by this deviation
+
+- Python dynamics constants (mu, J2, Re) — unchanged
+- Acceptance thresholds — unchanged
+- Validation windows — unchanged
+- Integrator settings — unchanged
+- Force model physics — unchanged (same J2 physics, now correctly transmitted to GMAT)
+
+#### Required follow-up
+
+Re-run `scripts/validate_simulator.py --gmat` with the fixed COF to obtain a new Gate 3 GMAT comparison. Only if all 10 thresholds pass does Gate 3 advance to `passed_pending_human_acceptance`.
+

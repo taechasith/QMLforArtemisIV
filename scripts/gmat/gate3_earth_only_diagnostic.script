@@ -1,0 +1,51 @@
+% Gate 3 diagnostic: Earth-only propagation (no Moon, no Sun)
+% Tool: NASA GMAT R2026a
+% Purpose: isolate H1/H2 (third-body) vs time/frame/integrator
+
+SolarSystem.EphemerisSource = 'SPICE';
+SolarSystem.SPKFilename = '../data/planetary_ephem/spk/de440s.bsp';
+
+Create Spacecraft V01;
+V01.DateFormat = UTCGregorian;
+V01.Epoch = '04 Apr 2026 11:00:00.000';
+V01.CoordinateSystem = EarthMJ2000Eq;
+V01.DisplayStateType = Cartesian;
+V01.X  = -105310.786419770316570;
+V01.Y  = -204917.564511674834648;
+V01.Z  = -112666.427079640023294;
+V01.VX = -0.217527477574041;
+V01.VY = -1.013501925844821;
+V01.VZ = -0.551216324422650;
+
+Create ForceModel EarthOnlyFM;
+EarthOnlyFM.CentralBody = Earth;
+EarthOnlyFM.PrimaryBodies = {Earth};
+% PointMasses intentionally empty - Luna and Sun DISABLED
+EarthOnlyFM.PointMasses = {};
+EarthOnlyFM.Drag = None;
+EarthOnlyFM.SRP = Off;
+EarthOnlyFM.RelativisticCorrection = Off;
+EarthOnlyFM.ErrorControl = RSSStep;
+EarthOnlyFM.GravityField.Earth.Degree = 2;
+EarthOnlyFM.GravityField.Earth.Order = 0;
+EarthOnlyFM.GravityField.Earth.PotentialFile = 'openqfuel_earth_j2.cof';
+EarthOnlyFM.GravityField.Earth.TideModel = 'None';
+
+Create Propagator EarthOnlyProp;
+EarthOnlyProp.FM = EarthOnlyFM;
+EarthOnlyProp.Type = RungeKutta89;
+EarthOnlyProp.InitialStepSize = 60;
+EarthOnlyProp.Accuracy = 1e-13;
+EarthOnlyProp.MinStep = 0.001;
+EarthOnlyProp.MaxStep = 150;
+EarthOnlyProp.MaxStepAttempts = 50;
+EarthOnlyProp.StopIfAccuracyIsViolated = true;
+
+Create ReportFile DiagReport;
+DiagReport.Filename = 'gate3_earth_only_endpoints.txt';
+DiagReport.Precision = 16;
+DiagReport.WriteHeaders = false;
+
+BeginMissionSequence;
+Propagate EarthOnlyProp(V01) {V01.ElapsedSecs = 21600.0};
+Report DiagReport V01.ElapsedSecs V01.EarthMJ2000Eq.X V01.EarthMJ2000Eq.Y V01.EarthMJ2000Eq.Z V01.EarthMJ2000Eq.VX V01.EarthMJ2000Eq.VY V01.EarthMJ2000Eq.VZ;

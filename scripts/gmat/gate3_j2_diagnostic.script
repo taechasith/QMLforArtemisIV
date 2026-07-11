@@ -1,0 +1,47 @@
+% Gate 3 diagnostic: Earth J2 ONLY (no Moon, no Sun)
+SolarSystem.EphemerisSource = 'SPICE';
+SolarSystem.SPKFilename = '../data/planetary_ephem/spk/de440s.bsp';
+
+Create Spacecraft V01;
+V01.DateFormat = UTCGregorian;
+V01.Epoch = '04 Apr 2026 11:00:00.000';
+V01.CoordinateSystem = EarthMJ2000Eq;
+V01.DisplayStateType = Cartesian;
+V01.X  = -105310.786419770316570;
+V01.Y  = -204917.564511674834648;
+V01.Z  = -112666.427079640023294;
+V01.VX = -0.217527477574041;
+V01.VY = -1.013501925844821;
+V01.VZ = -0.551216324422650;
+
+Create ForceModel J2FM;
+J2FM.CentralBody = Earth;
+J2FM.PrimaryBodies = {Earth};
+J2FM.PointMasses = {};
+J2FM.Drag = None;
+J2FM.SRP = Off;
+J2FM.RelativisticCorrection = Off;
+J2FM.ErrorControl = RSSStep;
+J2FM.GravityField.Earth.Degree = 2;
+J2FM.GravityField.Earth.Order = 0;
+J2FM.GravityField.Earth.PotentialFile = 'openqfuel_earth_j2.cof';
+J2FM.GravityField.Earth.TideModel = 'None';
+
+Create Propagator J2Prop;
+J2Prop.FM = J2FM;
+J2Prop.Type = RungeKutta89;
+J2Prop.InitialStepSize = 60;
+J2Prop.Accuracy = 1e-13;
+J2Prop.MinStep = 0.001;
+J2Prop.MaxStep = 150;
+J2Prop.MaxStepAttempts = 50;
+J2Prop.StopIfAccuracyIsViolated = true;
+
+Create ReportFile Rep;
+Rep.Filename = 'gate3_j2_only.txt';
+Rep.Precision = 16;
+Rep.WriteHeaders = false;
+
+BeginMissionSequence;
+Propagate J2Prop(V01) {V01.ElapsedSecs = 21600.0};
+Report Rep V01.ElapsedSecs V01.EarthMJ2000Eq.X V01.EarthMJ2000Eq.Y V01.EarthMJ2000Eq.Z V01.EarthMJ2000Eq.VX V01.EarthMJ2000Eq.VY V01.EarthMJ2000Eq.VZ;

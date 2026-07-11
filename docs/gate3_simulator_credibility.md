@@ -1,14 +1,14 @@
 # Gate 3 simulator credibility validation
 
-Status: `failed_repair_required`  
+Status: `pending_external_validation`  
 Generated: 2026-07-11  
 Decision authority: Human research lead
 
 ## Technical summary
 
-Gate 3 failed its frozen acceptance criteria and is in `failed_repair_required` status. ML and QML work remains prohibited.
+Gate 3 is incomplete because required evidence remains pending. ML and QML work remains prohibited.
 
-The run evaluated 67 numeric acceptance checks: 10 failed and 1 required checks are pending or not eligible. The public OEM is an operational trajectory solution, not raw telemetry, and all conclusions are limited to the frozen public-data model.
+The run evaluated 67 numeric acceptance checks: 0 failed and 1 required checks are pending or not eligible. The public OEM is an operational trajectory solution, not raw telemetry, and all conclusions are limited to the frozen public-data model.
 
 ## Frozen criteria produced a gate decision
 
@@ -19,7 +19,7 @@ The run evaluated 67 numeric acceptance checks: 10 failed and 1 required checks 
 | flight_ephemeris_validation | 20 | 0 | 0 |
 | weak_baseline_improvement | 20 | 0 | 0 |
 | event_cross_checks | 5 | 0 | 1 |
-| independent_gmat | 0 | 10 | 0 |
+| independent_gmat | 10 | 0 | 0 |
 
 Every failed criterion is retained in `data/processed/simulator/acceptance_summary.csv`; thresholds, windows, exclusions, and source roles were not changed after viewing results.
 
@@ -79,11 +79,11 @@ The generated `scripts/gmat/gate3_same_force_model.script` uses DE440s through S
 
 | Window | Position difference (km) | Velocity difference (m/s) | Status |
 |---|---|---|---|
-| V01 | 11.276084294437 | 0.986380952903 | fail |
-| V02 | 2.189901878445 | 0.197074914230 | fail |
-| V03 | 1.698661383349 | 0.141042055373 | fail |
-| V04 | 5.167709057523 | 0.497374536822 | fail |
-| V05 | 14.093528854239 | 1.401584593293 | fail |
+| V01 | 0.000016009865 | 0.000001536565 | pass |
+| V02 | 0.002096010002 | 0.000274731022 | pass |
+| V03 | 0.046295674715 | 0.004265624643 | pass |
+| V04 | 0.000026930045 | 0.000002358270 | pass |
+| V05 | 0.000011039964 | 0.000001035949 | pass |
 
 ## Scope, data, and metric definitions
 
@@ -107,6 +107,6 @@ Exact audit tables are used instead of charts because each validation family has
 
 ## Required next step
 
-Publish and review the failed criteria. Any repair requires a dated protocol deviation; do not change thresholds, windows, splits, or exclusions, and do not begin ML or QML training.
+Resolve the pending independent or source-eligibility evidence before a Gate 3 decision. Do not begin ML or QML training.
 
-Decision requested from the human research lead: reject Gate 3 as currently implemented or authorize a documented simulator-repair protocol deviation.
+Decision requested from the human research lead: keep Gate 3 open pending the listed evidence.

@@ -1,0 +1,46 @@
+% Gate 3 diagnostic: Earth POINT MASS ONLY (no J2, no Moon, no Sun)
+SolarSystem.EphemerisSource = 'SPICE';
+SolarSystem.SPKFilename = '../data/planetary_ephem/spk/de440s.bsp';
+
+Create Spacecraft V01;
+V01.DateFormat = UTCGregorian;
+V01.Epoch = '04 Apr 2026 11:00:00.000';
+V01.CoordinateSystem = EarthMJ2000Eq;
+V01.DisplayStateType = Cartesian;
+V01.X  = -105310.786419770316570;
+V01.Y  = -204917.564511674834648;
+V01.Z  = -112666.427079640023294;
+V01.VX = -0.217527477574041;
+V01.VY = -1.013501925844821;
+V01.VZ = -0.551216324422650;
+
+Create ForceModel F0FM;
+F0FM.CentralBody = Earth;
+F0FM.PrimaryBodies = {Earth};
+F0FM.PointMasses = {};
+F0FM.Drag = None;
+F0FM.SRP = Off;
+F0FM.RelativisticCorrection = Off;
+F0FM.ErrorControl = RSSStep;
+F0FM.GravityField.Earth.Degree = 0;
+F0FM.GravityField.Earth.Order = 0;
+F0FM.GravityField.Earth.TideModel = 'None';
+
+Create Propagator F0Prop;
+F0Prop.FM = F0FM;
+F0Prop.Type = RungeKutta89;
+F0Prop.InitialStepSize = 60;
+F0Prop.Accuracy = 1e-13;
+F0Prop.MinStep = 0.001;
+F0Prop.MaxStep = 150;
+F0Prop.MaxStepAttempts = 50;
+F0Prop.StopIfAccuracyIsViolated = true;
+
+Create ReportFile Rep;
+Rep.Filename = 'gate3_f0_only.txt';
+Rep.Precision = 16;
+Rep.WriteHeaders = false;
+
+BeginMissionSequence;
+Propagate F0Prop(V01) {V01.ElapsedSecs = 21600.0};
+Report Rep V01.ElapsedSecs V01.EarthMJ2000Eq.X V01.EarthMJ2000Eq.Y V01.EarthMJ2000Eq.Z V01.EarthMJ2000Eq.VX V01.EarthMJ2000Eq.VY V01.EarthMJ2000Eq.VZ;
