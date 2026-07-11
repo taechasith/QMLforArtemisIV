@@ -242,6 +242,12 @@ checksum. All nonconvergence cases remain represented. The first corrected
 group is deliberately serial so validity is established before throughput is
 optimized for the reference laptop.
 
+After full F0 qualification, a deterministic within-group cache was enabled
+for zero-burn candidates with byte-identical true states. This removes repeated
+integration of the same trajectory in nominal groups while retaining each
+candidate's timing metadata. It does not cache nonzero burns or distinct
+uncertainty states and therefore changes scheduling cost, not scientific rows.
+
 ### 6.3 Classical model experiments
 
 Trial-level and model-internal parallelism are not both run at full width.
@@ -339,6 +345,7 @@ and scientific failures because they require different responses.
 | 2026-07-12 | Gate 4 literature retrieval | OpenAlex returned all seven query counts but persistently rate-limited metadata export with HTTP 429 | A complete multi-database systematic review could not be claimed from this run | Preserved count-only OpenAlex logs, completed NTRS/arXiv API retrieval, extracted 23 primary or authoritative records, labeled the synthesis bounded, and accepted D002 with a mandatory pre-manuscript update | Open coverage limitation. API throttling must reduce claim scope, not be hidden as successful screening |
 | 2026-07-12 | Gate 4 QML scheduling | A full trial-by-seed-by-fold Cartesian run would spend substantial laptop time on configurations that are clearly uncompetitive at small samples | The accepted 30-trial and seed ceilings could be misread as requiring every combination | Froze grouped successive-halving rungs for QML and matched controls, 20 seeds only for selected development configurations, one statevector/GPU job, and resumable checkpoints | Preventive adaptation. Preserve comparisons and randomness while pruning only by a rule registered before outcomes |
 | 2026-07-12 | Gate 5 scenario generation | The first generator produced 7,000 F0 rows before a schema/uncertainty audit and an F1 run stopped on an incorrect DE440s path | Every pre-D003 F0 row is invalid for research use, and 1,020 of 1,400 decision sets lack a feasible reference | Stopped progression, preserved RFIG-002 through RFIG-004, froze D003 in `72f99c4`, qualified G01 with RFIG-005/RFIG-006, then audited all F0 with RFIG-007 through RFIG-009 | F0 resolved: 14/14 groups and 7,000/7,000 rows valid in 542.060 s group work; 319/1,400 no-reference sets are retained limitations. F1/F2 audits remain open |
+| 2026-07-12 | Gate 5 F1 preparation | Nominal decision sets contain multiple zero-delta-v candidates that would repeat the same multi-day propagation thousands of times | The scientifically identical work would waste CPU time before any higher-fidelity evidence was produced | Added a true-state-keyed zero-burn cache after F0 qualification; candidate timing metadata remains distinct and nonzero/distinct-state propagations are never cached | Execution-only adaptation. Unit tests enforce cache identity and timing retention; F1 runtime figures must disclose the optimization |
 
 For RTC3 specifically, the qualified OEM predates the event by 15 hours 30
 minutes 41 seconds. A separate post-RTC3 trajectory product was not substituted

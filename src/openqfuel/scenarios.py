@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import math
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -767,6 +767,56 @@ def execute_candidate(
         )
 
 
+def execute_candidate_cached(
+    cache: dict[tuple[float, ...], ExecutionResult],
+    epoch: datetime,
+    true_state: np.ndarray,
+    targeting: TargetingContext,
+    plan: CandidatePlan,
+    error: ExecutionError,
+    sample: UncertaintySample,
+    settings: ForceModelSettings,
+    ephemeris: Any,
+    vehicle: Vehicle,
+    lunar_flyby_epoch: datetime,
+    generation_config: Mapping[str, Any],
+) -> ExecutionResult:
+    if float(np.linalg.norm(plan.planned_delta_v_m_s)) != 0.0:
+        return execute_candidate(
+            epoch,
+            true_state,
+            targeting,
+            plan,
+            error,
+            sample,
+            settings,
+            ephemeris,
+            vehicle,
+            lunar_flyby_epoch,
+            generation_config,
+        )
+
+    key = tuple(float(value) for value in true_state)
+    if key not in cache:
+        cache[key] = execute_candidate(
+            epoch,
+            true_state,
+            targeting,
+            plan,
+            error,
+            sample,
+            settings,
+            ephemeris,
+            vehicle,
+            lunar_flyby_epoch,
+            generation_config,
+        )
+    actual_start = plan.planned_start_offset_s + 60.0 * (
+        sample.communication_hold_min + sample.burn_delay_min
+    )
+    return replace(cache[key], actual_start_offset_s=actual_start)
+
+
 def _flight_path_angle(position: np.ndarray, velocity: np.ndarray) -> float:
     denominator = float(np.linalg.norm(position) * np.linalg.norm(velocity))
     value = float(np.dot(position, velocity)) / denominator
@@ -1056,6 +1106,7 @@ def generate_group_records(
     elapsed_since_tli_h = (epoch - tli_epoch).total_seconds() / 3600.0
     time_to_target_h = targeting.duration_s / 3600.0
     records: list[dict[str, Any]] = []
+    no_burn_cache: dict[tuple[float, ...], ExecutionResult] = {}
 
     for set_index, sobol_row in enumerate(design, start=1):
         sample = sample_uncertainty(
@@ -1101,7 +1152,8 @@ def generate_group_records(
                 uncertainty_config,
                 generation_config,
             )
-            execution = execute_candidate(
+            execution = execute_candidate_cached(
+                no_burn_cache,
                 epoch,
                 true_state,
                 targeting,

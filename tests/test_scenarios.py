@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import numpy as np
 
+from openqfuel.dynamics import ForceModelSettings
 from openqfuel.gate4 import read_yaml
 from openqfuel.scenarios import (
     CandidatePlan,
@@ -13,6 +14,8 @@ from openqfuel.scenarios import (
     cap_delta_v,
     correlated_ellipse_utilization,
     crew_axis_acceleration_m_s2,
+    execute_candidate,
+    execute_candidate_cached,
     execution_error,
     interval_overlaps_exclusion,
     planned_burn_duration_s,
@@ -158,3 +161,80 @@ def test_terminal_components_are_zero_for_identical_states() -> None:
     state = np.array([7000.0, 0.0, 0.0, 0.0, 7.5, 1.0, 25000.0])
     components = terminal_components(state, state.copy())
     assert all(abs(value) < 1e-12 for value in components.values())
+
+
+def test_zero_burn_cache_reuses_propagation_but_retains_candidate_start() -> None:
+    vehicle = vehicle_from_configs(CONSTRAINTS, GENERATION)
+    epoch = datetime(2026, 4, 8, tzinfo=timezone.utc)
+    state = np.array([7000.0, 0.0, 0.0, 0.0, 7.5, 1.0, vehicle.mass_kg])
+    targeting = TargetingContext(
+        target_epoch=epoch + timedelta(seconds=60),
+        duration_s=60.0,
+        target_state=state.copy(),
+        state_to_terminal_position=np.zeros((3, 6)),
+        burn_offsets_s=(10.0, 20.0, 30.0, 40.0),
+        burn_to_terminal_position=tuple(np.eye(3) for _ in range(4)),
+    )
+    sample = sample_uncertainty(
+        sobol_rows(1, 41)[0], "U0", UNCERTAINTY, GENERATION, 60.0
+    )
+    error = execution_error(sample, "U0", 1, UNCERTAINTY, GENERATION)
+    cache = {}
+    first = execute_candidate_cached(
+        cache,
+        epoch,
+        state,
+        targeting,
+        CandidatePlan(1, 0.0, np.zeros(3), 0.0, "RCS_LOW", vehicle.rcs_thrust_n),
+        error,
+        sample,
+        ForceModelSettings.for_fidelity("F0"),
+        None,
+        vehicle,
+        epoch + timedelta(days=1),
+        GENERATION,
+    )
+    second_plan = CandidatePlan(
+        2, 20.0, np.zeros(3), 0.0, "RCS_LOW", vehicle.rcs_thrust_n
+    )
+    second = execute_candidate_cached(
+        cache,
+        epoch,
+        state,
+        targeting,
+        second_plan,
+        error,
+        sample,
+        ForceModelSettings.for_fidelity("F0"),
+        None,
+        vehicle,
+        epoch + timedelta(days=1),
+        GENERATION,
+    )
+    uncached = execute_candidate(
+        epoch,
+        state,
+        targeting,
+        second_plan,
+        error,
+        sample,
+        ForceModelSettings.for_fidelity("F0"),
+        None,
+        vehicle,
+        epoch + timedelta(days=1),
+        GENERATION,
+    )
+    assert len(cache) == 1
+    np.testing.assert_array_equal(first.endpoint, second.endpoint)
+    np.testing.assert_array_equal(second.endpoint, uncached.endpoint)
+    np.testing.assert_array_equal(
+        second.actual_delta_v_m_s, uncached.actual_delta_v_m_s
+    )
+    assert first.actual_start_offset_s == 0.0
+    assert second.actual_start_offset_s == uncached.actual_start_offset_s == 20.0
+    assert second.propellant_used_kg == uncached.propellant_used_kg
+    assert second.minimum_lunar_surface_altitude_km == (
+        uncached.minimum_lunar_surface_altitude_km
+    )
+    assert second.nonconverged == uncached.nonconverged
+    assert second.execution_violation == uncached.execution_violation

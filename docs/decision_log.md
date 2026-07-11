@@ -478,3 +478,12 @@ All-F0 qualification, 2026-07-12:
 - Outcome-visibility rule: the 319 no-reference sets are a reportable development limitation and cannot be reduced by post-result candidate retuning under D003.
 - Consequence: F0 repair is qualified. F1 may begin with one group followed by a separate full audit before scale-up; F2 remains pending.
 
+Post-F0 compute adaptation:
+
+Before F1, the implementation added a deterministic within-group cache for
+zero-delta-v candidates with byte-identical true states. It retains each
+candidate's actual-start metadata and does not cache nonzero burns or distinct
+uncertainty states. This is an execution-only laptop adaptation under the
+already frozen compute rule; it does not alter scenario identities, sampled
+inputs, force models, outcomes, constraints, or acceptance criteria.
+

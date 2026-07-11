@@ -167,6 +167,7 @@ payload:
 
 compute:
   current_execution: "serial group checkpoint until the first corrected group passes full audit"
+  deterministic_zero_burn_cache: "within a group, reuse propagation only for byte-identical true states and zero planned delta-v; retain each candidate's actual start metadata"
   post_audit_worker_default: 4
   post_audit_worker_ceiling: 8
   numerical_library_threads_per_worker: 1
