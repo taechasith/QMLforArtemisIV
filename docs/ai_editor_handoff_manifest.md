@@ -2,7 +2,8 @@
 
 Prepared: 2026-07-11  
 Repository: [QMLforArtemisIV](https://github.com/taechasith/QMLforArtemisIV)  
-Local unpushed checkpoint: `432385a` (`Freeze Gate 3 simulator core before formal validation`)
+Local unpushed Gate 3A checkpoint: `432385a` (`Freeze Gate 3 simulator core before formal validation`)  
+Local handoff commits: `432385a..7775c9d`
 
 This manifest identifies what is already on GitHub, what must be copied into a
 fresh clone, what raw public data must be downloaded locally, and what the next
