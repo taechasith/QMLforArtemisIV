@@ -1,7 +1,7 @@
 # OpenQFuel-Cislunar Research Protocol
 
 Version: 0.3.0
-Status: Gates 1, 2, 3, and 4 accepted; Gate 5 development-scenario generation and tuning in progress
+Status: Gates 1, 2, 3, and 4 accepted; Gate 5 D003 generator repair in progress
 Prepared: 2026-07-10  
 Updated: 2026-07-12
 Recommended next decision: Accept Gate 5 trigger after reviewing the development-split analysis report
@@ -550,6 +550,9 @@ technical authorities.
 - Fixed configuration files and seed lists.
 - Automated unit, integration, and numerical regression tests.
 - Machine-readable results and figure-generation scripts.
+- A figure registry linking every material result, failed attempt, repair, and
+  claim-bearing methodology change to source data, deterministic PNG/SVG
+  generation, captions, checksums, and claim boundaries.
 - Data cards, model cards, and simulation-credibility report.
 - Tagged releases and an archival DOI at publication.
 - Negative and failed experiments retained when scientifically relevant.
@@ -595,19 +598,19 @@ not because a numeric criterion failed. The human decision accepted this
 nonblocking source limitation and the disclosed pre-freeze F2 smoke
 computation.
 
-The Gate 4 candidate now freezes 65,000 manifest-only candidate-plan identities
-in 13,000 five-plan decision sets, whole-group splits, schema, seeds, tuning
-trials, nine candidate families, one interpretation control, QML resources,
-and analysis code. No feature payload, label, fitted research model, or
-benchmark outcome has been generated. Gate 4 remains pending the human
-research lead's accept, reject, or revise decision. Both final-test splits also
-require a separate post-approval unlock commit.
+Gate 4 froze 65,000 candidate-plan identities in 13,000 five-plan decision
+sets, whole-group splits, schema, seeds, tuning trials, nine candidate
+families, one interpretation control, QML resources, and analysis code. Gate 4
+and D002 were accepted on 2026-07-12 before any research scenario outcome or
+model result was visible. Development generation and registered tuning are
+authorized; both final-test splits still require a separate unlock commit.
 
-Gate 4, Phase 1 Freeze: pending human approval. The recommendation is to accept
-the benchmark with proposed Deviation D002, which records the bounded
-literature-search coverage and requires the full systematic update before
-manuscript submission. Acceptance authorizes development generation and
-tuning, not immediate final-test access.
+The first post-acceptance generator produced 7,000 F0 rows that were later
+found invalid for schema, uncertainty, epoch, targeting, and effective-input
+conformance. Deviation D003 excludes those rows from all research use, retains
+their audit and figures, and authorizes a committed repair followed by a
+first-group audit before scale-up. No F1/F2 payload, valid research payload,
+fitted model, or benchmark result exists at this checkpoint.
 
 Gate 5, Algorithm Trigger: authorize or reject development of the proposed new
 model based only on the preregistered trigger.
@@ -628,13 +631,23 @@ in repository history and `docs/decision_log.md`. D001 changed serialization
 only; no scientific constant, threshold, split, window, exclusion, or force
 term changed.
 
-Proposed Deviation D002, dated 2026-07-12, would allow the Gate 4 freeze to use
+Deviation D002, accepted on 2026-07-12, allows the Gate 4 freeze to use
 complete NTRS/arXiv retrieval plus 23 extracted primary or authoritative
 records after OpenAlex metadata export was blocked by HTTP 429 responses. The
 search is labeled a bounded scoping synthesis, not a complete systematic
-review. No research outcome was visible. If accepted, a broader database
+review. No research outcome was visible at acceptance. A broader database
 update remains mandatory before manuscript submission and cannot be used to
 change a model after final-test access without a new deviation.
+
+Deviation D003, authorized on 2026-07-12 before any model fit or final-test
+access, repairs the Gate 5 scenario generator after the invalid F0 run. The
+repair is limited to frozen-config conformance, source-derived epochs,
+deterministic Sobol sampling, numerical targeting, effective timing/execution
+inputs, lunar-flyby exclusion, explicit crew-axis mapping, complete metadata,
+schema and checksum validation, and append-only provenance. Pre-D003 outputs
+are audit-only. Because their diagnostic outcomes
+were visible, no repair choice may be tuned to produce a preferred feasibility
+rate, and pre/post repair figures are mandatory.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

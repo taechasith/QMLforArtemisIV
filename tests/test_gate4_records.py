@@ -73,7 +73,7 @@ def test_gate4_artifact_checksums_match_files() -> None:
         assert artifact.is_file()
         assert int(row["size_bytes"]) == artifact.stat().st_size
         assert row["sha256"] == sha256_file(artifact)
-        assert row["status"] == "frozen_candidate_pending_human_approval"
+        assert row["status"] == "frozen_gate_4_accepted_final_test_separately_locked"
 
 
 def test_locked_payload_root_remains_empty() -> None:

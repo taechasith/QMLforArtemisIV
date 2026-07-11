@@ -210,10 +210,10 @@ Checkpoint 3D, 2026-07-12 – repaired comparison reviewed and Gate 3 accepted:
 
 Date opened: 2026-07-12
 Date package completed: 2026-07-12
-Status: Pending human approval
-Recommendation: Accept together with proposed Deviation D002
+Status: **Accepted**
+Decision: Accepted together with Deviation D002
 
-Decision requested:
+Decision considered:
 
 Accept, reject, or revise the manifest-only scenario design, grouped splits,
 feature and target schema, model registry, interpretation controls, tuning
@@ -344,7 +344,7 @@ New COF SHA-256: `3a3ff03505c29f45d7ceadfcd0ad1ba36d1f10b2d28fd07b227939f0876d86
 
 The fixed COF was used for a complete GMAT rerun in commit `cbd157d`. All 10 independent endpoint thresholds passed without changing the frozen acceptance limits. The human research lead accepted Gate 3 on 2026-07-12 while explicitly retaining RTC3 as not tested, neither pass nor fail, and outside the validation claim.
 
-### Proposed Deviation D002 - bounded Gate 4 literature coverage
+### Deviation D002 - bounded Gate 4 literature coverage
 
 Date proposed: 2026-07-12
 Date accepted: 2026-07-12
@@ -383,4 +383,76 @@ negative reporting, but cannot prove the missing records are immaterial.
 
 Decision requested: Accept D002 with Gate 4, reject it and hold Gate 4 for a
 broader search, or request a specific revision.
+
+### Deviation D003 - Gate 5 scenario-generator conformance repair
+
+Date opened: 2026-07-12
+Date authorized: 2026-07-12
+Status: **Repair implementation frozen; corrected payload rerun pending**
+Authority: Human research lead
+
+Original implementation:
+
+Commit `61bef3e` added the first scenario generator while recording Gate 4
+acceptance. One F0 group was generated and inspected before that generator was
+committed. The committed generator and an uncommitted ephemeris-path repair
+then produced all 7,000 F0 development/calibration rows. An F1 run was stopped
+after its original DE440s path failed and before it wrote an F1 payload.
+
+Observed problems:
+
+- All 7,000 F0 rows omit required top-level `base_trajectory`, so every row fails the frozen JSON Schema.
+- Twelve non-U0 groups use hard-coded uncertainty scales rather than `configs/uncertainty_model.yaml`.
+- TLI and entry-interface epochs were hard-coded inconsistently with the event registry and qualified OEM metadata.
+- Candidate plans use pseudorandom burns rather than the registered Sobol or Latin-hypercube design and reproducible numerical targeting reference.
+- Communication delay, burn delay, and burn start are recorded as inputs but do not alter propagation.
+- The 500 km and 200 m/s feasibility thresholds are implementation assumptions rather than the frozen entry-interface constraints.
+- The original feasibility check does not enforce the frozen lunar-flyby exclusion and treats inertial thrust components as crew-body acceleration components.
+- The first generator was not frozen in a separate pre-output commit, weakening ideal execution order.
+
+Machine-readable audit:
+
+- `data/processed/simulator/scenarios/pre_d003_audit.csv`
+- `data/processed/simulator/scenarios/pre_d003_audit_summary.json`
+- RFIG-002 through RFIG-004 in `artifacts/research_figures/figure_registry.csv`
+
+Audit result:
+
+Fourteen of fourteen groups are invalid. All 7,000 rows fail schema and
+metadata relationship checks. Twelve groups fail uncertainty conformance. Of
+1,400 decision sets, 1,020 have no independently feasible reference candidate.
+No non-finite value or nonconverged propagation was observed. No final-test
+payload was generated or read.
+
+Authorized repair:
+
+Preserve the audit and figures as failed-attempt evidence; derive epochs,
+uncertainties, constraints, and vehicle values from frozen files; use a seeded
+Sobol design and a documented numerical targeting reference; make every timing
+and execution input effective in propagation; enforce the lunar-flyby exclusion
+and an explicit burn-attitude crew-axis mapping; validate complete payloads
+against schema and checksums; commit the repair before replacing payloads; and
+rerun F0 before starting F1/F2. Pre-D003 payloads are prohibited from model
+training, tuning, calibration, or benchmark claims.
+
+The repair also reconciles acceptance-state metadata in the final-test and
+seed manifests; adds top-level `boundary_or_tail` and `payload_version`
+provenance; and records sampled lunar surface altitude as a secondary outcome
+needed to audit the existing frozen constraint. No scenario identity, split,
+model input, primary outcome, tuning trial, seed value, or final-test lock is
+changed. Exact artifact hashes are recorded in
+`docs/gate4_phase1_freeze.md`.
+
+Outcome visibility and bias control:
+
+F0 feasibility and terminal-error summaries were visible before D003. The
+repair criteria are therefore conformance-based and may not be tuned to obtain
+a preferred feasibility rate. The paper must show the pre/post repair graphs,
+and any further result-changing repair requires a new deviation. No model was
+fitted and no final-test feature or label was visible.
+
+Human authorization basis: after being informed that the active F1 process
+should stop and the generator required preservation, repair, and graphing, the
+human research lead instructed the assistant to continue after the current run
+stopped and to record all material changes as research-paper graphs.
 

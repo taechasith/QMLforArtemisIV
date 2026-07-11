@@ -1,6 +1,7 @@
 schema_version: "0.4.0"
 status: "gate_4_accepted_development_generation_authorized"
 prepared_date: "2026-07-12"
+scenario_generation_config: "configs/scenario_generation.yaml"
 
 governance:
   gate_3_acceptance_commit: "bf56fcec322e70dfa14ff3b63bbf15b27c0ecc8f"
@@ -134,6 +135,8 @@ features:
     - scenario_id
     - decision_set_id
     - candidate_index
+    - boundary_or_tail
+    - payload_version
     - any final-test outcome or outcome-derived statistic
 
 targets:
@@ -149,6 +152,7 @@ targets:
     - terminal_velocity_error_m_s
     - terminal_margin
     - propellant_used_kg
+    - minimum_lunar_surface_altitude_km
     - nonconverged
     - violation_code
 

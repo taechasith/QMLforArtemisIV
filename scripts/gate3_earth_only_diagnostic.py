@@ -267,7 +267,7 @@ def main() -> None:
     print(sep)
     print(f"\n  Position difference (Earth-only): {pos_diff_km:.9f} km")
     print(f"  Velocity difference (Earth-only): {vel_diff_ms:.9f} m/s")
-    print(f"  Component differences (Python minus GMAT):")
+    print("  Component differences (Python minus GMAT):")
     print(f"    dX  = {dpos[0]:+.9f} km")
     print(f"    dY  = {dpos[1]:+.9f} km")
     print(f"    dZ  = {dpos[2]:+.9f} km")

@@ -316,7 +316,7 @@ def build_final_test_manifest(
                 "group_commitment": commitment,
                 "feature_payload": "LOCKED_NOT_GENERATED",
                 "label_payload": "LOCKED_NOT_GENERATED",
-                "access_status": "prohibited_pending_gate_4_acceptance",
+                "access_status": "prohibited_pending_separate_final_test_unlock",
             }
         )
     return rows
@@ -326,6 +326,9 @@ def build_seed_manifest(config: Mapping[str, Any]) -> list[dict[str, Any]]:
     master = int(config["scenario_design"]["master_seed"])
     development_count = int(config["randomness"]["development_seeds_per_configuration"])
     finalist_count = int(config["randomness"]["finalist_seeds"])
+    gate4_accepted = (
+        config["status"] == "gate_4_accepted_development_generation_authorized"
+    )
     rows: list[dict[str, Any]] = []
     for family in tunable_families(config):
         family_name = family["family"]
@@ -344,7 +347,11 @@ def build_seed_manifest(config: Mapping[str, Any]) -> list[dict[str, Any]]:
                         master, "training", family_name, index
                     ),
                     "shot_seed": derive_seed(master, "shots", family_name, index),
-                    "allowed_before_gate_4_acceptance": "synthetic_smoke_only",
+                    "development_use_status": (
+                        "authorized_after_gate_4_acceptance"
+                        if gate4_accepted
+                        else "synthetic_smoke_only_pending_gate_4"
+                    ),
                     "final_test_use": "prohibited_until_separate_unlock_commit",
                 }
             )
@@ -432,10 +439,15 @@ def build_scenario_schema(config: Mapping[str, Any]) -> dict[str, Any]:
             outcome_properties[name] = {"type": "boolean"}
         elif name == "violation_code":
             outcome_properties[name] = {"type": ["string", "null"]}
+        elif name == "minimum_lunar_surface_altitude_km":
+            outcome_properties[name] = {"type": ["number", "null"]}
         else:
             outcome_properties[name] = {"type": "number"}
 
     required_inputs = [*numeric, *categorical]
+    gate4_accepted = (
+        config["status"] == "gate_4_accepted_development_generation_authorized"
+    )
     return {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "https://github.com/taechasith/QMLforArtemisIV/tree/main/data/processed/simulator/scenario_schema.json",
@@ -452,6 +464,8 @@ def build_scenario_schema(config: Mapping[str, Any]) -> dict[str, Any]:
             "candidate_index",
             "group_id",
             "base_trajectory",
+            "boundary_or_tail",
+            "payload_version",
             "fidelity",
             "split",
             "inputs",
@@ -471,6 +485,8 @@ def build_scenario_schema(config: Mapping[str, Any]) -> dict[str, Any]:
             },
             "group_id": {"type": "string", "pattern": "^G[0-9]{2}$"},
             "base_trajectory": {"type": "string", "pattern": "^[CTV][0-9]{2}$"},
+            "boundary_or_tail": {"type": "boolean"},
+            "payload_version": {"type": "string", "pattern": "^d[0-9]{3}-v[0-9]+$"},
             "fidelity": {"enum": ["F0", "F1", "F2"]},
             "split": {"enum": list(config["scenario_design"]["split_fractions"])},
             "inputs": {
@@ -487,7 +503,11 @@ def build_scenario_schema(config: Mapping[str, Any]) -> dict[str, Any]:
             },
         },
         "x-gate4-access": {
-            "development": "available only after Gate 4 acceptance",
+            "development": (
+                "generation and model development authorized"
+                if gate4_accepted
+                else "available only after Gate 4 acceptance"
+            ),
             "uncertainty_calibration": "not for fitting, tuning, or feature selection",
             "in_distribution_final_test": "locked and not generated",
             "out_of_distribution_final_test": "locked and not generated",
@@ -568,6 +588,12 @@ def write_freeze_artifacts(
         newline="\n",
     )
 
+    accepted = config["status"] == "gate_4_accepted_development_generation_authorized"
+    freeze_status = (
+        "frozen_gate_4_accepted_final_test_separately_locked"
+        if accepted
+        else "frozen_candidate_pending_human_approval"
+    )
     checksums = []
     for path in (
         artifacts.scenario_manifest,
@@ -581,7 +607,7 @@ def write_freeze_artifacts(
                 "artifact": path.name,
                 "size_bytes": path.stat().st_size,
                 "sha256": sha256_file(path),
-                "status": "frozen_candidate_pending_human_approval",
+                "status": freeze_status,
             }
         )
     write_csv(artifacts.checksums, checksums)

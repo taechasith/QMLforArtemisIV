@@ -220,8 +220,10 @@ Integrator tolerances, OEM samples, validation windows, and acceptance limits
 are never loosened to reduce runtime.
 
 Gate 3 was accepted on 2026-07-12 after the D001 repair and independent rerun.
-Gate 4 remains pending. No research scenario payload or ML/QML fit may begin
-merely because the local simulator or synthetic model smoke tests run quickly.
+Gate 4 and D002 were accepted on 2026-07-12. Development generation is
+authorized, but Gate 5 remains under D003 repair and no ML/QML fit may begin
+until corrected payloads pass their conformance audit. Final tests remain
+separately locked.
 
 ### 6.2 F0/F1/F2 dataset generation
 
@@ -230,13 +232,15 @@ The accepted totals remain 10,000 F0 cases, 50,000 F1 cases, and an initial
 
 | Fidelity | Initial local chunk | Initial workers | Execution method |
 |---|---:|---:|---|
-| F0 | 1,000-2,500 cases | 8-12 | Verified vectorization and atomic chunk checkpoints |
-| F1 | 500-1,000 cases | 8 | Process-parallel propagation with one numerical-library thread per worker |
-| F2 | 50-100 cases | 4-8 | Profile ephemeris and memory overhead before increasing concurrency |
+| F0 | One 500-row group | 1 for repaired first group; up to 4 groups after audit | Atomic group checkpoint and deterministic equivalence check before parallel scale-up |
+| F1 | One 2,500-row group | 1 for first group; up to 4 groups after audit | Process-isolated groups with one numerical-library thread per worker |
+| F2 | One 250-row group | 1 for first group; up to 2 groups after audit | Profile ephemeris, memory, and thermal behavior before increasing concurrency |
 
-Each chunk manifest records configuration hash, seed range, requested cases,
-completed cases, failures, runtime, and output checksum. All nonconvergence
-cases remain represented.
+Each completed group ledger records payload version, configuration hash,
+source commit, requested/completed cases, validation state, runtime, and output
+checksum. All nonconvergence cases remain represented. The first corrected
+group is deliberately serial so validity is established before throughput is
+optimized for the reference laptop.
 
 ### 6.3 Classical model experiments
 
@@ -332,8 +336,9 @@ and scientific failures because they require different responses.
 | 2026-07-11 | GMAT integration | GMAT resolved support files from its execution environment rather than the repository-relative location initially assumed | The independent tool could not load DE440s or the custom gravity file from the first generated script | Staged checksum-verified support files in the external GMAT distribution and kept the tracked script portable | Resolved. Cross-tool validation must test path resolution and provenance, not only equations |
 | 2026-07-11 | Gate 3 GMAT comparison | The first independent comparison failed all ten endpoint thresholds by large margins | The simulator gate correctly entered repair analysis instead of allowing ML work to start | Incremental Earth-only, J2-only, and full-force diagnostics isolated the discrepancy to the custom COF `POTFIELD` fixed-column format; Deviation D001 records the repair | Resolved. The fixed COF passes all ten frozen GMAT thresholds without changing physics, windows, or acceptance limits; preserve failed evidence because it shows how the defect was found |
 | 2026-07-11 | Gate 3 event evidence | RTC3 occurred at 18:53:00Z, after the qualified OEM was created at 03:22:19Z | Later rows in that OEM are pre-event predictions, not post-event evidence; more compute cannot turn them into historical/reconstructed evidence | Computed no RTC3 timing error and retained `not_eligible`, meaning not tested with eligible evidence, neither pass nor fail | Open source limitation. Gate 3 acceptance does not claim RTC3 validation, and hardware adaptation cannot repair missing evidence |
-| 2026-07-12 | Gate 4 literature retrieval | OpenAlex returned all seven query counts but persistently rate-limited metadata export with HTTP 429 | A complete multi-database systematic review could not be claimed from this run | Preserved count-only OpenAlex logs, completed NTRS/arXiv API retrieval, extracted 23 primary or authoritative records, labeled the synthesis bounded, and proposed D002 with a mandatory pre-manuscript update | Open coverage limitation. API throttling must reduce claim scope, not be hidden as successful screening |
+| 2026-07-12 | Gate 4 literature retrieval | OpenAlex returned all seven query counts but persistently rate-limited metadata export with HTTP 429 | A complete multi-database systematic review could not be claimed from this run | Preserved count-only OpenAlex logs, completed NTRS/arXiv API retrieval, extracted 23 primary or authoritative records, labeled the synthesis bounded, and accepted D002 with a mandatory pre-manuscript update | Open coverage limitation. API throttling must reduce claim scope, not be hidden as successful screening |
 | 2026-07-12 | Gate 4 QML scheduling | A full trial-by-seed-by-fold Cartesian run would spend substantial laptop time on configurations that are clearly uncompetitive at small samples | The accepted 30-trial and seed ceilings could be misread as requiring every combination | Froze grouped successive-halving rungs for QML and matched controls, 20 seeds only for selected development configurations, one statevector/GPU job, and resumable checkpoints | Preventive adaptation. Preserve comparisons and randomness while pruning only by a rule registered before outcomes |
+| 2026-07-12 | Gate 5 scenario generation | The first generator produced 7,000 F0 rows before a schema/uncertainty audit and an F1 run stopped on an incorrect DE440s path | Every F0 row is invalid for research use, and 1,020 of 1,400 decision sets lack a feasible reference | Stopped progression, preserved checksums and audit summaries, generated failure figures RFIG-002 through RFIG-004, authorized D003, and required a committed conformance repair before rerun | Open repair. Fast completion is not evidence of valid generation; schema, frozen distributions, effective inputs, and reference targeting must be audited before scale-up |
 
 For RTC3 specifically, the qualified OEM predates the event by 15 hours 30
 minutes 41 seconds. A separate post-RTC3 trajectory product was not substituted
@@ -364,6 +369,8 @@ the following occurs:
 5. work moves to external compute or a quantum backend;
 6. an execution adaptation is introduced to finish a frozen experiment; or
 7. a limitation remains unresolved and could affect what readers conclude.
+8. a material experimental or methodological change requires a corresponding
+   registry entry and reproducible graph under `artifacts/research_figures/`.
 
 Each update records the observed problem, affected phase, measured impact,
 attempted response, final status, evidence location, and whether any scientific

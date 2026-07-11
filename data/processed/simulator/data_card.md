@@ -2,7 +2,7 @@
 
 Version: 0.3.0
 Prepared: 2026-07-12
-Status: Manifest-only Gate 4 freeze candidate; feature and label payloads not generated
+Status: Gate 4 accepted; D003 generator repair in progress; no valid research payload yet
 
 ## Intended use
 
@@ -15,18 +15,21 @@ that a learned model can command a spacecraft.
 
 ## Current contents
 
-Gate 4 defines identities, groups, counts, schemas, seeds, and cryptographic
-commitments only. No scenario feature row and no outcome label has been
-generated. `data/locked/phase1/` is ignored and absent; any file there before
-an explicit unlock causes the preparation audit to fail closed.
+Gate 4 defines the accepted identities, groups, counts, schemas, seeds, and
+cryptographic commitments. A pre-D003 attempt generated 7,000 F0 rows after
+acceptance, but all failed the conformance audit and are prohibited from model
+fitting, tuning, calibration, or benchmark claims. They remain only as
+failed-attempt evidence. No valid research payload has yet been admitted.
+`data/locked/phase1/` is ignored and absent; any file there before an explicit
+unlock causes the preparation audit to fail closed.
 
 The compact 60-row `scenario_manifest.csv` deterministically defines 65,000
 candidate-plan row identities grouped into 13,000 decision sets of five plans:
 
 | Split | F0 | F1 | F2 | Total | Gate 4 payload state |
 |---|---:|---:|---:|---:|---|
-| Development | 6,000 | 30,000 | 3,000 | 39,000 | Not generated |
-| Uncertainty calibration | 1,000 | 5,000 | 500 | 6,500 | Not generated |
+| Development | 6,000 | 30,000 | 3,000 | 39,000 | Pre-D003 F0 invalid and excluded; corrected payloads pending |
+| Uncertainty calibration | 1,000 | 5,000 | 500 | 6,500 | Pre-D003 F0 invalid and excluded; corrected payloads pending |
 | In-distribution final test | 1,500 | 7,500 | 750 | 9,750 | Locked and not generated |
 | Out-of-distribution final test | 1,500 | 7,500 | 750 | 9,750 | Locked and not generated |
 
@@ -38,7 +41,7 @@ silently replaced.
 
 ## Unit and provenance
 
-One future row represents one simulated candidate correction plan under one
+One valid D003 row will represent one simulated candidate correction plan under one
 fidelity, base trajectory, mission epoch, and uncertainty family. Base windows
 come from the Gate 2 qualified Artemis II validation-window registry. F0, F1,
 and F2 outcomes will be produced by the Gate 3 accepted simulator and frozen
@@ -68,7 +71,9 @@ The primary regression outcome is
 `robust_total_correction_delta_v_m_s`. The paired feasibility outcome is
 `independently_propagated_feasible`. Secondary outcomes include the burn
 vector, terminal errors and margin, propellant use, nonconvergence, and
-violation code.
+violation code. D003 also records minimum sampled lunar surface altitude when
+the candidate can affect the E006 flyby window; this is a secondary constraint
+audit outcome and not a model input.
 
 Identifiers, decision-set metadata, split names, group IDs, and outcome-derived
 statistics are prohibited model inputs. Input features are sensitivity
@@ -78,11 +83,12 @@ interpretation.
 
 ## Split access and generation order
 
-1. Before Gate 4 acceptance, only manifest generation and synthetic smoke tests are allowed.
-2. After acceptance, development payloads may be generated in resumable, checksum-verified chunks.
-3. The calibration split may calibrate uncertainty or probability outputs only after model selection; it cannot fit, tune, or select a model.
-4. Final-test payloads require a separate explicit unlock commit after the candidate, preprocessing, tuning outcome, and analysis implementation are fixed.
-5. In-distribution and OOD final tests are evaluated once and reported together with all failed and nonconverged rows.
+1. Gate 4 was accepted before any research outcome was visible.
+2. D003 requires the repaired generator to be committed, then one corrected F0 group to pass schema, relationship, uncertainty, and checksum audit before scale-up.
+3. Development payloads may then be generated in resumable, checksum-verified groups; pre-D003 payloads remain excluded.
+4. The calibration split may calibrate uncertainty or probability outputs only after model selection; it cannot fit, tune, or select a model.
+5. Final-test payloads require a separate explicit unlock commit after the candidate, preprocessing, tuning outcome, and analysis implementation are fixed.
+6. In-distribution and OOD final tests are evaluated once and reported together with all failed and nonconverged rows.
 
 ## Preprocessing
 

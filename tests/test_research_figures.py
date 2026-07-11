@@ -1,0 +1,71 @@
+from __future__ import annotations
+
+import csv
+import hashlib
+import json
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+FIGURES = ROOT / "artifacts/research_figures"
+
+
+def read_csv(path: Path) -> list[dict[str, str]]:
+    with path.open(newline="", encoding="utf-8") as handle:
+        return list(csv.DictReader(handle))
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def test_pre_d003_audit_is_retained_as_invalid_evidence() -> None:
+    summary = json.loads(
+        (
+            ROOT / "data/processed/simulator/scenarios/pre_d003_audit_summary.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert summary == {
+        "audit_label": "pre_d003",
+        "decision_sets": 1400,
+        "feasible_records": 502,
+        "final_test_payloads_read": 0,
+        "groups_audited": 14,
+        "invalid_groups": 14,
+        "no_reference_feasible_sets": 1020,
+        "nonfinite_records": 0,
+        "records_audited": 7000,
+        "relationship_error_records": 7000,
+        "schema_error_records": 7000,
+        "status": "invalid",
+        "valid_groups": 0,
+    }
+
+
+def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
+    rows = read_csv(FIGURES / "figure_registry.csv")
+    assert len(rows) >= 4
+    assert len({row["figure_id"] for row in rows}) == len(rows)
+    assert {row["evidence_status"] for row in rows} >= {
+        "accepted_decision_record",
+        "invalid_failed_attempt",
+        "invalid_workload_timing",
+    }
+    for row in rows:
+        assert "final_test" not in row["source_data"]
+        for kind in ("png", "svg"):
+            path = ROOT / row[f"{kind}_path"]
+            assert path.is_file()
+            assert path.stat().st_size == int(row[f"{kind}_bytes"])
+            assert sha256_file(path) == row[f"{kind}_sha256"]
+
+
+def test_figure_policy_requires_failed_and_negative_evidence() -> None:
+    policy = (ROOT / "docs/research_figure_policy.md").read_text(encoding="utf-8")
+    assert "failed attempt" in policy
+    assert "negative and inconclusive findings" in policy
+    assert "Never plot a locked final-test value" in policy

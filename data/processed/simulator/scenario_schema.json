@@ -8,6 +8,9 @@
       "pattern": "^[CTV][0-9]{2}$",
       "type": "string"
     },
+    "boundary_or_tail": {
+      "type": "boolean"
+    },
     "candidate_index": {
       "maximum": 5,
       "minimum": 1,
@@ -210,6 +213,12 @@
         "independently_propagated_feasible": {
           "type": "boolean"
         },
+        "minimum_lunar_surface_altitude_km": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
         "nonconverged": {
           "type": "boolean"
         },
@@ -241,6 +250,10 @@
       ],
       "type": "object"
     },
+    "payload_version": {
+      "pattern": "^d[0-9]{3}-v[0-9]+$",
+      "type": "string"
+    },
     "scenario_id": {
       "pattern": "^F[012]-G[0-9]{2}-[0-9]{6}$",
       "type": "string"
@@ -260,6 +273,8 @@
     "candidate_index",
     "group_id",
     "base_trajectory",
+    "boundary_or_tail",
+    "payload_version",
     "fidelity",
     "split",
     "inputs"
@@ -267,7 +282,7 @@
   "title": "QMLforArtemisIV Phase 1 scenario record",
   "type": "object",
   "x-gate4-access": {
-    "development": "available only after Gate 4 acceptance",
+    "development": "generation and model development authorized",
     "in_distribution_final_test": "locked and not generated",
     "out_of_distribution_final_test": "locked and not generated",
     "uncertainty_calibration": "not for fitting, tuning, or feature selection"

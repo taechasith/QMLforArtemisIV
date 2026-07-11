@@ -1,0 +1,177 @@
+schema_version: "0.1.0"
+payload_version: "d003-v1"
+status: "d003_repair_authorized_pre_model_fit"
+prepared_date: "2026-07-12"
+
+governance:
+  authority: "human research lead"
+  authorization_basis: "continue after the stopped run; preserve, repair, and graph all material changes"
+  superseded_generator_commit: "61bef3e10e2a1fd4d2c56064f849275bdee602a2"
+  pre_d003_payload_status: "invalid; audit-only; prohibited from fitting, tuning, calibration, or claims"
+  final_splits_remain_locked: true
+  repair_selection_rule: "derive behavior from frozen configs and source metadata; do not tune for a preferred feasibility rate"
+
+sources:
+  scenario_manifest: "data/processed/simulator/scenario_manifest.csv"
+  scenario_schema: "data/processed/simulator/scenario_schema.json"
+  uncertainty_model: "configs/uncertainty_model.yaml"
+  mission_constraints: "configs/constraints.yaml"
+  crew_schedule: "configs/crew_schedule.yaml"
+  acceleration_limits: "configs/human_acceleration_limits.yaml"
+  event_registry: "data/artemis2_event_registry.csv"
+  qualified_oem:
+    path: "data/raw/artemis2/oem/asc/Artemis_II_OEM_2026_04_10_Post-ICPS-Sep-to-EI.asc"
+    sha256: "9def718e2aefe3205e0ff4e2546db0e06763c07a8fcccad8dc01929b9d9c5859"
+    target_epoch_rule: "CCSDS OEM USEABLE_STOP_TIME"
+  de440s:
+    path: "data/raw/ephemeris/de440s.bsp"
+    sha256: "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2"
+    required_for: [F0, F1, F2]
+    F0_role: "lunar-altitude geometry only; F0 force model remains Earth point mass"
+  tli_epoch_rule: "event E002 actual_utc from data/artemis2_event_registry.csv"
+  lunar_flyby_epoch_rule: "event E006 actual_utc from data/artemis2_event_registry.csv"
+
+sampling:
+  method: "scipy.stats.qmc.Sobol"
+  scramble: true
+  seed_rule: "derive_seed(master_seed, scenario_generation_d003, fidelity, group_id)"
+  power_of_two_rule: "draw the next power of two and retain the first decision_set_count rows"
+  gaussian_rule: "inverse normal CDF with probabilities clipped to [1e-12, 1-1e-12]"
+  bounded_rule: "inverse truncated-normal CDF on [-3, 3] standard deviations"
+  heavy_tail_rule: "Student-t df=5 scaled to matching Gaussian marginal standard deviation and clipped at 6 sigma equivalent"
+  final_heavy_tail_generation_authorized: false
+
+uncertainty_application:
+  state_dispersion:
+    source: "initial_state_dispersion_3sigma"
+    active_families: [U1, U2, U3, U4, U5]
+  navigation_error:
+    source: "initial_navigation_uncertainty_3sigma"
+    active_families: [U1, U3, U4, U5]
+  execution_error:
+    source: "thruster_execution_3sigma"
+    active_families: [U2, U3, U4, U5]
+  disturbance:
+    source: "disturbance_process_noise.pressure_swing_adsorption_awake.q_si"
+    active_families: [U3, U4, U5]
+    implementation: "sample accumulated velocity perturbation with sigma=sqrt(q_si*remaining_seconds)"
+  bounded_families: [U4]
+  heavy_tail_families: [U5]
+  nominal_family: U0
+  operational_stress:
+    active_families: [U4, U5]
+    communication_hold_values_min: [0, 15, 120]
+    burn_delay_values_min: [0, 15, 60]
+    mass_error_fraction_values: [0.0, -0.02, 0.02, -0.05, 0.05]
+    selection: "deterministic Sobol quantile into the frozen discrete values"
+
+targeting_reference:
+  method: "linearized differential correction from numerical state-transition sensitivities"
+  target: "same-fidelity nominal no-burn endpoint at qualified OEM USEABLE_STOP_TIME"
+  estimated_state_rule: "true dispersed state plus navigation error"
+  true_state_rule: "OEM state plus state dispersion plus accumulated disturbance velocity"
+  state_sensitivity:
+    position_step_km: 0.01
+    velocity_step_m_s: 0.001
+  burn_sensitivity:
+    delta_v_step_m_s: 0.001
+  linear_solver: "numpy.linalg.pinv with rcond=1e-10"
+  independent_check: "repropagate every candidate from the true state with execution errors"
+  no_result_tuning: true
+
+decision_set:
+  candidates_per_set: 5
+  candidate_1: "zero-burn deterministic fallback"
+  targeted_candidates:
+    indices: [2, 3, 4, 5]
+    timing_quantiles: [0.2, 0.4, 0.6, 0.8]
+    correction_scale: [0.75, 1.0, 1.25, 1.0]
+    candidate_5_orthogonal_probe_m_s: 0.25
+  maximum_candidate_delta_v_m_s: 20.0
+  cap_policy: "clip magnitude to 20 m/s and retain the resulting feasibility outcome"
+
+burn_timing:
+  earliest_rule: "max(group epoch, TLI actual UTC plus 3 hours)"
+  latest_rule: "OEM target epoch minus 3 hours minus planned burn duration"
+  actual_start_rule: "planned start plus communication hold plus burn delay"
+  late_actual_start_policy: "retain candidate and mark burn_timing violation"
+
+lunar_altitude_evaluation:
+  event_epoch: "E006 actual_utc"
+  half_width_min: 10
+  step_s: 60
+  mean_radius_km: 1737.4
+  mean_radius_source_id: "D030"
+  rule: "sample the independently propagated trajectory every 60 seconds across E006 plus or minus 10 minutes and retain the minimum surface altitude"
+  post_event_group_rule: "not re-evaluated when the scenario epoch follows the sampling window because a future candidate cannot alter the past flyby"
+
+vehicle_and_burn:
+  mass_source: "constraints.vehicle_reference.post_tli_mass.value_kg"
+  usable_propellant_source: "constraints.vehicle_reference.usable_propellant.value_kg"
+  reserve_source: "constraints.hard_constraints.propellant_reserve.nominal_reserve_kg"
+  specific_impulse_s: 314.0
+  specific_impulse_status: "frozen midpoint sensitivity, not flight-specific truth"
+  thrust_selection:
+    - {maximum_delta_v_m_s: 0.75, class: RCS_LOW, source: reaction_control_thruster.each_thrust_n}
+    - {maximum_delta_v_m_s: 3.0, class: AUX_MED, source: auxiliary_engine.each_thrust_n}
+    - {maximum_delta_v_m_s: 20.0, class: MAIN_HIGH, source: main_engine.nominal_thrust_n}
+  F0_maneuver: "impulsive at actual start with rocket-equation mass sensitivity"
+  F1_maneuver: "fixed-direction finite burn with time-varying mass"
+  F2_maneuver: "fixed-direction finite burn with time-varying mass"
+  thrust_scale_rule: "apply scale to realized thrust and commanded delta-v; recompute finite-burn duration so scale error does not become a hidden nominal-thrust duration error"
+  pointing_rotation_axis_rule: "deterministic normalized cross product against the least-aligned inertial basis axis"
+  crew_axis_mapping: "positive_body_x_after_burn_attitude_alignment"
+  crew_axis_mapping_status: "explicit conservative research assumption: the vehicle rotates to burn attitude, so inertial delta-v direction is not a crew-body direction; public thruster-allocation attitude data are unavailable"
+
+robust_cost:
+  definition: "planned delta-v plus three times analytic one-sigma execution delta-v uncertainty"
+  one_sigma_components:
+    - "planned magnitude times thrust scale-factor sigma"
+    - "planned magnitude times sin(pointing sigma)"
+    - "thruster additive noise sigma"
+    - "thruster additive bias sigma treated as sensitivity"
+  execution_inactive_rule: "robust cost equals planned magnitude"
+  realized_correction_delta_v: "magnitude of independently executed burn"
+
+feasibility:
+  entry_constraint_source: "constraints.hard_constraints.entry_interface_3sigma_ellipse"
+  correlated_ellipse_rule: "(x/a)^2 - 2*rho*(x/a)*(y/b) + (y/b)^2 <= 1-rho^2"
+  other_hard_constraints:
+    - total_correction_delta_v
+    - propellant_reserve
+    - burn_timing
+    - lunar_flyby_exclusion
+    - protected_crew_periods
+    - translational_acceleration
+  terminal_margin: "one minus the maximum normalized constraint utilization; positive is feasible margin"
+  violation_code: "semicolon-separated stable reason codes or null"
+  no_feasible_reference_policy: "retain decision set, apply frozen regret penalty to all models, and report rate"
+
+payload:
+  format: "one compact JSON object per line"
+  required_metadata:
+    - scenario_id
+    - decision_set_id
+    - candidate_index
+    - group_id
+    - base_trajectory
+    - boundary_or_tail
+    - payload_version
+    - fidelity
+    - split
+  schema_validation: "Draft 2020-12; every row before atomic replacement"
+  atomic_write: true
+  ledger: "data/processed/simulator/scenarios/generation_ledger_v2.csv; append every successful attempt with payload version, config checksum, validation status, source commit, and checksum; the latest matching entry is active and earlier entries remain preserved"
+  overwrite_rule: "replacement requires --replace-invalid and a matching invalid audit record"
+  committed_source_rule: "generation script, scenario module, schema, and governing configs must match HEAD before any payload write"
+
+compute:
+  current_execution: "serial group checkpoint until the first corrected group passes full audit"
+  post_audit_worker_default: 4
+  post_audit_worker_ceiling: 8
+  numerical_library_threads_per_worker: 1
+  group_checkpoint: true
+  F0_initial_workers: 4
+  F1_initial_workers: 4
+  F2_initial_workers: 2
+  stop_after_first_group_for_full_audit: true

@@ -2,7 +2,7 @@
 
 Version: 0.3.0
 Prepared: 2026-07-12
-Status: Frozen candidate; synthetic smoke-tested only; no research model fitted
+Status: Gate 4 accepted and frozen; synthetic smoke-tested only; no research model fitted
 
 ## Registered candidates
 

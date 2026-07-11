@@ -20,6 +20,9 @@ data/processed/*
 !data/processed/.gitkeep
 !data/processed/artemis2/
 !data/processed/simulator/
+!data/processed/reporting/
+data/processed/reporting/*
+!data/processed/reporting/gate_timeline.csv
 data/processed/artemis2/*
 !data/processed/artemis2/oem_inventory.csv
 !data/processed/artemis2/oem_release_revisions.csv

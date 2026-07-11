@@ -3,7 +3,7 @@
 Version: 0.3.0
 Search date: 2026-07-12
 Search cutoff: 2026-07-10
-Status: Gate 4 freeze candidate; bounded scoping synthesis, not a complete systematic review
+Status: Accepted for Gate 4 under D002; bounded scoping synthesis, not a complete systematic review
 
 ## 1. Decision use
 
@@ -43,9 +43,9 @@ ledger.
 The 24 included source rows map to 23 unique extracted evidence records. This
 is a bounded, reproducible scoping synthesis, not the complete systematic
 review anticipated by the original review protocol. Crossref, NASA ADS, and a
-complete AIAA/publisher search were not exported in this pass. Proposed
-Deviation D002 in `docs/decision_log.md` asks the human research lead to accept
-this limitation for the Gate 4 freeze while requiring a broader update before
+complete AIAA/publisher search were not exported in this pass. Deviation D002
+in `docs/decision_log.md` records the human research lead's acceptance of this
+limitation for the Gate 4 freeze while requiring a broader update before
 manuscript submission.
 
 ## 3. Findings that control Phase 1

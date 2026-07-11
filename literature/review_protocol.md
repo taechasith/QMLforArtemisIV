@@ -7,9 +7,9 @@ Status: Gate 4 bounded search executed; full systematic update required before m
 The 2026-07-12 execution is recorded in `search_log.csv`,
 `screening_log.csv`, `extraction_matrix.csv`, and
 `docs/literature_synthesis.md`. OpenAlex query counts were obtained, but
-metadata export was blocked by persistent HTTP 429 responses. Proposed
-Deviation D002 requests acceptance of the complete NTRS/arXiv retrieval and
-curated primary-source extraction for the Phase 1 freeze only. This execution
+metadata export was blocked by persistent HTTP 429 responses. Accepted
+Deviation D002 permits the complete NTRS/arXiv retrieval and curated
+primary-source extraction to support the Phase 1 freeze only. This execution
 must not be described as the complete systematic review defined below.
 
 ## Objective

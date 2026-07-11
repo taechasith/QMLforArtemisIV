@@ -2,11 +2,11 @@
 
 Version: 0.3.0
 Prepared: 2026-07-12
-Status: Gate 4 candidate; analysis functions tested only with synthetic data
+Status: Gate 4 accepted; D003 payload repair in progress; analysis functions tested only with synthetic data
 
 ## Analysis sequence
 
-1. Generate development scenarios only after Gate 4 acceptance.
+1. Admit development scenarios only after Gate 4 acceptance and D003 conformance audit.
 2. Fit preprocessing on development rows and execute the frozen grouped-CV tuning manifest.
 3. Select one configuration per candidate family using mean development NRMSE, then regret and lower complexity as frozen tie-breakers.
 4. Rerun selected configurations on 20 development seeds and freeze finalists.

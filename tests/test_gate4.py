@@ -66,11 +66,11 @@ class Gate4ManifestTests(unittest.TestCase):
         cls.windows = read_csv(WINDOWS)
         cls.rows = build_scenario_manifest(cls.config, cls.windows)
 
-    def test_gate4_remains_pending_human_approval(self) -> None:
+    def test_gate4_is_accepted_but_final_test_remains_separately_locked(self) -> None:
         validate_freeze_config(self.config, self.windows)
         self.assertEqual(
             self.config["status"],
-            "gate_4_freeze_candidate_pending_human_approval",
+            "gate_4_accepted_development_generation_authorized",
         )
 
     def test_manifest_locks_exact_case_and_split_counts(self) -> None:
@@ -127,6 +127,12 @@ class Gate4ManifestTests(unittest.TestCase):
         self.assertTrue(
             all(row["label_payload"] == "LOCKED_NOT_GENERATED" for row in rows)
         )
+        self.assertTrue(
+            all(
+                row["access_status"] == "prohibited_pending_separate_final_test_unlock"
+                for row in rows
+            )
+        )
 
     def test_seed_and_tuning_manifests_are_complete_and_unique(self) -> None:
         seeds = build_seed_manifest(self.config)
@@ -134,6 +140,12 @@ class Gate4ManifestTests(unittest.TestCase):
         self.assertEqual(len(seeds), 10 * 30)
         self.assertEqual(len({row["training_seed"] for row in seeds}), len(seeds))
         self.assertEqual(len(tuning), 10 * 30)
+        self.assertTrue(
+            all(
+                row["development_use_status"] == "authorized_after_gate_4_acceptance"
+                for row in seeds
+            )
+        )
         counts = Counter(row["model_family"] for row in tuning)
         self.assertEqual(set(counts.values()), {30})
         for row in tuning:
@@ -172,11 +184,19 @@ class Gate4ManifestTests(unittest.TestCase):
         self.assertIn("decision_set_id", schema["properties"])
         self.assertIn("candidate_index", schema["properties"])
         self.assertIn("base_trajectory", schema["properties"])
+        self.assertIn("boundary_or_tail", schema["properties"])
+        self.assertIn("payload_version", schema["properties"])
         self.assertNotIn("outcomes", schema["required"])
         self.assertIn("final_feature_record", schema["x-payload-rules"])
         self.assertIn(
             "robust_total_correction_delta_v_m_s",
             schema["properties"]["outcomes"]["properties"],
+        )
+        self.assertEqual(
+            schema["properties"]["outcomes"]["properties"][
+                "minimum_lunar_surface_altitude_km"
+            ]["type"],
+            ["number", "null"],
         )
 
 

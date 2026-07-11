@@ -1,0 +1,15 @@
+{
+  "audit_label": "pre_d003",
+  "decision_sets": 1400,
+  "feasible_records": 502,
+  "final_test_payloads_read": 0,
+  "groups_audited": 14,
+  "invalid_groups": 14,
+  "no_reference_feasible_sets": 1020,
+  "nonfinite_records": 0,
+  "records_audited": 7000,
+  "relationship_error_records": 7000,
+  "schema_error_records": 7000,
+  "status": "invalid",
+  "valid_groups": 0
+}
