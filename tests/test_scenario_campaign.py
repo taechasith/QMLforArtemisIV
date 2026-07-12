@@ -28,7 +28,8 @@ def test_exclusive_ledger_lock_is_created_and_removed(tmp_path: Path) -> None:
     assert not lock_path.exists()
 
 
-def test_f0_and_f1_parallel_qualification_records_are_valid() -> None:
+def test_f0_f1_and_f2_parallel_qualification_records_are_valid() -> None:
     module = load_generator_module()
     module.assert_parallel_qualification("F0")
     module.assert_parallel_qualification("F1")
+    module.assert_parallel_qualification("F2")

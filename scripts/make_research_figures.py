@@ -28,6 +28,10 @@ POST_F1_G01_AUDIT = (
 )
 POST_F1_AUDIT = ROOT / "data/processed/simulator/scenarios/post_d003_f1_audit.csv"
 F1_RUNTIME = ROOT / "data/processed/reporting/gate5_f1_campaign_runtime.csv"
+POST_F2_G01_AUDIT = (
+    ROOT / "data/processed/simulator/scenarios/post_d003_f2_g01_audit.csv"
+)
+F2_RUNTIME = ROOT / "data/processed/reporting/gate5_f2_campaign_runtime.csv"
 SEARCH_LOG = ROOT / "literature/search_log.csv"
 SCREENING_LOG = ROOT / "literature/screening_log.csv"
 EXTRACTION_MATRIX = ROOT / "literature/extraction_matrix.csv"
@@ -871,6 +875,61 @@ def draw_f0_f1_summary(path: Path) -> None:
     )
 
 
+def draw_g01_three_fidelity_checkpoint(path: Path) -> None:
+    audits = {
+        "F0": next(row for row in read_csv(POST_F0_AUDIT) if row["group_id"] == "G01"),
+        "F1": read_csv(POST_F1_G01_AUDIT)[0],
+        "F2": read_csv(POST_F2_G01_AUDIT)[0],
+    }
+    ledger_rows = {
+        row["fidelity"]: row
+        for row in read_csv(V2_LEDGER)
+        if row["group_id"] == "G01" and row["fidelity"] in audits
+    }
+    projection = next(
+        row
+        for row in read_csv(F2_RUNTIME)
+        if row["stage"] == "parallel_scaleup_projection"
+    )
+    rows = []
+    for fidelity in ("F0", "F1", "F2"):
+        audit = audits[fidelity]
+        ledger = ledger_rows[fidelity]
+        observed = int(audit["observed_records"])
+        feasible = int(audit["feasible_records"])
+        decisions = int(audit["observed_decision_sets"])
+        no_reference = int(audit["no_reference_feasible_sets"])
+        elapsed = float(ledger["elapsed_s"])
+        rows.append(
+            [
+                f"{fidelity} G01",
+                f"{observed:,}",
+                f"{feasible:,}/{observed:,} ({100.0 * feasible / observed:.0f}%)",
+                f"{no_reference}/{decisions} ({100.0 * no_reference / decisions:.0f}%)",
+                f"{elapsed / observed:.3f}",
+                f"{elapsed:,.1f} s",
+            ]
+        )
+    planning_hours = float(projection["projected_planning_wall_s"]) / 3600
+    draw_table_figure(
+        path,
+        "VALID D003-v1 G01 qualification across F0, F1, and F2",
+        [
+            "Checkpoint",
+            "Rows",
+            "Feasible rows",
+            "No-reference sets",
+            "Seconds/row",
+            "Wall time",
+        ],
+        rows,
+        f"Exact nominal-U0 table: every row is valid and every set retains a reference; F2 G02-G14 planning estimate is {planning_hours:.2f} wall-hours at two workers with 25% margin.",
+        figsize=(10.2, 4.0),
+        col_widths=[0.16, 0.10, 0.22, 0.21, 0.14, 0.17],
+        row_facecolors=[GOOD_PALE, GOOD_PALE, GOOD_PALE],
+    )
+
+
 def draw_literature_refresh_flow(path: Path) -> None:
     search_rows = read_csv(SEARCH_LOG)
     screening_rows = read_csv(SCREENING_LOG)
@@ -1226,6 +1285,18 @@ def specs() -> list[FigureSpec]:
             "The post-acceptance refresh records 4,218 unique discovery rows: 3,288 title/abstract exclusions, 926 pending full-text screens, and four provisional includes; the 23 accepted extracted records remain unchanged.",
             "Discovery-flow evidence only; the refresh is incomplete and did not alter the accepted Gate 4 model, threshold, split, or evidence claims.",
             draw_literature_refresh_flow,
+        ),
+        FigureSpec(
+            "RFIG-015",
+            "d003_g01_three_fidelity_checkpoint",
+            "Valid D003-v1 G01 F0/F1/F2 checkpoint",
+            "Gate 5 scenario generation",
+            "Methods: fidelity and compute",
+            "repair_validation_development",
+            "data/processed/simulator/scenarios/post_d003_f0_audit.csv;data/processed/simulator/scenarios/post_d003_f1_g01_audit.csv;data/processed/simulator/scenarios/post_d003_f2_g01_audit.csv;data/processed/simulator/scenarios/generation_ledger_v2.csv;data/processed/reporting/gate5_f2_campaign_runtime.csv",
+            "F0, F1, and F2 G01 all pass strict audit with 80% feasible candidates and a feasible numerical reference in every nominal-U0 decision set; F2 G01 required 450.835 seconds for 250 rows.",
+            "Nominal-U0 development qualification only; row counts and force-model workloads differ, and the timing values do not measure model or mission performance.",
+            draw_g01_three_fidelity_checkpoint,
         ),
     ]
 

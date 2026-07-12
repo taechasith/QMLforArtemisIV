@@ -1,6 +1,6 @@
 # Computational Methodology and Reference Hardware
 
-Version: 0.4.0
+Version: 0.5.0
 Hardware snapshot: 2026-07-11  
 Status: published computational-methodology supplement  
 Repository: `taechasith/QMLforArtemisIV`
@@ -222,8 +222,9 @@ are never loosened to reduce runtime.
 Gate 3 was accepted on 2026-07-12 after the D001 repair and independent rerun.
 Gate 4 and D002 were accepted on 2026-07-12. Development generation is
 authorized. Corrected F0 and F1 payloads pass their full D003 conformance
-audits; F2 qualification remains pending, and no ML/QML fit may begin until it
-also passes. Final tests remain separately locked.
+audits; the serial F2 G01 checkpoint also passes, but remaining F2 groups and
+the full audit are pending. No ML/QML fit may begin until that audit passes.
+Final tests remain separately locked.
 
 ### 6.2 F0/F1/F2 dataset generation
 
@@ -264,6 +265,15 @@ workers rather than the eight-worker ceiling to limit sustained laptop heat;
 CPU, not RAM or VRAM, was limiting. RFIG-011 through RFIG-013 preserve group
 coverage, runtime, and the exact F0/F1 summary. The optimistic estimate is
 retained as scheduling evidence rather than rewritten after the result.
+
+The serial F2 G01 checkpoint generated 250 rows in 450.835 seconds and passed
+every strict audit. Its 1.803 seconds per row is 3.555 times the F1 G01
+per-row cost. Applying that measured ratio to F1 G02-G14 work and the
+one-tenth F2 row count projects 22,624.046 seconds (6.285 worker-hours) for the
+remaining 3,250 rows. The frozen two-worker ceiling gives 3.142 ideal
+wall-hours; the local planning estimate is 3.928 hours after the required 25%
+margin. This estimate authorizes scheduling only after the checkpoint commit;
+actual F2 ledgers and the full audit remain authoritative.
 
 ### 6.3 Classical model experiments
 
@@ -373,6 +383,7 @@ and scientific failures because they require different responses.
 | 2026-07-12 | Gate 5 F1 preparation | Nominal decision sets contain multiple zero-delta-v candidates that would repeat the same multi-day propagation thousands of times | The scientifically identical work would waste CPU time before any higher-fidelity evidence was produced | Added a true-state-keyed zero-burn cache after F0 qualification; candidate timing metadata remains distinct and nonzero/distinct-state propagations are never cached | Execution-only adaptation. Unit tests enforce cache identity and timing retention; F1 runtime figures must disclose the optimization |
 | 2026-07-12 | Gate 5 F1 checkpoint | Valid F1 G01 required 1,268.159 s, 22.7 times F0 G01, while using one core and roughly 115 MB RAM | Serial completion of the remaining 32,500 unlocked F1 rows would be unnecessarily slow on the 24-core/32-thread reference laptop | Qualified G01 first, projected aggregate work, and added a four-process group scheduler with per-worker thread limits, atomic files, and a locked shared ledger | Resolved checkpoint. CPU, not RAM/VRAM, was limiting; four workers preserved cases and tolerances |
 | 2026-07-12 | Gate 5 F1 scale-up | The 13-group scale-up exceeded its 13.8 worker-hour and 3.5 ideal wall-hour projection | The laptop required 17.678 worker-hours and 5.041 wall-hours despite effective concurrency 3.51; four-group load was uneven because trajectory and uncertainty families have different cost | Completed every group without increasing workers or relaxing the scientific configuration; retained per-group ledgers, strict audit, and RFIG-011 through RFIG-013 | F1 resolved: 14/14 groups and 35,000/35,000 rows valid. Runtime projections need measured family-specific costs plus thermal/imbalance margin; 4,215/7,000 no-reference sets remain a scientific coverage limitation, not a compute failure |
+| 2026-07-12 | Gate 5 F2 checkpoint | F2 G01 required 450.835 s for only 250 rows, 3.555 times F1 G01 per-row cost | The tighter F2 model makes even the reduced row groups expensive, while only 11.49 GiB RAM and 47.74 GiB disk were free before launch | Kept the checkpoint serial, audited all 250 rows, projected G02-G14 from measured fidelity-normalized work, capped scale-up at two workers, and recorded RFIG-015 | Qualified checkpoint. Plan about 3.93 wall-hours with 25% margin, but retain measured ledgers and reduce concurrency rather than scientific work if thermal or memory pressure appears |
 
 For RTC3 specifically, the qualified OEM predates the event by 15 hours 30
 minutes 41 seconds. A separate post-RTC3 trajectory product was not substituted

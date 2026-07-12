@@ -48,10 +48,10 @@ def test_pre_d003_audit_is_retained_as_invalid_evidence() -> None:
 
 def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     rows = read_csv(FIGURES / "figure_registry.csv")
-    assert len(rows) >= 14
+    assert len(rows) >= 15
     figure_ids = {row["figure_id"] for row in rows}
     assert len(figure_ids) == len(rows)
-    assert {f"RFIG-{index:03d}" for index in range(1, 15)} <= figure_ids
+    assert {f"RFIG-{index:03d}" for index in range(1, 16)} <= figure_ids
     assert {row["evidence_status"] for row in rows} >= {
         "accepted_decision_record",
         "invalid_failed_attempt",
@@ -88,6 +88,30 @@ def test_full_f1_audit_is_valid_and_final_test_remains_unread() -> None:
         "schema_error_records": 0,
         "status": "valid",
         "valid_groups": 14,
+    }
+
+
+def test_f2_first_group_audit_is_valid_and_final_test_remains_unread() -> None:
+    summary = json.loads(
+        (
+            ROOT
+            / "data/processed/simulator/scenarios/post_d003_f2_g01_audit_summary.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert summary == {
+        "audit_label": "post_d003_f2_g01",
+        "decision_sets": 50,
+        "feasible_records": 200,
+        "final_test_payloads_read": 0,
+        "groups_audited": 1,
+        "invalid_groups": 0,
+        "no_reference_feasible_sets": 0,
+        "nonfinite_records": 0,
+        "records_audited": 250,
+        "relationship_error_records": 0,
+        "schema_error_records": 0,
+        "status": "valid",
+        "valid_groups": 1,
     }
 
 

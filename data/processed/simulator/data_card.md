@@ -1,8 +1,8 @@
 # Phase 1 Scenario Dataset Card
 
-Version: 0.4.0
+Version: 0.5.0
 Prepared: 2026-07-12
-Status: Gate 4 accepted; all unlocked F0/F1 qualified; F2 pending
+Status: Gate 4 accepted; all unlocked F0/F1 and F2 G01 qualified; remaining F2 pending
 
 ## Intended use
 
@@ -24,7 +24,8 @@ groups are now admitted: all 7,000 rows pass strict audit. All 14 corrected F1
 development/calibration groups are also admitted: all 35,000 rows pass strict
 audit, with no nonconvergence. Of 7,000 F1 decision sets, 4,215 have no
 feasible numerical reference and remain included under the frozen penalty and
-reporting rule. All F2 groups are ungenerated at this checkpoint.
+reporting rule. The serial 250-row F2 development G01 checkpoint also passes
+strict audit; the remaining 13 F2 groups are ungenerated at this checkpoint.
 `data/locked/phase1/` is ignored and absent; any file there before an explicit
 unlock causes the preparation audit to fail closed.
 
@@ -33,7 +34,7 @@ candidate-plan row identities grouped into 13,000 decision sets of five plans:
 
 | Split | F0 | F1 | F2 | Total | Gate 4 payload state |
 |---|---:|---:|---:|---:|---|
-| Development | 6,000 | 30,000 | 3,000 | 39,000 | F0/F1 valid (36,000 rows); F2 pending |
+| Development | 6,000 | 30,000 | 3,000 | 39,000 | F0/F1 valid (36,000 rows); F2 G01 valid (250 rows), remaining F2 pending |
 | Uncertainty calibration | 1,000 | 5,000 | 500 | 6,500 | F0/F1 valid (6,000 rows); calibration-use restricted; F2 pending |
 | In-distribution final test | 1,500 | 7,500 | 750 | 9,750 | Locked and not generated |
 | Out-of-distribution final test | 1,500 | 7,500 | 750 | 9,750 | Locked and not generated |

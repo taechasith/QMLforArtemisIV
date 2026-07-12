@@ -395,7 +395,7 @@ Post-acceptance discovery refresh, 2026-07-12:
 
 Date opened: 2026-07-12
 Date authorized: 2026-07-12
-Status: **All F0/F1 groups qualified; F2 first-group qualification pending**
+Status: **F2 first group qualified; controlled two-worker scale-up pending**
 Authority: Human research lead
 
 Original implementation:
@@ -515,4 +515,14 @@ All-F1 qualification, 2026-07-12:
 - RFIG-011 through RFIG-013 record full-F1 coverage, reference-laptop runtime, and the exact F0/F1 campaign summary.
 - Outcome-visibility rule: the 4,215 no-reference sets are a reportable development limitation. They cannot motivate post-result candidate redesign or uncertainty retuning under D003.
 - Consequence: F1 is qualified. F2 may begin with one serial group and must pass its own strict first-group audit before the authorized two-worker scale-up. Model fitting remains prohibited until the full F2 audit passes.
+
+F2 first-group qualification, 2026-07-12:
+
+- `F2/development/G01` produced 250 D003-v1 rows in 450.835 seconds from source commit `9d18500`.
+- All 250 rows pass strict schema, relationship, finite-value, uncertainty, checksum, and decision-set audits. No row is nonconverged, and no final-test payload was generated or read.
+- 200 candidate rows are feasible, and all 50 decision sets retain at least one feasible numerical reference.
+- F2 required 1.803 seconds per row, 3.555 times the F1 G01 per-row cost. Scaling the measured F1 G02-G14 work by that ratio and the one-tenth F2 row count projects 22,624.046 seconds (6.285 worker-hours) for the remaining groups.
+- At the frozen two-worker ceiling, the ideal projection is 11,312.023 seconds (3.142 hours); the planning estimate adds 25% and is 14,140.029 seconds (3.928 hours). Measured F2 ledgers remain authoritative.
+- RFIG-015 records exact F0/F1/F2 G01 validity, coverage, normalized runtime, and the scale-up planning boundary.
+- Consequence: F2 G01 is qualified. After this checkpoint is committed, G02-G14 may run with at most two process-isolated workers, one numerical-library thread per worker, atomic payload writes, and the locked v2 ledger. No model fitting is authorized before the full-F2 audit passes.
 

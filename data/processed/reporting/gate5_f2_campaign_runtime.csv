@@ -1,0 +1,3 @@
+campaign_id,fidelity,stage,groups,records,worker_limit,stage_wall_s,summed_group_work_s,effective_concurrency,projected_group_work_s,projected_ideal_wall_s,projected_planning_wall_s,source_commit,notes
+D003-F2-G01,F2,serial_qualification,1,250,1,450.835,450.835,1.000000,,,,9d1850013cbdffa240559050fc2bcf1568aceeb0,G01 generated and strictly audited before scale-up
+D003-F2-scaleup,F2,parallel_scaleup_projection,13,3250,2,,,,22624.046,11312.023,14140.029,9d1850013cbdffa240559050fc2bcf1568aceeb0,Projection scales F1 G02-G14 group work by one-tenth row count and the observed 3.555035 F2-to-F1 G01 per-row cost ratio; planning wall time adds 25 percent
