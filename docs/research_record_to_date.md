@@ -1,5 +1,9 @@
 # OpenQFuel-Cislunar: research record to date
 
+Historical note, 2026-07-12: this is an archival Gate 2/Gate 3 handoff record.
+It is superseded for current status by `README.md`, `research_protocol.md`,
+`docs/decision_log.md`, and `docs/research_execution_map.md`.
+
 Status date: 2026-07-11  
 Repository: [taechasith/QMLforArtemisIV](https://github.com/taechasith/QMLforArtemisIV)  
 Current remote status: Gate 2 package published; Gate 3A simulator-core

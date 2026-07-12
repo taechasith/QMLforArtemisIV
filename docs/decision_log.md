@@ -538,3 +538,60 @@ All-F2 qualification, 2026-07-12:
 - Outcome-visibility rule: the 423 no-reference sets are a reportable development limitation and cannot motivate candidate redesign, uncertainty retuning, or constraint changes under D003.
 - Consequence: D003 scenario generation is complete. All 45,500 unlocked rows across 42 F0/F1/F2 groups are qualified. Registered model fitting may begin on development rows only; calibration remains restricted to post-selection calibration, and final-test payloads remain absent and locked.
 
+### Deviation D004 - Gate 5 literature hardening before model fitting
+
+Date opened: 2026-07-12
+Date authorized: 2026-07-12
+Status: **Authorized; pre-fit controls added**
+Authority: Human research lead
+
+Original rule:
+
+Gate 4 froze the Phase 1 candidate families, splits, thresholds, tuning trials,
+seed plan, QML resources, matched control, and analysis plan from the accepted
+bounded literature synthesis. D002 already required broader literature closure
+before manuscript submission and prohibited outcome-driven model changes after
+final-test access.
+
+Revised rule:
+
+Before any research model fit, Gate 5 adds a literature-hardening layer:
+source-grade discipline, mandatory quantum-kernel concentration and bandwidth
+diagnostics, variational-trainability failure reporting, matched
+random-feature and compressed-classical dequantization controls, fixed regime
+reports, and RFIG-019. The accepted model families, splits, thresholds, tuning
+budgets, sample rungs, seed counts, scenario identities, and final-test lock do
+not change.
+
+Reason:
+
+The human research lead requested a stronger Gate 5 process after reviewing the
+local QML space-fuel literature note. That note contains useful research leads
+but mixes primary papers, arXiv manuscripts, vendor articles, RequestPDF pages,
+and broad claims. A high-impact paper needs tighter source vetting and explicit
+QML failure diagnostics before model fitting begins.
+
+Outcome visibility and likely bias:
+
+All unlocked F0/F1/F2 scenario audits and no-reference rates were visible. No
+research model had been fitted, no calibration data had been used for fitting
+or selection, and no final-test payload had been generated or read. Because
+scenario-level outcomes were visible, D004 is restricted to diagnostics,
+reporting, interpretation, and claim discipline. It cannot be used to redesign
+candidate plans, retune uncertainty distributions, change thresholds, alter
+ranking objectives, add a candidate family, or promote QRL, dynamic circuits,
+quantum annealing, or QAOA into Phase 1.
+
+Controls and evidence:
+
+- `docs/phase1_analysis_plan.md` now requires source-grade screening, kernel diagnostics, trainability diagnostics, dequantization controls, fixed regime reports, and claim-boundary checks.
+- `docs/literature_synthesis.md` records the additional primary-source implications and defers adjacent QRL/dynamic-circuit work.
+- `data/processed/reporting/gate5_literature_hardening_matrix.csv` is the machine-readable hardening matrix.
+- RFIG-019 records the literature-to-control matrix for the paper.
+
+Consequence:
+
+The next technical step is to freeze a Gate 5 runner that emits these
+diagnostics before executing any development-only research fit. Final-test
+payloads remain absent and locked.
+

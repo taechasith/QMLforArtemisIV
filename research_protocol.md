@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.0
-Status: Gates 1-4 accepted; Gate 5 D003 unlocked scenarios qualified, development fitting authorized
+Version: 0.6.1
+Status: Gates 1-4 accepted; Gate 5 D003 unlocked scenarios qualified; D004 literature hardening applied before model fitting
 Prepared: 2026-07-10  
 Updated: 2026-07-12
-Recommended next decision: Accept Gate 5 trigger after reviewing the development-split analysis report
+Recommended next decision: Freeze the Gate 5 runner, then accept or reject the algorithm trigger after reviewing the development-split analysis report
 
 ## 1. Proposed title
 
@@ -611,11 +611,17 @@ conformance. Deviation D003 excludes those rows from all research use, retains
 their audit and figures, and authorizes a committed repair followed by a
 first-group audit before each fidelity scale-up. At D003 authorization, no
 F1/F2 payload, valid research payload, fitted model, or benchmark result
-existed. Corrected F0 and F1 payloads now pass their required audits; F2 and
-all model fitting remain pending.
+existed. Corrected F0, F1, and F2 payloads now pass their required audits.
+Registered development-only model fitting is authorized only after the D004
+pre-fit literature-hardening controls are preserved in the runner and figures.
 
 Gate 5, Algorithm Trigger: authorize or reject development of the proposed new
-model based only on the preregistered trigger.
+model based only on the preregistered trigger. Before the first research model
+fit, D004 adds literature-derived diagnostic controls: source-grade discipline,
+kernel concentration and bandwidth diagnostics, variational-trainability
+failure reporting, random-feature dequantization controls, fixed regime
+reporting, and a figure-backed claim boundary. D004 does not add any candidate
+family, threshold, split, tuning budget, or final-test access.
 
 Gate 6, Mission Experiment: approve Phase 2 scenario set and safety filter
 before opening final mission results.
@@ -672,8 +678,8 @@ numerical reference. The latter are retained as a development limitation and
 cannot motivate post-result candidate or uncertainty retuning. Total F1 group
 work was 64,907.601 seconds; the separate 13-group scale-up required
 18,148.400 seconds of wall time at effective concurrency 3.51. No final-test
-payload was generated or read. F2 still requires its full-fidelity audit
-before model fitting may begin.
+payload was generated or read. F2 required its own full-fidelity audit before
+model fitting and later completed that audit.
 
 The serial F2 G01 checkpoint contains 250 valid nominal-U0 rows with no
 nonconvergence or no-reference decision set. It required 450.835 seconds,
@@ -687,6 +693,19 @@ effective concurrency 1.956. All 45,500 unlocked F0/F1/F2 rows now pass their
 full audits, so registered development-only model fitting may begin. The
 calibration split remains prohibited for fitting or selection, and final-test
 payloads remain absent and locked.
+
+Deviation D004, authorized on 2026-07-12 before any research model fit,
+hardens Gate 5 using an additional local literature review and primary-source
+checks. The revision adds source-vetting rules, quantum-kernel concentration
+and bandwidth diagnostics, variational-trainability failure reporting,
+random-feature and compressed-classical dequantization controls, fixed regime
+reports, and RFIG-019. It does not add a model family, threshold, split,
+tuning budget, scenario outcome, or final-test access. Scenario feasibility and
+no-reference rates were visible, so the D004 controls are restricted to
+diagnosis, reporting, interpretation, and claim discipline. They cannot be used
+to redesign candidate plans, retune uncertainty distributions, change ranking
+thresholds, or promote QRL, dynamic circuits, quantum annealing, or QAOA into
+the Phase 1 candidate set.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

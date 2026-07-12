@@ -1,5 +1,6 @@
-schema_version: "0.4.0"
+schema_version: "0.4.1"
 status: "gate_4_accepted_development_generation_authorized"
+gate5_status: "d004_literature_hardening_authorized_before_model_fit"
 prepared_date: "2026-07-12"
 scenario_generation_config: "configs/scenario_generation.yaml"
 
@@ -11,6 +12,7 @@ governance:
     - "generate manifest-only scenario identities"
     - "run unit and synthetic development-only smoke tests"
     - "freeze model, tuning, preprocessing, and analysis code"
+    - "fit development-only research models only after the Gate 5 runner preserves D004 diagnostics"
   prohibited_until_gate_4_acceptance:
     - "generate or read final-test feature payloads"
     - "generate or read final-test labels"
@@ -295,6 +297,49 @@ quantum_execution:
     readout_bit_flip_probability: 0.02
     implementation: "versioned observable attenuation plus finite-shot sampling"
   reporting_rule: "classical simulation cost is never described as quantum speedup or advantage"
+
+gate5_literature_hardening:
+  source_matrix: "data/processed/reporting/gate5_literature_hardening_matrix.csv"
+  status: "authorized before any research model fit"
+  changes_model_families: false
+  changes_splits_or_thresholds: false
+  changes_tuning_budget: false
+  final_test_access: false
+  source_grade_rule: "vendor, marketing, RequestPDF, and broad summary sources are search leads only unless backed by a retrievable primary or official source"
+  qml_candidate_exclusions:
+    - quantum_reinforcement_learning
+    - dynamic_circuit_control
+    - quantum_annealing
+    - qaoa
+  quantum_kernel_diagnostics:
+    - feature_scale
+    - centered_kernel_target_alignment_training_fold_only
+    - off_diagonal_concentration
+    - effective_rank
+    - condition_number
+    - nystrom_landmarks
+    - fold_id
+    - rung_sample_count
+  variational_trainability_diagnostics:
+    - optimizer_status
+    - loss_improvement
+    - gradient_norm_proxy_when_available
+    - parameter_count
+    - circuit_depth
+    - two_qubit_gate_count
+    - wall_time_s
+    - seed_failure_rate
+  matched_interpretation_controls:
+    - "A01 random_fourier_ridge on identical PCA inputs, rows, folds, rungs, and seeds"
+    - "C05 compressed-input MLP view on identical PCA inputs, rows, folds, rungs, and seeds"
+  fixed_regime_reports:
+    - fidelity
+    - uncertainty_family
+    - base_trajectory_family
+    - boundary_or_tail
+    - reference_feasible_status
+    - no_reference_feasible_decision_sets
+  claim_boundary_rule: "apparent QML gains must be checked against bandwidth, entanglement removal, random-feature approximation, parameter count, sample selection, and no-reference-feasible concentration before any trigger recommendation"
 
 analysis:
   nrmse_denominator: "standard deviation of primary target in development split only"

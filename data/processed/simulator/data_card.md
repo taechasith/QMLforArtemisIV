@@ -1,8 +1,8 @@
 # Phase 1 Scenario Dataset Card
 
-Version: 0.6.0
+Version: 0.6.1
 Prepared: 2026-07-12
-Status: Gate 4 accepted; all 45,500 unlocked F0/F1/F2 rows qualified
+Status: Gate 4 accepted; all 45,500 unlocked F0/F1/F2 rows qualified; D004 pre-fit diagnostics required
 
 ## Intended use
 
@@ -30,6 +30,10 @@ decision sets, 423 have no feasible numerical reference and remain included
 under the same frozen rule.
 `data/locked/phase1/` is ignored and absent; any file there before an explicit
 unlock causes the preparation audit to fail closed.
+
+D004 adds pre-fit Gate 5 diagnostics and source-grade controls. It does not
+change row identities, labels, splits, thresholds, tuning budgets, or final-test
+access.
 
 The compact 60-row `scenario_manifest.csv` deterministically defines 65,000
 candidate-plan row identities grouped into 13,000 decision sets of five plans:

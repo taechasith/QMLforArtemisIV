@@ -1,9 +1,9 @@
 # Gate 4 Bounded Literature Synthesis
 
-Version: 0.4.0
+Version: 0.5.0
 Search date: 2026-07-12
 Search cutoff: 2026-07-10
-Status: Accepted for Gate 4 under D002; bounded scoping synthesis, not a complete systematic review
+Status: Accepted for Gate 4 under D002; D004 Gate 5 literature hardening added before model fitting; bounded scoping synthesis, not a complete systematic review
 
 ## 1. Decision use
 
@@ -124,7 +124,28 @@ supports treating crew constraints as separate hard requirements rather than
 folding them into a prediction score. Public standards do not make this
 software flight-qualified.
 
-## 4. Frozen implications
+## 4. D004 Gate 5 hardening update
+
+A local Thai-language QML and space-fuel research note was reviewed as a source
+lead before Gate 5 model fitting. It is not promoted wholesale into the public
+evidence base because it mixes peer-reviewed papers, arXiv manuscripts,
+vendor/industry pages, RequestPDF metadata, and broad claims whose underlying
+methods are not always inspectable. The useful outcome is a stricter Gate 5
+process, not a broader claim of QML readiness.
+
+Additional primary or official sources sharpen the benchmark:
+
+1. The 2025 Artemis II performance-impact preprint extends the 2023 burn-placement record from optimized placements to mission maps and sensitivity trends. Gate 5 therefore reports fixed regime performance by navigation/uncertainty family and reference-feasible status, but it cannot retune candidate plans from the already visible no-reference rates. See [Woffinden, Margolis, and Robinson](https://ntrs.nasa.gov/api/citations/20250000050/downloads/Artemis2TrajOpt.pdf?attachment=true).
+2. Quantum-kernel concentration can make kernel values collapse toward uninformative constants, especially with expressive embeddings, entanglement, global measurements, or noise. Gate 5 therefore records off-diagonal spread, effective rank, condition number, and kernel-target alignment on training folds only. See [Thanasilp et al.](https://www.nature.com/articles/s41467-024-49287-w).
+3. Variational circuits can suffer barren plateaus and initialization sensitivity. Gate 5 therefore reports loss movement, optimizer failures, depth, two-qubit gate count, and seed-level failure rates rather than replacing failed runs. See [McClean et al.](https://www.nature.com/articles/s41467-018-07090-4).
+4. Random Fourier features and later dequantization work strengthen the need for A01. A QML result is not interpreted as quantum-specific if the matched random-feature or compressed classical controls explain the same performance. See [Rahimi and Recht](https://people.eecs.berkeley.edu/~brecht/papers/07.rah.rec.nips.pdf), [Sweke et al.](https://quantum-journal.org/papers/q-2025-02-20-1640/), and [Huang et al.](https://www.nature.com/articles/s41467-021-22539-9).
+5. QRL and dynamic-circuit papers are relevant to future mission-control research, but they do not replace the supervised Phase 1 surrogate benchmark. Reusable-rocket QRL and dynamic-circuit trajectory papers are therefore deferred to exploratory discussion unless a later gate creates a separate RL protocol. See [Kim, Chung, and Park](https://arxiv.org/abs/2310.06541), [Wang et al.](https://quantum-journal.org/papers/q-2025-03-12-1660/), and [Su, Shresthamali, and Kondo](https://arxiv.org/abs/2509.16002).
+
+D004 does not add a model family, split, threshold, outcome, tuning budget, or
+final-test access. It adds mandatory diagnostics, matched interpretation
+controls, source-grade discipline, and RFIG-019.
+
+## 5. Frozen implications
 
 The evidence directly produced these Gate 4 controls:
 
@@ -137,8 +158,10 @@ The evidence directly produced these Gate 4 controls:
 7. Exact statevector, finite-shot, and fixed hardware-agnostic noise sensitivities are reported separately.
 8. All failed optimizer seeds, infeasible selections, and nonconverged scenarios remain in the result record.
 9. Quantum advantage language is prohibited for classical simulation.
+10. Gate 5 must report QML kernel concentration, trainability, matched dequantization controls, and fixed regime diagnostics before any algorithm-trigger recommendation.
+11. QRL, dynamic circuits, quantum annealing, and QAOA are deferred from Phase 1 candidate ranking unless a later dated protocol deviation creates a separate experiment.
 
-## 5. Evidence gaps
+## 6. Evidence gaps
 
 - There is no public Artemis IV mission-owned dispersion, propulsion, or guidance dataset sufficient to reproduce operational planning.
 - There is no included head-to-head QML benchmark for crewed cislunar correction planning.

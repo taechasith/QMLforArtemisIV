@@ -18,14 +18,15 @@ acceptance does not claim that RTC3 was validated. Gate 4 and bounded-literature
 Deviation D002 were accepted on 2026-07-12. A subsequent pre-D003 run generated
 7,000 F0 rows, but the conformance audit found every row invalid; those rows
 are excluded from all model and benchmark use and retained only as failed-run
-evidence. Gate 5 is now executing the authorized D003 generator repair. The
-corrected F0 and F1 campaigns pass strict audit for all 28 unlocked groups and
-42,000 rows. The F1 audit retains 4,215 of 7,000 decision sets without a
-feasible numerical reference as a development limitation; it does not retune
-candidates after seeing that result. The corrected F2 campaign also passes
-strict audit, so all 42 unlocked groups and 45,500 F0/F1/F2 rows are now
-qualified. Registered development-only model fitting may begin, but no fitted
-research model or benchmark result exists yet.
+evidence. D003 repaired the scenario generator and qualified every unlocked
+development/calibration payload: all 42 groups and 45,500 F0/F1/F2 rows pass
+strict audit. The F1 and F2 audits retain no-reference decision sets as
+development limitations; they do not retune candidates after seeing those
+rates. D004 then hardened Gate 5 before any research model fit by adding
+source-vetting, QML diagnostic, matched-control, regime-reporting, and
+figure-record requirements. Registered development-only model fitting may begin
+only after the Gate 5 runner preserves those D004 controls. No fitted research
+model or benchmark result exists yet.
 Both final-test splits remain locked and require a separate unlock commit.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
@@ -81,6 +82,7 @@ through a dated deviation record.
 - docs/research_figure_policy.md: required visual, provenance, and claim-boundary workflow.
 - docs/research_execution_map.md: work ownership and future decision gates.
 - docs/decision_log.md: acceptance and deviation history.
+- data/processed/reporting/gate5_literature_hardening_matrix.csv: D004 source-to-control matrix for RFIG-019.
 - scripts/fetch_public_data.py: immutable-source downloader.
 - scripts/extract_artemis2_oem.py: safe nested-archive extraction and hashing.
 - scripts/audit_artemis2_oem.py: OEM qualification and revision audit.

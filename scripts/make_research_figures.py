@@ -33,6 +33,7 @@ POST_F2_G01_AUDIT = (
 )
 POST_F2_AUDIT = ROOT / "data/processed/simulator/scenarios/post_d003_f2_audit.csv"
 F2_RUNTIME = ROOT / "data/processed/reporting/gate5_f2_campaign_runtime.csv"
+GATE5_HARDENING = ROOT / "data/processed/reporting/gate5_literature_hardening_matrix.csv"
 SEARCH_LOG = ROOT / "literature/search_log.csv"
 SCREENING_LOG = ROOT / "literature/screening_log.csv"
 EXTRACTION_MATRIX = ROOT / "literature/extraction_matrix.csv"
@@ -1300,6 +1301,85 @@ def draw_literature_refresh_flow(path: Path) -> None:
     save(fig, path)
 
 
+def draw_gate5_literature_hardening(path: Path) -> None:
+    rows = read_csv(GATE5_HARDENING)
+    columns = [
+        ("ranking_guard", "Ranking\nguard"),
+        ("registered_candidate", "Registered\ncandidate"),
+        ("diagnostic_reporting", "Diagnostic\nreport"),
+        ("failure_diagnostic", "Failure\nmode"),
+        ("interpretation_control", "Interpretation\ncontrol"),
+        ("deferred", "Deferred"),
+        ("excluded", "Excluded"),
+    ]
+    color_by_use = {
+        "ranking_guard": GREEN,
+        "registered_candidate": BLUE,
+        "diagnostic_reporting": ORANGE,
+        "failure_diagnostic": MAGENTA,
+        "interpretation_control": "#56B4E9",
+        "deferred": GRAY,
+        "excluded": "#8B5A2B",
+    }
+    y = np.arange(len(rows))
+    fig, ax = plt.subplots(figsize=(10.8, 5.9))
+    fig.subplots_adjust(left=0.28, right=0.98, top=0.88, bottom=0.23)
+    ax.set_xlim(-0.5, len(columns) - 0.5)
+    ax.set_ylim(-0.65, len(rows) - 0.35)
+    ax.invert_yaxis()
+    ax.set_xticks(np.arange(len(columns)), [label for _, label in columns])
+    ax.set_yticks(y, [row["evidence_domain"] for row in rows])
+    ax.tick_params(axis="x", labelsize=8)
+    ax.tick_params(axis="y", labelsize=8)
+    ax.grid(False)
+    ax.set_title("Gate 5 literature-hardening controls before model fitting")
+
+    for row_index, row in enumerate(rows):
+        ax.axhspan(
+            row_index - 0.5,
+            row_index + 0.5,
+            color=PALE if row_index % 2 else "white",
+            alpha=0.55,
+            zorder=0,
+        )
+        decision_use = row["decision_use"]
+        column_index = next(index for index, (key, _) in enumerate(columns) if key == decision_use)
+        ax.scatter(
+            column_index,
+            row_index,
+            marker="s",
+            s=560,
+            color=color_by_use[decision_use],
+            edgecolor=INK,
+            linewidth=0.6,
+            zorder=3,
+        )
+        ax.text(
+            column_index,
+            row_index,
+            "set",
+            ha="center",
+            va="center",
+            fontsize=7.5,
+            color="white",
+            fontweight="bold",
+            zorder=4,
+        )
+
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+    fig.text(
+        0.28,
+        0.055,
+        "Source: gate5_literature_hardening_matrix.csv. Matrix records pre-fit controls only; it adds no model family, split, threshold, or final-test access.",
+        ha="left",
+        va="bottom",
+        fontsize=8,
+        color=GRAY,
+    )
+    save(fig, path)
+
+
 def specs() -> list[FigureSpec]:
     return [
         FigureSpec(
@@ -1517,6 +1597,18 @@ def specs() -> list[FigureSpec]:
             "All 45,500 unlocked F0/F1/F2 rows pass strict audit; 9,417 candidates are feasible and 4,957 of 9,100 decision sets have no feasible numerical reference.",
             "Exact fidelity-level diagnostic table only; different force-model workloads are not a speed benchmark and no value is model-performance evidence.",
             draw_f0_f1_f2_summary,
+        ),
+        FigureSpec(
+            "RFIG-019",
+            "gate5_literature_hardening_controls",
+            "Gate 5 literature-hardening controls",
+            "Gate 5 pre-fit hardening",
+            "Methods: model benchmark",
+            "pre_fit_literature_hardening",
+            "data/processed/reporting/gate5_literature_hardening_matrix.csv",
+            "Primary and official literature was translated into pre-fit Gate 5 controls: ranking guards, required diagnostics, matched interpretation controls, deferred QRL topics, and excluded non-primary claims.",
+            "Process-control evidence only; this figure adds no model family, split, threshold, final-test access, or model-performance claim.",
+            draw_gate5_literature_hardening,
         ),
     ]
 

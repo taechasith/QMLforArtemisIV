@@ -1,8 +1,8 @@
 # Phase 1 Model Registry
 
-Version: 0.3.0
+Version: 0.3.1
 Prepared: 2026-07-12
-Status: Gate 4 accepted and frozen; synthetic smoke-tested only; no research model fitted
+Status: Gate 4 accepted and frozen; D004 diagnostics added before fitting; synthetic smoke-tested only; no research model fitted
 
 ## Registered candidates
 
@@ -77,6 +77,25 @@ failed optimizer seed is a reportable result and is not replaced.
 The statevector implementation is an auditable research reference, not a QPU
 backend. Runtime on a CPU or RTX 4060 cannot support a hardware-speedup or
 quantum-advantage claim.
+
+## D004 QML diagnostic contract
+
+D004 adds diagnostics but does not add a candidate family or change finalist
+selection thresholds.
+
+Q01 must report quantum-kernel feature scale, centered kernel-target alignment,
+off-diagonal concentration, effective rank, condition number, landmark count,
+fold, rung, and sample count. These values are computed only inside the
+development training folds.
+
+Q02 and Q03 must report optimizer status, loss improvement, gradient-norm proxy
+where available, parameter count, circuit depth, two-qubit gate count, wall
+time, and seed-level failures. Failed seeds are retained.
+
+Every QML result must be shown beside A01 and the compressed-input C05 view on
+identical rows, PCA inputs, folds, rungs, and seeds. Quantum reinforcement
+learning, dynamic circuits, quantum annealing, and QAOA remain deferred from
+Phase 1 candidate ranking.
 
 ## Implementation locations
 

@@ -1,8 +1,8 @@
 # Frozen Phase 1 Analysis Plan
 
-Version: 0.6.0
+Version: 0.6.1
 Prepared: 2026-07-12
-Status: Gate 4 accepted; all D003 unlocked scenarios qualified; registered development-only fitting authorized
+Status: Gate 4 accepted; all D003 unlocked scenarios qualified; D004 literature hardening applied before any research model fit
 
 ## Analysis sequence
 
@@ -14,6 +14,40 @@ Status: Gate 4 accepted; all D003 unlocked scenarios qualified; registered devel
 6. Commit finalist identities, fitted preprocessing hashes, and executable analysis state before a separate final-test unlock.
 7. Evaluate the ID and OOD final tests once over 30 registered finalist seeds.
 8. Preserve and report every failed optimizer, nonconverged propagation, infeasible selection, and missing prediction.
+
+## D004 literature hardening before fitting
+
+The local Gate 5 literature review was tightened before any research model was
+fitted. The accepted model families, splits, thresholds, tuning-trial counts,
+sample rungs, and final-test lock remain unchanged. The added requirements are
+diagnostic and interpretive controls that prevent a weak or cosmetic QML result
+from being promoted.
+
+Source vetting is now explicit. Primary research papers, NASA/official
+standards, and authoritative mission-design records may support benchmark
+rules. Vendor pages, marketing articles, unsourced blog claims, RequestPDF
+metadata pages, and broad AI-generated summaries are search leads only. A claim
+from those sources cannot change a model, threshold, split, metric, or paper
+claim unless a retrievable primary or official source supports it.
+
+The Gate 5 runner must emit these development-only diagnostics:
+
+- Learning-curve parity at 128, 256, 512, and 1,024 rows for QML and matched controls, with same-row classical comparisons reported separately from full-development classical results.
+- Quantum-kernel diagnostics for Q01: feature-scale setting, centered kernel-target alignment, off-diagonal concentration, effective rank, condition number, Nystrom landmark count, and fold/rung sample count.
+- Variational-trainability diagnostics for Q02 and Q03: optimizer failure status, loss improvement, gradient-norm proxy where available, parameter count, circuit depth, two-qubit gate count, wall time, and seed-level failure rate.
+- Dequantization controls for every QML result: A01 random-Fourier ridge and the compressed-input C05 view on identical PCA inputs, sample IDs, folds, rungs, and seeds.
+- Fixed regime reports by fidelity, uncertainty family, base-trajectory family, boundary/tail flag, reference-feasible status, and no-reference-feasible decision sets.
+- Claim-boundary checks showing whether any apparent QML gain is explained by bandwidth/feature scale, entanglement removal, random-feature approximation, parameter count, sample selection, or a small set of no-reference-feasible cases.
+
+Quantum reinforcement learning, dynamic-circuit qubit reuse, quantum annealing,
+and QAOA remain outside the Phase 1 candidate ranking. They may be discussed as
+future or exploratory appendix material only after the supervised surrogate
+benchmark is completed.
+
+RFIG-019 records the literature-to-control matrix for this hardening step. All
+future Gate 5 result figures must retain the same boundary: development-only
+evidence before model selection, calibration-only evidence after finalist
+selection, and no final-test value until a separate unlock.
 
 ## Endpoints
 
