@@ -1,7 +1,7 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.5.0
-Status: Gates 1, 2, 3, and 4 accepted; Gate 5 D003 F0/F1 and F2 G01 qualified
+Version: 0.6.0
+Status: Gates 1-4 accepted; Gate 5 D003 unlocked scenarios qualified, development fitting authorized
 Prepared: 2026-07-10  
 Updated: 2026-07-12
 Recommended next decision: Accept Gate 5 trigger after reviewing the development-split analysis report
@@ -677,10 +677,16 @@ before model fitting may begin.
 
 The serial F2 G01 checkpoint contains 250 valid nominal-U0 rows with no
 nonconvergence or no-reference decision set. It required 450.835 seconds,
-3.555 times the F1 G01 per-row cost. This authorizes at most two process
-workers for the remaining F2 groups after the checkpoint is committed. The
-full-F2 audit remains mandatory before model fitting, and the projection may
-change scheduling only, never rows, tolerances, constraints, or force models.
+3.555 times the F1 G01 per-row cost, and authorized at most two process workers
+for scale-up. The completed F2 campaign contains 3,500 valid rows in 14
+unlocked groups, with 642 feasible candidates and 423 of 700 decision sets
+lacking a feasible numerical reference. The latter remain included under the
+frozen penalty/reporting rule. Total F2 group work was 16,054.965 seconds;
+the separate two-worker scale-up required 7,978.900 seconds of wall time at
+effective concurrency 1.956. All 45,500 unlocked F0/F1/F2 rows now pass their
+full audits, so registered development-only model fitting may begin. The
+calibration split remains prohibited for fitting or selection, and final-test
+payloads remain absent and locked.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

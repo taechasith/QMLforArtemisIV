@@ -1,0 +1,15 @@
+{
+  "audit_label": "post_d003_f2",
+  "decision_sets": 700,
+  "feasible_records": 642,
+  "final_test_payloads_read": 0,
+  "groups_audited": 14,
+  "invalid_groups": 0,
+  "no_reference_feasible_sets": 423,
+  "nonfinite_records": 0,
+  "records_audited": 3500,
+  "relationship_error_records": 0,
+  "schema_error_records": 0,
+  "status": "valid",
+  "valid_groups": 14
+}

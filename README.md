@@ -22,9 +22,10 @@ evidence. Gate 5 is now executing the authorized D003 generator repair. The
 corrected F0 and F1 campaigns pass strict audit for all 28 unlocked groups and
 42,000 rows. The F1 audit retains 4,215 of 7,000 decision sets without a
 feasible numerical reference as a development limitation; it does not retune
-candidates after seeing that result. The serial 250-row F2 G01 checkpoint also
-passes strict audit; the remaining 13 F2 groups are pending. No fitted research
-model or benchmark result exists yet.
+candidates after seeing that result. The corrected F2 campaign also passes
+strict audit, so all 42 unlocked groups and 45,500 F0/F1/F2 rows are now
+qualified. Registered development-only model fitting may begin, but no fitted
+research model or benchmark result exists yet.
 Both final-test splits remain locked and require a separate unlock commit.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV

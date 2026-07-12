@@ -395,7 +395,7 @@ Post-acceptance discovery refresh, 2026-07-12:
 
 Date opened: 2026-07-12
 Date authorized: 2026-07-12
-Status: **F2 first group qualified; controlled two-worker scale-up pending**
+Status: **All unlocked payloads qualified; D003 scenario-generation repair complete**
 Authority: Human research lead
 
 Original implementation:
@@ -525,4 +525,16 @@ F2 first-group qualification, 2026-07-12:
 - At the frozen two-worker ceiling, the ideal projection is 11,312.023 seconds (3.142 hours); the planning estimate adds 25% and is 14,140.029 seconds (3.928 hours). Measured F2 ledgers remain authoritative.
 - RFIG-015 records exact F0/F1/F2 G01 validity, coverage, normalized runtime, and the scale-up planning boundary.
 - Consequence: F2 G01 is qualified. After this checkpoint is committed, G02-G14 may run with at most two process-isolated workers, one numerical-library thread per worker, atomic payload writes, and the locked v2 ledger. No model fitting is authorized before the full-F2 audit passes.
+
+All-F2 qualification, 2026-07-12:
+
+- All 14 unlocked F2 development/calibration groups completed under D003-v1 and pass the independent strict audit.
+- All 3,500 rows pass schema, relationship, finite-value, uncertainty-family, checksum, and decision-set checks. No row is nonconverged, and no final-test payload was generated or read.
+- 642 of 3,500 candidate rows are feasible. Of 700 decision sets, 423 have no feasible numerical reference and remain included under the frozen penalty/reporting rule.
+- The two-worker G02-G14 scale-up consumed 15,604.130 seconds (4.334 worker-hours) of summed group work in 7,978.900 seconds (2.216 wall-hours), yielding effective concurrency 1.956.
+- Including serial G01, total measured F2 group work is 16,054.965 seconds (4.460 worker-hours), and combined active wall time is 8,429.735 seconds (2.342 hours), excluding the idle interval between stages.
+- Actual scale-up work was 68.97% of the 22,624.046-second projection, and actual wall time was 56.43% of the conservative 14,140.029-second planning estimate. The estimate remains preserved as scheduling evidence.
+- RFIG-016 through RFIG-018 record full-F2 coverage, reference-laptop runtime, and the exact F0/F1/F2 campaign summary.
+- Outcome-visibility rule: the 423 no-reference sets are a reportable development limitation and cannot motivate candidate redesign, uncertainty retuning, or constraint changes under D003.
+- Consequence: D003 scenario generation is complete. All 45,500 unlocked rows across 42 F0/F1/F2 groups are qualified. Registered model fitting may begin on development rows only; calibration remains restricted to post-selection calibration, and final-test payloads remain absent and locked.
 

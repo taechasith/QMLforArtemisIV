@@ -1,6 +1,6 @@
 # Computational Methodology and Reference Hardware
 
-Version: 0.5.0
+Version: 0.6.0
 Hardware snapshot: 2026-07-11  
 Status: published computational-methodology supplement  
 Repository: `taechasith/QMLforArtemisIV`
@@ -222,9 +222,9 @@ are never loosened to reduce runtime.
 Gate 3 was accepted on 2026-07-12 after the D001 repair and independent rerun.
 Gate 4 and D002 were accepted on 2026-07-12. Development generation is
 authorized. Corrected F0 and F1 payloads pass their full D003 conformance
-audits; the serial F2 G01 checkpoint also passes, but remaining F2 groups and
-the full audit are pending. No ML/QML fit may begin until that audit passes.
-Final tests remain separately locked.
+audits, and all corrected F2 groups now pass as well. Registered development-
+only model fitting is authorized; calibration remains restricted to
+post-selection calibration, and final tests remain separately locked.
 
 ### 6.2 F0/F1/F2 dataset generation
 
@@ -274,6 +274,16 @@ remaining 3,250 rows. The frozen two-worker ceiling gives 3.142 ideal
 wall-hours; the local planning estimate is 3.928 hours after the required 25%
 margin. This estimate authorizes scheduling only after the checkpoint commit;
 actual F2 ledgers and the full audit remain authoritative.
+
+The measured G02-G14 scale-up required 15,604.130 seconds (4.334
+worker-hours) of summed group work in 7,978.900 seconds (2.216 wall-hours), for
+effective concurrency 1.956. This was 68.97% of projected group work and
+56.43% of the conservative planning wall time. Including G01, F2 totals
+16,054.965 seconds (4.460 worker-hours) and 8,429.735 seconds (2.342 hours) of
+active wall time. All 3,500 F2 rows pass strict audit with no nonconvergence;
+RFIG-016 through RFIG-018 preserve coverage, runtime, and the full campaign
+summary. The faster-than-planned result does not retroactively alter the
+projection method or authorize more workers for later phases.
 
 ### 6.3 Classical model experiments
 
@@ -384,6 +394,7 @@ and scientific failures because they require different responses.
 | 2026-07-12 | Gate 5 F1 checkpoint | Valid F1 G01 required 1,268.159 s, 22.7 times F0 G01, while using one core and roughly 115 MB RAM | Serial completion of the remaining 32,500 unlocked F1 rows would be unnecessarily slow on the 24-core/32-thread reference laptop | Qualified G01 first, projected aggregate work, and added a four-process group scheduler with per-worker thread limits, atomic files, and a locked shared ledger | Resolved checkpoint. CPU, not RAM/VRAM, was limiting; four workers preserved cases and tolerances |
 | 2026-07-12 | Gate 5 F1 scale-up | The 13-group scale-up exceeded its 13.8 worker-hour and 3.5 ideal wall-hour projection | The laptop required 17.678 worker-hours and 5.041 wall-hours despite effective concurrency 3.51; four-group load was uneven because trajectory and uncertainty families have different cost | Completed every group without increasing workers or relaxing the scientific configuration; retained per-group ledgers, strict audit, and RFIG-011 through RFIG-013 | F1 resolved: 14/14 groups and 35,000/35,000 rows valid. Runtime projections need measured family-specific costs plus thermal/imbalance margin; 4,215/7,000 no-reference sets remain a scientific coverage limitation, not a compute failure |
 | 2026-07-12 | Gate 5 F2 checkpoint | F2 G01 required 450.835 s for only 250 rows, 3.555 times F1 G01 per-row cost | The tighter F2 model makes even the reduced row groups expensive, while only 11.49 GiB RAM and 47.74 GiB disk were free before launch | Kept the checkpoint serial, audited all 250 rows, projected G02-G14 from measured fidelity-normalized work, capped scale-up at two workers, and recorded RFIG-015 | Qualified checkpoint. Plan about 3.93 wall-hours with 25% margin, but retain measured ledgers and reduce concurrency rather than scientific work if thermal or memory pressure appears |
+| 2026-07-12 | Gate 5 F2 scale-up | Family-normalized projection overstated F2 G02-G14 work because the tighter-model cost ratio from nominal G01 did not transfer uniformly across uncertainty families | Actual scale-up consumed 4.334 worker-hours and 2.216 wall-hours, 68.97% and 56.43% of the corresponding projected work and planning wall time | Completed every group at two workers, retained the original projection, audited all 3,500 rows, and added RFIG-016 through RFIG-018 | F2 resolved: 14/14 groups valid with zero nonconvergence. Use family-specific pilot costs for future estimates, but preserve conservative margin and never use an overestimate to expand scientific scope after outcomes are visible |
 
 For RTC3 specifically, the qualified OEM predates the event by 15 hours 30
 minutes 41 seconds. A separate post-RTC3 trajectory product was not substituted

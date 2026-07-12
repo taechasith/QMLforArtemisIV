@@ -31,6 +31,7 @@ F1_RUNTIME = ROOT / "data/processed/reporting/gate5_f1_campaign_runtime.csv"
 POST_F2_G01_AUDIT = (
     ROOT / "data/processed/simulator/scenarios/post_d003_f2_g01_audit.csv"
 )
+POST_F2_AUDIT = ROOT / "data/processed/simulator/scenarios/post_d003_f2_audit.csv"
 F2_RUNTIME = ROOT / "data/processed/reporting/gate5_f2_campaign_runtime.csv"
 SEARCH_LOG = ROOT / "literature/search_log.csv"
 SCREENING_LOG = ROOT / "literature/screening_log.csv"
@@ -875,6 +876,189 @@ def draw_f0_f1_summary(path: Path) -> None:
     )
 
 
+def draw_f2_feasibility(path: Path) -> None:
+    rows = sorted(read_csv(POST_F2_AUDIT), key=lambda row: int(row["group_id"][1:]))
+    labels = [
+        row["group_id"] if row["split"] == "development" else f"{row['group_id']}*"
+        for row in rows
+    ]
+    measures = [
+        (
+            "Feasible candidate rows",
+            np.array([100.0 * float(row["feasibility_rate"]) for row in rows]),
+            mpl_colors.LinearSegmentedColormap.from_list(
+                "f2_feasible", ["#F4F8FB", BLUE]
+            ),
+        ),
+        (
+            "Decision sets without feasible reference",
+            np.array(
+                [100.0 * float(row["no_reference_feasible_rate"]) for row in rows]
+            ),
+            mpl_colors.LinearSegmentedColormap.from_list(
+                "f2_no_reference", ["#FFF7F2", ORANGE]
+            ),
+        ),
+    ]
+    fig, axes = plt.subplots(
+        2,
+        1,
+        figsize=(10.2, 3.8),
+        sharex=True,
+        constrained_layout=True,
+        gridspec_kw={"height_ratios": [1, 1]},
+    )
+    for ax, (label, values, color_map) in zip(axes, measures):
+        image = ax.imshow(
+            values[np.newaxis, :],
+            aspect="auto",
+            cmap=color_map,
+            vmin=0,
+            vmax=100,
+            interpolation="nearest",
+        )
+        ax.set_yticks([0], [label])
+        ax.grid(False)
+        ax.axvline(11.5, color=INK, linewidth=1.1, linestyle="--")
+        for index, value in enumerate(values):
+            ax.text(
+                index,
+                0,
+                f"{value:.1f}",
+                ha="center",
+                va="center",
+                fontsize=7.5,
+                color="white" if value >= 55 else INK,
+                fontweight="bold" if value >= 90 else "normal",
+            )
+        colorbar = fig.colorbar(image, ax=ax, fraction=0.018, pad=0.012)
+        colorbar.set_label("%", rotation=0, labelpad=7)
+        colorbar.set_ticks([0, 50, 100])
+    axes[0].set_title("D003-v1 F2 candidate feasibility coverage", loc="left")
+    axes[1].set_xticks(np.arange(len(labels)), labels)
+    axes[1].set_xlabel(
+        "G01-G12 development; G13-G14 uncertainty calibration (*)\n"
+        "642/3,500 feasible rows; 423/700 decision sets have no feasible reference"
+    )
+    save(fig, path)
+
+
+def draw_f2_runtime(path: Path) -> None:
+    ledger_rows = sorted(
+        [row for row in read_csv(V2_LEDGER) if row["fidelity"] == "F2"],
+        key=lambda row: int(row["group_id"][1:]),
+    )
+    runtime_rows = {row["stage"]: row for row in read_csv(F2_RUNTIME)}
+    projection = runtime_rows["parallel_scaleup_projection"]
+    actual = runtime_rows["parallel_scaleup_actual"]
+    labels = [row["group_id"] for row in ledger_rows]
+    minutes = [float(row["elapsed_s"]) / 60.0 for row in ledger_rows]
+    colors = [BLUE if row["split"] == "development" else MAGENTA for row in ledger_rows]
+    fig, ax = plt.subplots(figsize=(10.0, 4.7), constrained_layout=True)
+    bars = ax.bar(labels, minutes, color=colors, edgecolor=INK, linewidth=0.5)
+    for bar, row, value in zip(bars, ledger_rows, minutes):
+        if row["split"] == "uncertainty_calibration":
+            bar.set_hatch("//")
+        ax.annotate(
+            f"{value:.1f}",
+            (bar.get_x() + bar.get_width() / 2, bar.get_height()),
+            xytext=(0, 3),
+            textcoords="offset points",
+            ha="center",
+            va="bottom",
+            fontsize=7,
+            color=INK,
+        )
+    projected_mean_minutes = float(projection["projected_group_work_s"]) / 13 / 60
+    ax.hlines(
+        projected_mean_minutes,
+        0.5,
+        13.5,
+        color=GRAY,
+        linewidth=1.0,
+        linestyle="--",
+        label=f"Pre-scale-up projection: {projected_mean_minutes:.1f} min/group",
+    )
+    ax.set_ylim(0, max(max(minutes) * 1.15, projected_mean_minutes * 1.15))
+    ax.set_ylabel("Wall time per 250-row group (min)")
+    ax.set_xlabel(
+        "G01 serial qualification; G02-G12 development; G13-G14 calibration (hatched)\n"
+        f"G02-G14: {float(actual['summed_group_work_s']) / 3600:.2f} worker-h in "
+        f"{float(actual['stage_wall_s']) / 3600:.2f} wall-h at effective concurrency "
+        f"{float(actual['effective_concurrency']):.2f}"
+    )
+    ax.set_title("D003-v1 F2 generation runtime on the reference laptop")
+    ax.legend(loc="upper left")
+    save(fig, path)
+
+
+def draw_f0_f1_f2_summary(path: Path) -> None:
+    audits = {
+        "F0": read_csv(POST_F0_AUDIT),
+        "F1": read_csv(POST_F1_AUDIT),
+        "F2": read_csv(POST_F2_AUDIT),
+    }
+    ledger = read_csv(V2_LEDGER)
+
+    def totals(fidelity: str) -> dict[str, float]:
+        rows = audits[fidelity]
+        return {
+            "groups": len(rows),
+            "records": sum(int(row["observed_records"]) for row in rows),
+            "decisions": sum(int(row["observed_decision_sets"]) for row in rows),
+            "feasible": sum(int(row["feasible_records"]) for row in rows),
+            "no_reference": sum(int(row["no_reference_feasible_sets"]) for row in rows),
+            "nonconverged": sum(int(row["nonconverged_records"]) for row in rows),
+            "work_s": sum(
+                float(row["elapsed_s"]) for row in ledger if row["fidelity"] == fidelity
+            ),
+        }
+
+    values = {fidelity: totals(fidelity) for fidelity in ("F0", "F1", "F2")}
+
+    def count_rate(fidelity: str, key: str, denominator: str) -> str:
+        count = values[fidelity][key]
+        total = values[fidelity][denominator]
+        return f"{int(count):,}/{int(total):,} ({100.0 * count / total:.1f}%)"
+
+    rows = [
+        ["Valid groups", "14/14", "14/14", "14/14", "All unlocked groups"],
+        ["Candidate rows", "7,000", "35,000", "3,500", "Five candidates per set"],
+        [
+            "Feasible candidate rows",
+            count_rate("F0", "feasible", "records"),
+            count_rate("F1", "feasible", "records"),
+            count_rate("F2", "feasible", "records"),
+            "Coverage diagnostic only",
+        ],
+        [
+            "Sets without feasible reference",
+            count_rate("F0", "no_reference", "decisions"),
+            count_rate("F1", "no_reference", "decisions"),
+            count_rate("F2", "no_reference", "decisions"),
+            "Frozen penalty rule",
+        ],
+        ["Nonconverged rows", "0", "0", "0", "No case removed"],
+        [
+            "Summed group work",
+            f"{values['F0']['work_s'] / 3600:.2f} h",
+            f"{values['F1']['work_s'] / 3600:.2f} h",
+            f"{values['F2']['work_s'] / 3600:.2f} h",
+            "Reference laptop",
+        ],
+    ]
+    draw_table_figure(
+        path,
+        "D003-v1 full unlocked scenario campaign audit summary",
+        ["Audit measure", "F0", "F1", "F2", "Interpretation"],
+        rows,
+        "Exact three-fidelity table: all 45,500 unlocked rows are valid; calibration rows and coverage diagnostics cannot support model selection.",
+        figsize=(10.8, 4.9),
+        col_widths=[0.25, 0.15, 0.15, 0.15, 0.30],
+        row_facecolors=[GOOD_PALE, "white", "white", WARNING_PALE, GOOD_PALE, "white"],
+    )
+
+
 def draw_g01_three_fidelity_checkpoint(path: Path) -> None:
     audits = {
         "F0": next(row for row in read_csv(POST_F0_AUDIT) if row["group_id"] == "G01"),
@@ -1297,6 +1481,42 @@ def specs() -> list[FigureSpec]:
             "F0, F1, and F2 G01 all pass strict audit with 80% feasible candidates and a feasible numerical reference in every nominal-U0 decision set; F2 G01 required 450.835 seconds for 250 rows.",
             "Nominal-U0 development qualification only; row counts and force-model workloads differ, and the timing values do not measure model or mission performance.",
             draw_g01_three_fidelity_checkpoint,
+        ),
+        FigureSpec(
+            "RFIG-016",
+            "d003_f2_feasibility_coverage",
+            "Valid D003-v1 F2 feasibility coverage",
+            "Gate 5 scenario generation",
+            "Methods: scenario coverage",
+            "development_and_calibration_diagnostic",
+            "data/processed/simulator/scenarios/post_d003_f2_audit.csv",
+            "All 3,500 F2 rows pass strict audit; 642 candidates are feasible and 423 of 700 decision sets have no feasible numerical reference.",
+            "Development/calibration coverage diagnostic only; calibration groups are marked and cannot support model fitting or selection.",
+            draw_f2_feasibility,
+        ),
+        FigureSpec(
+            "RFIG-017",
+            "d003_f2_generation_runtime",
+            "D003-v1 F2 generation runtime",
+            "computational methodology",
+            "Methods: compute",
+            "reference_hardware_observation",
+            "data/processed/simulator/scenarios/generation_ledger_v2.csv;data/processed/reporting/gate5_f2_campaign_runtime.csv",
+            "The 13-group two-worker F2 scale-up consumed 15,604.130 seconds of summed group work in 7,978.900 seconds of wall time, for effective concurrency 1.96 on the reference laptop.",
+            "Reference-hardware scheduling evidence only; G01 was a separate serial checkpoint and runtime does not measure model or mission performance.",
+            draw_f2_runtime,
+        ),
+        FigureSpec(
+            "RFIG-018",
+            "d003_full_scenario_campaign_summary",
+            "D003-v1 full unlocked scenario campaign audit summary",
+            "Gate 5 scenario generation",
+            "Methods: generator qualification",
+            "development_and_calibration_diagnostic",
+            "data/processed/simulator/scenarios/post_d003_f0_audit.csv;data/processed/simulator/scenarios/post_d003_f1_audit.csv;data/processed/simulator/scenarios/post_d003_f2_audit.csv;data/processed/simulator/scenarios/generation_ledger_v2.csv",
+            "All 45,500 unlocked F0/F1/F2 rows pass strict audit; 9,417 candidates are feasible and 4,957 of 9,100 decision sets have no feasible numerical reference.",
+            "Exact fidelity-level diagnostic table only; different force-model workloads are not a speed benchmark and no value is model-performance evidence.",
+            draw_f0_f1_f2_summary,
         ),
     ]
 
