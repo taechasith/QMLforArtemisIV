@@ -636,57 +636,6 @@ def draw_f0_runtime(path: Path) -> None:
     save(fig, path)
 
 
-def draw_g01_fidelity_checkpoint(path: Path) -> None:
-    f0 = next(row for row in read_csv(POST_F0_AUDIT) if row["group_id"] == "G01")
-    f1 = read_csv(POST_F1_G01_AUDIT)[0]
-    runtimes = {
-        row["fidelity"]: float(row["elapsed_s"])
-        for row in read_csv(V2_LEDGER)
-        if row["group_id"] == "G01" and row["fidelity"] in {"F0", "F1"}
-    }
-    ratio = runtimes["F1"] / runtimes["F0"]
-    rows = []
-    for row in (f0, f1):
-        fidelity = row["fidelity"]
-        observed = int(row["observed_records"])
-        feasible = int(row["feasible_records"])
-        decisions = int(row["observed_decision_sets"])
-        no_reference = int(row["no_reference_feasible_sets"])
-        rows.append(
-            [
-                f"{fidelity} G01",
-                f"{observed:,}",
-                f"{feasible:,}/{observed:,} ({100.0 * feasible / observed:.0f}%)",
-                f"{no_reference}/{decisions} ({100.0 * no_reference / decisions:.0f}%)",
-                f"{runtimes[fidelity]:,.1f} s",
-            ]
-        )
-    rows.append(
-        [
-            "F1/F0 ratio",
-            "same U0 group",
-            "not a coverage change",
-            "not a coverage change",
-            f"{ratio:.1f}x",
-        ]
-    )
-    draw_table_figure(
-        path,
-        "VALID D003-v1 G01 fidelity checkpoint",
-        [
-            "Checkpoint",
-            "Rows",
-            "Feasible rows",
-            "No-reference sets",
-            "Wall time",
-        ],
-        rows,
-        "Exact two-fidelity checkpoint table; runtime includes the post-F0 zero-burn cache and is not final model-performance evidence.",
-        figsize=(9.4, 3.7),
-        col_widths=[0.22, 0.14, 0.23, 0.23, 0.18],
-        row_facecolors=[GOOD_PALE, GOOD_PALE, "white"],
-    )
-
 
 def draw_f1_feasibility(path: Path) -> None:
     rows = sorted(read_csv(POST_F1_AUDIT), key=lambda row: int(row["group_id"][1:]))
@@ -800,82 +749,6 @@ def draw_f1_runtime(path: Path) -> None:
     ax.legend(loc="upper left")
     save(fig, path)
 
-
-def draw_f0_f1_summary(path: Path) -> None:
-    audits = {
-        "F0": read_csv(POST_F0_AUDIT),
-        "F1": read_csv(POST_F1_AUDIT),
-    }
-    ledger = read_csv(V2_LEDGER)
-
-    def totals(fidelity: str) -> dict[str, float]:
-        rows = audits[fidelity]
-        return {
-            "groups": len(rows),
-            "records": sum(int(row["observed_records"]) for row in rows),
-            "decisions": sum(int(row["observed_decision_sets"]) for row in rows),
-            "feasible": sum(int(row["feasible_records"]) for row in rows),
-            "no_reference": sum(int(row["no_reference_feasible_sets"]) for row in rows),
-            "nonconverged": sum(int(row["nonconverged_records"]) for row in rows),
-            "work_s": sum(
-                float(row["elapsed_s"]) for row in ledger if row["fidelity"] == fidelity
-            ),
-        }
-
-    f0 = totals("F0")
-    f1 = totals("F1")
-
-    def count_rate(count: float, total: float) -> str:
-        return f"{int(count):,}/{int(total):,} ({100.0 * count / total:.1f}%)"
-
-    rows = [
-        [
-            "Valid groups",
-            f"{int(f0['groups'])}/14",
-            f"{int(f1['groups'])}/14",
-            "All unlocked groups",
-        ],
-        [
-            "Candidate rows",
-            f"{int(f0['records']):,}",
-            f"{int(f1['records']):,}",
-            "Five candidates per decision set",
-        ],
-        [
-            "Feasible candidate rows",
-            count_rate(f0["feasible"], f0["records"]),
-            count_rate(f1["feasible"], f1["records"]),
-            "Coverage diagnostic, not model performance",
-        ],
-        [
-            "Sets without feasible reference",
-            count_rate(f0["no_reference"], f0["decisions"]),
-            count_rate(f1["no_reference"], f1["decisions"]),
-            "Retained under frozen penalty rule",
-        ],
-        [
-            "Nonconverged rows",
-            f"{int(f0['nonconverged']):,}",
-            f"{int(f1['nonconverged']):,}",
-            "No case removed",
-        ],
-        [
-            "Summed group work",
-            f"{f0['work_s'] / 3600:.2f} h",
-            f"{f1['work_s'] / 3600:.2f} h",
-            "Reference laptop; fidelities have different workloads",
-        ],
-    ]
-    draw_table_figure(
-        path,
-        "D003-v1 F0 and F1 campaign audit summary",
-        ["Audit measure", "F0", "F1", "Interpretation"],
-        rows,
-        "Exact two-fidelity table: all 42,000 unlocked F0/F1 rows are valid; neither calibration rows nor these diagnostics support model selection.",
-        figsize=(9.8, 4.8),
-        col_widths=[0.27, 0.18, 0.18, 0.37],
-        row_facecolors=[GOOD_PALE, "white", "white", WARNING_PALE, GOOD_PALE, "white"],
-    )
 
 
 def draw_f2_feasibility(path: Path) -> None:
@@ -1553,18 +1426,6 @@ def specs() -> list[FigureSpec]:
             draw_f0_runtime,
         ),
         FigureSpec(
-            "RFIG-010",
-            "d003_g01_fidelity_checkpoint",
-            "Valid D003-v1 G01 F0/F1 checkpoint",
-            "Gate 5 scenario generation",
-            "Methods: fidelity and compute",
-            "repair_validation_development",
-            "data/processed/simulator/scenarios/post_d003_f0_audit.csv;data/processed/simulator/scenarios/post_d003_f1_g01_audit.csv;data/processed/simulator/scenarios/generation_ledger_v2.csv",
-            "F0 and F1 G01 both retain feasible references in every decision set, while F1 requires 1,268.2 seconds versus 55.9 seconds for F0 on the reference laptop.",
-            "Nominal U0 development checkpoint only; runtime includes the post-F0 zero-burn cache and does not predict final model performance.",
-            draw_g01_fidelity_checkpoint,
-        ),
-        FigureSpec(
             "RFIG-011",
             "d003_f1_feasibility_coverage",
             "Valid D003-v1 F1 feasibility coverage",
@@ -1587,18 +1448,6 @@ def specs() -> list[FigureSpec]:
             "The 13-group four-worker F1 scale-up consumed 63,639.442 seconds of summed group work in 18,148.400 seconds of wall time, for effective concurrency 3.51 on the reference laptop.",
             "Reference-hardware scheduling evidence only; G01 was a separate serial checkpoint and runtime does not measure model or mission performance.",
             draw_f1_runtime,
-        ),
-        FigureSpec(
-            "RFIG-013",
-            "d003_f0_f1_campaign_summary",
-            "D003-v1 F0/F1 campaign audit summary",
-            "Gate 5 scenario generation",
-            "Methods: generator qualification",
-            "development_and_calibration_diagnostic",
-            "data/processed/simulator/scenarios/post_d003_f0_audit.csv;data/processed/simulator/scenarios/post_d003_f1_audit.csv;data/processed/simulator/scenarios/generation_ledger_v2.csv",
-            "All 42,000 unlocked F0/F1 rows pass strict audit; F1 has 6,436 feasible candidates and 4,215 decision sets without a feasible numerical reference.",
-            "Exact fidelity-level diagnostic table only; different force-model workloads are not a speed benchmark and no value is model-performance evidence.",
-            draw_f0_f1_summary,
         ),
         FigureSpec(
             "RFIG-014",
