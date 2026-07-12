@@ -676,7 +676,8 @@ and calibration/final-test read counts must remain zero.
 ### Deviation D006 - Pre-fit campaign and matched-control conformance refinement
 
 Date opened: 2026-07-12
-Status: **Candidate frozen; explicit human acceptance required before fitting**
+Date accepted: 2026-07-12
+Status: **Accepted by the human research lead**
 Authority requested: Human research lead
 
 Original rule:
@@ -732,11 +733,19 @@ Controls and evidence:
 - Statevector equivalence tests cover 4-12 qubits, one to three layers, kernels, features, finite shots, objectives, and numerical gradients.
 - Formal fitting still requires a clean tracked tree and leaves calibration and both final-test splits untouched.
 
-Decision requested:
+Human decision:
 
-Accept D006 to let the 450-task first-stage contract supersede only the D005
-execution-plan mapping, or reject it and revise the matched-control campaign
-before any fit. D006 does not create another candidate family or increase the
-30-trial hyperparameter search. The later Gate 5 trigger decision remains a
-separate human accept/reject/revise decision after development-only evidence
-is published.
+The human research lead explicitly accepted D006 after the candidate was
+published at commit `3ac9403`. Acceptance lets the 450-task first-stage
+contract supersede only the D005 execution-plan mapping and authorizes the
+development-only research fitting campaign from a clean post-acceptance source
+commit. D006 does not create another candidate family or increase the 30-trial
+hyperparameter search.
+
+Consequence:
+
+The bounded ten-task qualification benchmark may run first. Full scale-up is
+authorized only if its frozen 25%-margin compute, wall-time, and storage audit
+passes. Calibration and both final-test splits remain locked, and the later
+Gate 5 scientific trigger remains a separate human accept/reject/revise
+decision after development-only evidence is published.

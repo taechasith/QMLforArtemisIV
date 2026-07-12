@@ -2,7 +2,7 @@
 
 Version: 0.6.3
 Prepared: 2026-07-12
-Status: Gate 4 accepted; D003 data qualified; D004 controls integrated; D005 accepted; D006 campaign candidate pending human acceptance
+Status: Gate 4 accepted; D003 data qualified; D004 controls integrated; D005 and D006 accepted; development-only campaign authorized
 
 ## Analysis sequence
 
@@ -71,7 +71,7 @@ atomically with a signature covering the source commit, trial, view, rung,
 matched dimension, seed index, and resolved family seed; resume refuses a
 mismatched checkpoint. RFIG-020 records the outcome-blind fold allocation.
 
-## D006 pre-fit campaign refinement candidate
+## D006 accepted pre-fit campaign refinement
 
 The post-acceptance audit found that cycling control dimensions independently
 did not match many QML trials at the same seed index. Before any research fit,
@@ -81,7 +81,7 @@ C05 trials is repeated at 4, 6, and 8 PCA dimensions. This changes execution
 views, not hyperparameter-trial count. Controls advance independently per
 dimension and exact same-index controls also follow every QML survivor.
 
-If D006 is accepted, the formal scheduler freezes immutable rung and selection authorizations,
+Under the accepted D006 contract, the formal scheduler freezes immutable rung and selection authorizations,
 requires every authorized task to end in a signed success or retained terminal
 failure before ranking, blocks incomplete-stage selection, uses exactly 20
 existing family seed indices for selected configurations, and permits only one

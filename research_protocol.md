@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
 Version: 0.6.3
-Status: Gates 1-4 accepted; Gate 5 data qualified; D005 accepted; D006 campaign candidate pending human acceptance
+Status: Gates 1-4 accepted; Gate 5 data qualified; D005 and D006 accepted; development-only fitting authorized
 Prepared: 2026-07-10  
 Updated: 2026-07-12
-Recommended next decision: Accept, reject, or revise D006 before the first research fit; later decide the Gate 5 trigger from development-only evidence
+Recommended next action: Run the bounded D006 qualification audit, then scale up only if it passes; later decide the Gate 5 trigger from development-only evidence
 
 ## 1. Proposed title
 
@@ -734,7 +734,8 @@ advance independently within dimension and exact same-index views also follow
 QML survivors. It adds no hyperparameter trial, candidate family, fold, row,
 seed, threshold, or final-test access.
 
-D006 proposes immutable rung/selection authorizations, exact 20-seed
+D006 was explicitly accepted by the human research lead on 2026-07-12 from
+candidate commit `3ac9403`. It freezes immutable rung/selection authorizations, exact 20-seed
 selected-configuration reruns, terminal-failure preservation, task locks, and
 a mathematically equivalent vectorized statevector batch. Recorded
 state/feature/kernel differences are at most `2.67e-15`; circuits, objectives,

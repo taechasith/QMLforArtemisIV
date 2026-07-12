@@ -1,6 +1,6 @@
 schema_version: "0.4.2"
 status: "gate_4_accepted_development_generation_authorized"
-gate5_status: "d005_runner_accepted_d006_campaign_candidate_pending_human_acceptance"
+gate5_status: "d005_runner_and_d006_campaign_accepted_development_fitting_authorized"
 prepared_date: "2026-07-12"
 scenario_generation_config: "configs/scenario_generation.yaml"
 
@@ -343,10 +343,13 @@ gate5_literature_hardening:
 
 gate5_runner_freeze:
   status: "d005_gate5_runner_accepted"
-  research_fit_authorized: false
+  research_fit_authorized: true
   accepted_date: "2026-07-12"
   accepted_candidate_commit: "80ae35d06394e0d84a9feb8415d1eaacf5cfe04d"
-  pre_fit_campaign_refinement: "d006_candidate_pending_human_acceptance"
+  pre_fit_campaign_refinement: "d006_campaign_accepted"
+  d006_accepted_date: "2026-07-12"
+  d006_accepted_candidate_commit: "3ac9403bcba915afa7bea06fec13e7f1007d4caa"
+  d006_acceptance_scope: "development-only research fitting under the frozen campaign contract; full scale-up remains contingent on the bounded benchmark audit"
   implementation: "scripts/run_phase1_development.py, scripts/run_gate5_campaign.py, openqfuel.gate5, and openqfuel.gate5_campaign"
   split_scope: "development only; calibration prohibited for fitting and selection; final payload absent and locked"
   cv_assignment:
@@ -370,7 +373,7 @@ gate5_runner_freeze:
   checkpoint_rule: "atomic JSON after each completed fold, validated by source/trial/view/rung/dimension signature before resume"
   public_preflight: "data/processed/reporting/gate5_preflight_audit.json"
   initial_execution_plan: "data/processed/reporting/gate5_initial_execution_plan.csv"
-  execution_guard: "research fitting raises PermissionError until D005 is accepted and the active D006 campaign contract sets research_fit_authorized true after explicit human acceptance"
+  execution_guard: "D005 and D006 are explicitly accepted; research fitting is authorized only on development data, from a clean tracked source commit, under immutable campaign authorizations"
   initial_task_count: 450
   orchestration:
     successive_halving_rungs: [128, 256, 512, 1024]

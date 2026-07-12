@@ -400,6 +400,11 @@ def test_research_execution_is_blocked_without_d005_acceptance(
         execute_trial(ROOT, "C01-T01", tmp_path)
 
 
-def test_real_d006_candidate_blocks_research_fitting(tmp_path: Path) -> None:
-    with pytest.raises(PermissionError, match="active runner contract"):
-        execute_trial(ROOT, "C01-T01", tmp_path)
+def test_real_d006_acceptance_marks_initial_plan_ready() -> None:
+    config = read_yaml(CONFIG)
+    runner = config["gate5_runner_freeze"]
+    assert runner["research_fit_authorized"] is True
+    assert runner["pre_fit_campaign_refinement"] == "d006_campaign_accepted"
+    assert {row["execution_status"] for row in initial_execution_plan(ROOT)} == {
+        "ready"
+    }

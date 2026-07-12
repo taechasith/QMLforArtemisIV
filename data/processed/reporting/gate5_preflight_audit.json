@@ -1,6 +1,6 @@
 {
   "calibration_rows_read": 0,
-  "campaign_refinement": "d006_candidate_pending_human_acceptance",
+  "campaign_refinement": "d006_campaign_accepted",
   "candidates_per_decision_set": 5,
   "columns_in_model_contract": 39,
   "decision_sets": 7800,
@@ -46,7 +46,7 @@
     }
   ],
   "gate4_checksums_verified": 5,
-  "research_fit_authorized": false,
+  "research_fit_authorized": true,
   "rows": 39000,
   "rows_by_fidelity": {
     "F0": 6000,

@@ -2,7 +2,7 @@
 
 Version: 0.3.3
 Prepared: 2026-07-12
-Status: Gate 4 accepted; D004 diagnostics integrated; D005 accepted; D006 campaign/control candidate pending acceptance; no research model fitted
+Status: Gate 4 accepted; D004 diagnostics integrated; D005 and D006 accepted; development-only campaign authorized; no research model fitted
 
 ## Registered candidates
 
@@ -126,10 +126,11 @@ advance independently within each dimension, while the exact same-index view
 also follows each surviving QML trial. QML successive halving preserves at
 least one eligible trial per required qubit count before filling remaining
 slots by rank. Interpretation views remain ineligible to add a candidate
-winner. D005 was accepted on 2026-07-12; the D006 execution-only conformance
-refinement remains blocked pending explicit human acceptance before fitting.
+winner. D005 and the D006 execution-only conformance refinement were accepted
+on 2026-07-12. Development-only fitting is authorized from a clean tracked
+source commit, with full scale-up contingent on the bounded benchmark audit.
 
-## Proposed D006 execution roles
+## Accepted D006 execution roles
 
 The 450-task first stage contains 270 candidate tasks and 180 control views.
 The extra views do not change any of the 30 frozen A01 or C05 hyperparameter
