@@ -1,0 +1,74 @@
+{
+  "calibration_rows_read": 0,
+  "candidates_per_decision_set": 5,
+  "columns_in_model_contract": 39,
+  "decision_sets": 7800,
+  "feasible_rate": 0.22125641025641027,
+  "feasible_rows": 8629,
+  "final_payload_root_absent_or_empty": true,
+  "final_test_rows_read": 0,
+  "folds": [
+    {
+      "feasible_rate": 0.4503076923076923,
+      "feasible_rows": 2927,
+      "fold_id": "CV01",
+      "validation_groups": 2,
+      "validation_rows": 6500
+    },
+    {
+      "feasible_rate": 0.3384615384615385,
+      "feasible_rows": 3300,
+      "fold_id": "CV02",
+      "validation_groups": 3,
+      "validation_rows": 9750
+    },
+    {
+      "feasible_rate": 0.05046153846153846,
+      "feasible_rows": 492,
+      "fold_id": "CV03",
+      "validation_groups": 3,
+      "validation_rows": 9750
+    },
+    {
+      "feasible_rate": 0.09723076923076923,
+      "feasible_rows": 632,
+      "fold_id": "CV04",
+      "validation_groups": 2,
+      "validation_rows": 6500
+    },
+    {
+      "feasible_rate": 0.1966153846153846,
+      "feasible_rows": 1278,
+      "fold_id": "CV05",
+      "validation_groups": 2,
+      "validation_rows": 6500
+    }
+  ],
+  "gate4_checksums_verified": 5,
+  "rows": 39000,
+  "rows_by_fidelity": {
+    "F0": 6000,
+    "F1": 30000,
+    "F2": 3000
+  },
+  "rows_by_group": {
+    "G01": 3250,
+    "G02": 3250,
+    "G03": 3250,
+    "G04": 3250,
+    "G05": 3250,
+    "G06": 3250,
+    "G07": 3250,
+    "G08": 3250,
+    "G09": 3250,
+    "G10": 3250,
+    "G11": 3250,
+    "G12": 3250
+  },
+  "runner_status": "d005_candidate_pending_human_acceptance",
+  "seed_rows": 300,
+  "split": "development",
+  "status": "pass",
+  "tuning_trials": 300,
+  "unique_scenarios": 39000
+}

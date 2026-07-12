@@ -1,8 +1,8 @@
 # Phase 1 Model Registry
 
-Version: 0.3.1
+Version: 0.3.2
 Prepared: 2026-07-12
-Status: Gate 4 accepted and frozen; D004 diagnostics added before fitting; synthetic smoke-tested only; no research model fitted
+Status: Gate 4 accepted; D004 diagnostics integrated; D005 residual and fold corrections pending acceptance; no research model fitted
 
 ## Registered candidates
 
@@ -108,3 +108,21 @@ Phase 1 candidate ranking.
 
 All registry statuses are `frozen_not_run`. Synthetic unit data were used only
 to verify interfaces, determinism, shapes, and access controls.
+
+## D005 implementation correction
+
+C06 and Q03 no longer infer the physical low-fidelity baseline from the last
+shared transformed feature. The runner appends the named
+`low_fidelity_cost_m_s` value after applying the training-fold target scaler.
+C06 may use that value as a residual predictor; Q03 removes the appended value
+from its circuit input and adds it only as the physical baseline. This prevents
+a one-hot or PCA component from being mistaken for correction delta-v.
+
+All preprocessing and PCA objects are new per CV fold and are fitted only on
+that fold's selected training rows. A01 and compressed C05 are interpretation
+views at 4, 6, and 8 PCA dimensions. Their 30 existing trial orders cycle
+evenly across those dimensions, so no new hyperparameter trial is added. QML
+successive halving preserves at least one eligible trial per required qubit
+count before filling remaining slots by rank. Interpretation views remain
+ineligible to add a candidate winner. These rules are executable but research
+fitting remains blocked until D005 is accepted.

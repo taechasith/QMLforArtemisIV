@@ -24,9 +24,11 @@ strict audit. The F1 and F2 audits retain no-reference decision sets as
 development limitations; they do not retune candidates after seeing those
 rates. D004 then hardened Gate 5 before any research model fit by adding
 source-vetting, QML diagnostic, matched-control, regime-reporting, and
-figure-record requirements. Registered development-only model fitting may begin
-only after the Gate 5 runner preserves those D004 controls. No fitted research
-model or benchmark result exists yet.
+figure-record requirements. The D005 Gate 5 runner candidate now enforces
+fold-local preprocessing/PCA, deterministic whole-group CV, nested matched
+samples, explicit physical residual baselines, and fail-closed split access.
+Its research-fit switch remains off pending human acceptance of D005. No fitted
+research model or benchmark result exists yet.
 Both final-test splits remain locked and require a separate unlock commit.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
@@ -83,6 +85,9 @@ through a dated deviation record.
 - docs/research_execution_map.md: work ownership and future decision gates.
 - docs/decision_log.md: acceptance and deviation history.
 - data/processed/reporting/gate5_literature_hardening_matrix.csv: D004 source-to-control matrix for RFIG-019.
+- data/processed/reporting/gate5_cv_fold_manifest.csv: label-agnostic D005 whole-group CV assignment for RFIG-020.
+- data/processed/reporting/gate5_preflight_audit.json: development-only Gate 5 data and lock audit.
+- data/processed/reporting/gate5_initial_execution_plan.csv: all 330 first-stage development tasks, blocked until D005 acceptance.
 - scripts/fetch_public_data.py: immutable-source downloader.
 - scripts/extract_artemis2_oem.py: safe nested-archive extraction and hashing.
 - scripts/audit_artemis2_oem.py: OEM qualification and revision audit.

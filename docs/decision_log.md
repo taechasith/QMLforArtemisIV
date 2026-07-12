@@ -595,3 +595,72 @@ The next technical step is to freeze a Gate 5 runner that emits these
 diagnostics before executing any development-only research fit. Final-test
 payloads remain absent and locked.
 
+### Deviation D005 - Gate 5 runner scientific correction
+
+Date opened: 2026-07-12
+Status: **Candidate frozen; human acceptance required before research fitting**
+Authority requested: Human research lead
+
+Original rule:
+
+Gate 4 froze five-fold grouped CV, hash-selected QML learning rungs, shared
+preprocessing, matched controls, target standardization, and residual families.
+It did not freeze the exact group-to-fold map, row-hash namespace, weighting of
+unequal folds, or the executable mapping from a transformed matrix to the
+physical low-fidelity baseline.
+
+Proposed revised rule:
+
+- Assign G01-G12 by deterministic greedy balance of frozen uncertainty family and trajectory family, with master-seeded SHA-256 tie breaks and no outcomes.
+- Select nested training rows with `SHA-256(master_seed|gate5_learning_row_v1|scenario_id)` inside each training fold.
+- Fit imputation, encoding, feature scaling, target scaling, and PCA inside each training fold only.
+- Rank by pooled out-of-fold NRMSE using the frozen full-development denominator; retain unweighted fold NRMSE as a diagnostic.
+- Match QML, A01, and compressed C05 by rows, fold, rung, PCA dimension, and seed index while preserving each family's frozen integer seed.
+- Cycle A01 and compressed-C05 trial orders across 4/6/8 dimensions, 10 trials each, and retain at least one eligible QML trial per required qubit count at every rung before filling remaining slots by rank.
+- Append named low-fidelity cost in fold target-standardized units for C06/Q03; remove it from Q03 circuit inputs before residual addition.
+- Make any failed fold ineligible to advance and retain the failure record.
+- Checkpoint every completed fold atomically and reject resume when the source/trial/view/rung/dimension signature differs.
+
+Reason:
+
+Fitting transforms on the full development pool would leak validation-fold
+statistics. Treating the last transformed column as low-fidelity cost is not
+valid after one-hot encoding or PCA. Equal averaging of folds containing two
+versus three whole groups changes group weights. Exact integer seed equality
+across unlike algorithms does not create common random numbers because their
+random-number consumption differs.
+
+Outcome visibility and likely bias:
+
+Scenario outcomes, feasibility rates, and no-reference rates were already
+visible under D003/D004. No research model was fitted, no model metric was
+visible, no calibration row was used for fitting or selection, and no final
+payload was generated or read. Fold and row assignment use identifiers only;
+they cannot respond to labels. The proposed correction may change future model
+scores relative to a leaky or physically incorrect implementation, which is
+the intended preventive effect.
+
+Controls and evidence:
+
+- `openqfuel.gate5` implements development-only loading, audits, hashes, fold-local transforms, target scaling, diagnostics, and execution blocking.
+- `scripts/run_phase1_development.py` exposes read-only preflight and guarded trial execution.
+- `data/processed/reporting/gate5_cv_fold_manifest.csv` records the label-agnostic fold map.
+- `data/processed/reporting/gate5_preflight_audit.json` records 39,000 development rows, 7,800 complete decision sets, both feasibility classes in every fold, and zero calibration/final reads.
+- RFIG-020 records fold balance and group isolation for the paper.
+- Synthetic tests verify nesting, transform isolation, physical baseline handling, optimizer diagnostics, and the pending-acceptance execution block.
+
+Preflight refinement disclosure:
+
+The first candidate used pure hash round-robin assignment. Its read-only audit
+placed both U0 groups in one fold and produced feasibility rates from 5.4% to
+80.6%. Before any model fit, D005 replaced that candidate with deterministic
+balancing of frozen uncertainty and trajectory-family design strata. Outcome
+values are not inputs to the final assignment. The final proposed folds still
+show substantial 5.0%-45.0% feasibility variation, which is retained as real
+group heterogeneity rather than further tuning folds to outcomes.
+
+Decision requested:
+
+Accept D005 to enable development-only fitting under this runner, or reject it
+and keep Gate 5 model fitting blocked while the contract is revised.
+

@@ -463,6 +463,7 @@ class VariationalQuantumRegressor(RegressorMixin, BaseEstimator):
             penalty = self.regularization * float(np.dot(values[:-1], values[:-1]))
             return float(np.mean(residual * residual) + penalty)
 
+        self.initial_loss_ = objective(initial)
         result = minimize(
             objective,
             initial,
@@ -473,6 +474,15 @@ class VariationalQuantumRegressor(RegressorMixin, BaseEstimator):
         self.optimization_success_ = bool(result.success)
         self.optimization_message_ = str(result.message)
         self.training_loss_ = float(result.fun)
+        self.loss_improvement_ = self.initial_loss_ - self.training_loss_
+        self.optimizer_iterations_ = int(getattr(result, "nit", 0))
+        self.objective_evaluations_ = int(getattr(result, "nfev", 0))
+        jacobian = getattr(result, "jac", None)
+        self.gradient_norm_proxy_ = (
+            float(np.linalg.norm(np.asarray(jacobian, dtype=float)))
+            if jacobian is not None
+            else None
+        )
         return self
 
     def predict(self, x: np.ndarray) -> np.ndarray:
@@ -589,6 +599,7 @@ class HybridQuantumResidualRegressor(RegressorMixin, BaseEstimator):
         matrix = _as_matrix(x)
         targets = np.asarray(y, dtype=float)
         baseline = matrix[:, self.low_fidelity_column]
+        circuit_matrix = np.delete(matrix, self.low_fidelity_column, axis=1)
         self.residual_model_ = VariationalQuantumRegressor(
             self.n_qubits,
             self.layers,
@@ -597,13 +608,13 @@ class HybridQuantumResidualRegressor(RegressorMixin, BaseEstimator):
             self.seed,
             self.feature_scale,
             self.entangle,
-        ).fit(matrix, targets - baseline)
+        ).fit(circuit_matrix, targets - baseline)
         return self
 
     def predict(self, x: np.ndarray) -> np.ndarray:
         if not hasattr(self, "residual_model_"):
             raise RuntimeError("HybridQuantumResidualRegressor is not fitted")
         matrix = _as_matrix(x)
-        return matrix[:, self.low_fidelity_column] + self.residual_model_.predict(
-            matrix
-        )
+        baseline = matrix[:, self.low_fidelity_column]
+        circuit_matrix = np.delete(matrix, self.low_fidelity_column, axis=1)
+        return baseline + self.residual_model_.predict(circuit_matrix)

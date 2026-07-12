@@ -341,6 +341,33 @@ gate5_literature_hardening:
     - no_reference_feasible_decision_sets
   claim_boundary_rule: "apparent QML gains must be checked against bandwidth, entanglement removal, random-feature approximation, parameter count, sample selection, and no-reference-feasible concentration before any trigger recommendation"
 
+gate5_runner_freeze:
+  status: "d005_candidate_pending_human_acceptance"
+  research_fit_authorized: false
+  implementation: "scripts/run_phase1_development.py and openqfuel.gate5"
+  split_scope: "development only; calibration prohibited for fitting and selection; final payload absent and locked"
+  cv_assignment:
+    method: "deterministic greedy balance of frozen uncertainty family and trajectory family, with SHA-256 master-seed tie breaks"
+    manifest: "data/processed/reporting/gate5_cv_fold_manifest.csv"
+    label_agnostic: true
+    outcome_fields_used: []
+  learning_row_selection:
+    method: "nested SHA-256 rank of master_seed|gate5_learning_row_v1|scenario_id within each training fold"
+    same_rows_for_qml_and_controls: true
+  transform_scope: "fit imputation, encoding, scaling, target standardization, and PCA inside each CV training fold only"
+  selection_objective_proposal: "pooled out-of-fold RMSE divided by the frozen full-development target standard deviation"
+  diagnostic_fold_score: "unweighted mean and dispersion of fold NRMSE"
+  seed_matching: "same seed_index across comparisons; preserve family-specific frozen training_seed because identical integer seeds do not create common random numbers across different algorithms"
+  matched_controls: "A01 and compressed C05 repeat each 4/6/8-dimensional QML view on identical rows, folds, rungs, and fitted PCA inputs"
+  matched_dimension_assignment: "trial orders cycle 4,6,8 qubits, giving 10 frozen trials per dimension for A01 and compressed C05 without adding hyperparameter trials"
+  qml_advancement_floor: "at least one eligible 4-, 6-, and 8-qubit trial survives every QML rung; remaining slots follow objective, regret, complexity, then trial ID"
+  residual_baseline: "append low_fidelity_cost transformed by the fold target scaler; exclude the appended baseline from Q03 circuit encoding before residual addition"
+  failure_rule: "optimizer non-success makes the fold ineligible; an exception writes a task-level failure artifact; failed work is never replaced silently"
+  checkpoint_rule: "atomic JSON after each completed fold, validated by source/trial/view/rung/dimension signature before resume"
+  public_preflight: "data/processed/reporting/gate5_preflight_audit.json"
+  initial_execution_plan: "data/processed/reporting/gate5_initial_execution_plan.csv"
+  execution_guard: "research fitting raises PermissionError until status is d005_gate5_runner_accepted"
+
 analysis:
   nrmse_denominator: "standard deviation of primary target in development split only"
   zero_denominator_action: "error"

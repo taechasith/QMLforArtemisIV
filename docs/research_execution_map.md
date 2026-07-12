@@ -1,6 +1,6 @@
 # Research Execution Map
 
-Version: 0.6.1
+Version: 0.6.2
 Prepared: 2026-07-10
 Updated: 2026-07-12
 
@@ -20,7 +20,7 @@ the final authority for scope, methodological deviations, claims, and release.
 | 2. Data and numeric freeze | Audit public files; freeze variables, uncertainty, splits, tolerances, practical effect, and compute budget | Accepted 2026-07-11 | Frozen Gate 2 package |
 | 3. Simulator credibility | Implement F0/F1/F2 dynamics, mass depletion, events, crew constraints, numerical verification, GMAT comparison, and held-out validation | Accepted 2026-07-12 with RTC3 explicitly outside the validation claim | 67 evaluable checks passed, 0 failed; all 10 repaired GMAT endpoints passed unchanged limits; RTC3 was not tested with eligible evidence |
 | 4. Phase 1 freeze | Execute bounded literature synthesis; freeze manifest-only identities, grouped splits, features, models, controls, tuning, seeds, and analysis without research outcomes | Accepted with D002 on 2026-07-12 | 65,000 identities committed, final payloads absent, 23 evidence records frozen; post-acceptance refresh has 4,218 unique discovery rows and 926 open full-text screens without changing the freeze |
-| 5. Development and algorithm trigger | Generate and validate unlocked payloads, run only preregistered development analysis, and test whether the residual-QML trigger passes | In progress: all 45,500 unlocked F0/F1/F2 rows qualified under D003; D004 literature hardening now precedes the first research fit | Pre-D003 F0 excluded; RFIG-002 through RFIG-019 retained; 42/42 unlocked groups valid with zero nonconvergence; Gate 5 runner and trigger report pending |
+| 5. Development and algorithm trigger | Generate and validate unlocked payloads, run only preregistered development analysis, and test whether the residual-QML trigger passes | In progress: D003 data qualified and D004 controls integrated; D005 runner candidate awaits human acceptance before fitting | Pre-D003 F0 excluded; RFIG-002 through RFIG-020 retained; 39,000 development rows pass runner preflight; calibration/final reads remain zero; trigger report pending |
 | 6. Mission experiment | Freeze safety filter and mission scenarios; run paired Monte Carlo with common random numbers and sequential precision stopping | Approve the final mission experiment and interpretation boundary | Scenario card, safety-filter tests, paired results |
 | 7. Claims and release | Draft results and discussion, perform robustness and negative-result analysis, audit reproducibility, prepare paper, archive, and GitHub release | Accept or reject each main claim and public release | Manuscript, result tables, model/simulation cards, tagged archive |
 

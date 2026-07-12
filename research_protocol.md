@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.1
-Status: Gates 1-4 accepted; Gate 5 D003 unlocked scenarios qualified; D004 literature hardening applied before model fitting
+Version: 0.6.2
+Status: Gates 1-4 accepted; Gate 5 data qualified; D005 runner candidate frozen pending human acceptance before fitting
 Prepared: 2026-07-10  
 Updated: 2026-07-12
-Recommended next decision: Freeze the Gate 5 runner, then accept or reject the algorithm trigger after reviewing the development-split analysis report
+Recommended next decision: Accept or reject D005 before the first research fit; later accept or reject the algorithm trigger from development-only evidence
 
 ## 1. Proposed title
 
@@ -706,6 +706,22 @@ diagnosis, reporting, interpretation, and claim discipline. They cannot be used
 to redesign candidate plans, retune uncertainty distributions, change ranking
 thresholds, or promote QRL, dynamic circuits, quantum annealing, or QAOA into
 the Phase 1 candidate set.
+
+Deviation D005 was opened on 2026-07-12 before any research model fit to close
+four execution ambiguities left by the Gate 4 freeze: exact group-to-fold
+assignment, nested row hashing, fold-local learned transforms, and matched
+control/residual handling. The proposed runner balances frozen uncertainty and
+trajectory-family design strata with SHA-256 tie breaks and no outcomes, then
+fits every imputer/scaler/PCA and target standardizer inside each
+training fold, scores pooled out-of-fold error while retaining fold summaries,
+and gives C06/Q03 an explicit low-fidelity baseline in target-standardized
+units. Q03 removes that appended baseline from circuit encoding before adding
+the predicted residual. A01 and compressed C05 use the same row IDs, fold,
+rung, PCA dimension, and seed index as their QML view; their existing 30 trial
+orders cycle evenly across 4/6/8 dimensions. QML halving retains at least one
+eligible trial per required qubit count at each rung. Research execution is
+blocked in code until the human research lead accepts D005. No calibration or
+final-test row was read while preparing or auditing this candidate.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

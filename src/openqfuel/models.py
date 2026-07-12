@@ -86,7 +86,10 @@ class PhysicsResidualRegressor(RegressorMixin, BaseEstimator):
 
 
 def build_classical_regressor(
-    family: str, parameters: Mapping[str, Any], seed: int
+    family: str,
+    parameters: Mapping[str, Any],
+    seed: int,
+    low_fidelity_column: int = -1,
 ) -> BaseEstimator:
     """Build one frozen classical cost model from a tuning-manifest row."""
 
@@ -157,7 +160,10 @@ def build_classical_regressor(
                 max_iter=200,
                 random_state=seed,
             )
-        return PhysicsResidualRegressor(residual)
+        return PhysicsResidualRegressor(
+            residual,
+            low_fidelity_column=low_fidelity_column,
+        )
     raise ValueError(f"Unknown classical model family: {family}")
 
 

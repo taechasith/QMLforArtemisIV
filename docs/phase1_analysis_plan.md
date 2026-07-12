@@ -1,14 +1,14 @@
 # Frozen Phase 1 Analysis Plan
 
-Version: 0.6.1
+Version: 0.6.2
 Prepared: 2026-07-12
-Status: Gate 4 accepted; all D003 unlocked scenarios qualified; D004 literature hardening applied before any research model fit
+Status: Gate 4 accepted; D003 data qualified; D004 controls integrated; D005 runner candidate pending human acceptance
 
 ## Analysis sequence
 
 1. Admit development scenarios only after Gate 4 acceptance and D003 conformance audit.
-2. Fit preprocessing on development rows and execute the frozen grouped-CV tuning manifest.
-3. Select one configuration per candidate family using mean development NRMSE, then regret and lower complexity as frozen tie-breakers.
+2. Fit preprocessing, target scaling, and any PCA separately inside every development-CV training fold.
+3. If D005 is accepted, select one configuration per candidate family using pooled out-of-fold development NRMSE, then regret and lower complexity; retain unweighted fold summaries as diagnostics.
 4. Rerun selected configurations on 20 development seeds and freeze finalists.
 5. Use the calibration split only for uncertainty/probability calibration; do not change features, families, or hyperparameters.
 6. Commit finalist identities, fitted preprocessing hashes, and executable analysis state before a separate final-test unlock.
@@ -48,6 +48,28 @@ RFIG-019 records the literature-to-control matrix for this hardening step. All
 future Gate 5 result figures must retain the same boundary: development-only
 evidence before model selection, calibration-only evidence after finalist
 selection, and no final-test value until a separate unlock.
+
+## D005 runner correction pending acceptance
+
+The Gate 4 freeze specified five-fold grouped CV and matched hash-selected
+learning rungs but did not freeze an exact fold map or hash namespace. It also
+did not state whether learned transforms were fit once or inside folds, and the
+residual factories defaulted to the last transformed column rather than an
+explicit physical baseline. D005 resolves these issues before model outcomes:
+
+- assign all records from one G01-G12 group to one validation fold using frozen uncertainty/trajectory design strata and version-stable SHA-256 tie breaks, without outcomes;
+- rank training rows with a separate SHA-256 namespace so the 128/256/512/1,024 rungs are nested and identical for QML, A01, and compressed C05;
+- fit imputation, categorical encoding, feature scaling, target scaling, and PCA only on the current fold's selected training rows;
+- use pooled out-of-fold squared error for the primary NRMSE so unequal two- and three-group folds do not receive equal aggregate weight, while still reporting every fold separately;
+- preserve family-specific frozen training seeds and pair comparisons by `seed_index`, because different algorithms do not consume random streams identically;
+- cycle the 30 A01 and compressed-C05 diagnostic trials across 4/6/8 dimensions (10 each) without adding hyperparameter trials, and preserve at least one eligible QML trial per required qubit count at every halving rung;
+- append the physical low-fidelity cost in target-standardized units for C06/Q03 and prevent Q03 from treating that appended baseline as a circuit angle.
+
+`scripts/run_phase1_development.py preflight` is read-only. The execution
+command fails closed until the D005 status is accepted by the human research
+lead. Each completed fold is written atomically with a signature covering the
+source commit, trial, view, rung, and matched dimension; resume refuses a
+mismatched checkpoint. RFIG-020 records the outcome-blind fold allocation.
 
 ## Endpoints
 

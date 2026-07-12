@@ -34,6 +34,7 @@ POST_F2_G01_AUDIT = (
 POST_F2_AUDIT = ROOT / "data/processed/simulator/scenarios/post_d003_f2_audit.csv"
 F2_RUNTIME = ROOT / "data/processed/reporting/gate5_f2_campaign_runtime.csv"
 GATE5_HARDENING = ROOT / "data/processed/reporting/gate5_literature_hardening_matrix.csv"
+GATE5_FOLDS = ROOT / "data/processed/reporting/gate5_cv_fold_manifest.csv"
 SEARCH_LOG = ROOT / "literature/search_log.csv"
 SCREENING_LOG = ROOT / "literature/screening_log.csv"
 EXTRACTION_MATRIX = ROOT / "literature/extraction_matrix.csv"
@@ -1380,6 +1381,67 @@ def draw_gate5_literature_hardening(path: Path) -> None:
     save(fig, path)
 
 
+def draw_gate5_cv_folds(path: Path) -> None:
+    rows = read_csv(GATE5_FOLDS)
+    by_fold: dict[str, dict[str, object]] = {}
+    for row in rows:
+        fold = row["fold_id"]
+        summary = by_fold.setdefault(
+            fold,
+            {"groups": [], "F0": 0, "F1": 0, "F2": 0},
+        )
+        summary["groups"].append(row["group_id"])
+        for fidelity, field in (("F0", "f0_rows"), ("F1", "f1_rows"), ("F2", "f2_rows")):
+            summary[fidelity] += int(row[field])
+
+    folds = sorted(by_fold)
+    x = np.arange(len(folds))
+    fig, ax = plt.subplots(figsize=(9.6, 5.5))
+    fig.subplots_adjust(left=0.10, right=0.98, top=0.84, bottom=0.22)
+    bottom = np.zeros(len(folds))
+    palette = {"F0": BLUE, "F1": ORANGE, "F2": GRAY}
+    for fidelity in ("F0", "F1", "F2"):
+        values = np.asarray([int(by_fold[fold][fidelity]) for fold in folds])
+        ax.bar(
+            x,
+            values,
+            bottom=bottom,
+            width=0.68,
+            color=palette[fidelity],
+            edgecolor=INK,
+            linewidth=0.6,
+            label=fidelity,
+        )
+        bottom += values
+    for index, fold in enumerate(folds):
+        groups = ", ".join(sorted(by_fold[fold]["groups"]))
+        ax.text(
+            index,
+            bottom[index] + 220,
+            f"{int(bottom[index]):,} rows\n{groups}",
+            ha="center",
+            va="bottom",
+            fontsize=8,
+            color=INK,
+        )
+    ax.set_xticks(x, folds)
+    ax.set_ylabel("Validation rows")
+    ax.set_ylim(0, max(bottom) * 1.22)
+    ax.set_title("Gate 5 grouped cross-validation fold allocation")
+    ax.legend(title="Fidelity", ncols=3, frameon=False, loc="upper right")
+    ax.grid(axis="x", visible=False)
+    fig.text(
+        0.10,
+        0.055,
+        "Source: gate5_cv_fold_manifest.csv. Whole groups never cross folds; assignment balances frozen uncertainty/trajectory design strata and uses no outcomes.",
+        ha="left",
+        va="bottom",
+        fontsize=8,
+        color=GRAY,
+    )
+    save(fig, path)
+
+
 def specs() -> list[FigureSpec]:
     return [
         FigureSpec(
@@ -1609,6 +1671,18 @@ def specs() -> list[FigureSpec]:
             "Primary and official literature was translated into pre-fit Gate 5 controls: ranking guards, required diagnostics, matched interpretation controls, deferred QRL topics, and excluded non-primary claims.",
             "Process-control evidence only; this figure adds no model family, split, threshold, final-test access, or model-performance claim.",
             draw_gate5_literature_hardening,
+        ),
+        FigureSpec(
+            "RFIG-020",
+            "gate5_grouped_cv_fold_allocation",
+            "Gate 5 grouped cross-validation fold allocation",
+            "Gate 5 runner freeze",
+            "Methods: model benchmark",
+            "pre_fit_runner_freeze",
+            "data/processed/reporting/gate5_cv_fold_manifest.csv",
+            "All 39,000 development rows are assigned by whole frozen groups to one of five validation folds; each fold retains F0, F1, and F2 coverage.",
+            "Outcome-blind methods evidence only; unequal two- and three-group fold sizes motivate pooled out-of-fold primary scoring and separate fold diagnostics.",
+            draw_gate5_cv_folds,
         ),
     ]
 

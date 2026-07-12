@@ -1,0 +1,13 @@
+fold_id,group_id,base_trajectory,uncertainty_family,f0_rows,f1_rows,f2_rows,total_rows,assignment_inputs,outcome_labels_used,hash_namespace
+CV01,G03,C03,U2,500,2500,250,3250,master_seed_group_id_uncertainty_and_trajectory_family,False,gate5_cv_group_stratified_v1
+CV01,G06,C06,U0,500,2500,250,3250,master_seed_group_id_uncertainty_and_trajectory_family,False,gate5_cv_group_stratified_v1
+CV02,G01,C01,U0,500,2500,250,3250,master_seed_group_id_uncertainty_and_trajectory_family,False,gate5_cv_group_stratified_v1
+CV02,G04,C04,U3,500,2500,250,3250,master_seed_group_id_uncertainty_and_trajectory_family,False,gate5_cv_group_stratified_v1
+CV02,G12,T04,U2,500,2500,250,3250,master_seed_group_id_uncertainty_and_trajectory_family,False,gate5_cv_group_stratified_v1
+CV03,G02,C02,U1,500,2500,250,3250,master_seed_group_id_uncertainty_and_trajectory_family,False,gate5_cv_group_stratified_v1
+CV03,G05,C05,U4,500,2500,250,3250,master_seed_group_id_uncertainty_and_trajectory_family,False,gate5_cv_group_stratified_v1
+CV03,G09,T01,U3,500,2500,250,3250,master_seed_group_id_uncertainty_and_trajectory_family,False,gate5_cv_group_stratified_v1
+CV04,G07,C07,U1,500,2500,250,3250,master_seed_group_id_uncertainty_and_trajectory_family,False,gate5_cv_group_stratified_v1
+CV04,G10,T02,U4,500,2500,250,3250,master_seed_group_id_uncertainty_and_trajectory_family,False,gate5_cv_group_stratified_v1
+CV05,G08,C08,U2,500,2500,250,3250,master_seed_group_id_uncertainty_and_trajectory_family,False,gate5_cv_group_stratified_v1
+CV05,G11,T03,U1,500,2500,250,3250,master_seed_group_id_uncertainty_and_trajectory_family,False,gate5_cv_group_stratified_v1
