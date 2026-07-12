@@ -48,10 +48,10 @@ def test_pre_d003_audit_is_retained_as_invalid_evidence() -> None:
 
 def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     rows = read_csv(FIGURES / "figure_registry.csv")
-    assert len(rows) >= 10
+    assert len(rows) >= 14
     figure_ids = {row["figure_id"] for row in rows}
     assert len(figure_ids) == len(rows)
-    assert {f"RFIG-{index:03d}" for index in range(1, 11)} <= figure_ids
+    assert {f"RFIG-{index:03d}" for index in range(1, 15)} <= figure_ids
     assert {row["evidence_status"] for row in rows} >= {
         "accepted_decision_record",
         "invalid_failed_attempt",
@@ -68,8 +68,34 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
             assert sha256_file(path) == row[f"{kind}_sha256"]
 
 
+def test_full_f1_audit_is_valid_and_final_test_remains_unread() -> None:
+    summary = json.loads(
+        (
+            ROOT / "data/processed/simulator/scenarios/post_d003_f1_audit_summary.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert summary == {
+        "audit_label": "post_d003_f1",
+        "decision_sets": 7000,
+        "feasible_records": 6436,
+        "final_test_payloads_read": 0,
+        "groups_audited": 14,
+        "invalid_groups": 0,
+        "no_reference_feasible_sets": 4215,
+        "nonfinite_records": 0,
+        "records_audited": 35000,
+        "relationship_error_records": 0,
+        "schema_error_records": 0,
+        "status": "valid",
+        "valid_groups": 14,
+    }
+
+
 def test_figure_policy_requires_failed_and_negative_evidence() -> None:
     policy = (ROOT / "docs/research_figure_policy.md").read_text(encoding="utf-8")
     assert "failed attempt" in policy
     assert "negative and inconclusive findings" in policy
     assert "Never plot a locked final-test value" in policy
+    assert "Comparisons with only a few factors are tables" in policy
+    assert "more than 100 plotted data points" in policy
+    assert "Methods, decision gates, protocols, and timelines are diagrams" in policy

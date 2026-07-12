@@ -384,11 +384,18 @@ negative reporting, but cannot prove the missing records are immaterial.
 Decision requested: Accept D002 with Gate 4, reject it and hold Gate 4 for a
 broader search, or request a specific revision.
 
+Post-acceptance discovery refresh, 2026-07-12:
+
+- The frozen S1-S7 interfaces were retried without changing their concepts or using a research model outcome.
+- The current logs contain 4,708 raw API rows and 4,218 unique canonical discovery keys. OpenAlex supplied 3,278 rows: two searches completed pagination and five remain bounded to the first 100 relevance-ranked records.
+- Title/abstract triage records 3,288 exclusions, 926 pending full-text screens, and four provisional includes. The 23-record Gate 4 extraction matrix remains unchanged.
+- RFIG-014 records the refreshed flow and open queue. This is progress toward the mandatory manuscript update, not closure of D002 and not authorization to alter a frozen model, split, threshold, metric, or claim.
+
 ### Deviation D003 - Gate 5 scenario-generator conformance repair
 
 Date opened: 2026-07-12
 Date authorized: 2026-07-12
-Status: **F1 first group qualified; controlled parallel F1 scale-up pending**
+Status: **All F0/F1 groups qualified; F2 first-group qualification pending**
 Authority: Human research lead
 
 Original implementation:
@@ -496,4 +503,16 @@ F1 first-group qualification, 2026-07-12:
 - RFIG-010 records F0/F1 G01 coverage and the 22.7-fold observed F1/F0 wall-time ratio.
 - The remaining F1 CPU requirement is projected at approximately 13.8 hours from G01 duration-normalized work; four independent workers imply about 3.5 hours only under ideal balance, so actual group ledgers remain authoritative.
 - A four-worker group scheduler is authorized only after this audit. It uses process-isolated ephemerides, one numerical-library thread per worker, atomic payload writes, and an exclusive append lock for the shared v2 ledger.
+
+All-F1 qualification, 2026-07-12:
+
+- All 14 unlocked F1 development/calibration groups completed under D003-v1 and pass the independent strict audit.
+- All 35,000 rows pass schema, relationship, finite-value, uncertainty-family, checksum, and decision-set checks. No row is nonconverged, and no final-test payload was generated or read.
+- 6,436 of 35,000 candidate rows are feasible. Of 7,000 decision sets, 4,215 have no feasible numerical reference and remain included under the frozen penalty/reporting rule.
+- The serial G01 qualification consumed 1,268.159 seconds. The separate four-worker G02-G14 scale-up consumed 63,639.442 seconds of summed group work in 18,148.400 seconds of wall time, yielding effective concurrency 3.51.
+- Total measured F1 group work is 64,907.601 seconds (18.030 worker-hours). Combined active wall time for the serial checkpoint and parallel scale-up is 19,416.559 seconds (5.393 hours), excluding the idle interval between stages.
+- The pre-scale-up estimate of 13.8 worker-hours and 3.5 ideal wall-hours was optimistic. The scientific workload was not reduced: rows, force models, tolerances, constraints, and worker ceilings remained frozen.
+- RFIG-011 through RFIG-013 record full-F1 coverage, reference-laptop runtime, and the exact F0/F1 campaign summary.
+- Outcome-visibility rule: the 4,215 no-reference sets are a reportable development limitation. They cannot motivate post-result candidate redesign or uncertainty retuning under D003.
+- Consequence: F1 is qualified. F2 may begin with one serial group and must pass its own strict first-group audit before the authorized two-worker scale-up. Model fitting remains prohibited until the full F2 audit passes.
 

@@ -15,7 +15,7 @@ def read_csv(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle))
 
 
-def test_search_log_discloses_complete_and_count_only_coverage() -> None:
+def test_search_log_discloses_complete_and_partial_refresh_coverage() -> None:
     rows = read_csv(ROOT / "literature/search_log.csv")
     assert len(rows) == 14
     assert {row["search_id"] for row in rows} == {
@@ -29,23 +29,32 @@ def test_search_log_discloses_complete_and_count_only_coverage() -> None:
     }
     openalex = [row for row in rows if row["database"] == "OpenAlex"]
     assert len(openalex) == 7
-    assert sum(int(row["result_count"]) for row in openalex) == 9732
-    assert all(row["records_retrieved"] == "0" for row in openalex)
-    assert all("HTTP 429" in row["coverage_status"] for row in openalex)
+    assert sum(int(row["result_count"]) for row in openalex) == 9747
+    assert sum(int(row["records_retrieved"]) for row in openalex) == 3278
+    assert Counter(
+        "complete" if row["coverage_status"].startswith("complete") else "partial"
+        for row in openalex
+    ) == {"complete": 2, "partial": 5}
     complete = [row for row in rows if row["database"] in {"NASA NTRS", "arXiv"}]
     assert len(complete) == 7
     assert all(row["coverage_status"].startswith("complete API") for row in complete)
 
 
-def test_screening_and_extraction_flow_is_closed_and_unique() -> None:
+def test_refresh_screening_is_unique_and_extraction_remains_frozen() -> None:
     screening = read_csv(ROOT / "literature/screening_log.csv")
     extraction = read_csv(ROOT / "literature/extraction_matrix.csv")
-    assert len(screening) == 1406
+    assert len(screening) == 4218
+    assert len({row["screening_id"] for row in screening}) == len(screening)
+    assert len({row["canonical_key"] for row in screening}) == len(screening)
     assert Counter(row["decision"] for row in screening) == {
-        "exclude": 1340,
-        "defer_phase_6": 42,
-        "include": 24,
+        "exclude": 3288,
+        "include_for_full_text": 926,
+        "include": 4,
     }
+    assert (
+        sum(row["full_text_status"] == "pending_full_text_screen" for row in screening)
+        == 926
+    )
     assert len(extraction) == 23
     assert len({row["evidence_id"] for row in extraction}) == 23
     assert all(row["source_url"].startswith("https://") for row in extraction)

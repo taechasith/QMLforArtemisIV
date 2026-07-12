@@ -1,6 +1,6 @@
 # Research Execution Map
 
-Version: 0.3.0
+Version: 0.4.0
 Prepared: 2026-07-10
 Updated: 2026-07-12
 
@@ -19,8 +19,8 @@ the final authority for scope, methodological deviations, claims, and release.
 |---|---|---|---|
 | 2. Data and numeric freeze | Audit public files; freeze variables, uncertainty, splits, tolerances, practical effect, and compute budget | Accepted 2026-07-11 | Frozen Gate 2 package |
 | 3. Simulator credibility | Implement F0/F1/F2 dynamics, mass depletion, events, crew constraints, numerical verification, GMAT comparison, and held-out validation | Accepted 2026-07-12 with RTC3 explicitly outside the validation claim | 67 evaluable checks passed, 0 failed; all 10 repaired GMAT endpoints passed unchanged limits; RTC3 was not tested with eligible evidence |
-| 4. Phase 1 freeze | Execute bounded literature synthesis; freeze manifest-only identities, grouped splits, features, models, controls, tuning, seeds, and analysis without research outcomes | Accepted with D002 on 2026-07-12 | 65,000 identities committed, final payloads absent, 23 evidence records extracted, analysis/model smoke tests synthetic only |
-| 5. Development and algorithm trigger | Generate and validate unlocked payloads, run only preregistered development analysis, and test whether the residual-QML trigger passes | In progress: all unlocked F0 and F1 G01 qualified under D003; later authorize one new-model variant or reject algorithm invention | Pre-D003 F0 excluded; RFIG-002 through RFIG-010 retained; 7,000 F0 and 2,500 F1 checkpoint rows valid, remaining F1/F2 and trigger report pending |
+| 4. Phase 1 freeze | Execute bounded literature synthesis; freeze manifest-only identities, grouped splits, features, models, controls, tuning, seeds, and analysis without research outcomes | Accepted with D002 on 2026-07-12 | 65,000 identities committed, final payloads absent, 23 evidence records frozen; post-acceptance refresh has 4,218 unique discovery rows and 926 open full-text screens without changing the freeze |
+| 5. Development and algorithm trigger | Generate and validate unlocked payloads, run only preregistered development analysis, and test whether the residual-QML trigger passes | In progress: all unlocked F0/F1 groups qualified under D003; F2 first-group audit is next; later authorize one new-model variant or reject algorithm invention | Pre-D003 F0 excluded; RFIG-002 through RFIG-013 retained; 7,000 F0 and 35,000 F1 rows valid, all F2 rows and the trigger report pending |
 | 6. Mission experiment | Freeze safety filter and mission scenarios; run paired Monte Carlo with common random numbers and sequential precision stopping | Approve the final mission experiment and interpretation boundary | Scenario card, safety-filter tests, paired results |
 | 7. Claims and release | Draft results and discussion, perform robustness and negative-result analysis, audit reproducibility, prepare paper, archive, and GitHub release | Accept or reject each main claim and public release | Manuscript, result tables, model/simulation cards, tagged archive |
 

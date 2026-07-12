@@ -17,8 +17,8 @@ from statistics import median
 import matplotlib
 
 matplotlib.use("Agg")
+from matplotlib import patches  # noqa: E402
 import matplotlib.pyplot as plt  # noqa: E402
-from matplotlib.dates import DateFormatter  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -155,31 +155,103 @@ def parse_utc(value: str) -> datetime:
 
 def split_timeline(rows: list[dict[str, str]], output: Path) -> str:
     role_colors = {"calibration": "#275d8c", "tuning": "#c47f17", "validation": "#9d3b3b"}
+    parsed = [
+        {
+            **row,
+            "start": parse_utc(row["start_utc"]),
+            "stop": parse_utc(row["stop_utc"]),
+        }
+        for row in rows
+    ]
+    mission_start = min(row["start"] for row in parsed)
+    mission_stop = max(row["stop"] for row in parsed)
+    total_seconds = (mission_stop - mission_start).total_seconds()
+    lanes = {"calibration": 0.68, "tuning": 0.46, "validation": 0.24}
     fig, ax = plt.subplots(figsize=(11, 4.8))
-    for index, row in enumerate(rows):
-        start = parse_utc(row["start_utc"])
-        stop = parse_utc(row["stop_utc"])
-        ax.barh(
-            index,
-            stop - start,
-            left=start,
-            height=0.62,
-            color=role_colors[row["role"]],
+    ax.set_axis_off()
+    ax.set_title("Frozen Artemis II coast-arc split diagram", loc="left", pad=14)
+
+    for role, y_value in lanes.items():
+        ax.text(
+            0.01,
+            y_value + 0.045,
+            role.title(),
+            transform=ax.transAxes,
+            ha="left",
+            va="center",
+            fontsize=9,
+            fontweight="bold",
+            color=role_colors[role],
         )
-        ax.text(stop, index, f"  {row['window_id']}", va="center", fontsize=8)
-    ax.set_yticks([])
-    ax.xaxis.set_major_formatter(DateFormatter("%d %b\n%H:%M"))
-    ax.set_xlabel("UTC")
-    ax.set_title("Frozen Artemis II coast-arc split")
+        ax.plot(
+            [0.13, 0.97],
+            [y_value, y_value],
+            transform=ax.transAxes,
+            color="#d4d8de",
+            linewidth=0.8,
+        )
+
+    day = mission_start.date()
+    while day <= mission_stop.date():
+        day_start = datetime.combine(day, datetime.min.time(), tzinfo=timezone.utc)
+        x_value = 0.13 + (
+            (day_start - mission_start).total_seconds() / total_seconds
+        ) * 0.84
+        if 0.13 <= x_value <= 0.97:
+            ax.plot(
+                [x_value, x_value],
+                [0.16, 0.76],
+                transform=ax.transAxes,
+                color="#eef1f4",
+                linewidth=0.8,
+            )
+            ax.text(
+                x_value,
+                0.12,
+                day.strftime("%d %b"),
+                transform=ax.transAxes,
+                ha="center",
+                va="top",
+                fontsize=8,
+                color="#5b6573",
+            )
+        day = day.fromordinal(day.toordinal() + 1)
+
+    for row in parsed:
+        x0 = 0.13 + ((row["start"] - mission_start).total_seconds() / total_seconds) * 0.84
+        width = ((row["stop"] - row["start"]).total_seconds() / total_seconds) * 0.84
+        y0 = lanes[row["role"]] - 0.035
+        box = patches.FancyBboxPatch(
+            (x0, y0),
+            width,
+            0.07,
+            boxstyle="round,pad=0.006,rounding_size=0.012",
+            transform=ax.transAxes,
+            facecolor=role_colors[row["role"]],
+            edgecolor="white",
+            linewidth=0.8,
+        )
+        ax.add_patch(box)
+        ax.text(
+            x0 + width / 2,
+            y0 + 0.035,
+            row["window_id"],
+            transform=ax.transAxes,
+            ha="center",
+            va="center",
+            fontsize=7,
+            color="white",
+            fontweight="bold",
+        )
     handles = [
         plt.Rectangle((0, 0), 1, 1, color=color, label=role.title())
         for role, color in role_colors.items()
     ]
-    ax.legend(handles=handles, frameon=False, ncol=3, loc="upper left")
+    ax.legend(handles=handles, frameon=False, ncol=3, loc="upper right")
     fig.text(
         0.01,
         0.01,
-        "Windows were declared before simulator fitting; each is six hours and disjoint from the others.",
+        "Diagram only: windows were declared before simulator fitting; each is six hours and disjoint from the others.",
         fontsize=8,
     )
     return save(fig, output, "frozen_validation_split.png")

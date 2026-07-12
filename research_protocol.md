@@ -1,7 +1,7 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.3.0
-Status: Gates 1, 2, 3, and 4 accepted; Gate 5 D003 F0 and F1 G01 qualified
+Version: 0.4.0
+Status: Gates 1, 2, 3, and 4 accepted; Gate 5 D003 F0/F1 qualified, F2 pending
 Prepared: 2026-07-10  
 Updated: 2026-07-12
 Recommended next decision: Accept Gate 5 trigger after reviewing the development-split analysis report
@@ -609,8 +609,10 @@ The first post-acceptance generator produced 7,000 F0 rows that were later
 found invalid for schema, uncertainty, epoch, targeting, and effective-input
 conformance. Deviation D003 excludes those rows from all research use, retains
 their audit and figures, and authorizes a committed repair followed by a
-first-group audit before scale-up. No F1/F2 payload, valid research payload,
-fitted model, or benchmark result exists at this checkpoint.
+first-group audit before each fidelity scale-up. At D003 authorization, no
+F1/F2 payload, valid research payload, fitted model, or benchmark result
+existed. Corrected F0 and F1 payloads now pass their required audits; F2 and
+all model fitting remain pending.
 
 Gate 5, Algorithm Trigger: authorize or reject development of the proposed new
 model based only on the preregistered trigger.
@@ -639,6 +641,12 @@ review. No research outcome was visible at acceptance. A broader database
 update remains mandatory before manuscript submission and cannot be used to
 change a model after final-test access without a new deviation.
 
+A same-day post-acceptance discovery refresh expanded the current ledger to
+4,218 unique canonical keys. It leaves 926 full-text screens open and does not
+change the accepted 23-record extraction matrix or any Gate 4 scientific
+choice. RFIG-014 preserves the updated coverage and incomplete-screening
+boundary.
+
 Deviation D003, authorized on 2026-07-12 before any model fit or final-test
 access, repairs the Gate 5 scenario generator after the invalid F0 run. The
 repair is limited to frozen-config conformance, source-derived epochs,
@@ -649,17 +657,23 @@ are audit-only. Because their diagnostic outcomes
 were visible, no repair choice may be tuned to produce a preferred feasibility
 rate, and pre/post repair figures are mandatory.
 
-The corrected F0 checkpoint contains 7,000 rows in 14 unlocked groups. All
+The corrected F0 campaign contains 7,000 rows in 14 unlocked groups. All
 rows pass schema, relationship, finite-value, checksum, and frozen uncertainty
 audits, with no nonconvergence. Of 1,400 decision sets, 319 have no feasible
 reference; they remain included under the preregistered penalty/reporting rule
-and cannot motivate post-result candidate retuning. F1 and F2 require separate
-first-group and full-fidelity audits before model fitting may begin.
+and cannot motivate post-result candidate retuning.
 
-The F1 G01 checkpoint adds 2,500 valid U0 rows with no nonconvergence or
-no-reference decision set. Its 1,268.159-second wall time authorizes controlled
-four-process F1 group execution with locked ledger appends; it does not
-authorize reduced rows, tolerances, constraints, or higher worker counts.
+The serial F1 G01 checkpoint added 2,500 valid U0 rows with no nonconvergence
+or no-reference decision set. Its 1,268.159-second wall time authorized
+controlled four-process F1 group execution with locked ledger appends. The
+completed F1 campaign contains 35,000 valid rows in 14 unlocked groups, with
+6,436 feasible candidates and 4,215 of 7,000 decision sets lacking a feasible
+numerical reference. The latter are retained as a development limitation and
+cannot motivate post-result candidate or uncertainty retuning. Total F1 group
+work was 64,907.601 seconds; the separate 13-group scale-up required
+18,148.400 seconds of wall time at effective concurrency 3.51. No final-test
+payload was generated or read. F2 still requires separate first-group and
+full-fidelity audits before model fitting may begin.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

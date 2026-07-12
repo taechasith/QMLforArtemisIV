@@ -1,6 +1,6 @@
 # Gate 4 Bounded Literature Synthesis
 
-Version: 0.3.0
+Version: 0.4.0
 Search date: 2026-07-12
 Search cutoff: 2026-07-10
 Status: Accepted for Gate 4 under D002; bounded scoping synthesis, not a complete systematic review
@@ -15,38 +15,46 @@ model to a research result.
 
 The machine-readable audit trail is:
 
-- `literature/search_log.csv`: exact queries, interfaces, dates, counts, and coverage;
-- `literature/screening_log.csv`: deduplication and screening decisions;
+- `literature/search_log.csv`: exact queries, interfaces, dates, counts, and current refresh coverage;
+- `literature/screening_log.csv`: deduplicated discovery decisions and open full-text queue;
 - `literature/extraction_matrix.csv`: 23 fully extracted evidence records and domain ratings;
 - `scripts/run_literature_search.py`: reproducible API search and deduplication;
 - `scripts/build_literature_extraction.py`: curated extraction and second-pass closure.
 
 ## 2. Search flow and limitation
 
-All seven frozen concepts S1-S7 were executed on OpenAlex. The seven count
-queries returned 9,732 results in aggregate, but repeated metadata export
-requests received HTTP 429 responses. Those records were not treated as
-retrieved, screened, or included evidence.
+The accepted Gate 4 snapshot is preserved in commit `61bef3e`. At that
+decision, all seven frozen concepts S1-S7 had OpenAlex count results totaling
+9,732, but repeated metadata exports received HTTP 429 responses. Complete
+supplemental retrieval produced 387 NASA NTRS and 1,043 date-eligible arXiv
+records. Deduplication, seed records, and reference-chain checking produced a
+closed 1,406-row screening ledger: 1,340 exclusions, 42 Phase 6 deferrals, and
+24 included source rows mapping to 23 extracted evidence records. That is the
+evidence set that informed the accepted Phase 1 freeze.
 
-Complete supplemental API retrieval produced 387 NASA NTRS records for S1,
-S5, S6, and S7 and 1,043 date-eligible arXiv records for S2, S3, and S4. After
-deduplication with 13 seed records, there were 1,404 records. Reference-chain
-checking added two unique records, producing the final 1,406-row screening
-ledger.
+A post-acceptance discovery refresh retried the same frozen interfaces without
+using research outcomes. The current `search_log.csv` records 4,708 raw API
+rows: 3,278 OpenAlex, 387 NASA NTRS, and 1,043 arXiv rows. Two OpenAlex queries
+completed metadata pagination; five remain bounded to the first 100
+relevance-ranked records after rate limiting. The OpenAlex count snapshots now
+total 9,747. One completed query returned six more raw page rows than its count
+snapshot, so these values are treated as API audit counts rather than a stable
+universe size.
 
-| Final source-row decision | Count | Meaning |
+The refreshed discovery ledger contains 4,218 unique canonical keys:
+
+| Current discovery decision | Count | Meaning |
 |---|---:|---|
-| Included | 24 | Fully assessed source rows; two rows represent the same Artemis II evidence family |
-| Deferred to Phase 6 | 42 | Control or mission-design evidence not required to freeze Phase 1 prediction models |
-| Excluded | 1,340 | Did not directly inform the registered Phase 1 task, fairness controls, or statistics |
+| Title/abstract exclude | 3,288 | Does not pass the current direct task-method conjunction rule |
+| Pending full-text screen | 926 | Discovery candidate only; no evidence claim is authorized |
+| Provisional include | 4 | Requires authoritative-record reconciliation before extraction |
 
-The 24 included source rows map to 23 unique extracted evidence records. This
-is a bounded, reproducible scoping synthesis, not the complete systematic
-review anticipated by the original review protocol. Crossref, NASA ADS, and a
-complete AIAA/publisher search were not exported in this pass. Deviation D002
-in `docs/decision_log.md` records the human research lead's acceptance of this
-limitation for the Gate 4 freeze while requiring a broader update before
-manuscript submission.
+The refresh does not replace or enlarge the 23-record accepted extraction
+matrix and did not change a model, split, threshold, metric, or claim. RFIG-014
+records this distinction. The synthesis remains bounded and is not a complete
+systematic review: 926 full-text decisions, Crossref, NASA ADS, and a complete
+AIAA/publisher search remain open. D002 requires closure before manuscript
+submission and prohibits outcome-driven model changes from later literature.
 
 ## 3. Findings that control Phase 1
 
@@ -135,7 +143,7 @@ The evidence directly produced these Gate 4 controls:
 - There is no public Artemis IV mission-owned dispersion, propulsion, or guidance dataset sufficient to reproduce operational planning.
 - There is no included head-to-head QML benchmark for crewed cislunar correction planning.
 - Hardware QML evidence does not establish useful scale, latency, or reliability for this task.
-- The current search is incomplete because OpenAlex metadata export was throttled and several planned databases remain for the manuscript update.
+- The current search is incomplete because five OpenAlex exports remain bounded, 926 refreshed records await full-text screening, and several planned databases remain for the manuscript update.
 - Public human-system standards define a credibility boundary, not project-specific operational values for every Artemis IV constraint.
 
 These gaps limit claims; they do not justify filling missing values with

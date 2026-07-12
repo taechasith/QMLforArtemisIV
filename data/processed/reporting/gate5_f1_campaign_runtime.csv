@@ -1,0 +1,3 @@
+campaign_id,fidelity,stage,groups,records,worker_limit,stage_wall_s,summed_group_work_s,effective_concurrency,projected_group_work_s,projected_ideal_wall_s,source_commit,notes
+D003-F1-G01,F1,serial_qualification,1,2500,1,1268.159,1268.159,1.000000,,,f12432790db09c4ba2a835798e37553771aaf470,G01 was generated and audited before parallel scale-up
+D003-F1-scaleup,F1,parallel_scaleup,13,32500,4,18148.400,63639.442,3.506614,49680.000,12600.000,46a65089a3b4a9e25b863d21e0e5a2ca28a31413,Wall time covers the controlled four-worker G02-G14 command; summed group work comes from the append-only v2 ledger

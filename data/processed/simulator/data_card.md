@@ -1,8 +1,8 @@
 # Phase 1 Scenario Dataset Card
 
-Version: 0.3.0
+Version: 0.4.0
 Prepared: 2026-07-12
-Status: Gate 4 accepted; all unlocked F0 and F1 G01 qualified; remaining F1/F2 pending
+Status: Gate 4 accepted; all unlocked F0/F1 qualified; F2 pending
 
 ## Intended use
 
@@ -20,9 +20,11 @@ cryptographic commitments. A pre-D003 attempt generated 7,000 F0 rows after
 acceptance, but all failed the conformance audit and are prohibited from model
 fitting, tuning, calibration, or benchmark claims. They remain only as
 failed-attempt evidence. All 14 corrected D003-v1 F0 development/calibration
-groups are now admitted: all 7,000 rows pass strict audit. The 2,500-row F1
-development G01 checkpoint also passes strict audit. Remaining F1 and all F2
-groups are ungenerated at this checkpoint.
+groups are now admitted: all 7,000 rows pass strict audit. All 14 corrected F1
+development/calibration groups are also admitted: all 35,000 rows pass strict
+audit, with no nonconvergence. Of 7,000 F1 decision sets, 4,215 have no
+feasible numerical reference and remain included under the frozen penalty and
+reporting rule. All F2 groups are ungenerated at this checkpoint.
 `data/locked/phase1/` is ignored and absent; any file there before an explicit
 unlock causes the preparation audit to fail closed.
 
@@ -31,8 +33,8 @@ candidate-plan row identities grouped into 13,000 decision sets of five plans:
 
 | Split | F0 | F1 | F2 | Total | Gate 4 payload state |
 |---|---:|---:|---:|---:|---|
-| Development | 6,000 | 30,000 | 3,000 | 39,000 | F0 valid (6,000 rows); F1 G01 valid (2,500 rows); remaining F1/F2 pending |
-| Uncertainty calibration | 1,000 | 5,000 | 500 | 6,500 | Corrected F0 valid (1,000 rows); F1/F2 pending and calibration-use restricted |
+| Development | 6,000 | 30,000 | 3,000 | 39,000 | F0/F1 valid (36,000 rows); F2 pending |
+| Uncertainty calibration | 1,000 | 5,000 | 500 | 6,500 | F0/F1 valid (6,000 rows); calibration-use restricted; F2 pending |
 | In-distribution final test | 1,500 | 7,500 | 750 | 9,750 | Locked and not generated |
 | Out-of-distribution final test | 1,500 | 7,500 | 750 | 9,750 | Locked and not generated |
 
@@ -44,7 +46,7 @@ silently replaced.
 
 ## Unit and provenance
 
-One valid D003 row will represent one simulated candidate correction plan under one
+One valid D003 row represents one simulated candidate correction plan under one
 fidelity, base trajectory, mission epoch, and uncertainty family. Base windows
 come from the Gate 2 qualified Artemis II validation-window registry. F0, F1,
 and F2 outcomes will be produced by the Gate 3 accepted simulator and frozen

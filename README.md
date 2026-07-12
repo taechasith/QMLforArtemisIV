@@ -19,10 +19,11 @@ Deviation D002 were accepted on 2026-07-12. A subsequent pre-D003 run generated
 7,000 F0 rows, but the conformance audit found every row invalid; those rows
 are excluded from all model and benchmark use and retained only as failed-run
 evidence. Gate 5 is now executing the authorized D003 generator repair. The
-corrected F0 campaign now passes strict audit for all 14 unlocked groups and
-7,000 rows; the 2,500-row F1 G01 checkpoint also passes strict audit, while
-remaining F1 and all F2 groups are pending. No fitted research model or
-benchmark result exists yet.
+corrected F0 and F1 campaigns pass strict audit for all 28 unlocked groups and
+42,000 rows. The F1 audit retains 4,215 of 7,000 decision sets without a
+feasible numerical reference as a development limitation; it does not retune
+candidates after seeing that result. F2 generation remains pending. No fitted
+research model or benchmark result exists yet.
 Both final-test splits remain locked and require a separate unlock commit.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
@@ -75,7 +76,7 @@ through a dated deviation record.
 - docs/gate2_data_numeric_freeze.md: Gate 2 evidence and recommendation.
 - docs/gate4_phase1_freeze.md: accepted Gate 4 decision package and lock audit.
 - docs/model_registry.md and docs/phase1_analysis_plan.md: frozen comparison and statistics.
-- docs/research_figure_policy.md: required graph, provenance, and claim-boundary workflow.
+- docs/research_figure_policy.md: required visual, provenance, and claim-boundary workflow.
 - docs/research_execution_map.md: work ownership and future decision gates.
 - docs/decision_log.md: acceptance and deviation history.
 - scripts/fetch_public_data.py: immutable-source downloader.

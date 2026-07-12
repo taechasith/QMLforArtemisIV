@@ -1,8 +1,8 @@
 # Frozen Phase 1 Analysis Plan
 
-Version: 0.3.0
+Version: 0.4.0
 Prepared: 2026-07-12
-Status: Gate 4 accepted; D003 payload repair in progress; analysis functions tested only with synthetic data
+Status: Gate 4 accepted; D003 F0/F1 qualified, F2 pending; analysis functions tested only with synthetic data
 
 ## Analysis sequence
 

@@ -1,6 +1,6 @@
 # Computational Methodology and Reference Hardware
 
-Version: 0.3.0
+Version: 0.4.0
 Hardware snapshot: 2026-07-11  
 Status: published computational-methodology supplement  
 Repository: `taechasith/QMLforArtemisIV`
@@ -221,9 +221,9 @@ are never loosened to reduce runtime.
 
 Gate 3 was accepted on 2026-07-12 after the D001 repair and independent rerun.
 Gate 4 and D002 were accepted on 2026-07-12. Development generation is
-authorized, but Gate 5 remains under D003 repair and no ML/QML fit may begin
-until corrected payloads pass their conformance audit. Final tests remain
-separately locked.
+authorized. Corrected F0 and F1 payloads pass their full D003 conformance
+audits; F2 qualification remains pending, and no ML/QML fit may begin until it
+also passes. Final tests remain separately locked.
 
 ### 6.2 F0/F1/F2 dataset generation
 
@@ -248,13 +248,22 @@ integration of the same trajectory in nominal groups while retaining each
 candidate's timing metadata. It does not cache nonzero burns or distinct
 uncertainty states and therefore changes scheduling cost, not scientific rows.
 
-The first F1 group then required 1,268.159 seconds for 2,500 U0 rows, 22.7
-times the F0 G01 wall time despite the cache. Its strict audit passed. A
-duration- and trajectory-count projection estimates about 13.8 aggregate CPU
-hours for all unlocked F1 groups and about 3.5 hours at four ideally balanced
-workers. The projection controls scheduling only; measured group ledgers and
-RFIG-010 remain the evidence, and four workers are used rather than the
-eight-worker ceiling to limit sustained laptop heat.
+The first F1 group required 1,268.159 seconds for 2,500 U0 rows, 22.7 times the
+F0 G01 wall time despite the cache. Its strict audit passed. A duration- and
+trajectory-count projection estimated 13.8 worker-hours for the remaining
+groups and 3.5 wall-hours at four ideally balanced workers. The controlled
+G02-G14 scale-up instead required 63,639.442 seconds (17.678 worker-hours) of
+summed group work in 18,148.400 seconds (5.041 wall-hours), for effective
+concurrency 3.51. Including the earlier serial checkpoint, all F1 work totals
+64,907.601 seconds (18.030 worker-hours) and 19,416.559 seconds (5.393 hours)
+of active wall time, excluding the idle interval between stages.
+
+All 35,000 F1 rows pass strict schema, relationship, uncertainty, finite-value,
+checksum, and decision-set audits with no nonconvergence. The run used four
+workers rather than the eight-worker ceiling to limit sustained laptop heat;
+CPU, not RAM or VRAM, was limiting. RFIG-011 through RFIG-013 preserve group
+coverage, runtime, and the exact F0/F1 summary. The optimistic estimate is
+retained as scheduling evidence rather than rewritten after the result.
 
 ### 6.3 Classical model experiments
 
@@ -319,6 +328,13 @@ Timing comparisons are interpreted only after confirming equivalent workload,
 precision, preprocessing, and output requirements. Laptop wall time is not
 generalized to server, cloud, QPU, or flight-computer performance.
 
+Published compute figures follow `docs/research_figure_policy.md`. Small
+factor comparisons are reported as exact tables; dense evidence with more than
+100 plotted points is summarized with heat maps, ordered matrices, linear
+clusters, density views, or aggregated trends rather than row-per-record bar
+charts; and methods, timelines, and decision gates are represented as diagrams
+rather than statistical graphs.
+
 ## 8. Portability and reproducibility boundary
 
 Another machine may reproduce the study with different worker counts, batch
@@ -351,10 +367,12 @@ and scientific failures because they require different responses.
 | 2026-07-11 | Gate 3 GMAT comparison | The first independent comparison failed all ten endpoint thresholds by large margins | The simulator gate correctly entered repair analysis instead of allowing ML work to start | Incremental Earth-only, J2-only, and full-force diagnostics isolated the discrepancy to the custom COF `POTFIELD` fixed-column format; Deviation D001 records the repair | Resolved. The fixed COF passes all ten frozen GMAT thresholds without changing physics, windows, or acceptance limits; preserve failed evidence because it shows how the defect was found |
 | 2026-07-11 | Gate 3 event evidence | RTC3 occurred at 18:53:00Z, after the qualified OEM was created at 03:22:19Z | Later rows in that OEM are pre-event predictions, not post-event evidence; more compute cannot turn them into historical/reconstructed evidence | Computed no RTC3 timing error and retained `not_eligible`, meaning not tested with eligible evidence, neither pass nor fail | Open source limitation. Gate 3 acceptance does not claim RTC3 validation, and hardware adaptation cannot repair missing evidence |
 | 2026-07-12 | Gate 4 literature retrieval | OpenAlex returned all seven query counts but persistently rate-limited metadata export with HTTP 429 | A complete multi-database systematic review could not be claimed from this run | Preserved count-only OpenAlex logs, completed NTRS/arXiv API retrieval, extracted 23 primary or authoritative records, labeled the synthesis bounded, and accepted D002 with a mandatory pre-manuscript update | Open coverage limitation. API throttling must reduce claim scope, not be hidden as successful screening |
+| 2026-07-12 | Gate 4 literature refresh | Retrying the frozen searches recovered 3,278 OpenAlex metadata rows, but five searches remain first-100 partial and 926 of 4,218 unique discovery rows await full-text screening | The larger discovery ledger cannot be described as a closed evidence synthesis or used to revise an accepted model after outcomes become visible | Preserved the 23-record accepted extraction matrix, labeled refreshed includes provisional, and added RFIG-014 as the source-flow record | Open screening limitation. More retrieved metadata is not the same as completed evidence appraisal |
 | 2026-07-12 | Gate 4 QML scheduling | A full trial-by-seed-by-fold Cartesian run would spend substantial laptop time on configurations that are clearly uncompetitive at small samples | The accepted 30-trial and seed ceilings could be misread as requiring every combination | Froze grouped successive-halving rungs for QML and matched controls, 20 seeds only for selected development configurations, one statevector/GPU job, and resumable checkpoints | Preventive adaptation. Preserve comparisons and randomness while pruning only by a rule registered before outcomes |
-| 2026-07-12 | Gate 5 scenario generation | The first generator produced 7,000 F0 rows before a schema/uncertainty audit and an F1 run stopped on an incorrect DE440s path | Every pre-D003 F0 row is invalid for research use, and 1,020 of 1,400 decision sets lack a feasible reference | Stopped progression, preserved RFIG-002 through RFIG-004, froze D003 in `72f99c4`, qualified G01 with RFIG-005/RFIG-006, then audited all F0 with RFIG-007 through RFIG-009 | F0 resolved: 14/14 groups and 7,000/7,000 rows valid in 542.060 s group work; 319/1,400 no-reference sets are retained limitations. F1/F2 audits remain open |
+| 2026-07-12 | Gate 5 scenario generation | The first generator produced 7,000 F0 rows before a schema/uncertainty audit and an F1 run stopped on an incorrect DE440s path | Every pre-D003 F0 row is invalid for research use, and 1,020 of 1,400 decision sets lack a feasible reference | Stopped progression, preserved RFIG-002 through RFIG-004, froze D003 in `72f99c4`, qualified G01 with RFIG-005/RFIG-006, then audited all F0 with RFIG-007 through RFIG-009 | F0 resolved: 14/14 groups and 7,000/7,000 rows valid in 542.060 s group work; 319/1,400 no-reference sets are retained limitations. F1 later resolved separately; F2 remains open |
 | 2026-07-12 | Gate 5 F1 preparation | Nominal decision sets contain multiple zero-delta-v candidates that would repeat the same multi-day propagation thousands of times | The scientifically identical work would waste CPU time before any higher-fidelity evidence was produced | Added a true-state-keyed zero-burn cache after F0 qualification; candidate timing metadata remains distinct and nonzero/distinct-state propagations are never cached | Execution-only adaptation. Unit tests enforce cache identity and timing retention; F1 runtime figures must disclose the optimization |
-| 2026-07-12 | Gate 5 F1 checkpoint | Valid F1 G01 required 1,268.159 s, 22.7 times F0 G01, while using one core and roughly 115 MB RAM | Serial completion of the remaining 47,500 F1 rows would be unnecessarily slow on the 24-core/32-thread reference laptop | Qualified G01 first, projected aggregate work, and added a four-process group scheduler with per-worker thread limits, atomic files, and a locked shared ledger | Open scale-up. CPU, not RAM/VRAM, is limiting; use four workers and preserve actual runtime per group rather than reducing cases or tolerances |
+| 2026-07-12 | Gate 5 F1 checkpoint | Valid F1 G01 required 1,268.159 s, 22.7 times F0 G01, while using one core and roughly 115 MB RAM | Serial completion of the remaining 32,500 unlocked F1 rows would be unnecessarily slow on the 24-core/32-thread reference laptop | Qualified G01 first, projected aggregate work, and added a four-process group scheduler with per-worker thread limits, atomic files, and a locked shared ledger | Resolved checkpoint. CPU, not RAM/VRAM, was limiting; four workers preserved cases and tolerances |
+| 2026-07-12 | Gate 5 F1 scale-up | The 13-group scale-up exceeded its 13.8 worker-hour and 3.5 ideal wall-hour projection | The laptop required 17.678 worker-hours and 5.041 wall-hours despite effective concurrency 3.51; four-group load was uneven because trajectory and uncertainty families have different cost | Completed every group without increasing workers or relaxing the scientific configuration; retained per-group ledgers, strict audit, and RFIG-011 through RFIG-013 | F1 resolved: 14/14 groups and 35,000/35,000 rows valid. Runtime projections need measured family-specific costs plus thermal/imbalance margin; 4,215/7,000 no-reference sets remain a scientific coverage limitation, not a compute failure |
 
 For RTC3 specifically, the qualified OEM predates the event by 15 hours 30
 minutes 41 seconds. A separate post-RTC3 trajectory product was not substituted
@@ -386,7 +404,7 @@ the following occurs:
 6. an execution adaptation is introduced to finish a frozen experiment; or
 7. a limitation remains unresolved and could affect what readers conclude.
 8. a material experimental or methodological change requires a corresponding
-   registry entry and reproducible graph under `artifacts/research_figures/`.
+   registry entry and reproducible visual under `artifacts/research_figures/`.
 
 Each update records the observed problem, affected phase, measured impact,
 attempted response, final status, evidence location, and whether any scientific
