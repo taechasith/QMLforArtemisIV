@@ -391,6 +391,12 @@ def gate5_preflight(root: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     audit.update(
         {
             "runner_status": config.get("gate5_runner_freeze", {}).get("status"),
+            "research_fit_authorized": config.get("gate5_runner_freeze", {}).get(
+                "research_fit_authorized", False
+            ),
+            "campaign_refinement": config.get("gate5_runner_freeze", {}).get(
+                "pre_fit_campaign_refinement"
+            ),
             "tuning_trials": len(tuning),
             "seed_rows": len(seeds),
             "gate4_checksums_verified": len(checksums),
@@ -409,7 +415,9 @@ def write_csv_rows(path: Path, rows: Sequence[Mapping[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     with temporary.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(
+            handle, fieldnames=list(rows[0]), lineterminator="\n"
+        )
         writer.writeheader()
         writer.writerows(rows)
     temporary.replace(path)
@@ -458,23 +466,43 @@ def matched_qubits_for_trial(trial_order: int) -> int:
 
 
 def initial_execution_plan(root: Path) -> list[dict[str, Any]]:
-    """Return the complete first-stage plan without reading scenario outcomes."""
+    """Return the complete first stage without reading scenario outcomes.
 
+    A01 and compressed C05 are execution views rather than extra tuning trials.
+    Every frozen control trial is repeated at 4/6/8 dimensions. This both gives
+    each QML result an exactly matched control and permits strong controls to be
+    advanced independently within each required dimension.
+    """
+
+    config = read_yaml(root / "configs/phase1_benchmark.yaml")
+    runner_status = config.get("gate5_runner_freeze", {}).get("status")
+    research_fit_authorized = config.get("gate5_runner_freeze", {}).get(
+        "research_fit_authorized", False
+    )
+    if runner_status == RUNNER_ACCEPTED_STATUS and research_fit_authorized is True:
+        execution_status = "ready"
+    elif runner_status == RUNNER_ACCEPTED_STATUS:
+        execution_status = "blocked_pending_d006_acceptance"
+    else:
+        execution_status = "blocked_pending_d005_acceptance"
     tuning = read_csv(root / "data/processed/simulator/tuning_manifest.csv")
     rows: list[dict[str, Any]] = []
+    trial_by_family_order = {
+        (raw["family_id"], int(raw["trial_order"])): raw for raw in tuning
+    }
+    qml_pairs: dict[tuple[int, int], set[str]] = defaultdict(set)
     for raw in tuning:
         trial_order = int(raw["trial_order"])
         family_id = raw["family_id"]
         family = raw["model_family"]
         parameters = json.loads(raw["parameters_json"])
+        if family_id == "A01":
+            continue
         if family in QML_FAMILIES:
             view = "primary"
             rung = 128
             qubits = int(parameters["qubits"])
-        elif family == "random_fourier_ridge":
-            view = "primary"
-            rung = 128
-            qubits = matched_qubits_for_trial(trial_order)
+            qml_pairs[(trial_order, qubits)].add(family_id)
         else:
             view = "primary"
             rung = None
@@ -488,29 +516,41 @@ def initial_execution_plan(root: Path) -> list[dict[str, Any]]:
                 "trial_order": trial_order,
                 "view": view,
                 "rung_samples": rung,
-                "matched_qubits": qubits if family == "random_fourier_ridge" else None,
+                "matched_qubits": None,
                 "effective_qubits": qubits,
                 "candidate_role": raw["candidate_role"],
-                "execution_status": "blocked_pending_d005_acceptance",
+                "control_for": "",
+                "advancement_basis": "candidate",
+                "execution_status": execution_status,
             }
         )
-        if family_id == "C05":
-            qubits = matched_qubits_for_trial(trial_order)
-            rows.append(
-                {
-                    "task_id": f"{raw['trial_id']}__compressed_c05__128",
-                    "family_id": family_id,
-                    "model_family": family,
-                    "trial_id": raw["trial_id"],
-                    "trial_order": trial_order,
-                    "view": "compressed_c05",
-                    "rung_samples": 128,
-                    "matched_qubits": qubits,
-                    "effective_qubits": qubits,
-                    "candidate_role": "interpretation_control_not_eligible_to_win",
-                    "execution_status": "blocked_pending_d005_acceptance",
-                }
-            )
+
+    for trial_order in range(1, 31):
+        for qubits in MATCHED_QUBITS:
+            qml_ids = qml_pairs.get((trial_order, qubits), set())
+            for family_id, view in (("A01", "primary"), ("C05", "compressed_c05")):
+                raw = trial_by_family_order[(family_id, trial_order)]
+                rows.append(
+                    {
+                        "task_id": f"{raw['trial_id']}__{view}__128__q{qubits}",
+                        "family_id": raw["family_id"],
+                        "model_family": raw["model_family"],
+                        "trial_id": raw["trial_id"],
+                        "trial_order": trial_order,
+                        "view": view,
+                        "rung_samples": 128,
+                        "matched_qubits": qubits,
+                        "effective_qubits": qubits,
+                        "candidate_role": "interpretation_control_not_eligible_to_win",
+                        "control_for": ";".join(sorted(qml_ids)),
+                        "advancement_basis": (
+                            "control_ranked_and_qml_matched"
+                            if qml_ids
+                            else "control_ranked"
+                        ),
+                        "execution_status": execution_status,
+                    }
+                )
     return rows
 
 
@@ -625,16 +665,22 @@ def rank_rung_summaries(
     ]
 
 
-def trial_seed(root: Path, trial: TrialSpec) -> int:
+def trial_seed(
+    root: Path, trial: TrialSpec, seed_index: int | None = None
+) -> int:
+    resolved_seed_index = trial.trial_order if seed_index is None else seed_index
     rows = read_csv(root / "data/processed/simulator/seed_manifest.csv")
     matches = [
         row
         for row in rows
         if row["family_id"] == trial.family_id
-        and int(row["seed_index"]) == trial.trial_order
+        and int(row["seed_index"]) == resolved_seed_index
     ]
     if len(matches) != 1:
-        raise ValueError(f"Missing tuning seed for {trial.trial_id}")
+        raise ValueError(
+            "Missing frozen training seed for "
+            f"{trial.family_id} seed_index={resolved_seed_index}"
+        )
     return int(matches[0]["training_seed"])
 
 
@@ -743,6 +789,23 @@ def variational_diagnostics(model: Any, qubits: int, layers: int, entangle: bool
         "two_qubit_gate_count": layers * qubits if entangle else 0,
         "resource_count_scope": "logical_pretranspilation_per_circuit_evaluation",
     }
+
+
+def fitted_trainable_parameter_count(model: Any) -> int | None:
+    """Count fitted linear/MLP trainable arrays for capacity diagnostics."""
+
+    fitted = getattr(model, "estimator_", model)
+    if hasattr(fitted, "steps"):
+        fitted = fitted.steps[-1][1]
+    arrays: list[np.ndarray] = []
+    if hasattr(fitted, "coefs_"):
+        arrays.extend(np.asarray(value) for value in fitted.coefs_)
+        arrays.extend(np.asarray(value) for value in fitted.intercepts_)
+    elif hasattr(fitted, "coef_"):
+        arrays.append(np.asarray(fitted.coef_))
+        if hasattr(fitted, "intercept_"):
+            arrays.append(np.asarray(fitted.intercept_))
+    return sum(value.size for value in arrays) if arrays else None
 
 
 def _regime_diagnostics(
@@ -864,6 +927,27 @@ def _clean_source_commit(root: Path) -> str:
     return commit
 
 
+def validate_development_output_path(
+    root: Path,
+    output_path: Path,
+    config: Mapping[str, Any] | None = None,
+) -> Path:
+    """Reject any development artifact path inside the locked final payload."""
+
+    active_config = (
+        read_yaml(root / "configs/phase1_benchmark.yaml")
+        if config is None
+        else config
+    )
+    locked_root = (root / active_config["governance"]["final_payload_root"]).resolve()
+    resolved_output = output_path.resolve()
+    if resolved_output == locked_root or locked_root in resolved_output.parents:
+        raise PermissionError(
+            "Gate 5 development artifacts cannot be written under the final payload root"
+        )
+    return resolved_output
+
+
 def _build_models(
     trial: TrialSpec,
     seed: int,
@@ -910,24 +994,27 @@ def execute_trial(
     rung_samples: int | None = None,
     matched_qubits: int | None = None,
     view: str = "primary",
+    seed_index: int | None = None,
 ) -> dict[str, Any]:
-    """Execute one resumable development-CV task after D005 acceptance."""
+    """Execute one resumable development-CV task under the active authorization."""
 
     config = read_yaml(root / "configs/phase1_benchmark.yaml")
     status = config.get("gate5_runner_freeze", {}).get("status")
-    if status != RUNNER_ACCEPTED_STATUS:
+    research_fit_authorized = config.get("gate5_runner_freeze", {}).get(
+        "research_fit_authorized", False
+    )
+    if status != RUNNER_ACCEPTED_STATUS or research_fit_authorized is not True:
         raise PermissionError(
-            "Research fitting is blocked until the human lead accepts D005"
+            "Research fitting is blocked until the human lead accepts the active runner contract"
         )
     source_commit = _clean_source_commit(root)
-    locked_root = (root / config["governance"]["final_payload_root"]).resolve()
-    resolved_output = output_dir.resolve()
-    if resolved_output == locked_root or locked_root in resolved_output.parents:
-        raise PermissionError("Gate 5 results cannot be written under the final payload root")
+    validate_development_output_path(root, output_dir, config)
+    task_started = time.perf_counter()
     records, manifest = load_development_records(root, config)
     audit_development_records(records, manifest, config)
     trial = load_trial(root, trial_id)
-    seed = trial_seed(root, trial)
+    resolved_seed_index = trial.trial_order if seed_index is None else seed_index
+    seed = trial_seed(root, trial, resolved_seed_index)
 
     projected = trial.model_family in QML_FAMILIES or trial.model_family == "random_fourier_ridge" or view == "compressed_c05"
     qubits = (
@@ -935,6 +1022,12 @@ def execute_trial(
         if trial.model_family in QML_FAMILIES
         else matched_qubits
     )
+    if (
+        trial.model_family in QML_FAMILIES
+        and matched_qubits is not None
+        and matched_qubits != qubits
+    ):
+        raise ValueError("QML matched_qubits must equal the frozen trial dimension")
     if projected and qubits not in {4, 6, 8}:
         raise ValueError("Matched projected views require 4, 6, or 8 qubits")
     if projected and rung_samples not in {128, 256, 512, 1024}:
@@ -950,6 +1043,8 @@ def execute_trial(
                 "view": view,
                 "rung_samples": rung_samples,
                 "matched_qubits": matched_qubits,
+                "seed_index": resolved_seed_index,
+                "training_seed": seed,
             },
             sort_keys=True,
             separators=(",", ":"),
@@ -974,6 +1069,7 @@ def execute_trial(
     total_prediction_rows = 0
     all_regret_weighted = 0.0
     all_decision_sets = 0
+    setup_wall_time = time.perf_counter() - task_started
 
     for fold_id in range(1, int(config["tuning"]["grouped_cv_folds"]) + 1):
         checkpoint_path = output_dir / f"fold_CV{fold_id:02d}.json"
@@ -986,6 +1082,7 @@ def execute_trial(
             all_regret_weighted += float(checkpoint["regret_sum_m_s"])
             all_decision_sets += int(checkpoint["decision_sets"])
             continue
+        fold_started = time.perf_counter()
         validation_indices = np.asarray(
             [
                 index
@@ -1096,7 +1193,7 @@ def execute_trial(
             "family_id": trial.family_id,
             "model_family": trial.model_family,
             "view": view,
-            "seed_index": trial.trial_order,
+            "seed_index": resolved_seed_index,
             "training_seed": seed,
             "rung_samples": rung_samples,
             "qubits": qubits,
@@ -1121,6 +1218,12 @@ def execute_trial(
             "training_wall_time_s": training_wall,
             "inference_wall_time_s": inference_wall,
             "feasibility_metric_error": feasibility_error,
+            "cost_fitted_trainable_parameter_count": fitted_trainable_parameter_count(
+                cost_model
+            ),
+            "feasibility_fitted_trainable_parameter_count": fitted_trainable_parameter_count(
+                feasibility_model
+            ),
             **{f"feasibility_{key}": value for key, value in feasibility.items()},
         }
         if trial.model_family == "quantum_kernel":
@@ -1169,11 +1272,14 @@ def execute_trial(
             config,
             f"CV{fold_id:02d}",
         )
+        row["fold_end_to_end_wall_time_s"] = time.perf_counter() - fold_started
         fold_results.append(row)
         regime_results.extend(fold_regimes)
         checkpoint = {
             "task_signature": task_signature,
             "source_commit": source_commit,
+            "seed_index": resolved_seed_index,
+            "training_seed": seed,
             "fold_metrics": row,
             "regime_metrics": fold_regimes,
             "squared_error_sum": squared_error_sum,
@@ -1193,6 +1299,8 @@ def execute_trial(
         "view": view,
         "rung_samples": rung_samples,
         "matched_qubits": matched_qubits,
+        "seed_index": resolved_seed_index,
+        "training_seed": seed,
         "pooled_oof_rmse": pooled_rmse,
         "pooled_oof_nrmse": pooled_rmse / development_scale,
         "unweighted_mean_fold_nrmse": float(
@@ -1206,6 +1314,8 @@ def execute_trial(
         "source_commit": source_commit,
         "task_signature": task_signature,
         "checkpoint_count": len(fold_results),
+        "end_to_end_wall_time_s": setup_wall_time
+        + sum(float(row["fold_end_to_end_wall_time_s"]) for row in fold_results),
         "source_split": DEVELOPMENT_SPLIT,
         "calibration_rows_read": 0,
         "final_test_rows_read": 0,

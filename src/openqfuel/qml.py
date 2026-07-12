@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
 from typing import Mapping, Sequence
 
 import numpy as np
@@ -75,6 +76,64 @@ def _apply_cnot(
     updated = np.empty_like(state)
     updated[destinations] = state
     return updated
+
+
+def _apply_ry_rz_batch(
+    states: np.ndarray,
+    first_angles: float | np.ndarray,
+    second_angles: float | np.ndarray,
+    qubit: int,
+    n_qubits: int,
+) -> None:
+    """Apply one RY/RZ pair to every row without changing circuit ordering."""
+
+    batch_size = states.shape[0]
+    amplitudes = states.reshape(
+        batch_size,
+        1 << qubit,
+        2,
+        1 << (n_qubits - qubit - 1),
+    )
+    zero = amplitudes[:, :, 0, :]
+    one = amplitudes[:, :, 1, :]
+    original_zero = zero.copy()
+
+    first_half = np.asarray(first_angles, dtype=float) / 2.0
+    second_half = np.asarray(second_angles, dtype=float) / 2.0
+    cosine = np.cos(first_half)
+    sine = np.sin(first_half)
+    phase_minus = np.exp(-1j * second_half)
+    phase_plus = np.exp(1j * second_half)
+    if first_half.ndim:
+        cosine = cosine[:, None, None]
+        sine = sine[:, None, None]
+    if second_half.ndim:
+        phase_minus = phase_minus[:, None, None]
+        phase_plus = phase_plus[:, None, None]
+
+    zero[...] = phase_minus * (cosine * zero - sine * one)
+    one[...] = phase_plus * (sine * original_zero + cosine * one)
+
+
+def _apply_cnot_batch(
+    states: np.ndarray, control: int, target: int, n_qubits: int
+) -> None:
+    """Apply a CNOT in place across a leading batch dimension."""
+
+    if control == target:
+        raise ValueError("CNOT control and target must differ")
+    tensor = states.reshape((states.shape[0],) + (2,) * n_qubits)
+    zero_selector = [slice(None)] * (n_qubits + 1)
+    one_selector = [slice(None)] * (n_qubits + 1)
+    zero_selector[control + 1] = 1
+    one_selector[control + 1] = 1
+    zero_selector[target + 1] = 0
+    one_selector[target + 1] = 1
+    zero = tensor[tuple(zero_selector)]
+    one = tensor[tuple(one_selector)]
+    original_zero = zero.copy()
+    zero[...] = one
+    one[...] = original_zero
 
 
 def _as_matrix(values: Sequence[Sequence[float]] | np.ndarray) -> np.ndarray:
@@ -151,19 +210,40 @@ def statevector_batch(
     entangle: bool = True,
 ) -> np.ndarray:
     matrix = _as_matrix(values)
-    return np.vstack(
-        [
-            circuit_state(
-                row,
-                n_qubits,
-                layers,
-                parameters,
-                feature_scale,
-                entangle,
-            )
-            for row in matrix
-        ]
-    )
+    _validate_circuit(n_qubits, layers)
+    _validate_feature_map(feature_scale, entangle)
+    if parameters is not None and parameters.shape != (layers, n_qubits, 2):
+        raise ValueError(
+            f"Expected variational parameters with shape {(layers, n_qubits, 2)}"
+        )
+
+    states = np.zeros((matrix.shape[0], 2**n_qubits), dtype=complex)
+    states[:, 0] = 1.0
+    for layer in range(layers):
+        for qubit in range(n_qubits):
+            first = feature_scale * matrix[
+                :, (2 * qubit + 2 * layer) % matrix.shape[1]
+            ]
+            second = feature_scale * matrix[
+                :, (2 * qubit + 2 * layer + 1) % matrix.shape[1]
+            ]
+            _apply_ry_rz_batch(states, first, second, qubit, n_qubits)
+        if entangle:
+            for qubit in range(n_qubits):
+                _apply_cnot_batch(
+                    states, qubit, (qubit + 1) % n_qubits, n_qubits
+                )
+        if parameters is not None:
+            for qubit in range(n_qubits):
+                _apply_ry_rz_batch(
+                    states,
+                    parameters[layer, qubit, 0],
+                    parameters[layer, qubit, 1],
+                    qubit,
+                    n_qubits,
+                )
+    states /= np.linalg.norm(states, axis=1, keepdims=True)
+    return states
 
 
 def quantum_kernel_matrix(
@@ -179,11 +259,25 @@ def quantum_kernel_matrix(
 ) -> np.ndarray:
     """Return squared state overlaps, optionally sampled at finite shots."""
 
+    left_matrix = _as_matrix(left)
+    right_matrix = left_matrix if right is left else _as_matrix(right)
     left_states = statevector_batch(
-        left, n_qubits, layers, feature_scale=feature_scale, entangle=entangle
+        left_matrix,
+        n_qubits,
+        layers,
+        feature_scale=feature_scale,
+        entangle=entangle,
     )
-    right_states = statevector_batch(
-        right, n_qubits, layers, feature_scale=feature_scale, entangle=entangle
+    right_states = (
+        left_states
+        if right_matrix is left_matrix
+        else statevector_batch(
+            right_matrix,
+            n_qubits,
+            layers,
+            feature_scale=feature_scale,
+            entangle=entangle,
+        )
     )
     probabilities = np.abs(left_states.conj() @ right_states.T) ** 2
     probabilities = np.clip(probabilities.real, 0.0, 1.0)
@@ -200,13 +294,24 @@ def quantum_kernel_matrix(
 
 def _z_expectations(state: np.ndarray, n_qubits: int) -> np.ndarray:
     probabilities = np.abs(state) ** 2
-    indices = np.arange(state.size, dtype=np.int64)
-    expectations = []
-    for qubit in range(n_qubits):
-        mask = 1 << (n_qubits - 1 - qubit)
-        signs = np.where(indices & mask, -1.0, 1.0)
-        expectations.append(float(np.dot(probabilities, signs)))
-    return np.asarray(expectations)
+    return probabilities @ _z_expectation_signs(n_qubits).T
+
+
+@lru_cache(maxsize=None)
+def _z_expectation_signs(n_qubits: int) -> np.ndarray:
+    indices = np.arange(2**n_qubits, dtype=np.int64)
+    signs = np.vstack(
+        [
+            np.where(
+                indices & (1 << (n_qubits - 1 - qubit)),
+                -1.0,
+                1.0,
+            )
+            for qubit in range(n_qubits)
+        ]
+    )
+    signs.setflags(write=False)
+    return signs
 
 
 def _observable_attenuation(
@@ -244,7 +349,7 @@ def circuit_features(
         feature_scale,
         entangle,
     )
-    exact = np.vstack([_z_expectations(state, n_qubits) for state in states])
+    exact = np.abs(states) ** 2 @ _z_expectation_signs(n_qubits).T
     if shots is None:
         return exact
     if shots <= 0:

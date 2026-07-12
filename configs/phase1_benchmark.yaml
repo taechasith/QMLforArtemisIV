@@ -1,6 +1,6 @@
-schema_version: "0.4.1"
+schema_version: "0.4.2"
 status: "gate_4_accepted_development_generation_authorized"
-gate5_status: "d004_literature_hardening_authorized_before_model_fit"
+gate5_status: "d005_runner_accepted_d006_campaign_candidate_pending_human_acceptance"
 prepared_date: "2026-07-12"
 scenario_generation_config: "configs/scenario_generation.yaml"
 
@@ -342,9 +342,12 @@ gate5_literature_hardening:
   claim_boundary_rule: "apparent QML gains must be checked against bandwidth, entanglement removal, random-feature approximation, parameter count, sample selection, and no-reference-feasible concentration before any trigger recommendation"
 
 gate5_runner_freeze:
-  status: "d005_candidate_pending_human_acceptance"
+  status: "d005_gate5_runner_accepted"
   research_fit_authorized: false
-  implementation: "scripts/run_phase1_development.py and openqfuel.gate5"
+  accepted_date: "2026-07-12"
+  accepted_candidate_commit: "80ae35d06394e0d84a9feb8415d1eaacf5cfe04d"
+  pre_fit_campaign_refinement: "d006_candidate_pending_human_acceptance"
+  implementation: "scripts/run_phase1_development.py, scripts/run_gate5_campaign.py, openqfuel.gate5, and openqfuel.gate5_campaign"
   split_scope: "development only; calibration prohibited for fitting and selection; final payload absent and locked"
   cv_assignment:
     method: "deterministic greedy balance of frozen uncertainty family and trajectory family, with SHA-256 master-seed tie breaks"
@@ -359,14 +362,39 @@ gate5_runner_freeze:
   diagnostic_fold_score: "unweighted mean and dispersion of fold NRMSE"
   seed_matching: "same seed_index across comparisons; preserve family-specific frozen training_seed because identical integer seeds do not create common random numbers across different algorithms"
   matched_controls: "A01 and compressed C05 repeat each 4/6/8-dimensional QML view on identical rows, folds, rungs, and fitted PCA inputs"
-  matched_dimension_assignment: "trial orders cycle 4,6,8 qubits, giving 10 frozen trials per dimension for A01 and compressed C05 without adding hyperparameter trials"
+  matched_dimension_assignment: "D006 repeats each of the 30 frozen A01 and compressed-C05 trials at 4, 6, and 8 dimensions; these are execution views, not new hyperparameter trials"
+  control_advancement: "rank A01 and compressed C05 independently within each PCA dimension while also carrying the exact same-index control for every surviving QML task"
   qml_advancement_floor: "at least one eligible 4-, 6-, and 8-qubit trial survives every QML rung; remaining slots follow objective, regret, complexity, then trial ID"
   residual_baseline: "append low_fidelity_cost transformed by the fold target scaler; exclude the appended baseline from Q03 circuit encoding before residual addition"
-  failure_rule: "optimizer non-success makes the fold ineligible; an exception writes a task-level failure artifact; failed work is never replaced silently"
+  failure_rule: "optimizer non-success makes the fold ineligible; an exception writes one immutable task-level failure artifact; formal campaign resume preserves rather than retries failed work"
   checkpoint_rule: "atomic JSON after each completed fold, validated by source/trial/view/rung/dimension signature before resume"
   public_preflight: "data/processed/reporting/gate5_preflight_audit.json"
   initial_execution_plan: "data/processed/reporting/gate5_initial_execution_plan.csv"
-  execution_guard: "research fitting raises PermissionError until status is d005_gate5_runner_accepted"
+  execution_guard: "research fitting raises PermissionError until D005 is accepted and the active D006 campaign contract sets research_fit_authorized true after explicit human acceptance"
+  initial_task_count: 450
+  orchestration:
+    successive_halving_rungs: [128, 256, 512, 1024]
+    qml_retained_trials: [30, 15, 8, 4]
+    control_retained_trials_per_dimension: [30, 15, 8, 4]
+    selected_configuration_seed_indices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    immutable_authorization_sidecars: true
+    concurrent_statevector_tasks: 1
+    required_pre_scale_benchmark_trials: [C04-T02, Q01-T04, Q02-T07, Q03-T14]
+    required_pre_scale_projected_rung: 1024
+    benchmark_projection_margin: 1.25
+    scale_up_rule: "benchmark-projected core hours, wall days, and storage including margin must remain within every Gate 2 ceiling"
+    initial_tasks: "270 registered candidate tasks plus 180 A01/compressed-C05 execution views"
+    maximum_formal_tasks: 1275
+    maximum_formal_folds: 6375
+    maximum_executions_including_qualification_without_overlap_credit: 1285
+    maximum_folds_including_qualification_without_overlap_credit: 6425
+    maximum_model_fits_including_qualification_without_overlap_credit: 12850
+    calibration_access: false
+    final_test_access: false
+  statevector_batch_implementation:
+    refinement: "D006 mathematically equivalent batched state evolution"
+    recorded_state_feature_kernel_max_abs_error: 0.000000000000002665
+    changes_model_or_optimizer: false
 
 analysis:
   nrmse_denominator: "standard deviation of primary target in development split only"
@@ -380,6 +408,19 @@ analysis:
   calibration_bins: 10
   report_seed_level_rows: true
   preserve_failed_and_nonconverged: true
+  gate5_trigger:
+    maximum_relative_primary_error_gap: 0.05
+    stability_seed_count: 20
+    require_every_grouped_cv_fold: true
+    require_complete_campaign_audit: true
+    stability_rule: "upper 95% paired-bootstrap bound of seed-level relative NRMSE gap must be <= 0.05"
+    residual_regime_rule: "a preregistered regime cell present in all five folds must have QML-minus-comparator upper 95% paired-bootstrap bounds below zero versus strongest classical, tuned A01, and tuned compressed C05"
+    residual_fold_consistency_rule: "within every grouped CV fold, the 20-seed mean QML-minus-strongest-classical regime NRMSE must be below zero"
+    regime_multiplicity_rule: "QML-versus-strongest-classical paired sign-permutation p-values use Holm correction across all eligible regime cells"
+    claim_boundary_diagnostics: "mandatory report-only checks of feature scale, entanglement removal, random features, parameter count, sample/rung sensitivity, and no-reference concentration; a technical trigger pass still requires separate human review before algorithm authorization"
+    invalid_or_incomplete_evidence_action: "report decision unavailable and require repair; do not classify invalid evidence as a negative scientific result"
+    trigger_requires_all_conditions: true
+    no_trigger_action: "do not create the proposed new algorithm"
   primary_metrics:
     - robust_cost_nrmse
     - feasibility_constrained_regret_m_s

@@ -1,14 +1,14 @@
 # Frozen Phase 1 Analysis Plan
 
-Version: 0.6.2
+Version: 0.6.3
 Prepared: 2026-07-12
-Status: Gate 4 accepted; D003 data qualified; D004 controls integrated; D005 runner candidate pending human acceptance
+Status: Gate 4 accepted; D003 data qualified; D004 controls integrated; D005 accepted; D006 campaign candidate pending human acceptance
 
 ## Analysis sequence
 
 1. Admit development scenarios only after Gate 4 acceptance and D003 conformance audit.
 2. Fit preprocessing, target scaling, and any PCA separately inside every development-CV training fold.
-3. If D005 is accepted, select one configuration per candidate family using pooled out-of-fold development NRMSE, then regret and lower complexity; retain unweighted fold summaries as diagnostics.
+3. Select one configuration per candidate family using pooled out-of-fold development NRMSE, then regret and lower complexity; retain unweighted fold summaries as diagnostics.
 4. Rerun selected configurations on 20 development seeds and freeze finalists.
 5. Use the calibration split only for uncertainty/probability calibration; do not change features, families, or hyperparameters.
 6. Commit finalist identities, fitted preprocessing hashes, and executable analysis state before a separate final-test unlock.
@@ -49,7 +49,7 @@ future Gate 5 result figures must retain the same boundary: development-only
 evidence before model selection, calibration-only evidence after finalist
 selection, and no final-test value until a separate unlock.
 
-## D005 runner correction pending acceptance
+## D005 accepted runner correction
 
 The Gate 4 freeze specified five-fold grouped CV and matched hash-selected
 learning rungs but did not freeze an exact fold map or hash namespace. It also
@@ -62,14 +62,54 @@ explicit physical baseline. D005 resolves these issues before model outcomes:
 - fit imputation, categorical encoding, feature scaling, target scaling, and PCA only on the current fold's selected training rows;
 - use pooled out-of-fold squared error for the primary NRMSE so unequal two- and three-group folds do not receive equal aggregate weight, while still reporting every fold separately;
 - preserve family-specific frozen training seeds and pair comparisons by `seed_index`, because different algorithms do not consume random streams identically;
-- cycle the 30 A01 and compressed-C05 diagnostic trials across 4/6/8 dimensions (10 each) without adding hyperparameter trials, and preserve at least one eligible QML trial per required qubit count at every halving rung;
+- repeat the 30 A01 and compressed-C05 diagnostic trials at all 4/6/8 dimensions under D006 without adding hyperparameter trials, independently advance strong controls within each dimension, carry the exact same-index controls for QML survivors, and preserve at least one eligible QML trial per required qubit count at every halving rung;
 - append the physical low-fidelity cost in target-standardized units for C06/Q03 and prevent Q03 from treating that appended baseline as a circuit angle.
 
-`scripts/run_phase1_development.py preflight` is read-only. The execution
-command fails closed until the D005 status is accepted by the human research
-lead. Each completed fold is written atomically with a signature covering the
-source commit, trial, view, rung, and matched dimension; resume refuses a
+`scripts/run_phase1_development.py preflight` is read-only. D005 was accepted
+by the human research lead on 2026-07-12. Each completed fold is written
+atomically with a signature covering the source commit, trial, view, rung,
+matched dimension, seed index, and resolved family seed; resume refuses a
 mismatched checkpoint. RFIG-020 records the outcome-blind fold allocation.
+
+## D006 pre-fit campaign refinement candidate
+
+The post-acceptance audit found that cycling control dimensions independently
+did not match many QML trials at the same seed index. Before any research fit,
+D006 replaces the 330-task first stage with 270 registered candidate tasks and
+180 non-winning control views: every one of the 30 existing A01 and compressed
+C05 trials is repeated at 4, 6, and 8 PCA dimensions. This changes execution
+views, not hyperparameter-trial count. Controls advance independently per
+dimension and exact same-index controls also follow every QML survivor.
+
+If D006 is accepted, the formal scheduler freezes immutable rung and selection authorizations,
+requires every authorized task to end in a signed success or retained terminal
+failure before ranking, blocks incomplete-stage selection, uses exactly 20
+existing family seed indices for selected configurations, and permits only one
+statevector task at a time. Calibration and final-test access remain false.
+Before full scale-up, C04-T02 runs at its frozen full-data subset and
+Q01-T04/Q02-T07/Q03-T14 plus their matched controls run at the 1,024-row rung;
+their 25%-margin projection must remain inside every Gate 2 ceiling.
+
+The algorithm trigger is evaluated conservatively and mechanically:
+
+1. The best eligible QML finalist's mean 20-seed pooled OOF NRMSE must be no more than 5% above the strongest eligible classical finalist.
+2. At least one preregistered regime cell must appear in all five grouped folds; QML-minus-comparator 95% paired bootstrap upper bounds must be below zero against the strongest classical finalist, the independently tuned A01 view, and the independently tuned compressed-C05 view. In each grouped fold, the 20-seed mean QML-minus-strongest-classical difference must also be below zero. The QML-versus-classical sign-permutation result must remain below 0.05 after Holm correction across all eligible regime cells.
+3. All 20 QML seed runs and all five folds per seed must be eligible, and the 95% paired bootstrap upper bound of the seed-level relative NRMSE gap to the strongest classical finalist must not exceed 5%.
+
+The source-bound campaign audit must be complete before those three conditions
+can pass. Feature-scale/bandwidth, entanglement removal, random-feature,
+parameter-count, sample/rung, and no-reference concentration checks are
+mandatory report-only diagnostics. They do not silently add a fourth numeric
+threshold; a technical pass remains pending explicit human interpretation and
+acceptance before any new algorithm is authorized.
+Invalid, source-mismatched, incomplete, or diagnostically incomplete evidence
+is labeled `UNAVAILABLE` and must be repaired. It is not a failed QML trigger
+and cannot be published as a negative scientific result.
+
+All intervals and tests use the already frozen 10,000 replicates. Failure of
+any condition rejects new-algorithm development. This development-only trigger
+does not use calibration, ID-final, OOD-final, finite-shot confirmation, or a
+post-result threshold change.
 
 ## Endpoints
 

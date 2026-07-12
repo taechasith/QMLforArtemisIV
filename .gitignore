@@ -29,6 +29,9 @@ data/processed/reporting/*
 !data/processed/reporting/gate5_cv_fold_manifest.csv
 !data/processed/reporting/gate5_preflight_audit.json
 !data/processed/reporting/gate5_initial_execution_plan.csv
+!data/processed/reporting/gate5_model_summary.csv
+!data/processed/reporting/gate5_regime_trigger.csv
+!data/processed/reporting/gate5_statevector_batch_benchmark.json
 data/processed/artemis2/*
 !data/processed/artemis2/oem_inventory.csv
 !data/processed/artemis2/oem_release_revisions.csv

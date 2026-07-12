@@ -1,0 +1,51 @@
+{
+  "benchmark_script_sha256": "59ce8a2496bd96d75ee58f4853c8e8ba573ed821814713185e57128fe0e8ced2",
+  "calibration_rows_read": 0,
+  "final_test_rows_read": 0,
+  "numpy": "2.5.1",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "python": "3.12.1",
+  "qml_source_sha256": "c958dc35879c72042a63750dc43c87b6ef2e16f7814594dd16153baf31aad269",
+  "records": [
+    {
+      "batch_feature_s_median": 0.007735209001111798,
+      "batch_self_kernel_s_median": 0.005144917005964089,
+      "batch_state_s_median": 0.004873666999628767,
+      "feature_max_abs_error": 1.2212453270876722e-15,
+      "feature_speedup": 11.772101695893827,
+      "layers": 3,
+      "qubits": 8,
+      "repeats": 3,
+      "rows": 128,
+      "scalar_feature_s_median": 0.09105966700008139,
+      "scalar_self_kernel_s_median": 0.09977116699883481,
+      "scalar_state_s_median": 0.049368667001544964,
+      "self_kernel_max_abs_error": 1.7763568394002505e-15,
+      "self_kernel_speedup": 19.392182008607353,
+      "state_max_abs_error": 4.613190423717512e-16,
+      "state_speedup": 10.129675869382424
+    },
+    {
+      "batch_feature_s_median": 0.08813933299825294,
+      "batch_self_kernel_s_median": 0.05464012500306126,
+      "batch_state_s_median": 0.052723708999110386,
+      "feature_max_abs_error": 1.6653345369377348e-15,
+      "feature_speedup": 8.269305158167214,
+      "layers": 3,
+      "qubits": 8,
+      "repeats": 3,
+      "rows": 1024,
+      "scalar_feature_s_median": 0.7288510409998707,
+      "scalar_self_kernel_s_median": 0.8229152499989141,
+      "scalar_state_s_median": 0.39688412500254344,
+      "self_kernel_max_abs_error": 2.6645352591003757e-15,
+      "self_kernel_speedup": 15.060639959238921,
+      "state_max_abs_error": 7.108895957933346e-16,
+      "state_speedup": 7.5276214920547435
+    }
+  ],
+  "seed": 20260710,
+  "source_scope": "deterministic synthetic normal inputs; no research rows or outcomes",
+  "status": "synthetic_pre_fit_performance_and_equivalence_benchmark",
+  "uv_lock_sha256": "6b3fc5c79950d5fdfc70d7b0dfda62bae207a441a4610d9504b67bab20edbb99"
+}

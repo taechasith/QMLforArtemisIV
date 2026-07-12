@@ -1,5 +1,6 @@
 {
   "calibration_rows_read": 0,
+  "campaign_refinement": "d006_candidate_pending_human_acceptance",
   "candidates_per_decision_set": 5,
   "columns_in_model_contract": 39,
   "decision_sets": 7800,
@@ -45,6 +46,7 @@
     }
   ],
   "gate4_checksums_verified": 5,
+  "research_fit_authorized": false,
   "rows": 39000,
   "rows_by_fidelity": {
     "F0": 6000,
@@ -65,7 +67,7 @@
     "G11": 3250,
     "G12": 3250
   },
-  "runner_status": "d005_candidate_pending_human_acceptance",
+  "runner_status": "d005_gate5_runner_accepted",
   "seed_rows": 300,
   "split": "development",
   "status": "pass",

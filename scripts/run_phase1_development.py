@@ -11,6 +11,7 @@ from openqfuel.gate5 import (
     execute_trial,
     gate5_preflight,
     initial_execution_plan,
+    validate_development_output_path,
     write_csv_rows,
 )
 
@@ -35,6 +36,11 @@ def parse_args() -> argparse.Namespace:
         "execute-trial", help="Run one accepted, resumable development CV task"
     )
     execute.add_argument("trial_id")
+    execute.add_argument(
+        "--seed-index",
+        type=int,
+        help="Frozen family seed index; defaults to the tuning trial order",
+    )
     execute.add_argument("--rung-samples", type=int)
     execute.add_argument("--matched-qubits", type=int)
     execute.add_argument(
@@ -49,6 +55,7 @@ def main() -> None:
     if args.command in {"preflight", "prepare-contract"}:
         audit, folds = gate5_preflight(ROOT)
         if args.command == "prepare-contract":
+            validate_development_output_path(ROOT, args.output_dir)
             args.output_dir.mkdir(parents=True, exist_ok=True)
             write_csv_rows(args.output_dir / "gate5_cv_fold_manifest.csv", folds)
             write_csv_rows(
@@ -63,6 +70,7 @@ def main() -> None:
         print(json.dumps(audit, indent=2, sort_keys=True))
         return
 
+    validate_development_output_path(ROOT, args.output_dir)
     try:
         summary = execute_trial(
             ROOT,
@@ -71,12 +79,14 @@ def main() -> None:
             rung_samples=args.rung_samples,
             matched_qubits=args.matched_qubits,
             view=args.view,
+            seed_index=args.seed_index,
         )
     except Exception as error:
         args.output_dir.mkdir(parents=True, exist_ok=True)
         failure = {
             "status": "failed",
             "trial_id": args.trial_id,
+            "seed_index": args.seed_index,
             "view": args.view,
             "rung_samples": args.rung_samples,
             "matched_qubits": args.matched_qubits,

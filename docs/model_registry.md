@@ -1,8 +1,8 @@
 # Phase 1 Model Registry
 
-Version: 0.3.2
+Version: 0.3.3
 Prepared: 2026-07-12
-Status: Gate 4 accepted; D004 diagnostics integrated; D005 residual and fold corrections pending acceptance; no research model fitted
+Status: Gate 4 accepted; D004 diagnostics integrated; D005 accepted; D006 campaign/control candidate pending acceptance; no research model fitted
 
 ## Registered candidates
 
@@ -120,9 +120,27 @@ a one-hot or PCA component from being mistaken for correction delta-v.
 
 All preprocessing and PCA objects are new per CV fold and are fitted only on
 that fold's selected training rows. A01 and compressed C05 are interpretation
-views at 4, 6, and 8 PCA dimensions. Their 30 existing trial orders cycle
-evenly across those dimensions, so no new hyperparameter trial is added. QML
-successive halving preserves at least one eligible trial per required qubit
-count before filling remaining slots by rank. Interpretation views remain
-ineligible to add a candidate winner. These rules are executable but research
-fitting remains blocked until D005 is accepted.
+views at 4, 6, and 8 PCA dimensions. D006 repeats their 30 existing trial
+orders at every dimension, so no new hyperparameter trial is added. Controls
+advance independently within each dimension, while the exact same-index view
+also follows each surviving QML trial. QML successive halving preserves at
+least one eligible trial per required qubit count before filling remaining
+slots by rank. Interpretation views remain ineligible to add a candidate
+winner. D005 was accepted on 2026-07-12; the D006 execution-only conformance
+refinement remains blocked pending explicit human acceptance before fitting.
+
+## Proposed D006 execution roles
+
+The 450-task first stage contains 270 candidate tasks and 180 control views.
+The extra views do not change any of the 30 frozen A01 or C05 hyperparameter
+rows. Each QML result receives a control with the same fold, selected rows,
+rung, PCA dimension, and seed index. Separately ranked per-dimension controls
+prevent an unfavorable fixed-index control from being mistaken for the
+strongest classical explanation of a QML result. Both roles are reported, and
+neither can become a tenth candidate finalist.
+
+The generated registry retains effective qubit dimension in its identity, so
+one A01 or compressed-C05 trial selected at multiple dimensions cannot be
+collapsed. Only signed, eligible completed seed rows are registered. The
+source-bound campaign audit and mandatory D004 claim-boundary diagnostic
+package must be complete before a technical Gate 5 pass can be reported.

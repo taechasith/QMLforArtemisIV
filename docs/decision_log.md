@@ -598,8 +598,9 @@ payloads remain absent and locked.
 ### Deviation D005 - Gate 5 runner scientific correction
 
 Date opened: 2026-07-12
-Status: **Candidate frozen; human acceptance required before research fitting**
-Authority requested: Human research lead
+Date accepted: 2026-07-12
+Status: **Accepted; development-only research fitting authorized**
+Authority: Human research lead
 
 Original rule:
 
@@ -609,7 +610,7 @@ It did not freeze the exact group-to-fold map, row-hash namespace, weighting of
 unequal folds, or the executable mapping from a transformed matrix to the
 physical low-fidelity baseline.
 
-Proposed revised rule:
+Accepted revised rule:
 
 - Assign G01-G12 by deterministic greedy balance of frozen uncertainty family and trajectory family, with master-seeded SHA-256 tie breaks and no outcomes.
 - Select nested training rows with `SHA-256(master_seed|gate5_learning_row_v1|scenario_id)` inside each training fold.
@@ -659,8 +660,83 @@ values are not inputs to the final assignment. The final proposed folds still
 show substantial 5.0%-45.0% feasibility variation, which is retained as real
 group heterogeneity rather than further tuning folds to outcomes.
 
+Human decision:
+
+The human research lead accepted D005 after the candidate was published at
+commit `80ae35d`. Acceptance authorizes development-only fitting under the
+corrected runner. It does not authorize calibration use, final-test generation
+or access, the Gate 5 algorithm-trigger outcome, or Gate 6.
+
+Consequence:
+
+The research-fit guard is enabled only for the accepted development split.
+All formal task checkpoints must name the clean post-acceptance source commit,
+and calibration/final-test read counts must remain zero.
+
+### Deviation D006 - Pre-fit campaign and matched-control conformance refinement
+
+Date opened: 2026-07-12
+Status: **Candidate frozen; explicit human acceptance required before fitting**
+Authority requested: Human research lead
+
+Original rule:
+
+The D005 candidate generated 330 first-stage tasks. A01 and compressed C05
+cycled their 30 trial orders over 4/6/8 dimensions, ten trials per dimension,
+and the single-task executor did not yet orchestrate successive halving or the
+selected-configuration 20-seed stage.
+
+Proposed revised rule:
+
+- Repeat each frozen A01 and compressed-C05 hyperparameter trial at every required 4/6/8 PCA dimension. These are 180 diagnostic execution views, not new tuning trials, producing 450 first-stage tasks in total.
+- Advance A01 and compressed C05 independently within each dimension so the interpretation control remains tuned, while also carrying the exact same-index control for every surviving QML task.
+- Bind every rung, selection, and 20-seed authorization to immutable source and parent-stage digests; block selection from incomplete work and preserve terminal task failures without silent retry.
+- Resolve the selected configuration's existing family seed indices 1-20 explicitly; no seed, model family, parameter value, sample rung, or ranking budget is added.
+- Reject campaign, experiment, and direct-run output paths beneath the separately locked final-payload root before creating any lock or failure artifact.
+- Require a source-bound, failure-free campaign audit before the technical trigger can pass. D004 feature-scale, entanglement-removal, random-feature, parameter-count, sample/rung, and no-reference checks are mandatory report-only diagnostics; even a technical pass remains pending explicit human interpretation.
+- Distinguish a valid scientific `FAIL` from `UNAVAILABLE` evidence. Missing, invalid, source-mismatched, or diagnostically incomplete evidence requires repair and cannot be called a negative benchmark result.
+- Vectorize mathematically identical statevector batches to keep the proposed campaign inside the frozen wall-time ceiling. The recorded state/feature/kernel difference is at most `2.67e-15`, with no change to circuits, objectives, optimizers, seeds, or predictions beyond floating-point roundoff.
+
+Reason:
+
+A post-acceptance, pre-fit audit found that independently cycling control
+dimensions matched the QML dimension at the same trial/seed index for only
+18/30 Q01, 14/30 Q02, and 12/30 Q03 trials. It also found that a low-level
+single-task command could not enforce rung advancement, immutable selection,
+20-seed reruns, or strong independently tuned controls. Executing the 330-row
+plan would therefore contradict the accepted matched-control claim.
+
+Outcome visibility and likely bias:
+
+No research model had been fitted and no model metric was visible. No
+calibration or final-test row was read. The expanded mapping uses only the
+frozen tuning manifest's trial order and qubit field; it cannot respond to a
+model outcome. Candidate families, hyperparameter trials, folds, row hashes,
+targets, thresholds, objectives, retention counts, and final locks do not
+change. Static task counts fit inside the accepted ceilings, but the full
+campaign is not authorized from counts alone: the frozen C04-T02 full-data
+view and Q01-T04/Q02-T07/Q03-T14 plus their matched controls at the 1,024-row
+rung must establish a runtime/storage projection with 25% margin before
+scale-up. These outcome-blindly chosen checkpoint tasks are separately
+authorized; their scores do not enter halving or export unless the identical
+task is later authorized by its preceding-rung ranking. The projection uses
+end-to-end task time rather than fit/predict windows alone. The ceiling remains
+1,275 formal tasks and conservatively counts all ten qualification tasks again,
+without overlap credit, for at most 1,285 executions in resource projections.
+
+Controls and evidence:
+
+- `gate5_initial_execution_plan.csv` is regenerated with 270 candidate tasks and 180 non-winning control views.
+- `openqfuel.gate5_campaign` enforces stage authorization, exact control matching, independent control advancement, task validation, atomic locks, terminal-state selection, and formal 20-seed coverage.
+- Result CSV digests, task signatures, source commit, development scope, selection identity, control dimension/view, and zero locked-split reads are revalidated before reporting; malformed or incomplete evidence produces a negative report rather than a partial pass.
+- Statevector equivalence tests cover 4-12 qubits, one to three layers, kernels, features, finite shots, objectives, and numerical gradients.
+- Formal fitting still requires a clean tracked tree and leaves calibration and both final-test splits untouched.
+
 Decision requested:
 
-Accept D005 to enable development-only fitting under this runner, or reject it
-and keep Gate 5 model fitting blocked while the contract is revised.
-
+Accept D006 to let the 450-task first-stage contract supersede only the D005
+execution-plan mapping, or reject it and revise the matched-control campaign
+before any fit. D006 does not create another candidate family or increase the
+30-trial hyperparameter search. The later Gate 5 trigger decision remains a
+separate human accept/reject/revise decision after development-only evidence
+is published.

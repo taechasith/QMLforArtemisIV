@@ -24,12 +24,39 @@ strict audit. The F1 and F2 audits retain no-reference decision sets as
 development limitations; they do not retune candidates after seeing those
 rates. D004 then hardened Gate 5 before any research model fit by adding
 source-vetting, QML diagnostic, matched-control, regime-reporting, and
-figure-record requirements. The D005 Gate 5 runner candidate now enforces
+figure-record requirements. The D005 Gate 5 runner, accepted by the human
+research lead on 2026-07-12 from candidate commit `80ae35d`, enforces
 fold-local preprocessing/PCA, deterministic whole-group CV, nested matched
 samples, explicit physical residual baselines, and fail-closed split access.
-Its research-fit switch remains off pending human acceptance of D005. No fitted
-research model or benchmark result exists yet.
+D006 now proposes a pre-fit campaign repair after an audit found that the
+original cycled control dimensions were not exact matches for many QML trials.
+All 30 frozen A01 and compressed-C05 trials now repeat at 4/6/8 dimensions,
+with independently advanced strong controls and exact same-index QML controls;
+no hyperparameter trial or candidate family would be added. Because D006 is a
+material post-acceptance refinement, fitting remains paused pending explicit
+human acceptance. No research model or scientific benchmark result exists yet.
 Both final-test splits remain locked and require a separate unlock commit.
+
+The D006 candidate preflight again verifies 39,000 development rows and 7,800
+complete decision sets with zero calibration/final-test reads. Its exact-lock
+validation passes 127 tests and 667 subtests; Ruff is clean. Recorded batched
+state/feature/kernel outputs are within `2.67e-15` of the scalar path and reduce
+the measured 8-qubit/3-layer batch cost by roughly 7.5-19.4x depending on
+operation and rung.
+The campaign remains fail-closed until D006 is explicitly accepted, after
+which a bounded checkpoint using the frozen C04 trial plus the 1,024-row QML
+and matched-control views must pass the 25%-margin compute and storage
+projection before full scale-up. It uses end-to-end task timing, keeps
+preselection checkpoint scores outside ranking unless independently advanced,
+rejects every development output beneath the final-payload root, and preserves
+recoverable coordinator failures without freezing a stale scale-up decision.
+Final reporting revalidates evidence digests, task signatures, source commit,
+selection/control identity, development scope, and zero locked-split reads.
+D004 feature-scale, entanglement, random-feature, parameter-count, sample/rung,
+and no-reference checks are mandatory report-only diagnostics; a technical
+trigger pass still requires the human lead's separate interpretation and
+decision. Invalid or incomplete evidence is reported as `UNAVAILABLE` and
+requires repair; it is never relabeled as a negative QML result.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
@@ -87,7 +114,11 @@ through a dated deviation record.
 - data/processed/reporting/gate5_literature_hardening_matrix.csv: D004 source-to-control matrix for RFIG-019.
 - data/processed/reporting/gate5_cv_fold_manifest.csv: label-agnostic D005 whole-group CV assignment for RFIG-020.
 - data/processed/reporting/gate5_preflight_audit.json: development-only Gate 5 data and lock audit.
-- data/processed/reporting/gate5_initial_execution_plan.csv: all 330 first-stage development tasks, blocked until D005 acceptance.
+- data/processed/reporting/gate5_initial_execution_plan.csv: all 450 proposed D006 first-stage tasks (270 candidates and 180 non-winning matched-control views), blocked pending acceptance.
+- scripts/run_gate5_campaign.py: immutable, resumable successive-halving and 20-seed Gate 5 scheduler.
+- data/processed/reporting/gate5_statevector_batch_benchmark.json: locked-environment synthetic equivalence/runtime record for D006, bound to QML-source, benchmark-script, and lockfile hashes.
+- src/openqfuel/gate5_reporting.py: source-bound 20-seed, five-fold, matched-control trigger evaluator, D004 diagnostic auditor, and negative-result-safe report exporter.
+- scripts/make_gate5_result_figures.py: predeclared RFIG-021 through RFIG-023 development-result figures.
 - scripts/fetch_public_data.py: immutable-source downloader.
 - scripts/extract_artemis2_oem.py: safe nested-archive extraction and hashing.
 - scripts/audit_artemis2_oem.py: OEM qualification and revision audit.

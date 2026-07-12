@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.2
-Status: Gates 1-4 accepted; Gate 5 data qualified; D005 runner candidate frozen pending human acceptance before fitting
+Version: 0.6.3
+Status: Gates 1-4 accepted; Gate 5 data qualified; D005 accepted; D006 campaign candidate pending human acceptance
 Prepared: 2026-07-10  
 Updated: 2026-07-12
-Recommended next decision: Accept or reject D005 before the first research fit; later accept or reject the algorithm trigger from development-only evidence
+Recommended next decision: Accept, reject, or revise D006 before the first research fit; later decide the Gate 5 trigger from development-only evidence
 
 ## 1. Proposed title
 
@@ -382,12 +382,14 @@ paired with uncertainty estimation and a deterministic feasibility projection.
 Development is authorized only when all of the following hold on development
 data:
 
-1. A QML candidate is within 5 percent of the best classical primary error, or
-   is statistically non-inferior under the Gate 2 margin.
-2. It shows a preregistered advantage in limited-data, noise, or OOD testing,
-   or its residual errors are demonstrably complementary.
-3. The opportunity is not explained solely by different preprocessing,
-   parameter count, or tuning effort.
+1. A QML candidate's 20-seed mean primary error is within 5 percent of the
+   strongest classical candidate and the upper 95% paired-bootstrap bound of
+   its seed-level relative gap is also no greater than 5 percent.
+2. A residual regime registered before fitting is reproducibly complementary
+   across all five grouped folds and remains favorable after Holm correction.
+3. The regime is not explained by different preprocessing, PCA dimension,
+   parameter count, tuning effort, A01 random features, or compressed C05, and
+   all 20 QML seed runs remain eligible.
 
 The new model must beat:
 
@@ -717,11 +719,38 @@ training fold, scores pooled out-of-fold error while retaining fold summaries,
 and gives C06/Q03 an explicit low-fidelity baseline in target-standardized
 units. Q03 removes that appended baseline from circuit encoding before adding
 the predicted residual. A01 and compressed C05 use the same row IDs, fold,
-rung, PCA dimension, and seed index as their QML view; their existing 30 trial
-orders cycle evenly across 4/6/8 dimensions. QML halving retains at least one
-eligible trial per required qubit count at each rung. Research execution is
-blocked in code until the human research lead accepts D005. No calibration or
-final-test row was read while preparing or auditing this candidate.
+rung, PCA dimension, and seed index as their QML view. QML halving retains at
+least one eligible trial per required qubit count at each rung. The human
+research lead accepted D005 on 2026-07-12 after publication of the candidate
+at commit `80ae35d`. No calibration or final-test row was read while preparing,
+auditing, or accepting this candidate.
+
+Deviation D006 was opened before the first research fit after a final
+execution audit found that D005's independently cycled control dimensions did
+not match every QML trial at the same seed index. D006 repeats each of the 30
+frozen A01 and compressed-C05 hyperparameter trials at all 4/6/8 dimensions,
+giving 180 non-winning control views and 450 first-stage tasks. Controls
+advance independently within dimension and exact same-index views also follow
+QML survivors. It adds no hyperparameter trial, candidate family, fold, row,
+seed, threshold, or final-test access.
+
+D006 proposes immutable rung/selection authorizations, exact 20-seed
+selected-configuration reruns, terminal-failure preservation, task locks, and
+a mathematically equivalent vectorized statevector batch. Recorded
+state/feature/kernel differences are at most `2.67e-15`; circuits, objectives,
+optimizers, and seeds are unchanged. Before scale-up, frozen C04-T02 runs at
+its full-data subset and Q01-T04/Q02-T07/Q03-T14 plus their matched controls
+run at the 1,024-row rung; a 25%-margin projection must remain inside every
+Gate 2 ceiling. Checkpoint scores remain outside ranking unless the identical
+task later advances under the frozen halving rule, and the projection uses
+end-to-end task time. Source-bound, failure-free evidence is required for a
+technical trigger pass. D004 claim-boundary diagnostics are mandatory
+report-only checks pending human interpretation, so a technical pass does not
+itself authorize algorithm development. The maximum formal task count remains
+1,275; resource projections conservatively add all ten qualification tasks
+without overlap credit, for at most 1,285 executions inside those ceilings.
+Invalid or incomplete evidence yields `UNAVAILABLE` and repair, not a negative
+scientific result.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:
