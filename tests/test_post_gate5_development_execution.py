@@ -27,6 +27,7 @@ from openqfuel.post_gate5_reporting import evaluate_exploratory_signal
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs/post_gate5_development_execution.yaml"
 C1_CONFIG = ROOT / "configs/post_gate5_d011_c1_launcher_correction.yaml"
+C2_CONFIG = ROOT / "configs/post_gate5_d011_c2_hash_correction.yaml"
 
 
 def _config() -> dict:
@@ -35,6 +36,10 @@ def _config() -> dict:
 
 def _c1_config() -> dict:
     return yaml.safe_load(C1_CONFIG.read_text(encoding="utf-8"))
+
+
+def _c2_config() -> dict:
+    return yaml.safe_load(C2_CONFIG.read_text(encoding="utf-8"))
 
 
 def _context(*, constant_compressed: bool = False) -> FoldContext:
@@ -219,6 +224,39 @@ def test_d011_c1_launcher_import_is_package_safe() -> None:
     assert namespace["nystrom_features"].__module__ == (
         "openqfuel.post_gate5_preflight_runner"
     )
+
+
+def test_d011_c2_freezes_raw_blob_hash_correction() -> None:
+    config = _c2_config()
+    assert config["decision_id"] == "D011-C2"
+    assert config["status"] == "accepted_raw_blob_hash_correction_and_one_preflight"
+    assert config["authority"]["corrected_decision"] == "D011-C1"
+    assert config["authority"]["authorized_preflight_attempts"] == 1
+    assert config["authority"]["research_data_fitting_authorized"] is False
+    assert config["authority"]["campaign_execution_authorized"] is False
+    assert config["authorized_correction"]["root_cause"] == (
+        "non_raw_git_blob_dependency_hashes"
+    )
+    assert config["authorized_correction"]["scientific_workload_change_authorized"] is False
+    assert config["locks"]["allowed_data_scope"] == "synthetic"
+    assert config["locks"]["development_rows_read"] == 0
+    assert config["locks"]["calibration_rows_read"] == 0
+    assert config["locks"]["final_test_rows_read"] == 0
+    assert config["unchanged_preflight_contract"]["training_rows"] == 1024
+    assert config["unchanged_preflight_contract"]["validation_rows"] == 9750
+    assert config["unchanged_preflight_contract"]["total_worst_fold_bundle_units"] == 1220
+    assert config["source_binding"]["output"].endswith(
+        "post_gate5_d011_c2_fold_shape_preflight.json"
+    )
+    expected_hashes = {
+        "d011_config": "11c086c8ee5ef5b01cd3512b8e476a7d4e303208410291b0b91fce745014edd4",
+        "d011_stop_evidence": "75c26237eb7ea22965029772acbade6ba8e48ec45ce6353775ed169e46cfae09",
+        "d011_c1_config": "8efb65f12330004442515a5c65c13ee6b1f94bbee017abd66e9c55b743674e0f",
+        "d011_c1_stop_evidence": "e33908dd7b7b2767c1e88130dc34fb2c693dd5dd34ba69d422eeacedc9be338a",
+    }
+    for key, expected in expected_hashes.items():
+        assert config["accepted_dependencies"][key]["git_blob_sha256"] == expected
+    assert config["outcome"]["current_status"] == "accepted_not_yet_run"
 
 
 def test_fold_shape_projection_and_admission_are_conservative() -> None:

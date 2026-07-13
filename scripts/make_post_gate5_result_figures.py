@@ -26,6 +26,9 @@ PREFLIGHT = ROOT / "data/processed/reporting/post_gate5_d011_fold_shape_prefligh
 C1_PREFLIGHT = (
     ROOT / "data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json"
 )
+C2_PREFLIGHT = (
+    ROOT / "data/processed/reporting/post_gate5_d011_c2_fold_shape_preflight.json"
+)
 FUTURE = ROOT / "data/processed/reporting/post_gate5_future_research_discussion.csv"
 OUTPUT = ROOT / "artifacts/research_figures"
 REGISTRY = OUTPUT / "figure_registry.csv"
@@ -86,10 +89,15 @@ def _float(value: Any) -> float | None:
 
 
 def _validated_preflight() -> dict[str, Any]:
-    source_path = C1_PREFLIGHT if C1_PREFLIGHT.is_file() else PREFLIGHT
+    if C2_PREFLIGHT.is_file():
+        source_path = C2_PREFLIGHT
+    elif C1_PREFLIGHT.is_file():
+        source_path = C1_PREFLIGHT
+    else:
+        source_path = PREFLIGHT
     preflight = _json(source_path)
     if (
-        preflight.get("decision_id") not in {"D011", "D011-C1"}
+        preflight.get("decision_id") not in {"D011", "D011-C1", "D011-C2"}
         or preflight.get("status") not in {"PASS", "STOP"}
         or int(preflight.get("development_rows_read", -1)) != 0
         or int(preflight.get("calibration_rows_read", -1)) != 0
@@ -703,11 +711,7 @@ def draw_rfig029(decision: Mapping[str, Any]) -> tuple[Path, Path] | None:
 def draw_preflight_stop_rfig029(
     preflight: Mapping[str, Any],
 ) -> tuple[Path, Path]:
-    step_id = (
-        "D011_C1_fold_shape_preflight"
-        if preflight.get("decision_id") == "D011-C1"
-        else "D011_fold_shape_preflight"
-    )
+    step_id = f"{str(preflight.get('decision_id')).replace('-', '_')}_fold_shape_preflight"
     records = [
         row for row in _rows(FUTURE) if row["step_id"] == step_id
     ]

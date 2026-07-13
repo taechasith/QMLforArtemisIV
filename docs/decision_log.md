@@ -1239,3 +1239,44 @@ successor correction must verify raw dependency hashes before acceptance while
 leaving the D011 scientific workload unchanged. RFIG-029 is updated
 cumulatively. RFIG-031 remains absent because corrected admission was not
 reached.
+
+### D011-C2 accepted - raw-blob hash correction and one unchanged preflight attempt
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Initial status: **Accepted; hash smoke test and one corrected preflight pending**
+Authority: Human research lead supported D011-C2 after review of the D011-C1 hash mismatch, docs, and evidence
+
+Finding before correction:
+
+D011-C1 fixed the launcher import and passed the import smoke test, but the
+formal command stopped while checking C1's accepted dependency hashes. The
+actual raw Git blobs for the D011 config, D011 STOP evidence, and D011 launcher
+script were stable, but their C1-pinned hashes had been computed through a
+non-raw text path. This was a governance-metadata failure before the synthetic
+workload, not QML or resource-admission evidence.
+
+Decision:
+
+- Preserve D011 and D011-C1 STOP evidence as immutable.
+- Replace only the prospective correction authority with independently verified
+  raw Git-blob SHA-256 dependency hashes.
+- Require a clean-source hash-consistency smoke test and direct-file import
+  smoke test before running the preflight.
+- Run at most one unchanged D011-shaped preflight attempt with the same 1,024
+  training rows, 9,750 validation rows, q=8/two-layer benchmark, controls,
+  1,220 bundle-unit accounting, 25% margin, and laptop ceilings.
+- Open no development payload under D011-C2. A PASS can support a later human
+  decision on campaign resumption only; it does not itself authorize campaign
+  execution.
+- If the smoke tests or preflight stop, record the stop and future-only
+  improvement without retrying or reducing the active design.
+
+Reporting:
+
+D011-C2 writes separate evidence at
+`data/processed/reporting/post_gate5_d011_c2_fold_shape_preflight.json`.
+RFIG-031 records reached corrected admission. RFIG-029 is updated only if a
+governed D011-C2 stop occurs. RFIG-026 through RFIG-028 remain unauthorized
+until a later decision permits and the campaign actually reaches development
+evidence.

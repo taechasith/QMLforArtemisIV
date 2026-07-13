@@ -28,7 +28,7 @@ from openqfuel.post_gate5_campaign import (  # noqa: E402
     evaluate_fold_shape_admission,
     git_blob_sha256,
     project_fold_shape_resources,
-    verify_d011_c1_launcher_correction,
+    verify_d011_preflight_correction,
     verify_d011_authority,
 )
 from openqfuel.post_gate5_preflight_runner import (  # noqa: E402
@@ -50,9 +50,10 @@ def _record_resource_stop(
     path = ROOT / str(config["failure_policy"]["future_discussion_register"])
     with path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
-    step_id = "D011_C1_fold_shape_preflight"
+    decision_id = str(correction["decision_id"])
+    step_id = f"{decision_id.replace('-', '_')}_fold_shape_preflight"
     if any(row["step_id"] == step_id for row in rows):
-        raise PermissionError("D011-C1 fold-shape STOP was already recorded")
+        raise PermissionError(f"{decision_id} fold-shape STOP was already recorded")
     fields = list(rows[0])
     identifiers = [
         int(row["record_id"].split("FR")[-1])
@@ -67,7 +68,7 @@ def _record_resource_stop(
     ]
     row = {
         "record_id": f"P001-FR{max(identifiers, default=0) + 1:03d}",
-        "recorded_date": "2026-07-13",
+        "recorded_date": "2026-07-14",
         "track_id": "shared",
         "step_id": step_id,
         "terminal_status": "resource_stop",
@@ -136,7 +137,7 @@ def main() -> None:
         action="fold_shape_preflight",
         require_fold_shape_pass=False,
     )
-    correction = verify_d011_c1_launcher_correction(ROOT, source_commit)
+    correction = verify_d011_preflight_correction(ROOT, source_commit)
     benchmark = _benchmark_contract(config)
     runner_config = {"benchmark": benchmark}
     rng = np.random.default_rng(int(benchmark["seed"]))
@@ -317,8 +318,8 @@ def main() -> None:
     }
     payload = {
         "schema_version": "0.1.0",
-        "decision_id": "D011-C1",
-        "corrects_decision_id": "D011",
+        "decision_id": str(correction["decision_id"]),
+        "corrects_decision_id": str(correction["authority"]["corrected_decision"]),
         "unchanged_preflight_contract": "D011 largest-fold synthetic compute admission",
         "attempt": 1,
         "protocol_id": "P001",

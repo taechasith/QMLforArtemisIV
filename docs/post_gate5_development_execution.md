@@ -162,3 +162,10 @@ The D011-C1 smoke test passed, but the formal preflight stopped during
 correction-authority hash validation before the synthetic workload or resource
 admission. D011-C1 is terminal and now also requires a new prospective human
 decision before any hash-corrected attempt.
+
+D011-C2 was accepted on 2026-07-14 after review of the D011-C1 hash mismatch.
+It corrects only the pinned dependency hashes using raw Git-blob bytes, adds a
+hash-consistency smoke test, and permits one unchanged corrected fold-shape
+preflight attempt with separate evidence. Development campaign execution
+remains locked unless a later human decision explicitly authorizes resumption
+after a D011-C2 PASS.

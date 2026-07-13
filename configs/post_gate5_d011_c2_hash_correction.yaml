@@ -1,0 +1,116 @@
+schema_version: "0.1.0"
+decision_id: "D011-C2"
+protocol_id: "P001"
+status: "accepted_raw_blob_hash_correction_and_one_preflight"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+acceptance_basis: "human research lead supported D011-C2 after review of the D011-C1 raw Git-blob hash mismatch"
+
+authority:
+  scope: "raw Git-blob hash metadata correction, hash-consistency smoke test, and one unchanged D011 largest-fold synthetic preflight attempt"
+  corrected_decision: "D011-C1"
+  corrected_failure_stage: "d011_c1_authority_dependency_hash_check"
+  authorized_preflight_attempts: 1
+  hash_consistency_smoke_test_required_before_preflight: true
+  import_smoke_test_required_before_preflight: true
+  research_data_fitting_authorized: false
+  campaign_execution_authorized: false
+  reporting_authorized: true
+  next_decision_if_pass: "human lead must decide whether to resume the D011 development-only campaign authority"
+  action_if_stop: "record the governed stop and future-research discussion; do not retry or reduce the active design"
+
+accepted_dependencies:
+  d011_source_commit: "65dd687344b5f578282cc1fe8373bd9d6d2b2583"
+  d011_config:
+    path: "configs/post_gate5_development_execution.yaml"
+    source_commit: "65dd687344b5f578282cc1fe8373bd9d6d2b2583"
+    git_blob_sha256: "11c086c8ee5ef5b01cd3512b8e476a7d4e303208410291b0b91fce745014edd4"
+    must_match_current: true
+  d011_stop_evidence:
+    path: "data/processed/reporting/post_gate5_d011_fold_shape_preflight.json"
+    source_commit: "65dd687344b5f578282cc1fe8373bd9d6d2b2583"
+    git_blob_sha256: "75c26237eb7ea22965029772acbade6ba8e48ec45ce6353775ed169e46cfae09"
+    must_match_current: true
+  d011_c1_config:
+    path: "configs/post_gate5_d011_c1_launcher_correction.yaml"
+    source_commit: "e953e59acabfd6438842ace53233a646b45a3443"
+    git_blob_sha256: "8efb65f12330004442515a5c65c13ee6b1f94bbee017abd66e9c55b743674e0f"
+    must_match_current: true
+  d011_c1_stop_evidence:
+    path: "data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json"
+    source_commit: "e953e59acabfd6438842ace53233a646b45a3443"
+    git_blob_sha256: "e33908dd7b7b2767c1e88130dc34fb2c693dd5dd34ba69d422eeacedc9be338a"
+    must_match_current: true
+  future_research_register_through_fr003:
+    path: "data/processed/reporting/post_gate5_future_research_discussion.csv"
+    source_commit: "e953e59acabfd6438842ace53233a646b45a3443"
+    git_blob_sha256: "84da3db40841364da8438c1051428a44dcf5f951b874f5f4cf233f9afd53e414"
+    must_match_current: true
+
+authorized_correction:
+  root_cause: "non_raw_git_blob_dependency_hashes"
+  implementation: "replace D011-C1 text-pipe-derived dependency hashes with independently verified raw Git-blob SHA-256 values and require a hash-consistency smoke test"
+  hash_consistency_smoke_test_command: "uv run --frozen python -c \"from pathlib import Path; from openqfuel.post_gate5_campaign import clean_source_commit, verify_d011_c2_hash_correction; commit, _ = clean_source_commit(Path('.')); verify_d011_c2_hash_correction(Path('.'), commit)\""
+  import_smoke_test_command: "uv run --frozen python -c \"import runpy; ns = runpy.run_path('scripts/run_post_gate5_fold_shape_preflight.py', run_name='__d011_c2_import_smoke__'); assert callable(ns['main'])\""
+  preflight_command: "uv run --frozen python scripts/run_post_gate5_fold_shape_preflight.py"
+  scientific_workload_change_authorized: false
+  benchmark_rows_change_authorized: false
+  fold_or_split_change_authorized: false
+  model_family_change_authorized: false
+  threshold_change_authorized: false
+  seed_change_authorized: false
+  ceiling_change_authorized: false
+
+locks:
+  gate5_result_unchanged: true
+  d006_d007_evidence_immutable: true
+  d008_scientific_design_unchanged: true
+  d009_failure_evidence_immutable: true
+  d010_compute_result_immutable: true
+  d011_scientific_design_unchanged: true
+  d011_stop_evidence_immutable: true
+  d011_c1_stop_evidence_immutable: true
+  no_model_refit_authorized: true
+  no_threshold_change_authorized: true
+  no_seed_or_split_change_authorized: true
+  allowed_data_scope: "synthetic"
+  development_rows_read: 0
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  hardware_jobs_submitted: 0
+  gpu_execution_authorized: false
+  gate6_runs: 0
+  gate6_authorized: false
+
+unchanged_preflight_contract:
+  inherited_config: "configs/post_gate5_development_execution.yaml"
+  training_rows: 1024
+  validation_rows: 9750
+  qubits: 8
+  layers: 2
+  total_worst_fold_bundle_units: 1220
+  projection_margin: 1.25
+  ceiling_policy: "same D011 CPU, wall-clock, artifact, memory, disk, and zero-GPU ceilings"
+  output_attempt: "data/processed/reporting/post_gate5_d011_c2_fold_shape_preflight.json"
+
+source_binding:
+  output: "data/processed/reporting/post_gate5_d011_c2_fold_shape_preflight.json"
+  additional_sources:
+    d011_c2_correction_config: "configs/post_gate5_d011_c2_hash_correction.yaml"
+    preflight_helper_source: "src/openqfuel/post_gate5_preflight_runner.py"
+
+reporting:
+  preflight_figure: "RFIG-031"
+  failure_figure: "RFIG-029"
+  figure_generator: "scripts/make_post_gate5_result_figures.py"
+  missing_value_rule: "missing or unauthorized results remain absent and are never plotted as zero"
+  claim_boundary: "synthetic hash-corrected compute admission only; not QML performance, research-data fitting, Gate 5 reinterpretation, hardware, or Gate 6 evidence"
+
+outcome:
+  current_status: "accepted_not_yet_run"
+  hash_consistency_smoke_test_status: "pending"
+  import_smoke_test_status: "pending"
+  preflight_status: "pending"
+  source_commit: "pending_clean_source_commit"
+  result: "data/processed/reporting/post_gate5_d011_c2_fold_shape_preflight.json"
+  retry_authorized_after_attempt: false

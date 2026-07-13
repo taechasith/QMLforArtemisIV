@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.17
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-C1 ended in an authority-hash technical STOP; Gate 6 unauthorized
+Version: 0.6.18
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-C2 raw-blob hash correction accepted for one unchanged preflight attempt; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: Decide whether to open a new prospective hash-corrected launcher-authority decision; do not retry D011-C1 or open development payloads; Gate 6 remains unauthorized
+Recommended next action: Run the D011-C2 hash-consistency smoke test, import smoke test, and one unchanged corrected fold-shape preflight from clean source; do not open development payloads unless a later human decision authorizes campaign resumption; Gate 6 remains unauthorized
 
 ## 1. Proposed title
 
@@ -940,6 +940,17 @@ final-test rows, hardware/GPU work, and Gate 6 were not reached. P001-FR003
 records a future-only recommendation to validate raw dependency hashes before
 any successor correction. D011-C1 is terminal and cannot be retried without a
 new prospective human decision.
+
+D011-C2 was accepted prospectively on 2026-07-14 after reviewing the D011-C1
+hash mismatch, docs, and evidence. It corrects only the dependency hashes by
+using independently verified raw Git-blob SHA-256 values, requires a
+hash-consistency smoke test plus the package import smoke test, and permits one
+unchanged corrected fold-shape preflight attempt. D011-C2 writes separate
+evidence at
+`data/processed/reporting/post_gate5_d011_c2_fold_shape_preflight.json`.
+D011 and D011-C1 STOP evidence remain immutable. D011-C2 does not authorize any
+development payload, calibration/final-test access, hardware/GPU work, Gate 5
+reinterpretation, or Gate 6 work.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:
