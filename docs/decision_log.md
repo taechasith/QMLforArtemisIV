@@ -850,3 +850,115 @@ Consequence:
 - Calibration and final-test data remain locked. Gate 6 remains unauthorized and requires a separate prospective human decision.
 - The D007 report package remains byte-unchanged as the pre-decision evidence snapshot, so its internal `pending_human_accept_reject_or_revise` status is historical rather than the current governance state. `configs/phase1_benchmark.yaml`, this log, and the gate timeline carry the accepted decision.
 - RFIG-001 is updated to record the accepted gate state. RFIG-021 through RFIG-023 remain the unchanged scientific evidence.
+
+### Post-Gate-5 exploratory protocol P001 - Q01b and feasibility-only quantum kernel
+
+Date opened: 2026-07-13
+Status: **Opened prospectively; no experiment authorized**
+Authority: Human research lead
+
+Human decision:
+
+Open a new post-Gate-5 exploratory protocol with `Q01b` projected quantum
+kernel and `FQK` feasibility-only quantum kernel as the only near-term QML
+tests. Quantum reinforcement learning, dynamic circuits, quantum annealing,
+QAOA, new variational QML architectures, larger-qubit circuits, and hardware
+execution remain appendix or future-work topics only.
+
+Reason:
+
+The accepted Gate 5 result is a valid negative result for the preregistered
+development benchmark, but it is not a universal claim that QML cannot work.
+The literature review identified projected quantum kernels and feasibility
+classification as the only near-term QML directions that still map cleanly to
+the original supervised surrogate, grouped-development, matched-control, and
+safety-filter pipeline.
+
+Outcome visibility and likely bias:
+
+The Gate 5 development result is fully visible: Q01 failed the frozen trigger,
+and Q02/Q03 were verified terminally nonadvancing. This creates post-outcome
+bias risk. P001 therefore cannot change the Gate 5 result, refit D006 evidence,
+alter thresholds, unlock calibration/final-test rows, or authorize Gate 6. Any
+future execution must be frozen in a separate pre-result implementation
+decision before any new model output is inspected.
+
+Controls and evidence:
+
+- `docs/post_gate5_exploratory_protocol.md` defines the hard boundaries.
+- `data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv`
+  records near-term versus appendix/future-only scope.
+- `configs/phase1_benchmark.yaml` records zero calibration/final-test access,
+  no Gate 6 authorization, and no D006 refit authorization.
+- RFIG-024 records the protocol boundary for paper reporting.
+
+Consequence:
+
+The next allowed technical step is an implementation freeze for Q01b and FQK
+only. No exploratory model fit, calibration read, final-test read, hardware
+claim, or Gate 6 run is authorized by this entry.
+
+### D008 candidate - post-Gate-5 exploratory implementation freeze
+
+Date prepared: 2026-07-13
+Status: **Candidate pending human acceptance; no implementation or experiment authorized**
+Authority required: Human research lead
+
+Decision requested:
+
+Accept, reject, or revise the exact implementation contract for Q01b projected
+quantum-kernel cost regression and FQK feasibility-only quantum-kernel
+classification. D008 acceptance would authorize implementation and synthetic
+correctness validation only. A separate clean-source execution decision would
+still be required before any development-row fit.
+
+Frozen candidate:
+
+- Use the existing five grouped development folds, fold-local preprocessing,
+  nested hash-selected rung rows, and locked calibration/final boundaries.
+- Reuse one set of 30 exactly balanced projected-state configurations across
+  Q01b and FQK: 4/6/8 qubits, one/two data-reupload layers, feature scales
+  0.5/1/2, entangled/unentangled maps, median-distance gamma multipliers
+  0.25/1/4, and kernel regularization 0.0001/0.01/1.
+- Project each encoded state to Pauli X/Y/Z expectations for every qubit,
+  representing the one-qubit reduced density matrices. Use the frozen RBF on
+  one-RDM Frobenius distances with at most 256 Nyström landmarks.
+- Rank Q01b by robust-cost NRMSE then constrained regret. Rank FQK by Brier
+  score, fixed-threshold recall, AUROC, then precision. The local FQK ID means
+  feasibility-only quantum kernel, not fidelity quantum kernel.
+- Preserve the original 128/256/512/1,024-row successive-halving structure and
+  20 selected-configuration seed indices. Shot/noise views are report-only and
+  cannot rerank or retune.
+- Require C06, A01, compressed C05, and an exact classical RBF-on-PCA control
+  for Q01b; require all frozen selected classical feasibility heads plus the
+  same dequantization controls for FQK.
+- Fit the reference i9-13900HX/32 GiB laptop by sharing projected features,
+  allowing one statevector task, starting classical controls at four workers,
+  and requiring a representative pre-execution benchmark with 25% margin.
+
+Failure-discussion rule:
+
+Every technical failure, resource stop, undefined metric, terminal
+nonadvancement, or scientific negative must be committed with its evidence,
+bounded interpretation, and an improvement suggested for future research.
+Every such suggestion must state `new_protocol_required=true`,
+`active_pipeline_change_authorized=false`, and
+`post_outcome_retry_authorized=false`. The record informs the paper discussion
+but cannot alter, extend, retry, or rescue P001.
+
+Evidence prepared before decision:
+
+- `configs/post_gate5_exploratory.yaml` is the machine-readable freeze
+  candidate.
+- `docs/post_gate5_implementation_freeze.md` is the human-readable contract.
+- `data/processed/reporting/post_gate5_exploratory_trial_manifest.csv` contains
+  30 paired rows, all marked `frozen_not_run`.
+- `data/processed/reporting/post_gate5_future_research_discussion.csv` contains
+  only the required schema header; no outcome exists.
+- RFIG-025 is a pre-execution methods diagram, not performance evidence.
+
+Consequence while pending:
+
+No implementation, synthetic validation, research fit, calibration/final-test
+read, hardware run, larger-qubit run, Gate 5 reinterpretation, or Gate 6 work
+is authorized. Rejection retains the candidate record and runs nothing.

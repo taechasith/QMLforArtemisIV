@@ -1,8 +1,8 @@
 # Frozen Phase 1 Analysis Plan
 
-Version: 0.6.6
+Version: 0.6.8
 Prepared: 2026-07-12
-Status: Gate 5 accepted with technical outcome FAIL; proposed new algorithm not authorized; Gate 6 unauthorized
+Status: Gate 5 accepted with technical outcome FAIL; D008 exploratory implementation freeze candidate pending; Gate 6 unauthorized
 
 ## Analysis sequence
 
@@ -135,6 +135,48 @@ a technical `FAIL`: Q01 mean NRMSE is 0.6466 versus 0.00874 for C06, with zero
 qualifying regimes. The human research lead accepted this unchanged result on
 2026-07-13. Gate 5 is closed, the proposed new algorithm is not authorized,
 and no calibration, final-test, refit, or Gate 6 access is unlocked.
+
+## Post-Gate-5 exploratory protocol P001
+
+P001 opens a prospective exploratory branch after the accepted Gate 5 negative
+result. It is documented in `docs/post_gate5_exploratory_protocol.md` and
+summarized by RFIG-024. It does not reopen Gate 5 and does not authorize
+execution.
+
+Only two near-term QML designs may be prepared:
+
+- `Q01b` projected quantum kernel: same original development rows, grouped
+  folds, PCA discipline, matched controls, robust-cost NRMSE, and
+  feasibility-constrained regret, with projected-feature diagnostics replacing
+  the failed Q01 state-overlap readout.
+- `FQK` feasibility-only quantum kernel: a classifier for
+  `independently_propagated_feasible`, evaluated on development-fold AUROC,
+  Brier score, recall/precision at the frozen 0.5 threshold, and safety-filter
+  diagnostics. It cannot claim cost-regression improvement.
+
+Quantum reinforcement learning, dynamic circuits, quantum annealing, QAOA, new
+variational families, larger-qubit circuits, and hardware runs remain appendix
+or future-work concepts only. Any implementation or run requires a separate
+pre-result acceptance record specifying feature maps, controls, budgets,
+diagnostics, compute limits, and figures. Calibration and final-test data remain
+locked.
+
+### D008 candidate implementation freeze
+
+D008 prospectively fixes 30 balanced projected-kernel configurations shared by
+Q01b and FQK. Both tracks use the existing five grouped development folds,
+fold-local preprocessing, identical nested rung rows, 128/256/512/1,024-row
+successive halving, exact matched controls, and 20 selected-configuration seed
+indices. Q01b ranks by robust-cost NRMSE then constrained regret. FQK ranks by
+Brier score, fixed-threshold recall, AUROC, then precision. Full formulas,
+controls, compute ceilings, and signal boundaries are in
+`configs/post_gate5_exploratory.yaml`.
+
+Every technical failure, resource stop, undefined metric, terminal
+nonadvancement, or scientific negative must create and commit a bounded
+future-research discussion record. Such a record cannot change a current
+trial, rung, threshold, control, or retry decision. D008 remains pending, so no
+implementation or fit is currently authorized.
 
 ## Endpoints
 

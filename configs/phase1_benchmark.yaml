@@ -1,6 +1,7 @@
 schema_version: "0.4.2"
 status: "gate_4_accepted_development_generation_authorized"
 gate5_status: "accepted_technical_trigger_fail_new_algorithm_rejected"
+post_gate5_exploratory_status: "d008_candidate_implementation_freeze_pending_no_experiment_authorized"
 prepared_date: "2026-07-12"
 scenario_generation_config: "configs/scenario_generation.yaml"
 
@@ -340,6 +341,50 @@ gate5_literature_hardening:
     - reference_feasible_status
     - no_reference_feasible_decision_sets
   claim_boundary_rule: "apparent QML gains must be checked against bandwidth, entanglement removal, random-feature approximation, parameter count, sample selection, and no-reference-feasible concentration before any trigger recommendation"
+
+post_gate5_exploratory_protocol:
+  status: "d008_candidate_implementation_freeze_pending_no_experiment_authorized"
+  opened_date: "2026-07-13"
+  protocol_doc: "docs/post_gate5_exploratory_protocol.md"
+  source_matrix: "data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv"
+  figure: "RFIG-024"
+  implementation_freeze_config: "configs/post_gate5_exploratory.yaml"
+  implementation_freeze_doc: "docs/post_gate5_implementation_freeze.md"
+  implementation_freeze_figure: "RFIG-025"
+  implementation_freeze_decision: "pending_human_accept_reject_or_revise"
+  gate5_result_unchanged: true
+  calibration_access: false
+  final_test_access: false
+  gate6_authorized: false
+  d006_refit_authorized: false
+  d007_reporting_change_authorized: false
+  near_term_qml_tests:
+    - id: "Q01b"
+      family: "projected_quantum_kernel"
+      role: "exploratory supervised surrogate on the original grouped-development pipeline"
+      primary_endpoint: "robust-cost NRMSE and feasibility-constrained regret"
+      required_controls:
+        - "C06 strongest classical residual"
+        - "A01 random-feature control on identical PCA rows"
+        - "compressed C05"
+        - "historical Q01 as negative reference only"
+    - id: "FQK"
+      family: "feasibility_only_quantum_kernel"
+      role: "exploratory classifier for independently propagated feasibility"
+      primary_endpoint: "AUROC, Brier score, recall/precision at threshold 0.5, and safety-filter diagnostics"
+      required_controls:
+        - "strong classical feasibility heads"
+        - "A01 or projected-feature classical kernel control on identical rows"
+        - "compressed C05 classifier view"
+  appendix_future_only:
+    - "quantum_reinforcement_learning"
+    - "dynamic_circuit_control"
+    - "quantum_annealing"
+    - "qaoa"
+    - "new_variational_qml_architectures"
+    - "larger_qubit_or_hardware_runs"
+  execution_rule: "No exploratory implementation or model fit may run until D008 is accepted; after D008 acceptance, implementation and synthetic validation are allowed but research-data fitting still requires a clean-source preflight and separate execution decision."
+  failure_discussion_rule: "Every failure, resource stop, undefined metric, terminal nonadvancement, or scientific negative must be committed with an evidence-based future-research improvement that cannot alter or retry the active pipeline."
 
 gate5_runner_freeze:
   status: "d005_gate5_runner_accepted"

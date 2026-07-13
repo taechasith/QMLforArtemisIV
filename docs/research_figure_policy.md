@@ -1,6 +1,6 @@
 # Research Figure and Change-Evidence Policy
 
-Version: 0.2.0
+Version: 0.2.1
 Effective: 2026-07-12
 Authority: Human research lead
 Status: Active for all work after Gate 4 acceptance
@@ -28,6 +28,10 @@ model behavior, statistical conclusions, or the interpretation boundary.
 6. Label exploratory, failed, invalid, calibration-only, and final evidence distinctly.
 7. Preserve superseded figures and their source data when they explain a research decision.
 8. Regenerate the complete registry before each research commit and manuscript release.
+9. When a failed or stopped step suggests an improvement, graph the observed
+   failure separately from the future-work hypothesis. The figure and caption
+   must state that the hypothesis is not part of the active pipeline and needs
+   a new prospective protocol before testing.
 
 ## Visual standards
 

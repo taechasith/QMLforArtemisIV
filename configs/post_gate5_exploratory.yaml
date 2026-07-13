@@ -1,0 +1,198 @@
+schema_version: "0.1.0"
+decision_id: "D008"
+protocol_id: "P001"
+status: "candidate_implementation_freeze_pending_human_acceptance"
+prepared_date: "2026-07-13"
+execution_authorized: false
+
+provenance:
+  accepted_gate5_decision_commit: "48c9ff140fd5174037eeaad3879388b7899900da"
+  immutable_d006_campaign_source_commit: "6e5a6202eec486e88af6b969f6af86571fb0ce32"
+  accepted_d007_candidate_commit: "7a726c8917a85f24313208eb18c33e1ccb5f703e"
+  protocol_document: "docs/post_gate5_exploratory_protocol.md"
+  implementation_freeze_document: "docs/post_gate5_implementation_freeze.md"
+  trial_manifest: "data/processed/reporting/post_gate5_exploratory_trial_manifest.csv"
+  future_discussion_register: "data/processed/reporting/post_gate5_future_research_discussion.csv"
+
+locks:
+  gate5_result_unchanged: true
+  d006_d007_evidence_immutable: true
+  development_split_only: true
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  gate6_authorized: false
+  hardware_execution_authorized: false
+  larger_qubit_execution_authorized: false
+  allowed_track_ids: [Q01b, FQK]
+
+data_contract:
+  source_split: "development"
+  cv_manifest: "data/processed/reporting/gate5_cv_fold_manifest.csv"
+  grouped_cv_folds: 5
+  preprocessing: "openqfuel.preprocessing.FrozenFeaturePreprocessor and QuantumFeatureProjector"
+  preprocessing_scope: "fit every imputer, encoder, scaler, target standardizer, and PCA inside the training portion of each grouped fold"
+  row_selection: "nested SHA-256 rank using the existing Gate 5 development row-selection rule"
+  paired_row_rule: "Q01b, FQK, and every matched control use identical rows within each fold and rung"
+  prohibited_fields:
+    - split
+    - split_name
+    - group_id
+    - base_trajectory
+    - scenario_id
+    - decision_set_id
+    - candidate_index
+    - boundary_or_tail
+    - payload_version
+    - any_calibration_or_final_test_outcome
+
+projected_quantum_feature_map:
+  input_dimensions: [4, 6, 8]
+  qubits: [4, 6, 8]
+  pca_rule: "input dimension equals qubit count"
+  clipping_standard_deviations: 3.0
+  angle_map: "clip to [-3,3], divide by 3, multiply by pi"
+  circuit_backend: "openqfuel.qml.statevector_batch"
+  circuit_encoding: "RY and RZ angle encoding with data re-uploading"
+  data_reupload_layers: [1, 2]
+  feature_scale: [0.5, 1.0, 2.0]
+  entangle: [true, false]
+  entanglement: "nearest-neighbor CNOT ring when enabled"
+  trainable_circuit_parameters: 0
+  projection: "one-qubit reduced density matrix represented by Pauli X, Y, and Z expectation values for every qubit"
+  projected_feature_dimension: "3 * qubits"
+  primary_execution: "exact local statevector simulation"
+  quantum_hardware_claim: false
+  advantage_claim: false
+
+projected_kernel:
+  definition: "exp(-gamma * sum_q ||rho_q(x)-rho_q(z)||_F^2)"
+  bloch_equivalent: "exp(-0.5 * gamma * ||r(x)-r(z)||_2^2)"
+  gamma_reference: "let D_ij=sum_q ||rho_q(x_i)-rho_q(x_j)||_F^2; use 1/median(D_ij>0) on the training fold only"
+  gamma_multipliers: [0.25, 1.0, 4.0]
+  zero_median_action: "mark the fold ineligible and write a failure record; do not substitute a gamma"
+  nystrom_landmarks: 256
+  landmark_rule: "min(256, training-row count), selected by SHA-256 rank of source row ID, projection ID, fold ID, and seed index from training rows only; Q01b and FQK share landmark IDs"
+  psd_rule: "symmetrize training kernels and clip eigenvalues below 1e-12; record clipped count and magnitude"
+  regularization_alpha: [0.0001, 0.01, 1.0]
+
+paired_trial_design:
+  trial_count_per_track: 30
+  shared_projection_ids: 30
+  balance_rule: "the checked-in manifest has exact marginal balance for qubits, layers, feature scale, entanglement, gamma multiplier, and alpha"
+  tuning_seed_rule: "SHA-256 of protocol ID, decision ID, projection ID, and fold ID"
+  rungs:
+    - {development_samples: 128, trials_retained: 30}
+    - {development_samples: 256, trials_retained: 15}
+    - {development_samples: 512, trials_retained: 8}
+    - {development_samples: 1024, trials_retained: 4}
+  advancement_floor: "within each track retain at least one 4-, 6-, and 8-qubit trial and both entanglement states while slots permit; remaining slots follow the frozen endpoint ordering"
+  selected_configuration_seed_indices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  sensitivity_after_selection:
+    - exact_statevector
+    - 1024_shots
+    - 4096_shots
+    - fixed_gate4_noise_model
+  sensitivity_rule: "report-only on the selected configuration; never rerank or retune from sensitivity results"
+
+tracks:
+  Q01b:
+    role: "projected-quantum-kernel robust-cost surrogate"
+    target: "robust_total_correction_delta_v_m_s"
+    estimator: "Nyström kernel ridge regression"
+    primary_endpoint: "pooled out-of-fold robust-cost NRMSE"
+    tie_breakers:
+      - "lower feasibility-constrained regret"
+      - "lower kernel condition number"
+      - "lower qubit count"
+      - "lower layer count"
+      - "projection ID"
+    comparators:
+      - "C06-T17 frozen physics-residual configuration rerun on identical exploratory rows"
+      - "A01-T04 frozen random-feature control on identical PCA rows"
+      - "A02 exact classical RBF kernel on identical PCA rows using the same gamma and Nyström rules"
+      - "C05-T17 compressed-input MLP control on identical PCA rows"
+      - "historical Q01-T17 as a non-rerun negative reference"
+    promising_signal: "mean relative NRMSE gap versus C06 no greater than 5%, all five grouped folds present, twenty selected-configuration seeds complete, and at least one preregistered regime reproducibly better than every matched dequantization control"
+    claim_limit: "exploratory signal only; cannot revise Gate 5 or authorize Gate 6"
+  FQK:
+    local_name: "feasibility-only quantum kernel"
+    acronym_warning: "FQK is a repository track ID and does not mean fidelity quantum kernel; historical Q01 is the fidelity-style kernel"
+    role: "projected-quantum-kernel feasibility classifier"
+    target: "independently_propagated_feasible"
+    estimator: "Nyström kernel least-squares classifier with predictions clipped to [0,1] and no post-hoc calibration"
+    primary_endpoint: "pooled out-of-fold Brier score"
+    tie_breakers:
+      - "higher recall at threshold 0.5"
+      - "higher AUROC"
+      - "higher precision at threshold 0.5"
+      - "lower kernel condition number"
+      - "lower qubit count"
+      - "projection ID"
+    comparators:
+      - "frozen classifier heads C01-T18, C02-T02, C03-T13, C04-T28, C05-T12, and C06-T17 on identical exploratory rows"
+      - "A01-T04 frozen random-feature classifier on identical PCA rows"
+      - "A02 exact classical RBF classifier on identical PCA rows using the same gamma and Nyström rules"
+      - "C05-T17 compressed-input MLP classifier on identical PCA rows"
+    promising_signal: "Brier score no more than 5% above the strongest classical feasibility comparator (exact equality required if comparator Brier is zero), AUROC no more than 0.01 lower, recall at threshold 0.5 no more than 0.02 lower, all five grouped folds present, and twenty selected-configuration seeds complete"
+    claim_limit: "feasibility classification only; cannot claim cost improvement, revise Gate 5, or authorize Gate 6"
+
+failure_and_stop_policy:
+  statuses_requiring_discussion:
+    - technical_failure
+    - resource_stop
+    - metric_undefined
+    - terminal_nonadvancement
+    - scientific_negative
+  required_fields:
+    - record_id
+    - recorded_date
+    - track_id
+    - step_id
+    - terminal_status
+    - evidence_paths
+    - observed_finding
+    - bounded_interpretation
+    - future_research_improvement
+    - new_protocol_required
+    - active_pipeline_change_authorized
+    - post_outcome_retry_authorized
+  commit_rule: "commit the discussion record with the corresponding reporting change before the step is considered closed"
+  firewall_rule: "future-research improvements are discussion only and cannot alter, extend, retry, or rescue the active P001 pipeline"
+  retry_rule: "no silent retry; a corrected execution requires a new prospective deviation accepted before rerun"
+  required_boolean_values:
+    new_protocol_required: true
+    active_pipeline_change_authorized: false
+    post_outcome_retry_authorized: false
+
+compute_admission:
+  reference_cpu: "Intel Core i9-13900HX, 24 cores, 32 logical processors"
+  reference_ram_gib: 32
+  reference_gpu: "NVIDIA GeForce RTX 4060 Laptop GPU"
+  reference_vram_mib: 8188
+  max_concurrent_statevector_tasks: 1
+  max_total_project_working_set_gib: 24
+  max_gpu_working_set_gib: 6.5
+  default_cpu_workers_for_controls: 4
+  maximum_cpu_workers_after_benchmark: 8
+  minimum_free_disk_gib: 20
+  branch_cpu_core_hour_ceiling: 250
+  branch_gpu_hour_ceiling: 0
+  branch_new_artifact_ceiling_gib: 20
+  branch_wall_clock_day_ceiling: 5
+  benchmark_rule: "before research fitting, benchmark one q=8, layers=2, 1024-row projection plus both heads and all matched controls; projected totals with 25% margin must fit every branch ceiling"
+  over_ceiling_action: "stop and seek a prospective compute deviation; do not reduce rows, folds, rungs, controls, or diagnostics"
+
+reporting:
+  existing_protocol_figure: "RFIG-024"
+  implementation_freeze_figure: "RFIG-025"
+  planned_result_figures:
+    - {id: "RFIG-026", content: "Q01b and FQK learning curves with matched controls"}
+    - {id: "RFIG-027", content: "projected-kernel geometry, effective rank, concentration, and dequantization diagnostics"}
+    - {id: "RFIG-028", content: "FQK Brier, AUROC, fixed-threshold recall/precision, and safety-filter consequences"}
+    - {id: "RFIG-029", content: "failure/stop disposition and future-research discussion firewall; required when any governed failure or stop occurs"}
+  result_figure_rule: "generate figures only from source-bound machine-readable outputs; absent results must remain absent rather than shown as zero"
+
+acceptance:
+  current_decision: "pending_human_accept_reject_or_revise"
+  acceptance_effect: "authorize implementation and synthetic validation only; research-data fitting still requires a clean-source preflight and a separate execution decision"
+  rejection_effect: "retain D008 as a candidate record and run nothing"

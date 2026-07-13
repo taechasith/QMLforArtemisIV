@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.6
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; Gate 6 unauthorized
+Version: 0.6.8
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D008 exploratory implementation freeze candidate pending; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-13
-Recommended next decision: Pause experiments and preregister the post-Gate-5 path; Gate 6 remains unauthorized
+Recommended next decision: Accept, revise, or reject D008 before implementation; Gate 6 remains unauthorized
 
 ## 1. Proposed title
 
@@ -791,6 +791,36 @@ authorize refitting, reranking, new algorithm work, calibration or final-test
 access, or Gate 6. Any later experiment requires a new, prospectively approved
 protocol decision; the accepted result cannot be reinterpreted as a universal
 claim that QML cannot work.
+
+Post-Gate-5 exploratory protocol P001 was opened by the human research lead on
+2026-07-13. It creates a narrow prospective branch, not a rescue analysis.
+Only two near-term QML tests may be designed under that branch:
+
+- `Q01b`, a projected quantum-kernel supervised surrogate using the original
+  grouped-development pipeline, matched controls, and robust-cost/regret
+  endpoints.
+- `FQK`, a feasibility-only quantum-kernel classifier for
+  `independently_propagated_feasible`, using development-fold feasibility and
+  safety-filter diagnostics rather than cost-regression claims.
+
+Quantum reinforcement learning, dynamic circuits, quantum annealing, QAOA, new
+variational QML architectures, larger-qubit circuits, and hardware execution
+are appendix or future-work topics only unless a later prospective protocol
+opens them. P001 does not authorize any fit, refit, calibration read, final-test
+read, Gate 6 run, or reinterpretation of Gate 5. The protocol document is
+`docs/post_gate5_exploratory_protocol.md`; RFIG-024 records its paper-ready
+decision boundary.
+
+D008 is the pending implementation-freeze candidate for P001. It fixes the
+projected one-qubit-density-matrix feature map, 30 balanced paired projection
+configurations, Q01b and FQK endpoint orderings, exact classical and frozen
+model controls, successive-halving rungs, 20 selected-configuration seeds,
+local compute ceilings, and RFIG-025 through RFIG-029 reporting obligations.
+It also requires every failure or stopped step to commit an evidence-based
+future-research improvement while marking that improvement as prohibited from
+changing or retrying the active pipeline. D008 acceptance would authorize only
+implementation and synthetic validation; a separate execution decision would
+still be required before fitting development rows.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

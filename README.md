@@ -94,6 +94,24 @@ frozen trigger. This decision does not authorize refitting, new algorithm work,
 calibration or final-test access, or Gate 6. RFIG-001 records the accepted gate
 state; RFIG-021 through RFIG-023 remain the unchanged scientific evidence.
 
+Post-Gate-5 exploratory protocol P001 is now open as a prospective planning
+branch only. The only near-term QML designs allowed under that branch are Q01b
+projected quantum kernel and FQK feasibility-only quantum kernel, both tied to
+the original grouped-development pipeline and matched-control discipline.
+Quantum reinforcement learning, dynamic circuits, quantum annealing, QAOA, new
+variational QML architectures, larger-qubit circuits, and hardware execution
+remain appendix or future-work topics. P001 does not authorize an experiment,
+calibration/final-test access, or Gate 6. RFIG-024 records this boundary.
+
+D008 is prepared as the candidate implementation freeze for P001. It fixes 30
+paired projected-kernel configurations, shared Q01b/FQK projections, grouped
+development folds, matched controls, compute ceilings for the reference
+laptop, staged reporting figures, and a mandatory future-research record for
+every failure or stop. Those records may explain what a later study could
+improve, but cannot alter or retry the active pipeline. D008 still requires
+human acceptance and currently authorizes no implementation or experiment;
+RFIG-025 records the candidate freeze.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -146,8 +164,13 @@ through a dated deviation record.
 - docs/model_registry.md and docs/phase1_analysis_plan.md: frozen comparison and statistics.
 - docs/research_figure_policy.md: required visual, provenance, and claim-boundary workflow.
 - docs/research_execution_map.md: work ownership and future decision gates.
+- docs/post_gate5_exploratory_protocol.md: prospective exploratory Q01b/FQK protocol opened after the accepted Gate 5 negative result.
+- docs/post_gate5_implementation_freeze.md: D008 candidate defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
 - docs/decision_log.md: acceptance and deviation history.
 - data/processed/reporting/gate5_literature_hardening_matrix.csv: D004 source-to-control matrix for RFIG-019.
+- data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv: P001 near-term versus appendix/future QML boundary for RFIG-024.
+- data/processed/reporting/post_gate5_exploratory_trial_manifest.csv: 30 balanced paired projected-kernel configurations frozen but not run.
+- data/processed/reporting/post_gate5_future_research_discussion.csv: schema-locked register for evidence-based future-work suggestions after failures or stops.
 - data/processed/reporting/gate5_cv_fold_manifest.csv: label-agnostic D005 whole-group CV assignment for RFIG-020.
 - data/processed/reporting/gate5_preflight_audit.json: development-only Gate 5 data and lock audit.
 - data/processed/reporting/gate5_initial_execution_plan.csv: all 450 accepted D006 first-stage tasks (270 candidates and 180 non-winning matched-control views), ready under the clean-source fit guard.
@@ -156,6 +179,8 @@ through a dated deviation record.
 - data/processed/reporting/gate5_statevector_batch_benchmark.json: locked-environment synthetic equivalence/runtime record for D006, bound to QML-source, benchmark-script, and lockfile hashes.
 - src/openqfuel/gate5_reporting.py: source-bound 20-seed, five-fold, matched-control trigger evaluator, D004 diagnostic auditor, and negative-result-safe report exporter.
 - scripts/make_gate5_result_figures.py: predeclared RFIG-021 through RFIG-023 development-result figures.
+- scripts/make_post_gate5_exploratory_figures.py: RFIG-024 protocol-boundary diagram generator.
+- scripts/make_post_gate5_implementation_figure.py: RFIG-025 D008 implementation-freeze and future-research-firewall diagram generator.
 - scripts/fetch_public_data.py: immutable-source downloader.
 - scripts/extract_artemis2_oem.py: safe nested-archive extraction and hashing.
 - scripts/audit_artemis2_oem.py: OEM qualification and revision audit.

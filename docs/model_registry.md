@@ -1,8 +1,8 @@
 # Phase 1 Model Registry
 
-Version: 0.3.6
+Version: 0.3.8
 Prepared: 2026-07-12
-Status: Gate 5 accepted with technical outcome FAIL; proposed new algorithm not authorized; Gate 6 unauthorized
+Status: Gate 5 accepted with technical outcome FAIL; D008 exploratory implementation freeze candidate pending; Gate 6 unauthorized
 
 ## Registered candidates
 
@@ -166,3 +166,30 @@ qualify. The human research lead accepted the resulting technical `FAIL` on
 2026-07-13. No proposed new algorithm is authorized, and calibration,
 final-test access, refitting, and Gate 6 remain locked pending a separate
 prospective decision.
+
+## Post-Gate-5 exploratory registry boundary
+
+P001 opens a separate exploratory protocol after the accepted Gate 5 negative
+result. The entries below are not Phase 1 registered finalists, do not change
+the accepted Gate 5 result, and may not run until a later implementation freeze
+is accepted.
+
+| ID | Family | Exploratory role | Required boundary |
+|---|---|---|---|
+| Q01b | Projected quantum kernel | Supervised robust-cost/regret surrogate using projected quantum features on the original grouped-development pipeline | Must compare against C06, A01, compressed C05, and historical Q01 without refitting D006 evidence |
+| FQK | Feasibility-only quantum kernel | Classifier for `independently_propagated_feasible` and safety-filter diagnostics | Cannot claim cost-regression improvement and cannot unlock calibration/final-test rows |
+
+Quantum reinforcement learning, dynamic circuits, quantum annealing, QAOA, new
+variational QML architectures, larger-qubit circuits, and hardware execution
+are appendix or future-work topics only under P001.
+
+D008 is now prepared as a candidate implementation freeze. It binds Q01b and
+FQK to the same 30 balanced projection IDs and exact projected-state cache,
+while allowing each track to rank independently on its preregistered endpoint.
+It adds the exact classical RBF-on-PCA control because a projected-kernel gain
+is not interpretable without testing ordinary nonlinear geometry on identical
+compressed inputs. D008 is not accepted and neither registry entry may run.
+
+The local ID `FQK` means feasibility-only quantum kernel. It is not the common
+literature abbreviation for a fidelity quantum kernel; historical Q01 is this
+repository's fidelity-style kernel reference.

@@ -32,6 +32,9 @@ data/processed/reporting/*
 !data/processed/reporting/gate5_model_summary.csv
 !data/processed/reporting/gate5_regime_trigger.csv
 !data/processed/reporting/gate5_statevector_batch_benchmark.json
+!data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv
+!data/processed/reporting/post_gate5_exploratory_trial_manifest.csv
+!data/processed/reporting/post_gate5_future_research_discussion.csv
 data/processed/artemis2/*
 !data/processed/artemis2/oem_inventory.csv
 !data/processed/artemis2/oem_release_revisions.csv
