@@ -85,3 +85,10 @@ invention_readiness_labels:
   ledger: "docs/qml_invention_readiness_ledger.md"
 
 claim_boundary: "D013-C is a planning-only decision. It prepares stronger classical residual and safety-filter baselines so a later invented QML method has a fair target. It does not authorize implementation, experiments, refits, reranking, calibration/final-test access, hardware/GPU execution, Gate 5 reinterpretation, quantum-advantage claims, or Gate 6."
+
+selected_successor:
+  decision_id: "D014-C"
+  status: "accepted_freeze_proposal_no_execution"
+  freeze_config: "configs/post_gate5_d014_classical_first_freeze.yaml"
+  freeze_doc: "docs/post_gate5_d014_classical_first_freeze.md"
+  gate6_authorized: false

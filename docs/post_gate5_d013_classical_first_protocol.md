@@ -80,6 +80,6 @@ fitting anything.
 
 ## Next Decision
 
-D014 should be an implementation-freeze and compute-admission proposal for
-D013-C only if the project chooses to run another development-only experiment.
-Gate 6 remains unauthorized.
+D014-C has been accepted as a freeze proposal for CRES residual-cost hardening
+and CSAFE safety-filter hardening. It remains non-executable. D015 is required
+before implementation or synthetic validation, and Gate 6 remains unauthorized.

@@ -1,0 +1,104 @@
+schema_version: "0.1.0"
+decision_id: "D014-C"
+protocol_id: "P001"
+status: "accepted_freeze_proposal_no_execution"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+acceptance_basis: "assistant-selected next step after D013-C; freeze the classical-first residual and safety-filter hardening proposal before any implementation or fitting"
+
+authority:
+  freeze_proposal_authorized: true
+  implementation_authorized: false
+  synthetic_validation_authorized: false
+  development_data_fitting_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  refit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate5_reinterpretation_authorized: false
+  gate6_authorized: false
+  next_required_decision: "D015 must prospectively authorize implementation and synthetic validation only; a later clean-source compute admission is required before any development-data fitting."
+
+scientific_reason:
+  selected_path: "D013-C classical-first residual and safety-filter hardening"
+  rationale: "D011-R1 showed both tested QML tracks were weaker than strong classical controls; stronger classical residual and safety baselines are needed before a scientifically fair QML invention target can be defined."
+  invention_link: "D014-C defines the target that a later invented QML method must beat; it does not invent or implement that QML method."
+
+locked_tracks:
+  residual_cost_hardening:
+    track_id: "CRES"
+    target: "robust_total_correction_delta_v_m_s"
+    primary_metric: "pooled out-of-fold NRMSE"
+    secondary_metrics:
+      - "mean feasibility-constrained regret m/s"
+      - "regime-wise NRMSE by fidelity and uncertainty family"
+      - "tail error at q90 and q95"
+    required_controls:
+      - "C06-T17 frozen physics residual"
+      - "A02 exact classical RBF on identical fold-local PCA rows"
+      - "random-feature RBF residual"
+      - "compressed MLP residual"
+      - "ridge residual over explicit low-fidelity cost"
+    required_freezes_before_execution:
+      - "explicit residual target equation"
+      - "fold-local preprocessing and target-standardization rule"
+      - "candidate hyperparameter grid"
+      - "same grouped folds and row IDs as Gate 5/D011 unless a later protocol freezes a reason to change"
+      - "invention-readiness labels for any winning and failing regimes"
+  safety_filter_hardening:
+    track_id: "CSAFE"
+    target: "independently_propagated_feasible"
+    primary_metric: "pooled out-of-fold Brier score"
+    secondary_metrics:
+      - "AUROC"
+      - "recall at frozen intervention threshold"
+      - "false-negative rate"
+      - "expected calibration error"
+      - "safety-filter rejection/intervention rate"
+    required_controls:
+      - "C02-T02 strongest D011 feasibility comparator"
+      - "calibrated logistic safety head"
+      - "class-weighted tree ensemble"
+      - "conformal or quantile safety threshold"
+      - "A02 exact classical RBF feasibility head"
+    required_freezes_before_execution:
+      - "threshold selection rule using development-only inner folds"
+      - "false-negative priority and acceptable intervention-rate tradeoff"
+      - "calibration diagnostics and binning rule"
+      - "same grouped folds and row IDs as Gate 5/D011 unless a later protocol freezes a reason to change"
+      - "invention-readiness labels for any safety gains and failures"
+
+compute_admission_plan:
+  required_before_data_fitting: true
+  admission_decision: "D016 or later"
+  reference_machine: "project local laptop profile already recorded in docs/local_compute_guide.md"
+  ceilings:
+    cpu_core_hours: 250.0
+    wall_clock_days: 5.0
+    new_artifacts_gib: 20.0
+    peak_working_set_gib: 24.0
+    minimum_free_disk_gib: 20.0
+    gpu_hours: 0.0
+  accounting_rule: "charge the largest grouped fold and all candidate controls conservatively; do not credit cache reuse or early stopping unless a later preflight measures it prospectively."
+
+reporting:
+  planned_figures:
+    - id: "RFIG-032"
+      content: "D014-C classical-first freeze map and locked authority boundary"
+      required_before_execution: true
+    - id: "RFIG-033"
+      content: "future compute-admission margins if a later D016 synthetic preflight is accepted and reached"
+      required_before_data_fitting: true
+    - id: "RFIG-034"
+      content: "residual-cost hardening results if a later development-only campaign is accepted and reached"
+      required_before_claim: true
+    - id: "RFIG-035"
+      content: "safety-filter hardening results if a later development-only campaign is accepted and reached"
+      required_before_claim: true
+  invention_readiness_ledger: "docs/qml_invention_readiness_ledger.md"
+  failure_policy: "Every technical stop, resource stop, terminal nonadvancement, or negative result must append an invention-readiness label and future-only discussion record."
+
+claim_boundary: "D014-C is a freeze proposal only. It authorizes no implementation, synthetic validation, experiment, development-data fitting, calibration/final-test access, hardware/GPU execution, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, or Gate 6."

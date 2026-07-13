@@ -1403,3 +1403,33 @@ D013-C authorizes no implementation, new experiment, refit, rerank, retry,
 calibration/final-test read, hardware/GPU execution, Gate 5 reinterpretation,
 quantum-advantage claim, or Gate 6. D014 is required before any executable
 successor work.
+
+### D014-C accepted - classical-first freeze proposal
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Accepted; freeze proposal only; no execution authorized**
+Authority: Assistant-selected next step under delegated planning authority
+
+Decision:
+
+- Freeze the next classical-first proposal before any implementation or fitting.
+- Lock `CRES` residual-cost hardening with C06-T17, A02 exact classical RBF,
+  random-feature RBF residual, compressed MLP residual, and ridge residual
+  controls.
+- Lock `CSAFE` safety-filter hardening with C02-T02, calibrated logistic,
+  class-weighted tree ensemble, conformal or quantile threshold, and A02
+  feasibility controls.
+- Require conservative clean-source compute admission before any future
+  development-data fitting.
+- Reserve RFIG-032 through RFIG-035 for the freeze map, future compute
+  admission, residual-cost results, and safety-filter results if those stages
+  are later accepted and reached.
+
+Boundary:
+
+D014-C authorizes no implementation, synthetic validation, development-data
+fitting, refit, rerank, retry, calibration/final-test read, hardware/GPU
+execution, Gate 5 reinterpretation, QML invention claim, quantum-advantage
+claim, or Gate 6. D015 is required before implementation or synthetic
+validation.

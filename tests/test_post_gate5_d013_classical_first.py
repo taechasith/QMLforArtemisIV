@@ -47,6 +47,10 @@ def test_d013c_records_qml_invention_goal_without_unsupported_nasa_claim() -> No
     )
     assert "scientific correctness" in goal["scientific_correctness_priority"]
     assert "Every completed result" in goal["evidence_label_rule"]
+    successor = config["selected_successor"]
+    assert successor["decision_id"] == "D014-C"
+    assert successor["status"] == "accepted_freeze_proposal_no_execution"
+    assert successor["gate6_authorized"] is False
 
 
 def test_invention_readiness_ledger_labels_useful_and_prohibited_uses() -> None:
@@ -72,9 +76,12 @@ def test_d013c_docs_are_registered_in_project_governance() -> None:
         "README.md": "D013-C is accepted as that planning-only recommended path",
         "docs/decision_log.md": "D013-C accepted - classical-first planning",
         "docs/computational_methodology.md": "D013-C classical-first planning accepted",
-        "docs/research_execution_map.md": "D013-C planning accepted",
+        "docs/research_execution_map.md": "D014-C freeze proposal accepted",
         "docs/post_gate5_d013_classical_first_protocol.md": (
             "Planning-only accepted; no experiment authorized"
+        ),
+        "docs/post_gate5_d014_classical_first_freeze.md": (
+            "Freeze proposal accepted; no implementation or experiment authorized"
         ),
     }
     for relative, phrase in required.items():

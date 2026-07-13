@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.19
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; Gate 6 unauthorized
+Version: 0.6.20
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: Prepare D014 implementation-freeze and compute-admission proposal for D013-C only if another development-only experiment is needed; no experiment, refit, rerank, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, or Gate 6 is authorized by D013-C
+Recommended next action: Prepare D015 implementation and synthetic-validation authorization only if needed; no experiment, development-data fitting, refit, rerank, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, or Gate 6 is authorized by D014-C
 
 ## 1. Proposed title
 
@@ -1011,6 +1011,16 @@ each result labels the useful signal for later QML invention and the prohibited
 post-outcome use. D013-C authorizes no implementation, experiment, refit,
 rerank, calibration/final-test access, hardware/GPU execution, Gate 5
 reinterpretation, quantum-advantage claim, or Gate 6.
+
+D014-C was accepted as the next assistant-selected freeze proposal. It locks
+the classical-first residual-cost track (`CRES`) and safety-filter track
+(`CSAFE`), their required controls, metrics, compute-admission requirement, and
+planned figures RFIG-032 through RFIG-035. D014-C is not execution authority:
+implementation, synthetic validation, development-data fitting,
+calibration/final-test access, hardware/GPU execution, Gate 5 reinterpretation,
+QML invention claims, and Gate 6 remain unauthorized. D015 is required before
+any implementation or synthetic validation, and a later clean-source compute
+admission is required before any development-data fitting.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:
