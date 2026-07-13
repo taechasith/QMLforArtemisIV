@@ -1616,3 +1616,32 @@ Correction note:
   inputs from generated output destinations before a clean-source campaign run.
   The corrected runner excludes `output_root` from committed blob hashing and
   keeps all scientific workload settings unchanged.
+
+### D019-C opened - safety-objective redesign discussion
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Opened; discussion-only; no experiment authorized**
+Authority: Assistant-selected next step after D018-C `NO_ADVANCE`
+
+Decision:
+
+- Open a future-only safety-objective redesign discussion from the D018-C CSAFE
+  failure.
+- Record that the frozen D017 best-Brier model, `class_weighted_tree`, had mean
+  Brier 0.1311 but mean recall only 0.0139.
+- Record that the `calibrated_logistic` head had worse mean Brier 0.1422 but
+  much higher mean recall 0.8043, making it a future-only signal for a
+  recall-first safety objective.
+- Require any executable successor to prospectively freeze recall or
+  false-negative-cost priority, secondary Brier/calibration diagnostics,
+  threshold-selection rules, matched controls, compute admission, stop rules,
+  and minimum safety utility.
+- Generate RFIG-038 for the redesign boundary.
+
+Boundary:
+
+D019-C authorizes no implementation, experiment, development fitting, refit,
+rerank, retry, threshold change, calibration/final-test read, hardware/GPU
+execution, mission-loop work, Gate 5 reinterpretation, QML invention claim,
+quantum-advantage claim, or Gate 6. It does not rescue or reinterpret D017.

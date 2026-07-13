@@ -1,0 +1,22 @@
+{
+  "decision_id": "D019-C",
+  "protocol_id": "P001",
+  "official_status": "DISCUSSION_ONLY",
+  "source_d018_commit": "06e6283d99682615c16465af0254049987113563",
+  "development_rows_interpreted": 39000,
+  "calibration_rows_read": 0,
+  "final_test_rows_read": 0,
+  "hardware_jobs": 0,
+  "gpu_hours": 0,
+  "gate6_runs": 0,
+  "active_frozen_selection_model": "class_weighted_tree",
+  "active_frozen_selection_metric": "mean_brier",
+  "active_frozen_selection_mean_brier": 0.13110998581436642,
+  "active_frozen_selection_mean_recall": 0.013889174500238285,
+  "future_only_signal_model": "calibrated_logistic",
+  "future_only_signal_mean_brier": 0.14223067742525214,
+  "future_only_signal_mean_recall": 0.8042533959907271,
+  "diagnosis": "Brier-first frozen selection found a low-recall safety model; a future protocol must optimize safety utility explicitly before any new run.",
+  "official_recommendation": "Open only a future D020 recall-first safety freeze discussion or move to manuscript discussion; do not execute a new experiment under D019-C.",
+  "claim_boundary": "Future-only discussion; no implementation, fitting, threshold change, calibration, final-test, hardware/GPU, mission-loop, Gate 5 reinterpretation, QML invention, quantum advantage, or Gate 6."
+}

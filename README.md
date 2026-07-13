@@ -284,6 +284,13 @@ baseline. CSAFE fails safety utility because the best-Brier model has mean
 recall 0.0139. The higher-recall logistic signal is future-only and cannot
 rescue D017. RFIG-037 records the interpretation boundary.
 
+D019-C opens a future-only safety-objective redesign discussion. It records
+that the D017 frozen Brier-first CSAFE selector had near-zero recall, while the
+logistic head is only a future signal for a later recall-first protocol. It
+does not authorize implementation, threshold changes, refits, locked data,
+mission-loop work, QML invention claims, quantum-advantage claims, or Gate 6.
+RFIG-038 records the boundary.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -345,6 +352,7 @@ through a dated deviation record.
 - docs/post_gate5_d013_classical_first_protocol.md: planning-only classical-first residual and safety-filter path before QML invention.
 - docs/post_gate5_d014_classical_first_freeze.md: freeze proposal for CRES/CSAFE tracks before any implementation.
 - docs/post_gate5_d015_implementation_synthetic_validation.md: implementation and synthetic-validation authorization without data fitting.
+- docs/post_gate5_d019_safety_redesign.md: future-only safety-objective redesign discussion after D018-C.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
 - docs/post_gate5_compute_preflight.md: D009 synthetic-only clean-source compute-admission contract and pass/stop rules.

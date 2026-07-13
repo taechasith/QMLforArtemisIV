@@ -1,0 +1,65 @@
+schema_version: "0.1.0"
+decision_id: "D019-C"
+protocol_id: "P001"
+status: "discussion_only_opened"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+acceptance_basis: "assistant-selected next step after D018-C NO_ADVANCE; open future-only safety-objective redesign discussion before any executable successor"
+
+authority:
+  discussion_authorized: true
+  experiment_authorized: false
+  implementation_authorized: false
+  development_data_fitting_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  refit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  threshold_change_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate5_reinterpretation_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+  mission_loop_authorized: false
+  gate6_authorized: false
+
+source_evidence:
+  d018_result: "data/processed/reporting/post_gate5_d018_interpretation.json"
+  d018_figure: "RFIG-037"
+  d017_safety_summary: "data/processed/reporting/post_gate5_d017_classical_first/csafe_summary.csv"
+
+diagnosis:
+  active_frozen_selection:
+    model: "class_weighted_tree"
+    selected_by: "mean_brier"
+    mean_brier: 0.13110998581436642
+    mean_recall: 0.013889174500238285
+    finding: "good average probability score is not sufficient for safety use when recall is near zero"
+  future_only_signal:
+    model: "calibrated_logistic"
+    mean_brier: 0.14223067742525214
+    mean_recall: 0.8042533959907271
+    finding: "higher recall suggests a future recall-first safety objective, but selecting it after D017 would be post-outcome rescue"
+
+future_protocol_requirements:
+  primary_objective: "recall-first or false-negative-cost safety objective"
+  required_before_execution:
+    - "prospectively freeze recall, false-negative-rate, and Brier/calibration secondary metrics"
+    - "freeze threshold-selection rule using development-only training folds, not observed held-out rescue"
+    - "include C02-T02, calibrated logistic, class-weighted tree, A02 exact RBF, and any later QML candidate as matched controls"
+    - "predeclare minimum safety utility before requesting calibration, final-test, mission-loop, hardware/GPU, or Gate 6 authority"
+    - "generate a compute preflight before any new development-data fitting"
+  prohibited_uses:
+    - "do not replace the D017 frozen selector with the logistic head"
+    - "do not reinterpret Gate 5"
+    - "do not claim QML invention or quantum advantage"
+    - "do not open Gate 6"
+
+outcome:
+  official_status: "DISCUSSION_ONLY"
+  next_recommended_step: "draft a future D020 recall-first safety freeze proposal or stop experimentation and move to manuscript discussion; no executable work is authorized by D019-C"
+  figure: "RFIG-038"
+  result: "data/processed/reporting/post_gate5_d019_safety_redesign.json"
+  claim_boundary: "Future-only safety-objective discussion; no experiment, implementation, development fitting, calibration, final-test, hardware/GPU, mission-loop, Gate 5 reinterpretation, QML invention, quantum advantage, or Gate 6 claim."

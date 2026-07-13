@@ -1,0 +1,3 @@
+record_id,model,role,selection_status,mean_brier,mean_recall,interpretation,authorized_use
+D019-A,class_weighted_tree,D017 frozen best-Brier safety head,failed_safety_utility,0.13110998581436642,0.013889174500238285,Brier-first selection can miss unsafe cases when recall is near zero,Report as failed CSAFE utility only
+D019-B,calibrated_logistic,D017 alternative safety head,future_only_signal,0.14223067742525214,0.8042533959907271,Higher recall motivates a future recall-first objective but cannot rescue D017,Use only to design a future prospective protocol

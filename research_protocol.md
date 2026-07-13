@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.28
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; Gate 6 unauthorized
+Version: 0.6.29
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: prepare the discussion/future-work section or open a future-only D019 safety-objective redesign discussion; no experiment, calibration/final-test access, refit, rerank, retry, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized
+Recommended next action: draft a future D020 recall-first safety freeze proposal or move to manuscript discussion; no experiment, implementation, calibration/final-test access, refit, rerank, retry, threshold change, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized
 
 ## 1. Proposed title
 
@@ -1097,6 +1097,20 @@ CSAFE fails safety utility under the frozen selection rule because the best
 Brier model had mean recall 0.0139. The logistic head's higher recall is a
 future-only signal for a recall-first safety objective, not an active rescue
 selection. RFIG-037 records this interpretation boundary. No new experiment,
+calibration, final-test, hardware/GPU, mission-loop, QML invention,
+quantum-advantage, Gate 5 reinterpretation, or Gate 6 authority follows.
+
+D019-C opens a future-only safety-objective redesign discussion. The triggering
+lesson is that the frozen D017 Brier-first selector identified
+`class_weighted_tree` with mean Brier 0.1311 but mean recall 0.0139, while the
+`calibrated_logistic` head had worse mean Brier 0.1422 but much higher mean
+recall 0.8043. D019-C does not rescue D017 and does not replace the frozen
+selector. It records that any later executable successor must prospectively
+freeze recall or false-negative-cost priority, secondary calibration metrics,
+threshold selection, matched controls, compute admission, stop rules, and
+minimum safety utility before any locked-data, mission-loop, hardware/GPU, or
+Gate 6 request. RFIG-038 records this boundary. No experiment,
+implementation, development fitting, refit, rerank, retry, threshold change,
 calibration, final-test, hardware/GPU, mission-loop, QML invention,
 quantum-advantage, Gate 5 reinterpretation, or Gate 6 authority follows.
 
