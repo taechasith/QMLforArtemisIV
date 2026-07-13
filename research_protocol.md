@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.13
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D010 telemetry correction and one unchanged synthetic preflight rerun accepted; research fitting and Gate 6 unauthorized
+Version: 0.6.14
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D010 synthetic compute admission PASS; D011, research fitting, and Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-13
-Recommended next action: Run the D010 telemetry-only validation and, only if it passes, the single authorized unchanged synthetic preflight attempt; development-row fitting and Gate 6 remain unauthorized
+Recommended next decision: Review and freeze D011 development-only P001 execution authority; no development-row fitting or Gate 6 work is authorized yet
 
 ## 1. Proposed title
 
@@ -862,6 +862,19 @@ check followed by at most one full synthetic rerun. D009 evidence remains
 immutable. A D010 PASS may support preparation of D011 only; no development,
 calibration, final-test, hardware/GPU, Gate 5 reinterpretation, or Gate 6 work
 is authorized.
+
+The D010 telemetry-only check passed: the typed adapter reported 127,705,088
+bytes and PowerShell reported 127,754,240 bytes, a 49,152-byte difference
+against the frozen 67,108,864-byte allowance. The single unchanged attempt 2
+then completed both projected heads and every matched control. All five
+admission checks passed: 1.7849 of 250 CPU-core-hours, 0.0758 of five
+wall-days, 1.1658 of 20 GiB new artifacts, 0.2014 of 24 GiB peak process
+memory, and 53.7426 GiB free disk after artifacts against a 20 GiB minimum.
+The run used 1,280 synthetic rows and read zero development, calibration, or
+final-test rows; it submitted no hardware/GPU or Gate 6 job. RFIG-030 records
+the margins. D010 is now closed to rerun. This PASS establishes laptop compute
+admission only and permits preparation of D011; it is not QML performance,
+Gate 5 reinterpretation, or research-data execution authority.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

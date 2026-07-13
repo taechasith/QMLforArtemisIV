@@ -1,8 +1,8 @@
 # Post-Gate-5 Exploratory Protocol
 
-Version: 0.2.5
+Version: 0.2.6
 Opened: 2026-07-13
-Status: Opened prospectively; D008 implementation and synthetic validation complete; D010 telemetry correction and one unchanged synthetic preflight rerun accepted; research-data execution remains unauthorized
+Status: Opened prospectively; D008 implementation and synthetic validation complete; D010 synthetic compute admission PASS; D011 and research-data execution remain unauthorized
 
 ## Purpose
 
@@ -156,6 +156,16 @@ unchanged. The telemetry-only check must pass before the full synthetic rerun.
 A PASS permits preparation of D011 only; development rows, calibration,
 final-test data, hardware/GPU execution, Gate 5 reinterpretation, and Gate 6
 remain locked.
+
+The telemetry-only check passed within the frozen tolerance, and the one
+authorized unchanged attempt 2 completed with all five admission checks
+passing. The conservative projection is 1.7849 CPU-core-hours, 0.0758
+sequential wall-days, 1.1658 GiB new artifacts, 0.2014 GiB peak process
+memory, and 53.7426 GiB free disk after artifacts. All research, calibration,
+and final-test read counters are zero, and no hardware/GPU or Gate 6 job ran.
+RFIG-030 records the source-bound resource margins. D010 is closed to rerun;
+this compute PASS permits preparation of D011 only and is not model-performance
+or research-data evidence.
 
 ## Machine-readable source
 

@@ -1068,7 +1068,7 @@ thresholds, and Gate 5 result remain unchanged.
 
 Date prepared: 2026-07-13
 Date accepted: 2026-07-13
-Status: **Accepted; telemetry validation and one synthetic attempt-2 rerun pending; research-data execution unauthorized**
+Status: **Completed: synthetic compute admission PASS; research-data execution unauthorized**
 Authority: Human research lead instruction to perform the next process step
 
 Decision:
@@ -1098,3 +1098,25 @@ passes. A PASS permits preparation of D011 but does not unlock development
 rows. A STOP is terminal for this authority and must be recorded under the
 future-research firewall. Calibration/final-test access, hardware/GPU work,
 Gate 5 reinterpretation, and Gate 6 remain prohibited.
+
+D010 execution outcome:
+
+- Freeze/source commit: `882bfd58d1154194b011dfc6fcef974cfe96ead3`.
+- The telemetry-only check passed with a 49,152-byte adapter-versus-PowerShell
+  difference against a 67,108,864-byte allowance.
+- The one authorized unchanged attempt 2 completed both projected heads and
+  every matched control with finite outputs.
+- All five limits passed: 1.7849/250 CPU-core-hours, 0.0758/5 sequential
+  wall-days, 1.1658/20 GiB new artifacts, 0.2014/24 GiB peak process memory,
+  and 53.7426 GiB free disk after artifacts versus a 20 GiB minimum.
+- Development, calibration, and final-test reads remained zero. No hardware,
+  GPU, or Gate 6 job ran.
+- RFIG-030 records the source-bound resource margins. RFIG-029 and the D009
+  technical STOP remain unchanged.
+
+Consequence after PASS:
+
+D010 is closed and cannot be rerun. The result establishes synthetic compute
+admission on the reference laptop only. It permits preparation of D011 but
+does not authorize development-row fitting, claim QML performance, reinterpret
+Gate 5, or open Gate 6.

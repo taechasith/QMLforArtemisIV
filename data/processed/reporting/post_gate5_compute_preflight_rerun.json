@@ -1,0 +1,244 @@
+{
+  "admission": {
+    "checks": {
+      "cpu_core_hours": {
+        "comparison": "less_than_or_equal",
+        "limit": 250.0,
+        "observed": 1.7849256727430556,
+        "passed": true,
+        "utilization_fraction": 0.0071397026909722225
+      },
+      "free_disk_after_artifacts_gib": {
+        "comparison": "greater_than_or_equal",
+        "limit": 20.0,
+        "observed": 53.74257278442383,
+        "passed": true,
+        "utilization_fraction": 0.3721444464563592
+      },
+      "new_artifacts_gib": {
+        "comparison": "less_than_or_equal",
+        "limit": 20.0,
+        "observed": 1.165771484375,
+        "passed": true,
+        "utilization_fraction": 0.05828857421875
+      },
+      "peak_rss_gib": {
+        "comparison": "less_than_or_equal",
+        "limit": 24.0,
+        "observed": 0.20138931274414062,
+        "passed": true,
+        "utilization_fraction": 0.008391221364339193
+      },
+      "wall_clock_days": {
+        "comparison": "less_than_or_equal",
+        "limit": 5.0,
+        "observed": 0.07577203706963725,
+        "passed": true,
+        "utilization_fraction": 0.015154407413927451
+      }
+    },
+    "status": "PASS"
+  },
+  "attempt": 2,
+  "base_preflight_contract": {
+    "current_git_blob_sha256": "1ecdf4bf37c6db107b69f5a0227b9f93a70650ab31edc0a1ebc2481df72169d1",
+    "equivalent_1024_row_work_units": 477.5,
+    "historical_source_commit": "14e6b0e15ffdc9dd9a764a3c83246d27210c5d23",
+    "path": "configs/post_gate5_preflight.yaml",
+    "pinned_git_blob_sha256": "1ecdf4bf37c6db107b69f5a0227b9f93a70650ab31edc0a1ebc2481df72169d1"
+  },
+  "benchmark": {
+    "classical_rbf_diagnostics": {
+      "clipped_eigenvalues": 0,
+      "gamma": 0.06286006623877469,
+      "landmarks": 256,
+      "maximum_negative_eigenvalue": 0.0,
+      "minimum_eigenvalue_before_clip": 0.0005735364978488507
+    },
+    "compressed_feature_count": 8,
+    "cpu_seconds": 10.765625,
+    "data_reupload_layers": 2,
+    "gpu_hours": 0.0,
+    "primary_control_feature_count": 64,
+    "projected_kernel_diagnostics": {
+      "clipped_eigenvalues": 0,
+      "gamma": 2.5061862456935087,
+      "landmarks": 256,
+      "maximum_negative_eigenvalue": 0.0,
+      "minimum_eigenvalue_before_clip": 0.000210252419470538
+    },
+    "qubits": 8,
+    "seed": 20260713,
+    "statevector_concurrency": 1,
+    "steps": [
+      {
+        "cpu_seconds": 0.1875,
+        "peak_working_set_gib": 0.135528564453125,
+        "step": "Q01b_FQK_shared_training_projection",
+        "wall_seconds": 0.19263130001490936
+      },
+      {
+        "cpu_seconds": 0.015625,
+        "peak_working_set_gib": 0.135528564453125,
+        "step": "Q01b_FQK_shared_validation_projection",
+        "wall_seconds": 0.023983200022485107
+      },
+      {
+        "cpu_seconds": 0.0625,
+        "peak_working_set_gib": 0.14504241943359375,
+        "step": "Q01b_FQK_shared_projected_kernel_geometry",
+        "wall_seconds": 0.07020819996250793
+      },
+      {
+        "cpu_seconds": 0.0,
+        "peak_working_set_gib": 0.14504241943359375,
+        "step": "Q01b_FQK_two_head_fit_and_inference",
+        "wall_seconds": 0.0027540000155568123
+      },
+      {
+        "cpu_seconds": 0.046875,
+        "peak_working_set_gib": 0.14847946166992188,
+        "step": "A02_classical_RBF_geometry",
+        "wall_seconds": 0.04871530004311353
+      },
+      {
+        "cpu_seconds": 0.0,
+        "peak_working_set_gib": 0.14847946166992188,
+        "step": "A02_classical_RBF_two_head_fit_and_inference",
+        "wall_seconds": 0.0027788999723270535
+      },
+      {
+        "cpu_seconds": 0.96875,
+        "peak_working_set_gib": 0.14847946166992188,
+        "step": "C06-T17_cost",
+        "wall_seconds": 1.0139455000171438
+      },
+      {
+        "cpu_seconds": 0.015625,
+        "peak_working_set_gib": 0.14847946166992188,
+        "step": "A01-T04_cost",
+        "wall_seconds": 0.007852300012018532
+      },
+      {
+        "cpu_seconds": 0.09375,
+        "peak_working_set_gib": 0.14847946166992188,
+        "step": "C05-T17_compressed_cost",
+        "wall_seconds": 0.10132419998990372
+      },
+      {
+        "cpu_seconds": 1.671875,
+        "peak_working_set_gib": 0.14847946166992188,
+        "step": "C01-T18_feasibility",
+        "wall_seconds": 1.6719897000002675
+      },
+      {
+        "cpu_seconds": 0.9375,
+        "peak_working_set_gib": 0.14847946166992188,
+        "step": "C02-T02_feasibility",
+        "wall_seconds": 0.9830596999963745
+      },
+      {
+        "cpu_seconds": 0.328125,
+        "peak_working_set_gib": 0.14847946166992188,
+        "step": "C03-T13_feasibility",
+        "wall_seconds": 0.32994799996959046
+      },
+      {
+        "cpu_seconds": 5.328125,
+        "peak_working_set_gib": 0.20138931274414062,
+        "step": "C04-T28_feasibility",
+        "wall_seconds": 5.4139922999893315
+      },
+      {
+        "cpu_seconds": 0.140625,
+        "peak_working_set_gib": 0.20138931274414062,
+        "step": "C05-T12_feasibility",
+        "wall_seconds": 0.14489639998646453
+      },
+      {
+        "cpu_seconds": 0.84375,
+        "peak_working_set_gib": 0.20138931274414062,
+        "step": "C06-T17_feasibility",
+        "wall_seconds": 0.8459279999951832
+      },
+      {
+        "cpu_seconds": 0.015625,
+        "peak_working_set_gib": 0.20138931274414062,
+        "step": "A01-T04_feasibility",
+        "wall_seconds": 0.011358199990354478
+      },
+      {
+        "cpu_seconds": 0.09375,
+        "peak_working_set_gib": 0.20138931274414062,
+        "step": "C05-T17_feasibility",
+        "wall_seconds": 0.08653610001783818
+      }
+    ],
+    "training_rows": 1024,
+    "validation_rows": 256,
+    "wall_seconds": 10.968299900006969
+  },
+  "branch": "main",
+  "campaign_projection": {
+    "equivalent_1024_row_work_units": 477.5,
+    "observed_free_disk_gib": 54.90834426879883,
+    "observed_peak_rss_gib": 0.20138931274414062,
+    "projected_cpu_core_hours": 1.7849256727430556,
+    "projected_free_disk_after_artifacts_gib": 53.74257278442383,
+    "projected_new_artifacts_gib": 1.165771484375,
+    "projected_wall_clock_days": 0.07577203706963725,
+    "projection_margin": 1.25
+  },
+  "claim_boundary": "Synthetic compute-admission evidence only; no model-performance, research-data, Gate 5 reinterpretation, hardware, or Gate 6 claim.",
+  "corrects_decision_id": "D009",
+  "decision_id": "D010",
+  "evidence_scope": "deterministic synthetic compute admission only",
+  "integrity": {
+    "calibration_rows_read": 0,
+    "clean_source_verified_before_execution": true,
+    "development_rows_read": 0,
+    "final_test_rows_read": 0,
+    "gate6_runs": 0,
+    "hardware_jobs_submitted": 0,
+    "kernel_matrices_persisted": 0,
+    "statevectors_persisted": 0,
+    "synthetic_rows_used": 1280
+  },
+  "machine": {
+    "declared_reference_cpu": "Intel Core i9-13900HX",
+    "declared_reference_gpu": "NVIDIA GeForce RTX 4060 Laptop GPU; unused",
+    "logical_processors": 32,
+    "numpy": "2.5.1",
+    "physical_memory_gib": 31.70067596435547,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.6",
+    "scikit_learn": "1.9.0"
+  },
+  "next_step": "Prepare D011 development-only execution decision",
+  "protocol_id": "P001",
+  "schema_version": "0.1.0",
+  "source_commit": "882bfd58d1154194b011dfc6fcef974cfe96ead3",
+  "source_hash_scope": "committed Git blob bytes",
+  "source_hashes": {
+    "base_preflight_config": "1ecdf4bf37c6db107b69f5a0227b9f93a70650ab31edc0a1ebc2481df72169d1",
+    "benchmark_script": "a427d961f23241ad6d21a747920a0d7c0e46d6d91b2ab6e158922f1b7f7e8491",
+    "correction_config": "914698c4cc7d8c578baf0e04b9413a68d2d650c4d38ea930f198c378b3799375",
+    "guard_source": "919b423771f9eb9aa7ef353abdebefc22d06e2b32c6aa9f7898f0a300146bfc6",
+    "implementation_config": "5459bd93d476e891ef197dd3c513c88d674f866e4a23d382c46ef3f5d9a1fc59",
+    "lockfile": "6b3fc5c79950d5fdfc70d7b0dfda62bae207a441a4610d9504b67bab20edbb99",
+    "model_registry": "7ea0bfec43ebf425b7668d68bef318538be2c2e6f9c524c52cdeeebc6596c5d1",
+    "model_source": "26340ffb72eb307946c2b428f85d49a1abba0e511b2e217711103b36b90b6308",
+    "qml_source": "76b31373ce99a0739386e09712149abad2c372eae84a00955dd8360ce2d7e8f2"
+  },
+  "status": "PASS",
+  "telemetry_validation": {
+    "absolute_difference_bytes": 49152,
+    "adapter_current_bytes": 127651840,
+    "adapter_peak_bytes": 127651840,
+    "allowed_difference_bytes": 67108864,
+    "backend": "windows_psapi_typed",
+    "counters_consistent": true,
+    "independent_current_bytes": 127700992,
+    "status": "PASS"
+  }
+}

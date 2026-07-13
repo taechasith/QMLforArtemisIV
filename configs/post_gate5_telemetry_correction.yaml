@@ -1,10 +1,11 @@
 schema_version: "0.1.0"
 decision_id: "D010"
 protocol_id: "P001"
-status: "accepted_telemetry_correction_and_one_preflight_rerun_authorized"
+status: "completed_synthetic_compute_admission_pass"
 prepared_date: "2026-07-13"
 accepted_date: "2026-07-13"
-preflight_execution_authorized: true
+preflight_was_authorized: true
+preflight_execution_authorized: false
 research_data_fitting_authorized: false
 exploratory_execution_authorized: false
 
@@ -76,6 +77,22 @@ reporting:
   stop_figure_rule: "update RFIG-029 and the future-research register if attempt 2 stops"
 
 outcome:
-  current_status: "pending_telemetry_validation_and_rerun"
+  current_status: "PASS"
+  completed_date: "2026-07-13"
+  source_commit: "882bfd58d1154194b011dfc6fcef974cfe96ead3"
+  result: "data/processed/reporting/post_gate5_compute_preflight_rerun.json"
+  figure: "RFIG-030"
+  telemetry_only_status: "PASS"
+  telemetry_only_adapter_current_bytes: 127705088
+  telemetry_only_independent_current_bytes: 127754240
+  telemetry_only_absolute_difference_bytes: 49152
+  formal_rerun_telemetry_status: "PASS"
+  formal_rerun_telemetry_absolute_difference_bytes: 49152
+  projected_cpu_core_hours: 1.7849256727430556
+  projected_wall_clock_days: 0.07577203706963725
+  projected_new_artifacts_gib: 1.165771484375
+  observed_peak_rss_gib: 0.20138931274414062
+  projected_free_disk_after_artifacts_gib: 53.74257278442383
+  all_five_admission_checks_passed: true
   pass_effect: "permits preparation of D011 only; development-row fitting remains unauthorized"
   stop_effect: "P001 execution remains locked and no further preflight retry is authorized"

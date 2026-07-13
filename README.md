@@ -130,7 +130,7 @@ without a new prospective decision, and RFIG-029 records the stop plus its
 future-research firewall. RFIG-030 remains absent because no resource-margin
 result exists.
 
-D010 is now accepted as a prospective telemetry-only correction. It replaces
+D010 was accepted as a prospective telemetry-only correction. It replaces
 the untyped Windows process-memory call with explicitly typed operating-system
 interfaces, requires agreement with an independent PowerShell working-set
 reading, and binds provenance to committed Git blobs. D009 remains an
@@ -139,6 +139,18 @@ one unchanged synthetic preflight attempt; it changes no seed, row count,
 circuit, control, projection, margin, or resource ceiling. Development,
 calibration, final-test, hardware/GPU, and Gate 6 work remain locked. A PASS
 would permit preparation of D011 only, not research-data fitting.
+
+The required telemetry-only check passed with a 49,152-byte adapter-versus-
+PowerShell difference against a 64 MiB allowance. The single unchanged D010
+attempt 2 then completed every projected head and matched control and passed
+all five compute limits. With the frozen 477.5-work-unit projection and 25%
+margin, it estimates 1.785 CPU-core-hours, 0.0758 sequential wall-days,
+1.166 GiB of new artifacts, 0.201 GiB peak process memory, and 53.743 GiB free
+disk after artifacts. Development, calibration, and final-test reads remained
+zero; GPU, hardware, and Gate 6 runs remained zero. RFIG-030 records these
+margins. This is compute-admission evidence only, not QML performance. D010 is
+closed to rerun, and a separately accepted D011 is required before any
+development-row fitting.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
@@ -201,6 +213,7 @@ through a dated deviation record.
 - data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv: P001 near-term versus appendix/future QML boundary for RFIG-024.
 - data/processed/reporting/post_gate5_exploratory_trial_manifest.csv: 30 balanced paired projected-kernel configurations frozen but not run.
 - data/processed/reporting/post_gate5_future_research_discussion.csv: schema-locked register for evidence-based future-work suggestions after failures or stops.
+- data/processed/reporting/post_gate5_compute_preflight_rerun.json: source-bound D010 synthetic compute-admission PASS evidence.
 - data/processed/reporting/gate5_cv_fold_manifest.csv: label-agnostic D005 whole-group CV assignment for RFIG-020.
 - data/processed/reporting/gate5_preflight_audit.json: development-only Gate 5 data and lock audit.
 - data/processed/reporting/gate5_initial_execution_plan.csv: all 450 accepted D006 first-stage tasks (270 candidates and 180 non-winning matched-control views), ready under the clean-source fit guard.
@@ -211,6 +224,7 @@ through a dated deviation record.
 - scripts/make_gate5_result_figures.py: predeclared RFIG-021 through RFIG-023 development-result figures.
 - scripts/make_post_gate5_exploratory_figures.py: RFIG-024 protocol-boundary diagram generator.
 - scripts/make_post_gate5_implementation_figure.py: RFIG-025 D008 implementation-freeze and future-research-firewall diagram generator.
+- scripts/make_post_gate5_preflight_result_figure.py: RFIG-030 D010 laptop resource-admission chart generator.
 - scripts/run_post_gate5_compute_preflight.py: D010-corrected D009 synthetic-only resource benchmark; it cannot read research rows or authorize fitting.
 - src/openqfuel/post_gate5.py: D008 synthetic-only scope guard and future-research firewall validator.
 - scripts/fetch_public_data.py: immutable-source downloader.

@@ -1,11 +1,11 @@
 # Post-Gate-5 Telemetry Correction and Preflight Rerun
 
-Version: 0.1.0
+Version: 0.1.1
 Decision: D010
 Protocol: P001
 Prepared: 2026-07-13
 Accepted: 2026-07-13
-Status: Accepted for telemetry validation and one unchanged synthetic preflight rerun; research-data execution unauthorized
+Status: Completed with synthetic compute admission PASS; D011 and research-data execution unauthorized
 
 ## Decision
 
@@ -64,6 +64,26 @@ SHA-256 is pinned in the D010 config. The following remain unchanged:
 A PASS generates RFIG-030 from the source-bound result JSON. A STOP updates
 RFIG-029 and the future-research register. Missing values are never plotted as
 zero.
+
+## Outcome
+
+The telemetry-only check passed with a 49,152-byte difference between the
+typed adapter and PowerShell, below the frozen 64 MiB allowance. The one
+authorized full rerun then completed once from clean source commit `882bfd5`.
+Every projected head and matched control finished with finite outputs, and all
+five admission checks passed under the unchanged 477.5-work-unit projection
+and 25% margin:
+
+- 1.7849 CPU-core-hours against a 250 core-hour maximum;
+- 0.0758 sequential wall-days against a five-day maximum;
+- 1.1658 GiB new artifacts against a 20 GiB maximum;
+- 0.2014 GiB peak process memory against a 24 GiB maximum; and
+- 53.7426 GiB projected free disk against a 20 GiB minimum.
+
+The result used synthetic rows only. Development, calibration, and final-test
+reads were zero; hardware, GPU, and Gate 6 runs were zero. RFIG-030 records the
+resource margins. The authority is exhausted and no additional preflight rerun
+is permitted.
 
 ## Consequence
 
