@@ -1,17 +1,18 @@
-# Post-Gate-5 Exploratory Implementation Freeze Candidate
+# Post-Gate-5 Exploratory Implementation Freeze
 
-Version: 0.1.0
+Version: 0.1.1
 Decision: D008
 Protocol: P001
 Prepared: 2026-07-13
-Status: Candidate pending human acceptance; no experiment authorized
+Accepted: 2026-07-13
+Status: Accepted by human research lead; implementation and synthetic validation authorized; research-data execution remains unauthorized
 
-## Decision requested
+## Decision
 
-D008 asks whether to freeze the exact implementation contract for the two
-post-Gate-5 exploratory tracks. Acceptance would authorize implementation and
-synthetic correctness validation only. It would not authorize a research-data
-fit, calibration or final-test access, a Gate 5 reinterpretation, hardware
+D008 freezes the exact implementation contract for the two post-Gate-5
+exploratory tracks. Acceptance authorizes implementation and synthetic
+correctness validation only. It does not authorize a research-data fit,
+calibration or final-test access, a Gate 5 reinterpretation, hardware
 execution, or Gate 6.
 
 The machine-readable authority is `configs/post_gate5_exploratory.yaml`. If
@@ -171,8 +172,7 @@ observed evidence from discussion-only future improvements.
 
 ## Acceptance boundary
 
-Until the human research lead explicitly accepts D008, implementation and
-synthetic validation remain unauthorized. Even after D008 acceptance, a clean
+D008 is accepted for implementation and synthetic validation only. A clean
 source-bound preflight and a separate execution decision are required before
 any development-row fit. Calibration rows, final-test rows, hardware runs,
 larger-qubit runs, and Gate 6 remain locked.

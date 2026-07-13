@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.8
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D008 exploratory implementation freeze candidate pending; Gate 6 unauthorized
+Version: 0.6.9
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D008 exploratory implementation freeze accepted; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-13
-Recommended next decision: Accept, revise, or reject D008 before implementation; Gate 6 remains unauthorized
+Recommended next decision: Implement D008 code and synthetic validation only; research-data fitting requires a separate clean-source execution decision; Gate 6 remains unauthorized
 
 ## 1. Proposed title
 
@@ -811,16 +811,16 @@ read, Gate 6 run, or reinterpretation of Gate 5. The protocol document is
 `docs/post_gate5_exploratory_protocol.md`; RFIG-024 records its paper-ready
 decision boundary.
 
-D008 is the pending implementation-freeze candidate for P001. It fixes the
+D008 is the accepted implementation freeze for P001. It fixes the
 projected one-qubit-density-matrix feature map, 30 balanced paired projection
 configurations, Q01b and FQK endpoint orderings, exact classical and frozen
 model controls, successive-halving rungs, 20 selected-configuration seeds,
 local compute ceilings, and RFIG-025 through RFIG-029 reporting obligations.
 It also requires every failure or stopped step to commit an evidence-based
 future-research improvement while marking that improvement as prohibited from
-changing or retrying the active pipeline. D008 acceptance would authorize only
-implementation and synthetic validation; a separate execution decision would
-still be required before fitting development rows.
+changing or retrying the active pipeline. The accepted D008 scope authorizes
+implementation and synthetic validation only; a separate execution decision is
+still required before fitting development rows.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

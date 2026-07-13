@@ -1,7 +1,7 @@
 schema_version: "0.4.2"
 status: "gate_4_accepted_development_generation_authorized"
 gate5_status: "accepted_technical_trigger_fail_new_algorithm_rejected"
-post_gate5_exploratory_status: "d008_candidate_implementation_freeze_pending_no_experiment_authorized"
+post_gate5_exploratory_status: "d008_accepted_implementation_and_synthetic_validation_authorized_research_fit_locked"
 prepared_date: "2026-07-12"
 scenario_generation_config: "configs/scenario_generation.yaml"
 
@@ -343,7 +343,7 @@ gate5_literature_hardening:
   claim_boundary_rule: "apparent QML gains must be checked against bandwidth, entanglement removal, random-feature approximation, parameter count, sample selection, and no-reference-feasible concentration before any trigger recommendation"
 
 post_gate5_exploratory_protocol:
-  status: "d008_candidate_implementation_freeze_pending_no_experiment_authorized"
+  status: "d008_accepted_implementation_and_synthetic_validation_authorized_research_fit_locked"
   opened_date: "2026-07-13"
   protocol_doc: "docs/post_gate5_exploratory_protocol.md"
   source_matrix: "data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv"
@@ -351,7 +351,11 @@ post_gate5_exploratory_protocol:
   implementation_freeze_config: "configs/post_gate5_exploratory.yaml"
   implementation_freeze_doc: "docs/post_gate5_implementation_freeze.md"
   implementation_freeze_figure: "RFIG-025"
-  implementation_freeze_decision: "pending_human_accept_reject_or_revise"
+  implementation_freeze_decision: "accepted_by_human_research_lead"
+  implementation_freeze_accepted_date: "2026-07-13"
+  implementation_authorized: true
+  synthetic_validation_authorized: true
+  research_data_fitting_authorized: false
   gate5_result_unchanged: true
   calibration_access: false
   final_test_access: false

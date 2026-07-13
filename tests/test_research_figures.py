@@ -60,6 +60,7 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
         "development_and_calibration_diagnostic",
         "pre_fit_literature_hardening",
         "pre_fit_runner_freeze",
+        "pre_execution_implementation_freeze_accepted",
     }
     for row in rows:
         assert "final_test" not in row["source_data"]

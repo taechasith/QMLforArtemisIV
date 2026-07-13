@@ -898,21 +898,22 @@ The next allowed technical step is an implementation freeze for Q01b and FQK
 only. No exploratory model fit, calibration read, final-test read, hardware
 claim, or Gate 6 run is authorized by this entry.
 
-### D008 candidate - post-Gate-5 exploratory implementation freeze
+### D008 accepted - post-Gate-5 exploratory implementation freeze
 
 Date prepared: 2026-07-13
-Status: **Candidate pending human acceptance; no implementation or experiment authorized**
+Date accepted: 2026-07-13
+Status: **Accepted for implementation and synthetic validation only; research-data execution unauthorized**
 Authority required: Human research lead
 
-Decision requested:
+Decision:
 
-Accept, reject, or revise the exact implementation contract for Q01b projected
-quantum-kernel cost regression and FQK feasibility-only quantum-kernel
-classification. D008 acceptance would authorize implementation and synthetic
-correctness validation only. A separate clean-source execution decision would
-still be required before any development-row fit.
+The human research lead accepted the exact implementation contract for Q01b
+projected quantum-kernel cost regression and FQK feasibility-only
+quantum-kernel classification. The accepted scope authorizes implementation
+and synthetic correctness validation only. A separate clean-source execution
+decision is still required before any development-row fit.
 
-Frozen candidate:
+Accepted freeze:
 
 - Use the existing five grouped development folds, fold-local preprocessing,
   nested hash-selected rung rows, and locked calibration/final boundaries.
@@ -946,10 +947,9 @@ Every such suggestion must state `new_protocol_required=true`,
 `post_outcome_retry_authorized=false`. The record informs the paper discussion
 but cannot alter, extend, retry, or rescue P001.
 
-Evidence prepared before decision:
+Evidence accepted:
 
-- `configs/post_gate5_exploratory.yaml` is the machine-readable freeze
-  candidate.
+- `configs/post_gate5_exploratory.yaml` is the machine-readable freeze.
 - `docs/post_gate5_implementation_freeze.md` is the human-readable contract.
 - `data/processed/reporting/post_gate5_exploratory_trial_manifest.csv` contains
   30 paired rows, all marked `frozen_not_run`.
@@ -957,8 +957,8 @@ Evidence prepared before decision:
   only the required schema header; no outcome exists.
 - RFIG-025 is a pre-execution methods diagram, not performance evidence.
 
-Consequence while pending:
+Consequence after acceptance:
 
-No implementation, synthetic validation, research fit, calibration/final-test
-read, hardware run, larger-qubit run, Gate 5 reinterpretation, or Gate 6 work
-is authorized. Rejection retains the candidate record and runs nothing.
+Implementation and synthetic validation are authorized. Research fit,
+calibration/final-test read, hardware run, larger-qubit run, Gate 5
+reinterpretation, and Gate 6 work remain unauthorized by D008.

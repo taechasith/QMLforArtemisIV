@@ -26,17 +26,19 @@ def _rows(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle))
 
 
-def test_d008_is_candidate_and_cannot_run() -> None:
+def test_d008_is_accepted_and_research_fit_remains_locked() -> None:
     config = _config()
     assert config["decision_id"] == "D008"
     assert config["protocol_id"] == "P001"
     assert config["status"] == (
-        "candidate_implementation_freeze_pending_human_acceptance"
+        "accepted_implementation_freeze_implementation_and_synthetic_validation_authorized"
     )
+    assert config["accepted_date"] == "2026-07-13"
+    assert config["implementation_authorized"] is True
+    assert config["synthetic_validation_authorized"] is True
+    assert config["research_data_fitting_authorized"] is False
     assert config["execution_authorized"] is False
-    assert config["acceptance"]["current_decision"] == (
-        "pending_human_accept_reject_or_revise"
-    )
+    assert config["acceptance"]["current_decision"] == "accepted_by_human_research_lead"
     locks = config["locks"]
     assert locks["gate5_result_unchanged"] is True
     assert locks["d006_d007_evidence_immutable"] is True
@@ -152,13 +154,13 @@ def test_compute_and_reporting_fit_the_recorded_workstation() -> None:
     assert "failure" in reporting["planned_result_figures"][-1]["content"]
 
 
-def test_governance_describes_d008_as_pending() -> None:
+def test_governance_describes_d008_as_accepted_without_research_fit() -> None:
     required = {
-        "README.md": "D008 is prepared as the candidate implementation freeze",
-        "research_protocol.md": "D008 is the pending implementation-freeze candidate",
-        "docs/post_gate5_exploratory_protocol.md": "D008 implementation freeze candidate prepared but not accepted",
-        "docs/post_gate5_implementation_freeze.md": "Candidate pending human acceptance; no experiment authorized",
-        "docs/decision_log.md": "D008 candidate - post-Gate-5 exploratory implementation freeze",
+        "README.md": "D008 is accepted as the implementation freeze",
+        "research_protocol.md": "D008 is the accepted implementation freeze",
+        "docs/post_gate5_exploratory_protocol.md": "D008 implementation freeze accepted",
+        "docs/post_gate5_implementation_freeze.md": "Accepted by human research lead",
+        "docs/decision_log.md": "D008 accepted - post-Gate-5 exploratory implementation freeze",
     }
     for relative, phrase in required.items():
         text = (ROOT / relative).read_text(encoding="utf-8")

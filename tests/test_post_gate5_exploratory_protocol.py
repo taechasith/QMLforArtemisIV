@@ -20,8 +20,12 @@ def test_post_gate5_exploratory_protocol_scope_is_narrow() -> None:
     )
     protocol = config["post_gate5_exploratory_protocol"]
     assert protocol["status"] == (
-        "d008_candidate_implementation_freeze_pending_no_experiment_authorized"
+        "d008_accepted_implementation_and_synthetic_validation_authorized_research_fit_locked"
     )
+    assert protocol["implementation_freeze_decision"] == "accepted_by_human_research_lead"
+    assert protocol["implementation_authorized"] is True
+    assert protocol["synthetic_validation_authorized"] is True
+    assert protocol["research_data_fitting_authorized"] is False
     assert protocol["gate5_result_unchanged"] is True
     assert protocol["calibration_access"] is False
     assert protocol["final_test_access"] is False

@@ -1,8 +1,12 @@
 schema_version: "0.1.0"
 decision_id: "D008"
 protocol_id: "P001"
-status: "candidate_implementation_freeze_pending_human_acceptance"
+status: "accepted_implementation_freeze_implementation_and_synthetic_validation_authorized"
 prepared_date: "2026-07-13"
+accepted_date: "2026-07-13"
+implementation_authorized: true
+synthetic_validation_authorized: true
+research_data_fitting_authorized: false
 execution_authorized: false
 
 provenance:
@@ -193,6 +197,6 @@ reporting:
   result_figure_rule: "generate figures only from source-bound machine-readable outputs; absent results must remain absent rather than shown as zero"
 
 acceptance:
-  current_decision: "pending_human_accept_reject_or_revise"
-  acceptance_effect: "authorize implementation and synthetic validation only; research-data fitting still requires a clean-source preflight and a separate execution decision"
-  rejection_effect: "retain D008 as a candidate record and run nothing"
+  current_decision: "accepted_by_human_research_lead"
+  acceptance_effect: "authorizes implementation and synthetic validation only; research-data fitting still requires a clean-source preflight and a separate execution decision"
+  rejection_effect: "historical before acceptance: retain D008 as a candidate record and run nothing"

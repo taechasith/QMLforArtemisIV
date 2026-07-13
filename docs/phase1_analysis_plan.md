@@ -1,8 +1,8 @@
 # Frozen Phase 1 Analysis Plan
 
-Version: 0.6.8
+Version: 0.6.9
 Prepared: 2026-07-12
-Status: Gate 5 accepted with technical outcome FAIL; D008 exploratory implementation freeze candidate pending; Gate 6 unauthorized
+Status: Gate 5 accepted with technical outcome FAIL; D008 exploratory implementation freeze accepted; Gate 6 unauthorized
 
 ## Analysis sequence
 
@@ -161,7 +161,7 @@ pre-result acceptance record specifying feature maps, controls, budgets,
 diagnostics, compute limits, and figures. Calibration and final-test data remain
 locked.
 
-### D008 candidate implementation freeze
+### D008 accepted implementation freeze
 
 D008 prospectively fixes 30 balanced projected-kernel configurations shared by
 Q01b and FQK. Both tracks use the existing five grouped development folds,
@@ -175,8 +175,9 @@ controls, compute ceilings, and signal boundaries are in
 Every technical failure, resource stop, undefined metric, terminal
 nonadvancement, or scientific negative must create and commit a bounded
 future-research discussion record. Such a record cannot change a current
-trial, rung, threshold, control, or retry decision. D008 remains pending, so no
-implementation or fit is currently authorized.
+trial, rung, threshold, control, or retry decision. D008 authorizes
+implementation and synthetic validation only; development-row fitting still
+requires a separate clean-source execution decision.
 
 ## Endpoints
 

@@ -158,8 +158,10 @@ def save(fig: plt.Figure, path: Path) -> tuple[Path, Path]:
 def draw(path: Path) -> tuple[Path, Path]:
     config = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
     trials = read_csv(MANIFEST)
-    if config["status"] != "candidate_implementation_freeze_pending_human_acceptance":
-        raise ValueError("RFIG-025 may only describe the pending D008 candidate")
+    if config["status"] != (
+        "accepted_implementation_freeze_implementation_and_synthetic_validation_authorized"
+    ):
+        raise ValueError("RFIG-025 may only describe the accepted D008 freeze")
     if len(trials) != 30 or {row["execution_status"] for row in trials} != {
         "frozen_not_run"
     }:
@@ -181,7 +183,7 @@ def draw(path: Path) -> tuple[Path, Path]:
     ax.text(
         0.0,
         0.942,
-        "Candidate pending human acceptance; methods-only record with zero research fits and all locked data boundaries retained",
+        "Accepted for implementation and synthetic validation; zero research fits and all locked data boundaries retained",
         transform=ax.transAxes,
         ha="left",
         va="top",
@@ -335,7 +337,7 @@ def register(png: Path, svg: Path) -> None:
             "title": "D008 exploratory implementation freeze",
             "phase": "Post-Gate-5 exploratory protocol",
             "paper_section": "Methods: exploratory implementation freeze",
-            "evidence_status": "pre_execution_implementation_freeze_candidate",
+            "evidence_status": "pre_execution_implementation_freeze_accepted",
             "source_data": ";".join(
                 [
                     str(CONFIG.relative_to(ROOT)).replace("\\", "/"),
@@ -350,8 +352,8 @@ def register(png: Path, svg: Path) -> None:
             "svg_path": str(svg.relative_to(ROOT)).replace("\\", "/"),
             "svg_sha256": sha256_file(svg),
             "svg_bytes": str(svg.stat().st_size),
-            "caption": "D008 freezes a shared 30-projection design for Q01b cost regression and FQK feasibility classification, with grouped development folds, matched controls, bounded staging, and a mandatory future-research firewall for every failure or stop.",
-            "claim_boundary": "Pre-execution candidate methods record only; no research fit, result, calibration/final-test read, Gate 5 reinterpretation, Gate 6 authorization, hardware run, or quantum-advantage claim.",
+            "caption": "Accepted D008 freezes a shared 30-projection design for Q01b cost regression and FQK feasibility classification, with grouped development folds, matched controls, bounded staging, and a mandatory future-research firewall for every failure or stop.",
+            "claim_boundary": "Accepted pre-execution methods record only; no research fit, result, calibration/final-test read, Gate 5 reinterpretation, Gate 6 authorization, hardware run, or quantum-advantage claim.",
         }
     )
     by_id[row["figure_id"]] = row

@@ -1,8 +1,8 @@
 # Post-Gate-5 Exploratory Protocol
 
-Version: 0.2.0
+Version: 0.2.1
 Opened: 2026-07-13
-Status: Opened prospectively; D008 implementation freeze candidate prepared but not accepted; execution remains unauthorized
+Status: Opened prospectively; D008 implementation freeze accepted; implementation and synthetic validation authorized; research-data execution remains unauthorized
 
 ## Purpose
 
@@ -122,12 +122,11 @@ accounting, and new paper-ready figures.
   The suggestion must remain outside the active pipeline and require a new
   prospective protocol before it can be tested.
 
-D008 now provides the candidate implementation freeze in
+D008 now provides the accepted implementation freeze in
 `docs/post_gate5_implementation_freeze.md` and
-`configs/post_gate5_exploratory.yaml`. It remains pending human acceptance.
-Acceptance would authorize implementation and synthetic validation only; a
-separate clean-source execution decision would still be required before any
-development-row fit.
+`configs/post_gate5_exploratory.yaml`. The accepted scope authorizes
+implementation and synthetic validation only; a separate clean-source
+execution decision is still required before any development-row fit.
 
 ## Machine-readable source
 

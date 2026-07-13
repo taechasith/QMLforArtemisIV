@@ -103,14 +103,15 @@ variational QML architectures, larger-qubit circuits, and hardware execution
 remain appendix or future-work topics. P001 does not authorize an experiment,
 calibration/final-test access, or Gate 6. RFIG-024 records this boundary.
 
-D008 is prepared as the candidate implementation freeze for P001. It fixes 30
-paired projected-kernel configurations, shared Q01b/FQK projections, grouped
+D008 is accepted as the implementation freeze for P001. It fixes 30 paired
+projected-kernel configurations, shared Q01b/FQK projections, grouped
 development folds, matched controls, compute ceilings for the reference
 laptop, staged reporting figures, and a mandatory future-research record for
 every failure or stop. Those records may explain what a later study could
-improve, but cannot alter or retry the active pipeline. D008 still requires
-human acceptance and currently authorizes no implementation or experiment;
-RFIG-025 records the candidate freeze.
+improve, but cannot alter or retry the active pipeline. D008 authorizes
+implementation and synthetic validation only; research-data fitting still
+requires a separate clean-source execution decision. RFIG-025 records the
+accepted pre-execution freeze.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
@@ -165,7 +166,7 @@ through a dated deviation record.
 - docs/research_figure_policy.md: required visual, provenance, and claim-boundary workflow.
 - docs/research_execution_map.md: work ownership and future decision gates.
 - docs/post_gate5_exploratory_protocol.md: prospective exploratory Q01b/FQK protocol opened after the accepted Gate 5 negative result.
-- docs/post_gate5_implementation_freeze.md: D008 candidate defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
+- docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
 - docs/decision_log.md: acceptance and deviation history.
 - data/processed/reporting/gate5_literature_hardening_matrix.csv: D004 source-to-control matrix for RFIG-019.
 - data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv: P001 near-term versus appendix/future QML boundary for RFIG-024.

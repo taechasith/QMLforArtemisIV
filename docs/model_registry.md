@@ -1,8 +1,8 @@
 # Phase 1 Model Registry
 
-Version: 0.3.8
+Version: 0.3.9
 Prepared: 2026-07-12
-Status: Gate 5 accepted with technical outcome FAIL; D008 exploratory implementation freeze candidate pending; Gate 6 unauthorized
+Status: Gate 5 accepted with technical outcome FAIL; D008 exploratory implementation freeze accepted; Gate 6 unauthorized
 
 ## Registered candidates
 
@@ -171,8 +171,9 @@ prospective decision.
 
 P001 opens a separate exploratory protocol after the accepted Gate 5 negative
 result. The entries below are not Phase 1 registered finalists, do not change
-the accepted Gate 5 result, and may not run until a later implementation freeze
-is accepted.
+the accepted Gate 5 result. D008 accepts the implementation freeze for code
+and synthetic validation only; research-data fitting still requires a later
+execution decision.
 
 | ID | Family | Exploratory role | Required boundary |
 |---|---|---|---|
@@ -183,12 +184,14 @@ Quantum reinforcement learning, dynamic circuits, quantum annealing, QAOA, new
 variational QML architectures, larger-qubit circuits, and hardware execution
 are appendix or future-work topics only under P001.
 
-D008 is now prepared as a candidate implementation freeze. It binds Q01b and
+D008 is now accepted as the implementation freeze. It binds Q01b and
 FQK to the same 30 balanced projection IDs and exact projected-state cache,
 while allowing each track to rank independently on its preregistered endpoint.
 It adds the exact classical RBF-on-PCA control because a projected-kernel gain
 is not interpretable without testing ordinary nonlinear geometry on identical
-compressed inputs. D008 is not accepted and neither registry entry may run.
+compressed inputs. Under D008, implementation and synthetic validation may run;
+neither registry entry may fit research data until a separate clean-source
+execution decision is accepted.
 
 The local ID `FQK` means feasibility-only quantum kernel. It is not the common
 literature abbreviation for a fidelity quantum kernel; historical Q01 is this
