@@ -790,9 +790,10 @@ Proposed revised rule:
 
 Outcome visibility and likely bias:
 
-Development outcomes are visible. Provisionally, Q01 has mean NRMSE 0.6466,
-C06 has 0.00874, their relative gap is 72.99, and no preregistered regime
-qualifies. D007 could therefore change the official status from `UNAVAILABLE`
+At the D007 acceptance decision, development outcomes were visible and Q01
+provisionally had mean NRMSE 0.6466,
+C06 had 0.00874, their relative gap was 72.99, and no preregistered regime
+qualified. D007 could therefore change the official status from `UNAVAILABLE`
 to a valid scientific `FAIL`. It cannot improve or recalculate a model score,
 but it changes whether existing evidence is decision-eligible, so explicit
 post-outcome human acceptance is required.
@@ -812,3 +813,12 @@ registry, reporting CSVs, and RFIG-021 through RFIG-023 from unchanged D006
 evidence. The resulting technical outcome still requires a separate human Gate 5
 accept/reject/revise decision. Calibration, final tests, Gate 6, and new
 algorithm work remain unauthorized.
+
+Reporting completion:
+
+- The reporting-only entry point ran from clean source commit `7b7db694cd7911a2643950c4c57f993046271a95` after byte-matching the D007 implementation and immutable D006 evidence to accepted candidate `7a726c8917a85f24313208eb18c33e1ccb5f703e`.
+- The derived-package manifest is complete, all embedded provenance agrees, and RFIG-021 through RFIG-023 match their registered PNG/SVG SHA-256 values.
+- The official technical trigger is `FAIL`: Q01 mean NRMSE is `0.6466136067`, C06 mean NRMSE is `0.0087390408`, the relative gap is `72.9913708168`, and zero preregistered regimes qualify.
+- Q02 and Q03 are `verified_terminal_nonadvancing`; their absent later rungs and seed reruns are `not_reached_under_frozen_eligibility`, not task failures.
+- All 871 campaign tasks remain complete with zero failures, zero calibration reads, and zero final-test reads. Immutable D006 evidence did not change.
+- The human accept/reject/revise decision on this technical `FAIL` remains pending. Gate 6 and new algorithm work remain unauthorized.

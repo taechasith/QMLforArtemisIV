@@ -1,6 +1,6 @@
 schema_version: "0.4.2"
 status: "gate_4_accepted_development_generation_authorized"
-gate5_status: "d006_campaign_complete_d007_reporting_accepted_regeneration_authorized"
+gate5_status: "d007_reporting_complete_technical_trigger_fail_pending_human_decision"
 prepared_date: "2026-07-12"
 scenario_generation_config: "configs/scenario_generation.yaml"
 
@@ -359,6 +359,12 @@ gate5_runner_freeze:
   d007_accepted_candidate_commit: "7a726c8917a85f24313208eb18c33e1ccb5f703e"
   d007_acceptance_scope: "reporting-only recognition of source-bound terminal nonadvancement; no refit, rerank, retry, threshold change, locked-split read, Gate 6 work, or technical Gate 5 outcome acceptance"
   report_regeneration_authorized: true
+  reporting_completed_date: "2026-07-13"
+  reporting_source_commit: "7b7db694cd7911a2643950c4c57f993046271a95"
+  technical_trigger_status: "FAIL"
+  technical_gate5_decision: "pending_human_accept_reject_or_revise"
+  reporting_calibration_rows_read: 0
+  reporting_final_test_rows_read: 0
   reporting_provenance_required: "byte-match reporting code and immutable D006 evidence to the accepted D007 Git snapshot; preserve the campaign source separately from the clean reporting-source commit and code hashes; write and verify a complete derived-package digest manifest before figures"
   implementation: "scripts/run_phase1_development.py, scripts/run_gate5_campaign.py, openqfuel.gate5, and openqfuel.gate5_campaign"
   split_scope: "development only; calibration prohibited for fitting and selection; final payload absent and locked"

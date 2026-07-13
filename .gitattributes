@@ -10,3 +10,4 @@ experiments/phase1_seed_results.csv text eol=lf
 experiments/phase1_tuning_fold_metrics.csv text eol=lf
 experiments/phase1_tuning_regime_metrics.csv text eol=lf
 experiments/phase1_tuning_results.csv text eol=lf
+artifacts/research_figures/*.svg text eol=lf whitespace=-trailing-space

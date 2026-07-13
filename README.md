@@ -74,19 +74,21 @@ commit `7a726c8917a85f24313208eb18c33e1ccb5f703e`. This reporting-only correctio
 recognizes the exact
 source-bound terminal-nonadvancement case, evaluates D004 completeness over
 authorized/reached stages, and leaves every model score, ranking, threshold,
-seed, and campaign digest unchanged. Only the report and RFIG-021 through
-RFIG-023 are now authorized for regeneration; both reporting entry points
-verify the accepted candidate before writing. The official result remains
-`UNAVAILABLE` until that unchanged evidence validates cleanly. Any
-accepted report will preserve `6e5a620` as the campaign source while separately
+seed, and campaign digest unchanged. D007 authorized only the report and
+RFIG-021 through RFIG-023 for regeneration; both reporting entry points verify
+the accepted candidate before writing. The official D007 package now
+validates cleanly and preserves `6e5a620` as the campaign source while separately
 recording the accepted D007 candidate, the clean reporting-source commit, and
 reporter/generator hashes. Publication also byte-checks the reporter and every
 immutable D006 campaign evidence file against the accepted candidate's Git
 snapshot. A digest-bound reporting-package manifest is written last, and the
 figure generator refuses incomplete, stale, or provenance-inconsistent inputs.
-Provisionally, Q01's mean NRMSE is 0.6466 versus 0.00874 for C06, the relative
-gap is 72.99, and no regime qualifies; these values are not yet an official
-Gate 5 `FAIL`.
+The official technical trigger is `FAIL`: Q01's mean NRMSE is 0.6466 versus
+0.00874 for C06, the relative gap is 72.99, and no regime qualifies. RFIG-021
+through RFIG-023 preserve the reached-rung, 20-seed, and regime evidence. This
+negative result applies only to the preregistered development benchmark; it
+does not establish that QML can never work. A separate human Gate 5 decision
+is still required, and Gate 6 remains unauthorized.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
@@ -146,7 +148,7 @@ through a dated deviation record.
 - data/processed/reporting/gate5_preflight_audit.json: development-only Gate 5 data and lock audit.
 - data/processed/reporting/gate5_initial_execution_plan.csv: all 450 accepted D006 first-stage tasks (270 candidates and 180 non-winning matched-control views), ready under the clean-source fit guard.
 - scripts/run_gate5_campaign.py: immutable, resumable successive-halving and 20-seed Gate 5 scheduler.
-- experiments/: source-bound D006 campaign tables, audit, provisional `UNAVAILABLE` report, diagnostics, and model registry.
+- experiments/: source-bound D006 campaign tables plus the official D007 `FAIL` report package, diagnostics, and model registry.
 - data/processed/reporting/gate5_statevector_batch_benchmark.json: locked-environment synthetic equivalence/runtime record for D006, bound to QML-source, benchmark-script, and lockfile hashes.
 - src/openqfuel/gate5_reporting.py: source-bound 20-seed, five-fold, matched-control trigger evaluator, D004 diagnostic auditor, and negative-result-safe report exporter.
 - scripts/make_gate5_result_figures.py: predeclared RFIG-021 through RFIG-023 development-result figures.

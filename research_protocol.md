@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.4
-Status: Gates 1-4 accepted; D006 campaign complete; D007 reporting correction accepted; official reporting-only regeneration authorized
+Version: 0.6.5
+Status: Gates 1-4 accepted; D007 reporting complete; Gate 5 technical trigger FAIL pending separate human decision
 Prepared: 2026-07-10  
 Updated: 2026-07-13
-Recommended next decision: Regenerate and validate the official Gate 5 report under accepted D007, then accept, reject, or revise the technical Gate 5 outcome separately
+Recommended next decision: Accept, reject, or revise the official Gate 5 technical trigger FAIL; Gate 6 remains unauthorized
 
 ## 1. Proposed title
 
@@ -757,10 +757,10 @@ The D006 campaign completed on 2026-07-13 from source commit `6e5a620`: 671
 tuning tasks and 200 exact seed reruns completed with zero task failures and
 zero calibration/final-test reads. Q01 advanced through all four rungs. Q02
 and Q03 stopped at rung 128 because only 8/30 and 4/30 tasks were eligible,
-below the frozen retain count of 15. The first report remains `UNAVAILABLE`
-because the implemented selection/reporting contract incorrectly describes
-those registered early stops as terminal failures and requires diagnostics
-from later stages that were never authorized.
+below the frozen retain count of 15. The first report is preserved as an
+`UNAVAILABLE` historical artifact because the original reporting contract
+incorrectly described those registered early stops as terminal failures and
+required diagnostics from later stages that were never authorized.
 
 Deviation D007 was opened after outcomes became visible and accepted by the
 human research lead on 2026-07-13 from candidate commit
@@ -777,7 +777,14 @@ campaign source distinct from the accepted D007 candidate, clean reporting
 commit, and reporter/generator hashes. The accepted Git snapshot byte-anchors
 both the reporting implementation and every immutable D006 campaign evidence
 file; a complete derived-package digest manifest is written last and verified
-before figures.
+before figures. Reporting from clean source commit
+`7b7db694cd7911a2643950c4c57f993046271a95` validated the unchanged evidence
+and produced an official technical trigger `FAIL`: Q01 mean NRMSE
+`0.6466136067` versus C06 `0.0087390408`, relative gap `72.9913708168`, and
+zero qualifying regimes. RFIG-021 through RFIG-023 preserve the reached-rung,
+20-seed, and regime-trigger evidence. This is not a claim that QML can never
+work; it is a negative result for this preregistered development benchmark.
+The separate human Gate 5 decision remains pending.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

@@ -1,8 +1,8 @@
 # Frozen Phase 1 Analysis Plan
 
-Version: 0.6.4
+Version: 0.6.5
 Prepared: 2026-07-12
-Status: D006 development campaign complete; D007 reporting correction accepted; technical Gate 5 result remains UNAVAILABLE until reporting-only regeneration validates cleanly
+Status: D007 reporting complete; Gate 5 technical trigger FAIL pending separate human decision; Gate 6 unauthorized
 
 ## Analysis sequence
 
