@@ -179,14 +179,16 @@ absent because their governed evidence stages were not reached. A separate
 prospective human decision is required before any corrected preflight attempt.
 
 D011-C1 was accepted on 2026-07-14 as that prospective launcher-only
-correction. It moves shared synthetic-preflight helpers into the importable
-`openqfuel` package, requires a clean-source import-only smoke test, and permits
-one unchanged D011-shaped synthetic preflight attempt. The original D011 STOP
-evidence remains immutable and D011-C1 writes a separate evidence file. No
-development-row fitting, calibration/final-test access, hardware/GPU work, Gate
-5 reinterpretation, or Gate 6 work is authorized by D011-C1. A D011-C1 PASS
-would record corrected synthetic compute admission only and require a later
-human decision before the development campaign can resume.
+correction. It moved shared synthetic-preflight helpers into the importable
+`openqfuel` package, required a clean-source import-only smoke test, and
+permitted one unchanged D011-shaped synthetic preflight attempt. The smoke test
+passed, but the formal preflight stopped during correction-authority validation
+because a pinned raw Git-blob hash for the D011 config was wrong. The original
+D011 STOP evidence remains immutable and D011-C1 writes a separate STOP
+evidence file. No synthetic workload, resource admission, development-row
+fitting, calibration/final-test access, hardware/GPU work, Gate 5
+reinterpretation, or Gate 6 work was reached. A new prospective human decision
+is required before any hash-corrected launcher attempt.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
@@ -253,6 +255,7 @@ through a dated deviation record.
 - data/processed/reporting/post_gate5_future_research_discussion.csv: schema-locked register for evidence-based future-work suggestions after failures or stops.
 - data/processed/reporting/post_gate5_compute_preflight_rerun.json: source-bound D010 synthetic compute-admission PASS evidence.
 - data/processed/reporting/post_gate5_d011_fold_shape_preflight.json: source-bound D011 pre-launch technical-STOP evidence; corrected fold-shape admission was not reached.
+- data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json: source-bound D011-C1 authority-hash technical-STOP evidence; corrected fold-shape admission was still not reached.
 - data/processed/reporting/post_gate5_p001/: reserved compact D011 campaign, comparison, sensitivity, and decision evidence.
 - data/processed/reporting/gate5_cv_fold_manifest.csv: label-agnostic D005 whole-group CV assignment for RFIG-020.
 - data/processed/reporting/gate5_preflight_audit.json: development-only Gate 5 data and lock audit.

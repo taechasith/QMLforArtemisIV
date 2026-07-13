@@ -157,3 +157,8 @@ one clean-source import smoke test, and one unchanged corrected fold-shape
 preflight attempt recorded in a separate D011-C1 evidence file. Development
 campaign execution remains locked unless a later human decision explicitly
 authorizes resumption after a D011-C1 PASS.
+
+The D011-C1 smoke test passed, but the formal preflight stopped during
+correction-authority hash validation before the synthetic workload or resource
+admission. D011-C1 is terminal and now also requires a new prospective human
+decision before any hash-corrected attempt.

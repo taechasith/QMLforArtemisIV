@@ -1,0 +1,64 @@
+{
+  "schema_version": "0.1.0",
+  "decision_id": "D011-C1",
+  "corrects_decision_id": "D011",
+  "protocol_id": "P001",
+  "status": "STOP",
+  "terminal_status": "technical_failure",
+  "failed_stage": "d011_c1_authority_dependency_hash_check",
+  "failure_location": "src/openqfuel/post_gate5_campaign.py verify_d011_c1_launcher_correction",
+  "exception_type": "PermissionError",
+  "exception_message": "D011-C1 dependency hash is invalid: d011_config",
+  "command": "uv run --frozen python scripts/run_post_gate5_fold_shape_preflight.py",
+  "source_commit": "ce65b1a822188cb329b614907bc95e1ce13a1e37",
+  "branch": "main",
+  "evidence_scope": "launcher-correction authority verification only",
+  "smoke_test": {
+    "command": "uv run --frozen python -c \"import runpy; ns = runpy.run_path('scripts/run_post_gate5_fold_shape_preflight.py', run_name='__d011_c1_import_smoke__'); assert callable(ns['main'])\"",
+    "status": "PASS"
+  },
+  "dependency_hash_diagnostics": {
+    "d011_config": {
+      "path": "configs/post_gate5_development_execution.yaml",
+      "source_commit": "65dd687344b5f578282cc1fe8373bd9d6d2b2583",
+      "pinned_git_blob_sha256": "8c743ef623496dc79ea7bc9478d3db8dbda6e827ee191b2d05e6db4c33ae2bdc",
+      "actual_git_blob_sha256": "11c086c8ee5ef5b01cd3512b8e476a7d4e303208410291b0b91fce745014edd4"
+    },
+    "d011_stop_evidence": {
+      "path": "data/processed/reporting/post_gate5_d011_fold_shape_preflight.json",
+      "source_commit": "65dd687344b5f578282cc1fe8373bd9d6d2b2583",
+      "pinned_git_blob_sha256": "71d368b502832508419e94d9b044547f313b481785be88bfe372716227c4be00",
+      "actual_git_blob_sha256": "75c26237eb7ea22965029772acbade6ba8e48ec45ce6353775ed169e46cfae09"
+    },
+    "d011_launcher_script": {
+      "path": "scripts/run_post_gate5_fold_shape_preflight.py",
+      "source_commit": "65dd687344b5f578282cc1fe8373bd9d6d2b2583",
+      "pinned_git_blob_sha256": "039f8016dc4ca8ffa33724a80069c01be4531705e051b4c4bf8c244d45162e31",
+      "actual_git_blob_sha256": "12a429208dc6f48bae66e49808206a9f8cad229932ec19bdc18cfcee259d6f94"
+    }
+  },
+  "workload_progress": {
+    "launcher_imports_completed": true,
+    "d011_c1_authority_verification_reached": true,
+    "d011_authority_verification_completed": false,
+    "source_hash_verification_reached": false,
+    "synthetic_arrays_created": false,
+    "synthetic_workload_started": false,
+    "resource_admission_evaluated": false,
+    "development_campaign_started": false
+  },
+  "integrity": {
+    "development_rows_read": 0,
+    "calibration_rows_read": 0,
+    "final_test_rows_read": 0,
+    "hardware_jobs_submitted": 0,
+    "gate6_runs": 0
+  },
+  "admission_status": "NOT_REACHED",
+  "bounded_interpretation": "D011-C1 stopped while validating the correction authority's pinned dependency hashes. This is a governance-metadata failure before the synthetic fold-shaped workload, not Q01b or FQK evidence and not a laptop resource-admission result.",
+  "claim_boundary": "Technical execution-disposition evidence only; no model-performance, resource-admission, development-outcome, calibration, final-test, hardware, Gate 5, or Gate 6 claim.",
+  "retry_authorized": false,
+  "future_research_record": "P001-FR003",
+  "next_step": "Keep D011-C1 terminally stopped. Any hash-corrected launcher correction and preflight attempt require a separate prospective human decision.",
+  "reporting_commit": "pending_result_commit"
+}

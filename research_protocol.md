@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
 Version: 0.6.17
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-C1 launcher correction accepted for one unchanged preflight attempt; Gate 6 unauthorized
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-C1 ended in an authority-hash technical STOP; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: Run the D011-C1 import smoke test and one unchanged corrected fold-shape preflight from clean source; do not open development payloads unless a later human decision authorizes campaign resumption; Gate 6 remains unauthorized
+Recommended next action: Decide whether to open a new prospective hash-corrected launcher-authority decision; do not retry D011-C1 or open development payloads; Gate 6 remains unauthorized
 
 ## 1. Proposed title
 
@@ -926,16 +926,20 @@ because their evidence was not reached. A new prospective human decision is
 required before any corrected preflight attempt.
 
 D011-C1 was accepted prospectively by the human research lead on 2026-07-14.
-It corrects only the launcher/import path by moving shared synthetic-preflight
+It corrected only the launcher/import path by moving shared synthetic-preflight
 helpers into an importable `openqfuel` module and requiring an import-only
 smoke test before one unchanged corrected fold-shape preflight attempt. The
-original D011 STOP file remains immutable; D011-C1 writes separate evidence at
+smoke test passed, but the formal preflight stopped during D011-C1 authority
+verification because the pinned raw Git-blob hash for
+`configs/post_gate5_development_execution.yaml` did not match the actual raw
+Git blob. The original D011 STOP file remains immutable; D011-C1 writes
+separate STOP evidence at
 `data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json`.
-D011-C1 does not alter rows, folds, models, controls, thresholds, seeds,
-splits, margins, laptop ceilings, or claim boundaries. A PASS records synthetic
-compute admission only and requires a later human decision before any
-development campaign resumes. A STOP is terminal for D011-C1 and must be
-recorded with future-only discussion and paper figures.
+Synthetic arrays, resource admission, development rows, calibration rows,
+final-test rows, hardware/GPU work, and Gate 6 were not reached. P001-FR003
+records a future-only recommendation to validate raw dependency hashes before
+any successor correction. D011-C1 is terminal and cannot be retried without a
+new prospective human decision.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

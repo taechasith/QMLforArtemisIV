@@ -1191,6 +1191,7 @@ evidence was not reached.
 Date prepared: 2026-07-14
 Date accepted: 2026-07-14
 Initial status: **Accepted; import smoke test and one corrected preflight pending**
+Current status: **Terminal authority-hash technical STOP; corrected fold-shaped workload not reached**
 Authority: Human research lead accepted D011-C1 launcher correction and one unchanged preflight attempt
 
 Finding before correction:
@@ -1223,3 +1224,18 @@ RFIG-031 records reached corrected admission. RFIG-029 is updated only if a
 governed D011-C1 stop occurs. RFIG-026 through RFIG-028 remain unauthorized
 until a later decision permits and the campaign actually reaches development
 evidence.
+
+Execution outcome:
+
+The import-only smoke test passed from clean source commit `ce65b1a`. The
+formal preflight command then stopped during D011-C1 authority verification:
+the pinned raw Git-blob hash for `configs/post_gate5_development_execution.yaml`
+did not match the actual raw Git blob. Synthetic arrays, workload source-hash
+verification, resource admission, development rows, calibration rows, final-test
+rows, hardware/GPU work, and Gate 6 were not reached.
+
+D011-C1 is closed as a terminal technical `STOP`. P001-FR003 records that any
+successor correction must verify raw dependency hashes before acceptance while
+leaving the D011 scientific workload unchanged. RFIG-029 is updated
+cumulatively. RFIG-031 remains absent because corrected admission was not
+reached.

@@ -91,9 +91,12 @@ reporting:
   claim_boundary: "synthetic launcher-corrected compute admission only; not QML performance, research-data fitting, Gate 5 reinterpretation, hardware, or Gate 6 evidence"
 
 outcome:
-  current_status: "accepted_not_yet_run"
-  import_smoke_test_status: "pending"
-  preflight_status: "pending"
-  source_commit: "pending_clean_source_commit"
+  current_status: "terminal_authority_hash_check_stop"
+  completed_date: "2026-07-14"
+  import_smoke_test_status: "PASS"
+  preflight_status: "STOP"
+  failed_stage: "d011_c1_authority_dependency_hash_check"
+  source_commit: "ce65b1a822188cb329b614907bc95e1ce13a1e37"
   result: "data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json"
+  future_research_record: "P001-FR003"
   retry_authorized_after_attempt: false

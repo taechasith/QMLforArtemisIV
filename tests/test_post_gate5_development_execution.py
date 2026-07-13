@@ -173,8 +173,40 @@ def test_d011_c1_freezes_launcher_only_correction() -> None:
         "post_gate5_d011_c1_fold_shape_preflight.json"
     )
     assert config["source_binding"]["output"] != _config()["fold_shape_correction"]["output"]
+    assert config["outcome"]["current_status"] == "terminal_authority_hash_check_stop"
+    assert config["outcome"]["preflight_status"] == "STOP"
     for path in config["source_binding"]["additional_sources"].values():
         assert (ROOT / path).is_file()
+
+
+def test_d011_c1_stop_has_no_scientific_or_admission_result() -> None:
+    evidence = json.loads(
+        (
+            ROOT
+            / "data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert evidence["decision_id"] == "D011-C1"
+    assert evidence["status"] == "STOP"
+    assert evidence["terminal_status"] == "technical_failure"
+    assert evidence["failed_stage"] == "d011_c1_authority_dependency_hash_check"
+    assert evidence["smoke_test"]["status"] == "PASS"
+    assert evidence["admission_status"] == "NOT_REACHED"
+    assert evidence["retry_authorized"] is False
+    assert evidence["workload_progress"]["synthetic_workload_started"] is False
+    assert evidence["workload_progress"]["resource_admission_evaluated"] is False
+    assert all(value == 0 for value in evidence["integrity"].values())
+
+    with (
+        ROOT / "data/processed/reporting/post_gate5_future_research_discussion.csv"
+    ).open(newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    future = next(row for row in rows if row["record_id"] == "P001-FR003")
+    assert future["step_id"] == "D011_C1_authority_hash_check"
+    assert future["new_protocol_required"] == "true"
+    assert future["active_pipeline_change_authorized"] == "false"
+    assert future["post_outcome_retry_authorized"] == "false"
+    assert future["reporting_commit"] == evidence["reporting_commit"]
 
 
 def test_d011_c1_launcher_import_is_package_safe() -> None:

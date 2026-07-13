@@ -5,7 +5,7 @@ Decision: D011-C1
 Protocol: P001
 Prepared: 2026-07-14
 Accepted: 2026-07-14
-Status: Accepted; import smoke test and one unchanged preflight attempt pending
+Status: Terminal authority-hash technical STOP; corrected fold-shaped workload not reached
 
 ## Decision
 
@@ -47,10 +47,21 @@ evidence file at
 
 ## Consequence
 
-A D011-C1 `PASS` records corrected synthetic compute admission only and asks
-for a human decision on whether to resume the D011 development-only campaign
-authority. It does not itself authorize campaign execution.
+## Outcome
 
-A D011-C1 `STOP` is terminal for this correction attempt. It must update the
-future-research register and paper figures, and it cannot be retried or rescued
-by reducing the active design.
+The import-only smoke test passed from clean source. The formal preflight
+command then stopped during D011-C1 authority verification because the pinned
+raw Git-blob hash for `configs/post_gate5_development_execution.yaml` did not
+match the actual raw Git blob. The mismatch came from freeze metadata, not from
+the scientific workload.
+
+Synthetic arrays, source-hash verification of the workload, resource admission,
+development rows, calibration rows, final-test rows, hardware/GPU work, and
+Gate 6 were not reached. D011-C1 is therefore a terminal technical `STOP`, not
+QML evidence and not a laptop-capacity result.
+
+P001-FR003 records the future-only recommendation: any successor correction
+should compute and independently verify every pinned dependency hash from raw
+Git blob bytes before acceptance, then keep the D011 scientific workload,
+rows, models, controls, thresholds, folds, seeds, margins, and ceilings
+unchanged. D011-C1 cannot be retried or rescued by reducing the active design.
