@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
 Version: 0.6.18
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-C2 corrected fold-shape preflight PASS; D011 development campaign awaits human decision; Gate 6 unauthorized
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign resume accepted; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: Decide whether to resume the single D011 development-only campaign now that D011-C2 synthetic corrected fold-shape admission passed; calibration/final-test, hardware/GPU, Gate 5 reinterpretation, and Gate 6 remain unauthorized
+Recommended next action: Run the single source-bound D011 development-only campaign to completion or governed stop; calibration/final-test, hardware/GPU, Gate 5 reinterpretation, and Gate 6 remain unauthorized
 
 ## 1. Proposed title
 
@@ -961,6 +961,14 @@ minimum. Development, calibration, and final-test reads remained zero; hardware,
 GPU, and Gate 6 runs remained zero. RFIG-031 records this corrected admission.
 The PASS is synthetic compute-admission evidence only and requires a human
 decision before the D011 development campaign can resume.
+
+D011-R1 was accepted by the human research lead on 2026-07-14 to resume exactly
+one source-bound D011 development-only campaign after the D011-C2 PASS. It
+opens development rows only under the frozen D011 Q01b/FQK campaign contract.
+Calibration, final-test, hardware/GPU, Gate 5 reinterpretation, and Gate 6
+remain locked. Any technical failure, governed stop, terminal nonadvancement,
+or scientific negative must be recorded with future-only discussion and the
+required paper figures.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

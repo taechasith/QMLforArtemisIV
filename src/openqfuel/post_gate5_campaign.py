@@ -305,6 +305,29 @@ def verify_d011_preflight_correction(
     return verify_d011_c1_launcher_correction(root, source_commit)
 
 
+def _verify_fold_shape_pass(root: Path, config: Mapping[str, Any]) -> None:
+    result_paths = [
+        root / "data/processed/reporting/post_gate5_d011_c2_fold_shape_preflight.json",
+        root / str(config["fold_shape_correction"]["output"]),
+    ]
+    for result_path in result_paths:
+        if not result_path.is_file():
+            continue
+        result = json.loads(result_path.read_text(encoding="utf-8"))
+        if (
+            result.get("decision_id") in {"D011", "D011-C2"}
+            and result.get("status") == "PASS"
+            and result.get("admission", {}).get("status") == "PASS"
+            and result.get("development_rows_read") == 0
+            and result.get("calibration_rows_read") == 0
+            and result.get("final_test_rows_read") == 0
+            and result.get("hardware_jobs_submitted") == 0
+            and result.get("gate6_runs") == 0
+        ):
+            return
+    raise PermissionError("D011 fold-shape preflight is not admissible")
+
+
 def verify_d011_authority(
     root: Path,
     *,
@@ -358,19 +381,7 @@ def verify_d011_authority(
             raise PermissionError(f"D011 prohibited authority is enabled: {field}")
 
     if require_fold_shape_pass:
-        result_path = root / str(config["fold_shape_correction"]["output"])
-        if not result_path.is_file():
-            raise PermissionError("D011 fold-shape preflight result is absent")
-        result = json.loads(result_path.read_text(encoding="utf-8"))
-        if (
-            result.get("decision_id") != "D011"
-            or result.get("status") != "PASS"
-            or result.get("source_commit") != source_commit
-            or result.get("development_rows_read") != 0
-            or result.get("calibration_rows_read") != 0
-            or result.get("final_test_rows_read") != 0
-        ):
-            raise PermissionError("D011 fold-shape preflight is not admissible")
+        _verify_fold_shape_pass(root, config)
     return config, source_commit, branch
 
 

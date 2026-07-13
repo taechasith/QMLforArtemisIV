@@ -174,3 +174,8 @@ The D011-C2 smoke tests and corrected fold-shape synthetic preflight passed
 from clean source commit `06381d1`. This establishes corrected synthetic compute
 admission only. Development campaign execution remains locked pending the next
 human decision.
+
+The human research lead accepted D011-R1 on 2026-07-14 to resume exactly one
+source-bound D011 development-only campaign. The campaign must use the frozen
+contract in this document. Calibration, final-test, hardware/GPU, Gate 5
+reinterpretation, and Gate 6 remain locked.

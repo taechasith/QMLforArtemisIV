@@ -206,6 +206,11 @@ calibration, final-test, hardware/GPU, and Gate 6 reads/runs stayed zero.
 RFIG-031 records corrected fold-shape compute admission. The next decision is
 whether to resume the single D011 development-only campaign.
 
+D011-R1 was accepted on 2026-07-14 to resume exactly that single source-bound
+D011 development-only campaign. It opens development rows only under the frozen
+Q01b/FQK protocol. Calibration, final-test, hardware/GPU, Gate 5
+reinterpretation, and Gate 6 remain locked.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:

@@ -212,3 +212,22 @@ outcome:
   future_research_record: "P001-FR002"
   retry_authorized: false
   effect: "D011 is terminally stopped; a separate prospective launcher-correction decision is required before any new preflight attempt"
+
+campaign_resume_decision:
+  decision_id: "D011-R1"
+  accepted_date: "2026-07-14"
+  acceptance_basis: "human research lead instructed to resume the single D011 development-only campaign after D011-C2 corrected fold-shape preflight PASS"
+  prerequisite_result: "data/processed/reporting/post_gate5_d011_c2_fold_shape_preflight.json"
+  prerequisite_status: "PASS"
+  campaign_execution_authorized: true
+  campaign_count_limit: 1
+  development_rows_authorized: true
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate5_reinterpretation_authorized: false
+  gate6_authorized: false
+  result_figures: [RFIG-026, RFIG-027, RFIG-028]
+  failure_figure: "RFIG-029"
+  claim_boundary: "development-only exploratory model evidence; no calibration, final-test, mission, hardware, quantum-advantage, Gate 5 revision, or Gate 6 claim"

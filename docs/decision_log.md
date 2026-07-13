@@ -1295,3 +1295,30 @@ GPU, and Gate 6 runs were zero.
 D011-C2 is closed to rerun. This PASS is corrected synthetic compute-admission
 evidence only. It does not authorize development execution by itself; the next
 human decision is whether to resume the single D011 development-only campaign.
+
+### D011-R1 accepted - resume the single development-only campaign
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Initial status: **Accepted; campaign execution pending**
+Authority: Human research lead instructed the project to resume the D011 development-only campaign after D011-C2 PASS
+
+Decision:
+
+- Resume exactly one source-bound D011 development-only P001 campaign.
+- Use only the frozen D011 Q01b projected-kernel and FQK feasibility-only
+  protocol, folds, rows, controls, endpoint orderings, selected-seed rules,
+  sensitivity rules, and claim boundaries.
+- Treat the D011-C2 PASS as corrected fold-shape compute admission for campaign
+  entry while preserving D011 and D011-C1 STOP evidence.
+- Open development rows only; keep calibration rows, final-test rows,
+  hardware/GPU execution, Gate 5 reinterpretation, and Gate 6 locked.
+- Stop or continue only under the frozen D011 failure and eligibility policy.
+  Every technical failure, resource stop, terminal nonadvancement, or negative
+  scientific result requires future-only discussion and the required figures.
+
+Expected reporting:
+
+RFIG-026 through RFIG-028 report reached development evidence. RFIG-029 updates
+for any governed stop, terminal nonadvancement, or valid negative outcome.
+RFIG-031 remains the corrected synthetic compute-admission evidence.
