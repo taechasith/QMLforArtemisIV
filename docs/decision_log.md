@@ -500,7 +500,9 @@ F1 first-group qualification, 2026-07-12:
 - All 2,500 rows pass strict schema, relationship, finite-value, uncertainty, checksum, and decision-set audits.
 - 2,000 candidate rows are feasible; all 500 decision sets retain at least one feasible reference; no row is nonconverged.
 - No final-test payload was generated or read.
-- RFIG-010 records F0/F1 G01 coverage and the 22.7-fold observed F1/F0 wall-time ratio.
+- The F0/F1-only G01 checkpoint values remain in the audit and ledger CSVs.
+  The interim standalone visual was superseded by the three-fidelity checkpoint
+  in RFIG-015 after F2 G01 qualified.
 - The remaining F1 CPU requirement is projected at approximately 13.8 hours from G01 duration-normalized work; four independent workers imply about 3.5 hours only under ideal balance, so actual group ledgers remain authoritative.
 - A four-worker group scheduler is authorized only after this audit. It uses process-isolated ephemerides, one numerical-library thread per worker, atomic payload writes, and an exclusive append lock for the shared v2 ledger.
 
@@ -512,7 +514,9 @@ All-F1 qualification, 2026-07-12:
 - The serial G01 qualification consumed 1,268.159 seconds. The separate four-worker G02-G14 scale-up consumed 63,639.442 seconds of summed group work in 18,148.400 seconds of wall time, yielding effective concurrency 3.51.
 - Total measured F1 group work is 64,907.601 seconds (18.030 worker-hours). Combined active wall time for the serial checkpoint and parallel scale-up is 19,416.559 seconds (5.393 hours), excluding the idle interval between stages.
 - The pre-scale-up estimate of 13.8 worker-hours and 3.5 ideal wall-hours was optimistic. The scientific workload was not reduced: rows, force models, tolerances, constraints, and worker ceilings remained frozen.
-- RFIG-011 through RFIG-013 record full-F1 coverage, reference-laptop runtime, and the exact F0/F1 campaign summary.
+- RFIG-011 and RFIG-012 record full-F1 coverage and reference-laptop runtime.
+  The interim F0/F1-only campaign summary was superseded by the full F0/F1/F2
+  campaign summary in RFIG-018.
 - Outcome-visibility rule: the 4,215 no-reference sets are a reportable development limitation. They cannot motivate post-result candidate redesign or uncertainty retuning under D003.
 - Consequence: F1 is qualified. F2 may begin with one serial group and must pass its own strict first-group audit before the authorized two-worker scale-up. Model fitting remains prohibited until the full F2 audit passes.
 
