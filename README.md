@@ -113,6 +113,13 @@ implementation and synthetic validation only; research-data fitting still
 requires a separate clean-source execution decision. RFIG-025 records the
 accepted pre-execution freeze.
 
+The D008 projected-kernel primitives and synthetic validation guards are now
+implemented. Synthetic tests cover Pauli X/Y/Z one-RDM projection, the
+fold-local median-distance bandwidth, deterministic Nystrom landmark sharing,
+projected-kernel regressors/classifiers, PSD clipping, locked-scope guards,
+and the future-research firewall. No development-row fit, calibration/final
+read, hardware run, or Gate 6 work has been authorized.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -182,6 +189,7 @@ through a dated deviation record.
 - scripts/make_gate5_result_figures.py: predeclared RFIG-021 through RFIG-023 development-result figures.
 - scripts/make_post_gate5_exploratory_figures.py: RFIG-024 protocol-boundary diagram generator.
 - scripts/make_post_gate5_implementation_figure.py: RFIG-025 D008 implementation-freeze and future-research-firewall diagram generator.
+- src/openqfuel/post_gate5.py: D008 synthetic-only scope guard and future-research firewall validator.
 - scripts/fetch_public_data.py: immutable-source downloader.
 - scripts/extract_artemis2_oem.py: safe nested-archive extraction and hashing.
 - scripts/audit_artemis2_oem.py: OEM qualification and revision audit.

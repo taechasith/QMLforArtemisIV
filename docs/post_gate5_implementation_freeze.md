@@ -1,11 +1,11 @@
 # Post-Gate-5 Exploratory Implementation Freeze
 
-Version: 0.1.1
+Version: 0.1.2
 Decision: D008
 Protocol: P001
 Prepared: 2026-07-13
 Accepted: 2026-07-13
-Status: Accepted by human research lead; implementation and synthetic validation authorized; research-data execution remains unauthorized
+Status: Accepted by human research lead; implementation and synthetic validation complete; research-data execution remains unauthorized
 
 ## Decision
 
@@ -176,3 +176,9 @@ D008 is accepted for implementation and synthetic validation only. A clean
 source-bound preflight and a separate execution decision are required before
 any development-row fit. Calibration rows, final-test rows, hardware runs,
 larger-qubit runs, and Gate 6 remain locked.
+
+Implementation status: projected-kernel primitives, deterministic Nystrom
+landmarks, estimator wrappers, scope guards, and synthetic tests are complete.
+The implementation result is not performance evidence. It only permits the
+next governance step: a separate clean-source compute preflight proposal before
+any development-row fitting can be considered.

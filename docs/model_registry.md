@@ -1,8 +1,8 @@
 # Phase 1 Model Registry
 
-Version: 0.3.9
+Version: 0.3.10
 Prepared: 2026-07-12
-Status: Gate 5 accepted with technical outcome FAIL; D008 exploratory implementation freeze accepted; Gate 6 unauthorized
+Status: Gate 5 accepted with technical outcome FAIL; D008 projected-kernel implementation and synthetic validation complete; Gate 6 unauthorized
 
 ## Registered candidates
 
@@ -192,6 +192,12 @@ is not interpretable without testing ordinary nonlinear geometry on identical
 compressed inputs. Under D008, implementation and synthetic validation may run;
 neither registry entry may fit research data until a separate clean-source
 execution decision is accepted.
+
+The projected-kernel implementation now exists in `openqfuel.qml` with
+synthetic-only validation for one-RDM Pauli projection, fold-local bandwidth,
+deterministic landmarks, PSD clipping, regression, and feasibility
+classification. This makes Q01b/FQK code testable, but it does not make either
+entry a research result or authorize development-row fitting.
 
 The local ID `FQK` means feasibility-only quantum kernel. It is not the common
 literature abbreviation for a fidelity quantum kernel; historical Q01 is this

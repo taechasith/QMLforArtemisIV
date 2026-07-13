@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.9
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D008 exploratory implementation freeze accepted; Gate 6 unauthorized
+Version: 0.6.10
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D008 exploratory implementation and synthetic validation complete; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-13
-Recommended next decision: Implement D008 code and synthetic validation only; research-data fitting requires a separate clean-source execution decision; Gate 6 remains unauthorized
+Recommended next decision: Prepare D009 clean-source compute preflight before any exploratory development-row fit; Gate 6 remains unauthorized
 
 ## 1. Proposed title
 
@@ -821,6 +821,14 @@ future-research improvement while marking that improvement as prohibited from
 changing or retrying the active pipeline. The accepted D008 scope authorizes
 implementation and synthetic validation only; a separate execution decision is
 still required before fitting development rows.
+
+D008 implementation and synthetic validation are now complete. The implemented
+code covers Pauli X/Y/Z one-RDM projection, projected-kernel distances and
+bandwidths, deterministic SHA-256 Nystrom landmark selection, projected-kernel
+regression and feasibility classification, PSD clipping diagnostics, and
+Post-Gate-5 scope guards. Validation used synthetic arrays only and did not
+read development payloads for fitting, calibration rows, final-test rows,
+hardware devices, or Gate 6 scenarios.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

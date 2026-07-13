@@ -966,3 +966,23 @@ Consequence after acceptance:
 Implementation and synthetic validation are authorized. Research fit,
 calibration/final-test read, hardware run, larger-qubit run, Gate 5
 reinterpretation, and Gate 6 work remain unauthorized by D008.
+
+Implementation and synthetic validation record:
+
+- `src/openqfuel/qml.py` now implements Pauli X/Y/Z one-RDM projection,
+  projected one-RDM Frobenius distances, fold-local median-distance gamma,
+  deterministic SHA-256 Nystrom landmarks, PSD clipping diagnostics, and
+  projected-kernel regressors/classifiers for Q01b and FQK.
+- `src/openqfuel/post_gate5.py` enforces the D008 boundary: implementation and
+  synthetic validation may run, while development-row fitting,
+  calibration/final-test reads, hardware execution, and Gate 6 remain locked.
+- `tests/test_post_gate5_projected_kernel.py` validates only synthetic arrays
+  and explicit toy statevectors. It does not load development payloads,
+  calibration rows, final-test rows, hardware devices, or Gate 6 scenarios.
+
+Consequence after implementation:
+
+The next allowed process step is a separate clean-source compute preflight and
+execution decision before any exploratory development-row fit. A failure in a
+future step must still commit a future-research discussion record without
+changing or retrying the active P001 pipeline.

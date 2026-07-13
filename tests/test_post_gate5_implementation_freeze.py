@@ -36,7 +36,12 @@ def test_d008_is_accepted_and_research_fit_remains_locked() -> None:
     assert config["accepted_date"] == "2026-07-13"
     assert config["implementation_authorized"] is True
     assert config["synthetic_validation_authorized"] is True
+    assert config["implementation_status"] == "implemented_synthetic_validation_passed"
+    assert config["synthetic_validation_completed_date"] == "2026-07-13"
     assert config["research_data_fitting_authorized"] is False
+    assert config["research_data_execution_decision"] == (
+        "pending_separate_clean_source_preflight_and_execution_decision"
+    )
     assert config["execution_authorized"] is False
     assert config["acceptance"]["current_decision"] == "accepted_by_human_research_lead"
     locks = config["locks"]
@@ -158,7 +163,7 @@ def test_governance_describes_d008_as_accepted_without_research_fit() -> None:
     required = {
         "README.md": "D008 is accepted as the implementation freeze",
         "research_protocol.md": "D008 is the accepted implementation freeze",
-        "docs/post_gate5_exploratory_protocol.md": "D008 implementation freeze accepted",
+        "docs/post_gate5_exploratory_protocol.md": "D008 implementation and synthetic validation complete",
         "docs/post_gate5_implementation_freeze.md": "Accepted by human research lead",
         "docs/decision_log.md": "D008 accepted - post-Gate-5 exploratory implementation freeze",
     }

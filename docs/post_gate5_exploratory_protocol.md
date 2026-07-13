@@ -1,8 +1,8 @@
 # Post-Gate-5 Exploratory Protocol
 
-Version: 0.2.1
+Version: 0.2.2
 Opened: 2026-07-13
-Status: Opened prospectively; D008 implementation freeze accepted; implementation and synthetic validation authorized; research-data execution remains unauthorized
+Status: Opened prospectively; D008 implementation and synthetic validation complete; research-data execution remains unauthorized
 
 ## Purpose
 
@@ -127,6 +127,11 @@ D008 now provides the accepted implementation freeze in
 `configs/post_gate5_exploratory.yaml`. The accepted scope authorizes
 implementation and synthetic validation only; a separate clean-source
 execution decision is still required before any development-row fit.
+
+D008 implementation and synthetic validation are complete. The implementation
+adds projected-kernel primitives, deterministic landmarks, estimator wrappers,
+scope guards, and synthetic tests only. It does not create model-performance
+evidence or authorize development-row execution.
 
 ## Machine-readable source
 

@@ -1,8 +1,8 @@
 # Frozen Phase 1 Analysis Plan
 
-Version: 0.6.9
+Version: 0.6.10
 Prepared: 2026-07-12
-Status: Gate 5 accepted with technical outcome FAIL; D008 exploratory implementation freeze accepted; Gate 6 unauthorized
+Status: Gate 5 accepted with technical outcome FAIL; D008 projected-kernel implementation and synthetic validation complete; Gate 6 unauthorized
 
 ## Analysis sequence
 
@@ -178,6 +178,11 @@ future-research discussion record. Such a record cannot change a current
 trial, rung, threshold, control, or retry decision. D008 authorizes
 implementation and synthetic validation only; development-row fitting still
 requires a separate clean-source execution decision.
+
+The D008 projected-kernel implementation and synthetic validation are complete.
+This adds code and tests for the frozen projected-kernel method, but it does
+not add a trial result, change an endpoint, unlock calibration/final data, or
+authorize development-row fitting.
 
 ## Endpoints
 

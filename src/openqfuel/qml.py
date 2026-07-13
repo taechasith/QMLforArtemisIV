@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 from dataclasses import dataclass
 from functools import lru_cache
 from typing import Mapping, Sequence
@@ -36,6 +37,15 @@ class NoiseSensitivity:
         )
         if any(value < 0.0 or value >= 0.5 for value in probabilities):
             raise ValueError("Noise probabilities must lie in [0, 0.5)")
+
+
+@dataclass(frozen=True)
+class KernelPsdClipInfo:
+    """Audit record for PSD clipping of a symmetric training kernel."""
+
+    clipped_eigenvalues: int
+    min_eigenvalue_before_clip: float
+    max_negative_eigenvalue: float
 
 
 def _ry(angle: float) -> np.ndarray:
@@ -314,6 +324,207 @@ def _z_expectation_signs(n_qubits: int) -> np.ndarray:
     return signs
 
 
+def _as_state_matrix(states: Sequence[Sequence[complex]] | np.ndarray, n_qubits: int) -> np.ndarray:
+    matrix = np.asarray(states, dtype=complex)
+    if n_qubits <= 0:
+        raise ValueError("n_qubits must be positive")
+    if matrix.ndim == 1:
+        matrix = matrix.reshape(1, -1)
+    if matrix.ndim != 2 or matrix.shape[1] != 2**n_qubits:
+        raise ValueError("Statevectors must have shape (rows, 2**n_qubits)")
+    norms = np.linalg.norm(matrix, axis=1)
+    if np.any(norms <= 0.0) or not np.all(np.isfinite(norms)):
+        raise ValueError("Statevectors must be nonzero and finite")
+    return matrix / norms[:, None]
+
+
+def pauli_xyz_expectations(
+    states: Sequence[Sequence[complex]] | np.ndarray, n_qubits: int
+) -> np.ndarray:
+    """Return Pauli X/Y/Z expectations for each one-qubit reduced state."""
+
+    matrix = _as_state_matrix(states, n_qubits)
+    tensor = matrix.reshape((matrix.shape[0],) + (2,) * n_qubits)
+    projected = np.empty((matrix.shape[0], 3 * n_qubits), dtype=float)
+    for qubit in range(n_qubits):
+        moved = np.moveaxis(tensor, qubit + 1, 1).reshape(matrix.shape[0], 2, -1)
+        zero = moved[:, 0, :]
+        one = moved[:, 1, :]
+        coherence = np.sum(np.conj(zero) * one, axis=1)
+        projected[:, 3 * qubit] = 2.0 * coherence.real
+        projected[:, 3 * qubit + 1] = 2.0 * coherence.imag
+        projected[:, 3 * qubit + 2] = (
+            np.sum(np.abs(zero) ** 2, axis=1) - np.sum(np.abs(one) ** 2, axis=1)
+        )
+    return np.clip(projected, -1.0, 1.0)
+
+
+def projected_quantum_features(
+    values: Sequence[Sequence[float]] | np.ndarray,
+    n_qubits: int,
+    layers: int,
+    feature_scale: float = 1.0,
+    entangle: bool = True,
+) -> np.ndarray:
+    """Encode inputs and project each state to one-qubit Bloch vectors."""
+
+    states = statevector_batch(
+        values,
+        n_qubits,
+        layers,
+        feature_scale=feature_scale,
+        entangle=entangle,
+    )
+    return pauli_xyz_expectations(states, n_qubits)
+
+
+def _as_projected_features(values: Sequence[Sequence[float]] | np.ndarray) -> np.ndarray:
+    matrix = np.asarray(values, dtype=float)
+    if matrix.ndim != 2 or matrix.shape[0] == 0 or matrix.shape[1] == 0:
+        raise ValueError("Projected features must be a nonempty two-dimensional array")
+    if matrix.shape[1] % 3:
+        raise ValueError("Projected features must contain X/Y/Z values per qubit")
+    if not np.all(np.isfinite(matrix)):
+        raise ValueError("Projected features must be finite")
+    return matrix
+
+
+def one_rdm_distance_matrix(
+    left_features: Sequence[Sequence[float]] | np.ndarray,
+    right_features: Sequence[Sequence[float]] | np.ndarray,
+) -> np.ndarray:
+    """Return summed one-RDM Frobenius distances between projected features."""
+
+    left = _as_projected_features(left_features)
+    right = left if right_features is left_features else _as_projected_features(right_features)
+    if left.shape[1] != right.shape[1]:
+        raise ValueError("Projected feature dimensions must match")
+    left_sq = np.sum(left * left, axis=1)[:, None]
+    right_sq = np.sum(right * right, axis=1)[None, :]
+    squared_bloch = left_sq + right_sq - 2.0 * (left @ right.T)
+    return np.maximum(0.5 * squared_bloch, 0.0)
+
+
+def median_projected_kernel_gamma(
+    training_features: Sequence[Sequence[float]] | np.ndarray,
+    gamma_multiplier: float = 1.0,
+) -> float:
+    """Compute the fold-local D008 median-distance bandwidth."""
+
+    if not np.isfinite(gamma_multiplier) or gamma_multiplier <= 0.0:
+        raise ValueError("gamma_multiplier must be positive and finite")
+    distances = one_rdm_distance_matrix(training_features, training_features)
+    positive = distances[distances > 0.0]
+    if positive.size == 0:
+        raise ValueError("Projected-kernel median distance is zero")
+    median = float(np.median(positive))
+    if not np.isfinite(median) or median <= 0.0:
+        raise ValueError("Projected-kernel median distance is zero")
+    return float(gamma_multiplier / median)
+
+
+def projected_quantum_kernel_from_features(
+    left_features: Sequence[Sequence[float]] | np.ndarray,
+    right_features: Sequence[Sequence[float]] | np.ndarray,
+    gamma: float,
+) -> np.ndarray:
+    """Return exp(-gamma * one-RDM Frobenius distance)."""
+
+    if not np.isfinite(gamma) or gamma <= 0.0:
+        raise ValueError("Projected-kernel gamma must be positive and finite")
+    distances = one_rdm_distance_matrix(left_features, right_features)
+    return np.exp(-float(gamma) * distances)
+
+
+def projected_quantum_kernel_matrix(
+    left: Sequence[Sequence[float]] | np.ndarray,
+    right: Sequence[Sequence[float]] | np.ndarray,
+    n_qubits: int,
+    layers: int,
+    gamma: float | None = None,
+    gamma_multiplier: float = 1.0,
+    feature_scale: float = 1.0,
+    entangle: bool = True,
+) -> np.ndarray:
+    """Return the D008 projected quantum kernel for already compressed inputs."""
+
+    left_features = projected_quantum_features(
+        left, n_qubits, layers, feature_scale=feature_scale, entangle=entangle
+    )
+    right_features = (
+        left_features
+        if right is left
+        else projected_quantum_features(
+            right, n_qubits, layers, feature_scale=feature_scale, entangle=entangle
+        )
+    )
+    active_gamma = (
+        median_projected_kernel_gamma(left_features, gamma_multiplier)
+        if gamma is None
+        else float(gamma)
+    )
+    return projected_quantum_kernel_from_features(
+        left_features, right_features, active_gamma
+    )
+
+
+def deterministic_landmark_indices(
+    row_ids: Sequence[str],
+    projection_id: str,
+    fold_id: str,
+    seed_index: int,
+    landmark_count: int,
+) -> np.ndarray:
+    """Select D008 Nystrom landmarks by SHA-256 rank from training rows only."""
+
+    ids = [str(value) for value in row_ids]
+    if not ids or len(set(ids)) != len(ids):
+        raise ValueError("Landmark row IDs must be nonempty and unique")
+    if landmark_count <= 0 or landmark_count > len(ids):
+        raise ValueError("landmark_count must be in [1, row_count]")
+    ranked = sorted(
+        range(len(ids)),
+        key=lambda index: hashlib.sha256(
+            "|".join(
+                [
+                    "post_gate5_landmark_v1",
+                    ids[index],
+                    str(projection_id),
+                    str(fold_id),
+                    str(seed_index),
+                ]
+            ).encode("utf-8")
+        ).hexdigest(),
+    )
+    return np.asarray(ranked[:landmark_count], dtype=int)
+
+
+def symmetrize_and_clip_psd(
+    kernel: Sequence[Sequence[float]] | np.ndarray,
+    floor: float = 1e-12,
+) -> tuple[np.ndarray, KernelPsdClipInfo]:
+    """Symmetrize a training kernel and clip eigenvalues below the floor."""
+
+    matrix = np.asarray(kernel, dtype=float)
+    if matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1] or matrix.shape[0] == 0:
+        raise ValueError("Training kernel must be a nonempty square matrix")
+    if not np.all(np.isfinite(matrix)):
+        raise ValueError("Training kernel must be finite")
+    if not np.isfinite(floor) or floor <= 0.0:
+        raise ValueError("PSD floor must be positive and finite")
+    symmetric = 0.5 * (matrix + matrix.T)
+    eigenvalues, eigenvectors = np.linalg.eigh(symmetric)
+    clipped = np.clip(eigenvalues, floor, None)
+    clipped_kernel = (eigenvectors * clipped) @ eigenvectors.T
+    clipped_kernel = 0.5 * (clipped_kernel + clipped_kernel.T)
+    minimum = float(np.min(eigenvalues))
+    return clipped_kernel, KernelPsdClipInfo(
+        clipped_eigenvalues=int(np.sum(eigenvalues < floor)),
+        min_eigenvalue_before_clip=minimum,
+        max_negative_eigenvalue=min(minimum, 0.0),
+    )
+
+
 def _observable_attenuation(
     layers: int, noise: NoiseSensitivity, entangle: bool = True
 ) -> float:
@@ -499,6 +710,190 @@ class QuantumKernelClassifier(ClassifierMixin, BaseEstimator):
     def predict_proba(self, x: np.ndarray) -> np.ndarray:
         if not hasattr(self, "regressor_"):
             raise RuntimeError("QuantumKernelClassifier is not fitted")
+        probability = np.clip(self.regressor_.predict(x), 0.0, 1.0)
+        return np.column_stack((1.0 - probability, probability))
+
+    def predict(self, x: np.ndarray) -> np.ndarray:
+        return (self.predict_proba(x)[:, 1] >= 0.5).astype(int)
+
+
+class ProjectedQuantumKernelRegressor(RegressorMixin, BaseEstimator):
+    """D008 projected-kernel ridge regression with deterministic landmarks."""
+
+    def __init__(
+        self,
+        n_qubits: int = 4,
+        layers: int = 1,
+        alpha: float = 0.01,
+        landmarks: int = 256,
+        gamma_multiplier: float = 1.0,
+        projection_id: str = "synthetic",
+        fold_id: str = "synthetic",
+        seed_index: int = 1,
+        feature_scale: float = 1.0,
+        entangle: bool = True,
+    ) -> None:
+        self.n_qubits = n_qubits
+        self.layers = layers
+        self.alpha = alpha
+        self.landmarks = landmarks
+        self.gamma_multiplier = gamma_multiplier
+        self.projection_id = projection_id
+        self.fold_id = fold_id
+        self.seed_index = seed_index
+        self.feature_scale = feature_scale
+        self.entangle = entangle
+
+    @staticmethod
+    def _default_row_ids(row_count: int) -> list[str]:
+        return [f"synthetic-row-{index:06d}" for index in range(row_count)]
+
+    def _project(self, x: np.ndarray) -> np.ndarray:
+        return projected_quantum_features(
+            x,
+            self.n_qubits,
+            self.layers,
+            feature_scale=self.feature_scale,
+            entangle=self.entangle,
+        )
+
+    def fit(
+        self,
+        x: np.ndarray,
+        y: Sequence[float],
+        row_ids: Sequence[str] | None = None,
+    ) -> "ProjectedQuantumKernelRegressor":
+        matrix = _as_matrix(x)
+        targets = np.asarray(y, dtype=float)
+        if targets.shape != (matrix.shape[0],):
+            raise ValueError("Targets must contain one value per row")
+        if not np.all(np.isfinite(targets)):
+            raise ValueError("Targets must be finite")
+        if self.alpha <= 0.0:
+            raise ValueError("Kernel regularization must be positive")
+        if self.landmarks <= 0:
+            raise ValueError("landmarks must be positive")
+
+        ids = self._default_row_ids(matrix.shape[0]) if row_ids is None else list(row_ids)
+        if len(ids) != matrix.shape[0]:
+            raise ValueError("row_ids must contain one value per training row")
+        projected = self._project(matrix)
+        self.gamma_ = median_projected_kernel_gamma(
+            projected, float(self.gamma_multiplier)
+        )
+        landmark_count = min(int(self.landmarks), matrix.shape[0])
+        self.landmark_indices_ = deterministic_landmark_indices(
+            ids,
+            str(self.projection_id),
+            str(self.fold_id),
+            int(self.seed_index),
+            landmark_count,
+        )
+
+        if landmark_count == matrix.shape[0]:
+            kernel = projected_quantum_kernel_from_features(
+                projected, projected, self.gamma_
+            )
+            clipped, info = symmetrize_and_clip_psd(kernel)
+            self.psd_clip_info_ = info
+            self.training_features_ = projected
+            self.landmark_features_ = None
+            self.nystrom_inverse_root_ = None
+            self.dual_coef_ = np.linalg.solve(
+                clipped + float(self.alpha) * np.eye(clipped.shape[0]),
+                targets,
+            )
+            return self
+
+        self.training_features_ = None
+        self.landmark_features_ = projected[self.landmark_indices_]
+        landmark_kernel = projected_quantum_kernel_from_features(
+            self.landmark_features_, self.landmark_features_, self.gamma_
+        )
+        clipped, info = symmetrize_and_clip_psd(landmark_kernel)
+        self.psd_clip_info_ = info
+        eigenvalues, eigenvectors = np.linalg.eigh(clipped)
+        inverse_root = (eigenvectors * (1.0 / np.sqrt(eigenvalues))) @ eigenvectors.T
+        cross_kernel = projected_quantum_kernel_from_features(
+            projected, self.landmark_features_, self.gamma_
+        )
+        features = cross_kernel @ inverse_root
+        self.nystrom_inverse_root_ = inverse_root
+        self.feature_coef_ = np.linalg.solve(
+            features.T @ features + float(self.alpha) * np.eye(features.shape[1]),
+            features.T @ targets,
+        )
+        return self
+
+    def predict(self, x: np.ndarray) -> np.ndarray:
+        if not hasattr(self, "gamma_"):
+            raise RuntimeError("ProjectedQuantumKernelRegressor is not fitted")
+        projected = self._project(_as_matrix(x))
+        if self.training_features_ is not None:
+            kernel = projected_quantum_kernel_from_features(
+                projected, self.training_features_, self.gamma_
+            )
+            return kernel @ self.dual_coef_
+        kernel = projected_quantum_kernel_from_features(
+            projected, self.landmark_features_, self.gamma_
+        )
+        return kernel @ self.nystrom_inverse_root_ @ self.feature_coef_
+
+
+class ProjectedQuantumKernelClassifier(ClassifierMixin, BaseEstimator):
+    """D008 feasibility-only projected-kernel least-squares classifier."""
+
+    def __init__(
+        self,
+        n_qubits: int = 4,
+        layers: int = 1,
+        alpha: float = 0.01,
+        landmarks: int = 256,
+        gamma_multiplier: float = 1.0,
+        projection_id: str = "synthetic",
+        fold_id: str = "synthetic",
+        seed_index: int = 1,
+        feature_scale: float = 1.0,
+        entangle: bool = True,
+    ) -> None:
+        self.n_qubits = n_qubits
+        self.layers = layers
+        self.alpha = alpha
+        self.landmarks = landmarks
+        self.gamma_multiplier = gamma_multiplier
+        self.projection_id = projection_id
+        self.fold_id = fold_id
+        self.seed_index = seed_index
+        self.feature_scale = feature_scale
+        self.entangle = entangle
+
+    def fit(
+        self,
+        x: np.ndarray,
+        y: Sequence[int],
+        row_ids: Sequence[str] | None = None,
+    ) -> "ProjectedQuantumKernelClassifier":
+        labels = np.asarray(y, dtype=float)
+        if labels.ndim != 1 or not set(np.unique(labels)).issubset({0.0, 1.0}):
+            raise ValueError("Projected-kernel feasibility labels must be binary")
+        self.regressor_ = ProjectedQuantumKernelRegressor(
+            n_qubits=self.n_qubits,
+            layers=self.layers,
+            alpha=self.alpha,
+            landmarks=self.landmarks,
+            gamma_multiplier=self.gamma_multiplier,
+            projection_id=self.projection_id,
+            fold_id=self.fold_id,
+            seed_index=self.seed_index,
+            feature_scale=self.feature_scale,
+            entangle=self.entangle,
+        ).fit(x, labels, row_ids=row_ids)
+        self.classes_ = np.array([0, 1])
+        return self
+
+    def predict_proba(self, x: np.ndarray) -> np.ndarray:
+        if not hasattr(self, "regressor_"):
+            raise RuntimeError("ProjectedQuantumKernelClassifier is not fitted")
         probability = np.clip(self.regressor_.predict(x), 0.0, 1.0)
         return np.column_stack((1.0 - probability, probability))
 

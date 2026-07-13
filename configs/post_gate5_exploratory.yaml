@@ -6,7 +6,11 @@ prepared_date: "2026-07-13"
 accepted_date: "2026-07-13"
 implementation_authorized: true
 synthetic_validation_authorized: true
+implementation_status: "implemented_synthetic_validation_passed"
+synthetic_validation_completed_date: "2026-07-13"
+synthetic_validation_scope: "synthetic arrays only; no development, calibration, final-test, hardware, or Gate 6 execution"
 research_data_fitting_authorized: false
+research_data_execution_decision: "pending_separate_clean_source_preflight_and_execution_decision"
 execution_authorized: false
 
 provenance:
