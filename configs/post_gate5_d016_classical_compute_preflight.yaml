@@ -1,0 +1,103 @@
+schema_version: "0.1.0"
+decision_id: "D016-C"
+protocol_id: "P001"
+status: "accepted_clean_source_synthetic_preflight_pending"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+acceptance_basis: "assistant-selected next step after D015-C synthetic scaffolds; perform clean-source synthetic compute admission before any CRES/CSAFE development-data fitting"
+
+authority:
+  scope: "one clean-source synthetic compute-admission preflight for D014-C CRES/CSAFE classical-first scaffolds"
+  preflight_execution_authorized: true
+  authorized_preflight_attempts: 1
+  implementation_authorized: false
+  synthetic_validation_authorized: false
+  development_data_fitting_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  refit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate5_reinterpretation_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+  gate6_authorized: false
+  next_decision_if_pass: "D017 would be required before any development-data fitting."
+  action_if_stop: "record the governed STOP and future-only improvement; do not retry, reduce the workload, or open development data."
+
+locks:
+  gate5_result_unchanged: true
+  d006_d007_evidence_immutable: true
+  d011_r1_negative_evidence_immutable: true
+  d014_freeze_unchanged: true
+  d015_synthetic_scaffolds_unchanged: true
+  allowed_data_scope: "synthetic"
+  development_rows_read: 0
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  hardware_jobs_submitted: 0
+  gpu_hours: 0.0
+  gate6_runs: 0
+
+benchmark:
+  seed: 20260714
+  training_rows: 1024
+  validation_rows: 9750
+  primary_feature_count: 96
+  compressed_feature_count: 24
+  random_feature_count: 512
+  tree_count: 64
+  tree_max_depth: 8
+  mlp_hidden_units: 64
+  mlp_max_iter: 50
+  safety_minimum_recall: 0.95
+  safety_maximum_intervention_rate: 1.0
+  calibration_bins: 10
+
+candidate_workload:
+  largest_fold_benchmark_contains:
+    - "CRES ridge residual"
+    - "CRES random-feature RBF residual"
+    - "CRES compressed MLP residual"
+    - "CSAFE calibrated logistic safety head"
+    - "CSAFE class-weighted tree safety head"
+    - "CSAFE quantile-threshold safety metrics"
+  projected_fold_count: 5
+  projected_seed_count: 20
+  projection_margin: 1.25
+  artifact_bytes_per_fold_seed: 10485760
+  no_cache_or_early_stop_credit: true
+
+ceilings:
+  reference_cpu: "Intel Core i9-13900HX"
+  reference_gpu: "NVIDIA GeForce RTX 4060 Laptop GPU; unused"
+  branch_cpu_core_hours: 250.0
+  branch_wall_clock_days: 5.0
+  branch_new_artifacts_gib: 20.0
+  max_total_project_working_set_gib: 24.0
+  minimum_free_disk_gib: 20.0
+  max_gpu_hours: 0.0
+
+source_binding:
+  output: "data/processed/reporting/post_gate5_d016_classical_preflight.json"
+  implementation_config: "configs/post_gate5_d016_classical_compute_preflight.yaml"
+  d014_freeze_config: "configs/post_gate5_d014_classical_first_freeze.yaml"
+  d015_config: "configs/post_gate5_d015_implementation_synthetic_validation.yaml"
+  classical_source: "src/openqfuel/post_gate5_classical.py"
+  preflight_script: "scripts/run_post_gate5_d016_preflight.py"
+  figure_generator: "scripts/make_post_gate5_d016_preflight_figure.py"
+  lockfile: "uv.lock"
+
+reporting:
+  preflight_figure: "RFIG-033"
+  figure_generator: "scripts/make_post_gate5_d016_preflight_figure.py"
+  missing_value_rule: "missing or unauthorized values remain absent and are never plotted as zero"
+  claim_boundary: "Synthetic compute-admission evidence only; not model performance, development-data fitting, Gate 5 reinterpretation, QML invention, quantum advantage, hardware, or Gate 6 evidence."
+
+outcome:
+  current_status: "PENDING"
+  result: ""
+  figure: ""
+  pass_effect: "A PASS would permit preparation of D017 only; development-data fitting remains unauthorized by D016."

@@ -254,6 +254,13 @@ post_gate5_classical.py` with tests that use synthetic arrays only. They cover
 explicit residual targets, residual-cost metrics, safety threshold selection,
 held-out safety metrics, scope guards, and invention-readiness labels.
 
+D016-C is accepted for exactly one clean-source synthetic compute-admission
+preflight for those CRES/CSAFE scaffolds. It may generate RFIG-033 if reached,
+but it still authorizes no development-data fitting, calibration/final-test
+reads, hardware/GPU execution, Gate 5 reinterpretation, QML invention claim,
+quantum-advantage claim, or Gate 6. A later D017 decision remains required
+before any development rows can be fit.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:

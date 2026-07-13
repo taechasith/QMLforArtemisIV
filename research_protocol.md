@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.21
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; Gate 6 unauthorized
+Version: 0.6.22
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C synthetic compute preflight accepted; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: Prepare D016 clean-source synthetic compute-admission decision only if development-data fitting is being considered; no development-data fitting, refit, rerank, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, or Gate 6 is authorized
+Recommended next action: Run exactly one D016-C clean-source synthetic compute-admission preflight; no development-data fitting, refit, rerank, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, or Gate 6 is authorized
 
 ## 1. Proposed title
 
@@ -1037,6 +1037,16 @@ residual targets, residual-cost metrics, safety-threshold selection,
 held-out safety metrics, D015 scope guards, and invention-readiness labels.
 The tests use synthetic arrays only and do not open development, calibration,
 final-test, hardware/GPU, or Gate 6 pathways.
+
+D016-C was accepted as the assistant-selected clean-source synthetic compute
+preflight for the D014-C CRES/CSAFE classical-first scaffolds. It authorizes
+one committed-source synthetic benchmark and RFIG-033 if the result is reached.
+The preflight projects the largest-fold scaffold workload across five folds and
+20 seeds with 25% margin and no cache or early-stop credit. D016-C still
+prohibits development-data fitting, calibration/final-test reads, refit,
+rerank, retry, hardware/GPU execution, Gate 5 reinterpretation, QML invention
+claims, quantum-advantage claims, and Gate 6. A later D017 decision is required
+before any development-data fitting, even if D016-C passes.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

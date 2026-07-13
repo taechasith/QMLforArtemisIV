@@ -1467,3 +1467,27 @@ Outcome:
   invalid-input rejection, and invention-readiness labels.
 - No development, calibration, final-test, hardware/GPU, Gate 5
   reinterpretation, QML invention claim, or Gate 6 path was opened.
+
+### D016-C accepted - clean-source synthetic compute preflight
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Accepted; one synthetic compute preflight pending**
+Authority: Assistant-selected next step after D015-C synthetic scaffolds
+
+Decision:
+
+- Authorize exactly one clean-source synthetic compute-admission preflight for
+  the D014-C CRES/CSAFE classical-first scaffolds.
+- Benchmark the largest-fold synthetic CRES/CSAFE workload and conservatively
+  project it across five folds and 20 seeds with 25% margin.
+- Generate RFIG-033 only if terminal D016-C evidence is reached.
+- Do not use cache, early stopping, smaller folds, or post-outcome reduction as
+  admission credit.
+
+Boundary:
+
+D016-C authorizes no development-data fitting, calibration/final-test read,
+refit, rerank, retry, hardware/GPU execution, Gate 5 reinterpretation, QML
+invention claim, quantum-advantage claim, or Gate 6. A PASS permits only
+preparation of D017; it does not itself open development rows.
