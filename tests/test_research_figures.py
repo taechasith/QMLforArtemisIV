@@ -60,6 +60,7 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     expected_ids.add("RFIG-031")
     expected_ids.add("RFIG-032")
     expected_ids.add("RFIG-033")
+    expected_ids.add("RFIG-036")
     expected_ids.update({"RFIG-026", "RFIG-027", "RFIG-028"})
     assert expected_ids <= figure_ids
     assert {"RFIG-010", "RFIG-013"}.isdisjoint(figure_ids)
@@ -80,6 +81,7 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
             "development_only_feasibility_evidence",
             "classical_first_freeze_proposal",
             "classical_first_synthetic_compute_admission",
+            "a02_exact_rbf_synthetic_compute_admission",
         }
     for row in rows:
         assert "final_test" not in row["source_data"]
@@ -135,6 +137,19 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     )
     assert rfig033["figure_generator_sha256"] == sha256_file(
         ROOT / rfig033["generator"]
+    )
+    rfig036 = next(row for row in rows if row["figure_id"] == "RFIG-036")
+    assert rfig036["source_data"] == (
+        "data/processed/reporting/post_gate5_d016_c1_a02_preflight.json"
+    )
+    assert rfig036["evidence_status"] == (
+        "a02_exact_rbf_synthetic_compute_admission"
+    )
+    assert rfig036["reporting_source_commit"] == (
+        "a40a6687b7c68a04f355ee40e0ff6144482eaf6c"
+    )
+    assert rfig036["figure_generator_sha256"] == sha256_file(
+        ROOT / rfig036["generator"]
     )
 
 

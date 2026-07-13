@@ -60,3 +60,8 @@ final-test rows. It submitted no hardware/GPU job and ran no Gate 6 scenario.
 RFIG-033 records the resource margins. The bounded MLP component reached the
 configured 50-iteration synthetic limit without convergence, which is retained
 as compute-workload evidence only and is not a model-performance claim.
+
+A pre-D017 audit found that D016-C did not include the D014-C required A02
+exact classical RBF control. D016-C1 corrected that omission and passed
+separate synthetic compute admission, recorded in RFIG-036. D017 remains
+required before development-data fitting.

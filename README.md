@@ -264,9 +264,11 @@ QML invention claim, quantum-advantage claim, or Gate 6. D017 remains required
 before any development rows can be fit.
 
 A pre-D017 audit found that D016-C did not benchmark the D014-C required A02
-exact classical RBF control. D016-C1 is accepted as a narrow synthetic
-compute-admission correction for that missing control before any development
-row is opened.
+exact classical RBF control. D016-C1 corrected that omission and passed:
+0.0109/250 CPU-core-hours, 0.000438/5 wall-days, 1.2207/20 GiB artifacts,
+0.2679/24 GiB peak memory, 46.5217 GiB projected free disk after artifacts, and
+zero GPU-hours. RFIG-036 records the correction. Development fitting still
+requires D017.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 

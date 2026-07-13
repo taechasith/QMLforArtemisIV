@@ -1510,7 +1510,7 @@ Outcome:
 
 Date prepared: 2026-07-14
 Date accepted: 2026-07-14
-Status: **Accepted; one synthetic A02 preflight pending**
+Status: **Completed; A02 exact-RBF synthetic compute admission PASS**
 Authority: Assistant-selected correction after pre-D017 audit
 
 Decision:
@@ -1529,3 +1529,17 @@ D016-C1 authorizes no development-data fitting, calibration/final-test read,
 refit, rerank, retry, hardware/GPU execution, Gate 5 reinterpretation, QML
 invention claim, quantum-advantage claim, or Gate 6. D017 cannot proceed until
 D016-C1 is terminal.
+
+Outcome:
+
+- The single authorized A02 preflight ran from clean source commit
+  `a40a6687b7c68a04f355ee40e0ff6144482eaf6c`.
+- Admission status: `PASS`.
+- Projected resource use after 25% margin: 0.0109/250 CPU-core-hours,
+  0.000438/5 wall-days, 1.2207/20 GiB artifacts, 0.2679/24 GiB peak working
+  set, 46.5217 GiB free disk after artifacts against the 20 GiB minimum, and
+  zero GPU-hours.
+- Integrity counters: 10,774 synthetic rows used; zero development,
+  calibration, final-test, hardware, GPU, and Gate 6 reads/runs.
+- RFIG-036 records the A02 exact-RBF compute-correction margins.
+- Development-data fitting remains unauthorized and requires D017.
