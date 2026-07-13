@@ -1565,3 +1565,15 @@ D017-C authorizes no calibration/final-test read, refit, rerank, retry,
 hardware/GPU execution, Gate 5 reinterpretation, QML invention claim,
 quantum-advantage claim, mission-loop work, or Gate 6. D018 must interpret any
 terminal D017-C result before another successor step.
+
+Correction note:
+
+- The first D017-C launch stopped before development data were opened because
+  the runner attempted to hash `source_binding.output_root` as if it were a
+  committed source file.
+- Development rows read, calibration rows read, final-test rows read, hardware
+  jobs, GPU hours, and Gate 6 runs were all zero.
+- Corrective improvement: source bindings must distinguish committed source
+  inputs from generated output destinations before a clean-source campaign run.
+  The corrected runner excludes `output_root` from committed blob hashing and
+  keeps all scientific workload settings unchanged.

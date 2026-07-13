@@ -1076,6 +1076,12 @@ work, and Gate 6 remain unauthorized. RFIG-034 and RFIG-035 are reserved for
 the development-only residual-cost and safety-filter results if terminal
 evidence is reached.
 
+The first D017-C launch stopped before development data were opened because the
+runner incorrectly tried to hash the generated output directory as a committed
+source blob. This was a source-binding bug, not model evidence. The correction
+excludes `source_binding.output_root` from committed source hashes and changes
+no scientific workload, split, model, seed, threshold, or claim boundary.
+
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:
 

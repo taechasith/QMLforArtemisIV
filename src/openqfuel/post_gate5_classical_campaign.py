@@ -276,6 +276,7 @@ def run_d017_campaign(root: Path) -> dict[str, Any]:
     source_hashes = {
         key: _git_blob_sha256(root, source_commit, str(path))
         for key, path in config["source_binding"].items()
+        if key != "output_root"
     }
     wall_started = time.perf_counter()
     cpu_started = time.process_time()
