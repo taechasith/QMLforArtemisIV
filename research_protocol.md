@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.25
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C synthetic compute admission PASS; D016-C1 A02 exact-RBF compute admission PASS; Gate 6 unauthorized
+Version: 0.6.26
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C development-only campaign accepted; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: Prepare D017 development-data fitting decision for the CRES/CSAFE classical-first campaign; D016-C and D016-C1 do not themselves authorize development fitting, refit, rerank, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, or Gate 6
+Recommended next action: Run exactly one D017-C development-only CRES/CSAFE campaign from clean source; no calibration/final-test access, refit, rerank, retry, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized
 
 ## 1. Proposed title
 
@@ -1064,6 +1064,17 @@ disk after artifacts, and zero GPU-hours. It used synthetic rows only; no
 development, calibration, final-test, hardware/GPU, or Gate 6 work occurred.
 RFIG-036 records the A02 compute-correction margins. D017 is required before
 any development-data fitting.
+
+D017-C was accepted as the assistant-selected development-only CRES/CSAFE
+campaign after both synthetic compute admissions passed. It authorizes exactly
+one source-bound campaign over the original grouped development split: five
+folds, 20 seed replicates, 1,024 fold-local training rows, fold-local
+preprocessing/PCA, CRES residual-cost controls, and CSAFE safety-filter
+controls. Calibration, final-test, refit, rerank, retry, hardware/GPU, Gate 5
+reinterpretation, QML invention claims, quantum-advantage claims, mission-loop
+work, and Gate 6 remain unauthorized. RFIG-034 and RFIG-035 are reserved for
+the development-only residual-cost and safety-filter results if terminal
+evidence is reached.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

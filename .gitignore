@@ -37,6 +37,14 @@ data/processed/reporting/*
 !data/processed/reporting/post_gate5_future_research_discussion.csv
 !data/processed/reporting/post_gate5_d016_classical_preflight.json
 !data/processed/reporting/post_gate5_d016_c1_a02_preflight.json
+!data/processed/reporting/post_gate5_d017_classical_first/
+data/processed/reporting/post_gate5_d017_classical_first/*
+!data/processed/reporting/post_gate5_d017_classical_first/campaign_summary.json
+!data/processed/reporting/post_gate5_d017_classical_first/cres_fold_metrics.csv
+!data/processed/reporting/post_gate5_d017_classical_first/cres_summary.csv
+!data/processed/reporting/post_gate5_d017_classical_first/csafe_fold_metrics.csv
+!data/processed/reporting/post_gate5_d017_classical_first/csafe_summary.csv
+!data/processed/reporting/post_gate5_d017_classical_first/evidence_manifest.json
 !data/processed/reporting/post_gate5_p001/
 data/processed/reporting/post_gate5_p001/*
 !data/processed/reporting/post_gate5_p001/campaign_summary.json

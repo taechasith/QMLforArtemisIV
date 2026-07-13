@@ -1,0 +1,94 @@
+schema_version: "0.1.0"
+decision_id: "D017-C"
+protocol_id: "P001"
+status: "accepted_development_only_classical_first_campaign_pending"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+acceptance_basis: "D016-C and D016-C1 both passed source-bound synthetic compute admission; assistant-selected next step under delegated post-Gate-5 execution authority"
+
+authority:
+  scope: "one development-only CRES/CSAFE classical-first campaign over the original grouped development split"
+  campaign_execution_authorized: true
+  authorized_campaigns: 1
+  development_data_fitting_authorized: true
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  refit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate5_reinterpretation_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+  gate6_authorized: false
+  next_decision_if_complete: "D018 must interpret the development-only CRES/CSAFE result before any successor protocol, calibration, final-test, hardware, or Gate 6 authority."
+  action_if_failure: "record the governed failure and future-only improvement; do not retry or reduce the active workload."
+
+locks:
+  gate5_result_unchanged: true
+  d011_r1_negative_evidence_immutable: true
+  d014_freeze_unchanged: true
+  d015_synthetic_scaffolds_unchanged: true
+  d016_result_required: "PASS"
+  d016_c1_result_required: "PASS"
+  allowed_data_scope: "development"
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  hardware_jobs_submitted: 0
+  gpu_hours: 0.0
+  gate6_runs: 0
+
+campaign:
+  fold_count: 5
+  seed_count: 20
+  training_rows_per_fold: 1024
+  compressed_pca_dimensions: 8
+  threshold_minimum_recall: 0.95
+  threshold_maximum_intervention_rate: 1.0
+  calibration_bins: 10
+  output_root: "data/processed/reporting/post_gate5_d017_classical_first"
+  figures:
+    cres: "RFIG-034"
+    csafe: "RFIG-035"
+
+models:
+  cres:
+    - "ridge_residual"
+    - "random_feature_rbf_residual"
+    - "compressed_mlp_residual"
+    - "a02_exact_rbf_residual"
+  csafe:
+    - "calibrated_logistic"
+    - "class_weighted_tree"
+    - "a02_exact_rbf_feasibility"
+
+source_binding:
+  output_root: "data/processed/reporting/post_gate5_d017_classical_first"
+  d017_config: "configs/post_gate5_d017_classical_first_development.yaml"
+  phase1_config: "configs/phase1_benchmark.yaml"
+  d014_freeze_config: "configs/post_gate5_d014_classical_first_freeze.yaml"
+  d016_config: "configs/post_gate5_d016_classical_compute_preflight.yaml"
+  d016_result: "data/processed/reporting/post_gate5_d016_classical_preflight.json"
+  d016_c1_config: "configs/post_gate5_d016_c1_a02_compute_preflight.yaml"
+  d016_c1_result: "data/processed/reporting/post_gate5_d016_c1_a02_preflight.json"
+  campaign_source: "src/openqfuel/post_gate5_classical_campaign.py"
+  classical_source: "src/openqfuel/post_gate5_classical.py"
+  launcher: "scripts/run_post_gate5_d017_campaign.py"
+  figure_generator: "scripts/make_post_gate5_d017_figures.py"
+  lockfile: "uv.lock"
+
+reporting:
+  result_files:
+    - "data/processed/reporting/post_gate5_d017_classical_first/campaign_summary.json"
+    - "data/processed/reporting/post_gate5_d017_classical_first/cres_fold_metrics.csv"
+    - "data/processed/reporting/post_gate5_d017_classical_first/cres_summary.csv"
+    - "data/processed/reporting/post_gate5_d017_classical_first/csafe_fold_metrics.csv"
+    - "data/processed/reporting/post_gate5_d017_classical_first/csafe_summary.csv"
+    - "data/processed/reporting/post_gate5_d017_classical_first/evidence_manifest.json"
+  claim_boundary: "Development-only classical-first model evidence; no calibration, final-test, hardware/GPU, Gate 5 reinterpretation, QML invention, quantum advantage, mission, or Gate 6 claim."
+
+outcome:
+  current_status: "PENDING"
+  result: ""
+  figures: []

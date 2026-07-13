@@ -1543,3 +1543,25 @@ Outcome:
   calibration, final-test, hardware, GPU, and Gate 6 reads/runs.
 - RFIG-036 records the A02 exact-RBF compute-correction margins.
 - Development-data fitting remains unauthorized and requires D017.
+
+### D017-C accepted - development-only classical-first campaign
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Accepted; one development-only campaign pending**
+Authority: Assistant-selected next step after D016-C and D016-C1 PASS
+
+Decision:
+
+- Authorize exactly one source-bound CRES/CSAFE development-only campaign.
+- Use the original grouped development split, five folds, 20 seed replicates,
+  1,024 fold-local training rows, and fold-local preprocessing/PCA.
+- Fit only the frozen classical-first residual-cost and safety-filter controls.
+- Generate RFIG-034 and RFIG-035 only if terminal D017-C evidence is reached.
+
+Boundary:
+
+D017-C authorizes no calibration/final-test read, refit, rerank, retry,
+hardware/GPU execution, Gate 5 reinterpretation, QML invention claim,
+quantum-advantage claim, mission-loop work, or Gate 6. D018 must interpret any
+terminal D017-C result before another successor step.

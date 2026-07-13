@@ -270,6 +270,12 @@ exact classical RBF control. D016-C1 corrected that omission and passed:
 zero GPU-hours. RFIG-036 records the correction. Development fitting still
 requires D017.
 
+D017-C is now accepted for exactly one development-only CRES/CSAFE
+classical-first campaign over the original grouped development split. It does
+not authorize calibration/final-test reads, refit, rerank, retry, hardware/GPU
+execution, Gate 5 reinterpretation, QML invention claims, quantum-advantage
+claims, mission-loop work, or Gate 6.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
