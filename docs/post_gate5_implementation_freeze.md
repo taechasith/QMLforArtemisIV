@@ -1,11 +1,11 @@
 # Post-Gate-5 Exploratory Implementation Freeze
 
-Version: 0.1.3
+Version: 0.1.4
 Decision: D008
 Protocol: P001
 Prepared: 2026-07-13
 Accepted: 2026-07-13
-Status: Accepted by human research lead; implementation and synthetic validation complete; D009 synthetic preflight accepted; research-data execution remains unauthorized
+Status: Accepted by human research lead; implementation and synthetic validation complete; D009 preflight stopped on telemetry; research-data execution remains unauthorized
 
 ## Decision
 
@@ -186,3 +186,8 @@ any development-row fitting can be considered.
 D009 accepted that next step as a synthetic-only compute-admission benchmark.
 The benchmark outcome remains separate from research execution: even a PASS
 can authorize only preparation of D010, not development-row fitting.
+
+The D009 attempt produced a technical `STOP` before resource admission because
+the Windows memory telemetry probe failed. The D008 scientific design was not
+reduced or retried. RFIG-029 and P001-FR001 record the failure and a
+future-only telemetry improvement; neither authorizes an active correction.

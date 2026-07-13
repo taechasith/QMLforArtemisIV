@@ -120,13 +120,15 @@ projected-kernel regressors/classifiers, PSD clipping, locked-scope guards,
 and the future-research firewall. No development-row fit, calibration/final
 read, hardware run, or Gate 6 work has been authorized.
 
-D009 is accepted for one clean-source synthetic compute preflight. Its frozen
-q=8, two-layer, 1,024-row benchmark shares one projection across both P001
-heads and executes every matched control before conservatively projecting the
-complete branch with a 25% margin against the recorded laptop limits. D009 is
-compute admission only: development-row fitting remains locked until a later
-D010 decision, even if the preflight passes. RFIG-030 is reserved for the
-source-bound resource-margin result.
+D009 was accepted for one clean-source synthetic compute preflight. The run
+stopped after the first shared 1,024-row projection because the Windows
+peak-working-set probe returned no valid process counters. Neither projected
+head, any matched control, nor resource admission completed. This is a
+telemetry-interface failure, not a QML result or evidence that the workload
+exceeds the laptop. P001 fitting remains locked, the run will not be retried
+without a new prospective decision, and RFIG-029 records the stop plus its
+future-research firewall. RFIG-030 remains absent because no resource-margin
+result exists.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 

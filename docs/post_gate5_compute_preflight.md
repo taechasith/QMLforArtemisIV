@@ -1,11 +1,11 @@
 # Post-Gate-5 Clean-Source Compute Preflight
 
-Version: 0.1.0
+Version: 0.1.1
 Decision: D009
 Protocol: P001
 Prepared: 2026-07-13
 Accepted: 2026-07-13
-Status: Accepted for one synthetic preflight; outcome pending; research-data execution unauthorized
+Status: Terminal technical STOP; resource admission unavailable; research-data execution unauthorized
 
 ## Decision
 
@@ -85,3 +85,22 @@ support a model-performance, quantum-advantage, mission, or Gate 6 claim.
 A PASS permits preparation of a separate D010 development-only execution
 decision. It does not itself unlock research-data fitting. A STOP leaves P001
 execution locked pending a new prospective compute protocol.
+
+## Recorded outcome
+
+The single authorized run started from clean `main` commit
+`7aade60d61897781076730676aafca000ca52ad0`. It completed the shared 1,024-row
+synthetic training projection, then the Windows peak-working-set probe raised
+`OSError: Unable to read Windows process memory counters`.
+
+The validation projection, projected-kernel geometry, Q01b/FQK heads, all
+matched controls, and the admission calculation were not reached. Development,
+calibration, and final-test row reads remained zero. The result is therefore
+`STOP`, not PASS or resource-limit FAIL. It says nothing about QML performance
+and does not establish whether the frozen campaign fits the laptop ceilings.
+
+P001-FR001 records one future-only improvement: validate a correctly typed
+Windows memory adapter against an independent OS reading before a later full
+preflight. The improvement requires a new prospective protocol and cannot
+alter or retry the active P001 pipeline. RFIG-029 records the stop; RFIG-030 is
+not generated because no resource-admission values exist.

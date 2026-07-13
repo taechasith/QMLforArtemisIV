@@ -359,13 +359,15 @@ post_gate5_exploratory_protocol:
   synthetic_validation_completed_date: "2026-07-13"
   synthetic_validation_scope: "synthetic arrays only; no development, calibration, final-test, hardware, or Gate 6 execution"
   research_data_fitting_authorized: false
-  research_data_execution_decision: "d009_synthetic_compute_preflight_accepted_pending_execution; later_d010_required_for_any_research_fit"
+  research_data_execution_decision: "d009_terminal_technical_stop; no_resource_admission; corrective_rerun_requires_new_prospective_decision"
   compute_preflight_decision: "D009"
-  compute_preflight_status: "accepted_synthetic_only_pending_execution"
+  compute_preflight_status: "STOP_technical_failure"
   compute_preflight_config: "configs/post_gate5_preflight.yaml"
   compute_preflight_doc: "docs/post_gate5_compute_preflight.md"
   compute_preflight_figure: "RFIG-030"
-  compute_preflight_execution_authorized: true
+  compute_preflight_execution_authorized: false
+  compute_preflight_failure_evidence: "data/processed/reporting/post_gate5_compute_preflight.json"
+  compute_preflight_future_research_record: "P001-FR001"
   gate5_result_unchanged: true
   calibration_access: false
   final_test_access: false
@@ -397,7 +399,7 @@ post_gate5_exploratory_protocol:
     - "qaoa"
     - "new_variational_qml_architectures"
     - "larger_qubit_or_hardware_runs"
-  execution_rule: "D008 permits implementation and synthetic validation. D009 permits one clean-source synthetic compute preflight only. Research-data fitting remains locked until a later D010 decision."
+  execution_rule: "D008 permits implementation and synthetic validation. D009 ended in a technical STOP and cannot be rerun. Research-data fitting remains locked; any telemetry correction and preflight rerun require a new prospective human decision."
   failure_discussion_rule: "Every failure, resource stop, undefined metric, terminal nonadvancement, or scientific negative must be committed with an evidence-based future-research improvement that cannot alter or retry the active pipeline."
 
 gate5_runner_freeze:

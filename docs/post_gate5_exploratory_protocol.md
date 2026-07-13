@@ -1,8 +1,8 @@
 # Post-Gate-5 Exploratory Protocol
 
-Version: 0.2.3
+Version: 0.2.4
 Opened: 2026-07-13
-Status: Opened prospectively; D008 implementation and synthetic validation complete; D009 synthetic compute preflight accepted and pending; research-data execution remains unauthorized
+Status: Opened prospectively; D008 implementation and synthetic validation complete; D009 preflight ended in technical STOP; research-data execution remains unauthorized
 
 ## Purpose
 
@@ -139,6 +139,13 @@ D009 now authorizes one clean-source synthetic compute preflight under
 frozen q=8/two-layer synthetic workload and matched controls. It reads zero
 development, calibration, or final-test rows. Its result can support a later
 D010 execution proposal, but cannot itself unlock P001 fitting or Gate 6.
+
+The one authorized D009 attempt ended in a technical `STOP`: Windows process
+memory telemetry failed immediately after the first shared training
+projection. No head, matched control, or resource admission result exists.
+P001-FR001 records a possible telemetry validation for a later protocol, but
+the active runner is not corrected or retried. A new prospective human
+decision is required before any further preflight execution.
 
 ## Machine-readable source
 

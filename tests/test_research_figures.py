@@ -55,6 +55,7 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
         "RFIG-010",
         "RFIG-013",
     }
+    expected_ids.add("RFIG-029")
     assert expected_ids <= figure_ids
     assert {"RFIG-010", "RFIG-013"}.isdisjoint(figure_ids)
     assert {row["evidence_status"] for row in rows} >= {
@@ -67,6 +68,7 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
         "pre_fit_runner_freeze",
         "post_gate5_exploratory_protocol",
         "pre_execution_implementation_freeze_accepted",
+        "technical_failure_preflight_stop",
     }
     for row in rows:
         assert "final_test" not in row["source_data"]

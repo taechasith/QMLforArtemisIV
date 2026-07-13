@@ -1,0 +1,48 @@
+{
+  "schema_version": "0.1.0",
+  "decision_id": "D009",
+  "protocol_id": "P001",
+  "status": "STOP",
+  "terminal_status": "technical_failure",
+  "evidence_scope": "deterministic synthetic compute admission only",
+  "source_commit": "7aade60d61897781076730676aafca000ca52ad0",
+  "branch": "main",
+  "attempt": 1,
+  "failed_step": "peak_working_set_probe_after_Q01b_FQK_shared_training_projection",
+  "exception_type": "OSError",
+  "exception_message": "Unable to read Windows process memory counters",
+  "source_hash_scope": "SHA-256 of committed Git blob bytes at source_commit; independent of checkout line endings",
+  "source_hashes": {
+    "configs/post_gate5_preflight.yaml": "e248c51a0353ce47ce774a4d5f9c81f58673ed0a765a6d8aa26d34addf8c6c27",
+    "experiments/phase1_model_registry.yaml": "7ea0bfec43ebf425b7668d68bef318538be2c2e6f9c524c52cdeeebc6596c5d1",
+    "scripts/run_post_gate5_compute_preflight.py": "f7b95aae8c2f2b7c3bf11ba7c894aa8552649756ee23a5c335eee982a1c71275",
+    "src/openqfuel/models.py": "26340ffb72eb307946c2b428f85d49a1abba0e511b2e217711103b36b90b6308",
+    "src/openqfuel/post_gate5.py": "b45a3a0f38679a713c4d5f71fbb371e8ee161df26f91ed3c971657872df8540c",
+    "src/openqfuel/qml.py": "76b31373ce99a0739386e09712149abad2c372eae84a00955dd8360ce2d7e8f2",
+    "uv.lock": "6b3fc5c79950d5fdfc70d7b0dfda62bae207a441a4610d9504b67bab20edbb99"
+  },
+  "workload_progress": {
+    "synthetic_arrays_created": true,
+    "shared_training_projection_completed": true,
+    "shared_validation_projection_completed": false,
+    "projected_kernel_geometry_completed": false,
+    "projected_heads_completed": false,
+    "matched_controls_completed": false,
+    "resource_admission_evaluated": false
+  },
+  "integrity": {
+    "clean_source_verified_before_execution": true,
+    "development_rows_read": 0,
+    "calibration_rows_read": 0,
+    "final_test_rows_read": 0,
+    "hardware_jobs_submitted": 0,
+    "gpu_jobs_submitted": 0,
+    "gate6_runs": 0,
+    "statevectors_persisted": 0,
+    "kernel_matrices_persisted": 0
+  },
+  "bounded_interpretation": "D009 did not determine whether P001 fits the laptop ceilings. The failure occurred in Windows process-memory telemetry after the first synthetic projection, before either head, any matched control, or resource admission completed. It is neither a QML performance result nor evidence that the workload exceeds available compute.",
+  "future_research_record": "P001-FR001",
+  "claim_boundary": "Technical preflight-stop evidence only; no model-performance, resource-admission, research-data, Gate 5 reinterpretation, hardware, or Gate 6 claim.",
+  "next_step": "Keep P001 execution locked. Any telemetry correction and preflight rerun require a new prospective human decision."
+}

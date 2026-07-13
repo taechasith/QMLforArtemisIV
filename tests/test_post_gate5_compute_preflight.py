@@ -1,6 +1,10 @@
 from __future__ import annotations
 
+import csv
+import hashlib
+import json
 from pathlib import Path
+import subprocess
 
 import pytest
 import yaml
@@ -22,13 +26,14 @@ def _config() -> dict:
     return yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
 
 
-def test_d009_authorizes_only_one_synthetic_compute_preflight() -> None:
+def test_d009_records_one_authorized_attempt_and_terminal_stop() -> None:
     config = _config()
     assert config["decision_id"] == "D009"
     assert config["protocol_id"] == "P001"
-    assert config["status"] == "accepted_synthetic_compute_preflight_authorized"
+    assert config["status"] == "d009_terminal_technical_stop"
     assert config["accepted_date"] == "2026-07-13"
-    assert config["preflight_execution_authorized"] is True
+    assert config["preflight_was_authorized"] is True
+    assert config["preflight_execution_authorized"] is False
     assert config["research_data_fitting_authorized"] is False
     assert config["exploratory_execution_authorized"] is False
     assert config["locks"]["allowed_data_scope"] == "synthetic"
@@ -38,11 +43,12 @@ def test_d009_authorizes_only_one_synthetic_compute_preflight() -> None:
     assert config["locks"]["gate6_authorized"] is False
 
 
-def test_d009_scope_guard_keeps_every_research_split_locked() -> None:
+def test_d009_scope_guard_blocks_retry_and_every_research_split() -> None:
     config = _config()
-    assert_post_gate5_scope(
-        config, action="compute_preflight", data_scope="synthetic"
-    )
+    with pytest.raises(PermissionError, match="does not authorize"):
+        assert_post_gate5_scope(
+            config, action="compute_preflight", data_scope="synthetic"
+        )
     with pytest.raises(PermissionError, match="research-data fitting"):
         assert_post_gate5_scope(
             config, action="preflight", data_scope="development"
@@ -147,11 +153,57 @@ def test_preflight_contract_covers_both_heads_and_every_frozen_control() -> None
         assert identifier in controls
 
 
+def test_d009_stop_is_source_bound_and_has_no_research_or_admission_result() -> None:
+    evidence = json.loads(
+        (
+            ROOT
+            / "data/processed/reporting/post_gate5_compute_preflight.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert evidence["status"] == "STOP"
+    assert evidence["terminal_status"] == "technical_failure"
+    assert evidence["source_commit"] == (
+        "7aade60d61897781076730676aafca000ca52ad0"
+    )
+    progress = evidence["workload_progress"]
+    assert progress["shared_training_projection_completed"] is True
+    assert progress["projected_heads_completed"] is False
+    assert progress["matched_controls_completed"] is False
+    assert progress["resource_admission_evaluated"] is False
+    integrity = evidence["integrity"]
+    assert integrity["development_rows_read"] == 0
+    assert integrity["calibration_rows_read"] == 0
+    assert integrity["final_test_rows_read"] == 0
+
+    for relative, expected_hash in evidence["source_hashes"].items():
+        blob = subprocess.run(
+            ["git", "show", f"{evidence['source_commit']}:{relative}"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+        ).stdout
+        assert hashlib.sha256(blob).hexdigest() == expected_hash
+
+    discussion_path = (
+        ROOT
+        / "data/processed/reporting/post_gate5_future_research_discussion.csv"
+    )
+    with discussion_path.open(newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    assert len(rows) == 1
+    row = rows[0]
+    assert row["record_id"] == "P001-FR001"
+    assert row["terminal_status"] == "technical_failure"
+    assert row["new_protocol_required"] == "true"
+    assert row["active_pipeline_change_authorized"] == "false"
+    assert row["post_outcome_retry_authorized"] == "false"
+
+
 def test_governance_records_d009_without_unlocking_research_fit() -> None:
     required = {
         "README.md": "D009",
         "research_protocol.md": "D009",
-        "docs/post_gate5_compute_preflight.md": "Accepted for one synthetic preflight",
+        "docs/post_gate5_compute_preflight.md": "Terminal technical STOP",
         "docs/decision_log.md": "D009 accepted",
         "docs/research_execution_map.md": "D009",
     }

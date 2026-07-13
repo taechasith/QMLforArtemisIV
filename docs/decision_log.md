@@ -1035,3 +1035,29 @@ Consequence:
 A PASS permits preparation of D010 only; it does not unlock research-data
 fitting. A STOP must be committed with the D008 future-research discussion
 record and cannot reduce, retry, or rescue the active P001 design.
+
+D009 execution outcome:
+
+- Source commit: `7aade60d61897781076730676aafca000ca52ad0` on clean `main`.
+- Terminal status: **STOP - technical failure**.
+- The first shared 1,024-row synthetic training projection completed.
+- The Windows peak-working-set probe then raised
+  `OSError: Unable to read Windows process memory counters`.
+- Validation projection, projected-kernel geometry, Q01b/FQK heads, matched
+  controls, and resource admission were not reached.
+- Development, calibration, and final-test reads remained zero. No hardware,
+  GPU, or Gate 6 job ran.
+- This is not a QML result and not evidence that the workload exceeds the
+  laptop. Resource admission is unavailable.
+- P001-FR001 records a future-only proposal to validate a correctly typed
+  Windows memory adapter against an independent OS reading before a later
+  prospective preflight. It authorizes no active correction or retry.
+- RFIG-029 records the failure/stop disposition. RFIG-030 remains absent
+  because no resource-margin values exist.
+
+Consequence after STOP:
+
+P001 research-data fitting remains locked. The failed D009 run will not be
+silently retried. Any telemetry correction and preflight rerun require a new
+prospective human decision; the scientific design, rows, folds, controls,
+thresholds, and Gate 5 result remain unchanged.

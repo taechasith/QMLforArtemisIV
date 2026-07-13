@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.11
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D009 synthetic compute preflight accepted and pending execution; research fitting and Gate 6 unauthorized
+Version: 0.6.12
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D009 compute preflight ended in technical STOP; research fitting and Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-13
-Recommended next action: Execute the frozen D009 synthetic compute preflight; development-row fitting and Gate 6 remain unauthorized
+Recommended next decision: Review the D009 telemetry STOP; any corrected preflight requires a new prospective decision; development-row fitting and Gate 6 remain unauthorized
 
 ## 1. Proposed title
 
@@ -839,6 +839,16 @@ artifacts, a 24 GiB process working set, and a 20 GiB post-projection free-disk
 floor. A PASS permits preparation of D010 only; it does not authorize any
 development-row fit. A STOP invokes the frozen future-research firewall and
 cannot be rescued by reducing the active design.
+
+The single D009 attempt ended in `STOP` after the first shared synthetic
+training projection. The Windows peak-working-set probe raised `OSError`
+before validation projection, either projected head, any matched control, or
+the admission calculation completed. All research-row read counters remained
+zero. The outcome is a telemetry-interface failure: it provides no QML result
+and no evidence that the workload fits or exceeds the laptop. P001 execution
+remains locked. P001-FR001 records a future-only telemetry-adapter validation;
+it does not authorize a correction or retry. RFIG-029 records this boundary,
+while RFIG-030 remains absent because no resource-margin result exists.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

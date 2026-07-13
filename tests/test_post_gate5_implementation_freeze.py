@@ -40,8 +40,8 @@ def test_d008_is_accepted_and_research_fit_remains_locked() -> None:
     assert config["synthetic_validation_completed_date"] == "2026-07-13"
     assert config["research_data_fitting_authorized"] is False
     assert config["research_data_execution_decision"] == (
-        "d009_synthetic_compute_preflight_accepted_pending_execution; "
-        "later_d010_required_for_any_research_fit"
+        "d009_terminal_technical_stop; no_resource_admission; "
+        "corrective_rerun_requires_new_prospective_decision"
     )
     assert config["execution_authorized"] is False
     assert config["acceptance"]["current_decision"] == "accepted_by_human_research_lead"
@@ -124,10 +124,15 @@ def test_tracks_have_distinct_endpoints_and_strong_controls() -> None:
     assert "cost improvement" in fqk["claim_limit"]
 
 
-def test_failure_discussion_register_is_empty_and_firewalled() -> None:
+def test_failure_discussion_register_records_d009_and_remains_firewalled() -> None:
     config = _config()["failure_and_stop_policy"]
     rows = _rows(DISCUSSION)
-    assert rows == []
+    assert len(rows) == 1
+    assert rows[0]["record_id"] == "P001-FR001"
+    assert rows[0]["terminal_status"] == "technical_failure"
+    assert rows[0]["new_protocol_required"] == "true"
+    assert rows[0]["active_pipeline_change_authorized"] == "false"
+    assert rows[0]["post_outcome_retry_authorized"] == "false"
     with DISCUSSION.open(newline="", encoding="utf-8") as handle:
         fields = next(csv.reader(handle))
     assert fields == [*config["required_fields"], "reporting_commit"]
