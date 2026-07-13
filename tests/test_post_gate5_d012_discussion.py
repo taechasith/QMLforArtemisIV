@@ -56,6 +56,10 @@ def test_d012_preserves_d011_negative_evidence_and_future_boundary() -> None:
         candidate["authorization_status"] == "discussion_only"
         for candidate in candidates
     )
+    successor = config["selected_successor"]
+    assert successor["decision_id"] == "D013-C"
+    assert successor["selected_candidate"] == "D012-C"
+    assert successor["gate6_authorized"] is False
     assert "does not authorize new experiments" in config["claim_boundary"]
 
 
@@ -67,7 +71,7 @@ def test_d012_docs_and_top_level_protocol_record_gate6_lock() -> None:
         "research_protocol.md": "D012 future-protocol discussion opened",
         "README.md": "D012 is now open as discussion-only",
         "docs/decision_log.md": "D012 opened - future protocol discussion",
-        "docs/research_execution_map.md": "D012 discussion opened",
+        "docs/research_execution_map.md": "D013-C planning accepted",
     }
     for relative, phrase in required.items():
         text = (ROOT / relative).read_text(encoding="utf-8")

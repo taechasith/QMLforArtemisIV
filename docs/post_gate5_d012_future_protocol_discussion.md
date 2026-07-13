@@ -5,7 +5,7 @@ Decision: D012
 Protocol: P001
 Prepared: 2026-07-14
 Accepted: 2026-07-14
-Status: Discussion-only opened; Gate 6 unauthorized
+Status: Discussion-only opened; Gate 6 unauthorized; D013-C selected as planning-only successor
 
 ## Authority Boundary
 
@@ -87,10 +87,11 @@ D012.
 
 Do not open Gate 6. Do not run another QML experiment immediately.
 
-If the project wants a successor protocol, prepare D013 around D012-C first or
-use D012-A only if the paper explicitly needs one more prospective QML branch.
-D012-B should remain secondary unless feasibility recall becomes the dominant
-scientific question.
+D013-C has been selected as the planning-only successor. It prepares
+classical-first residual and safety-filter hardening before any new QML
+invention process. D012-A remains the main QML invention candidate for a later
+prospective protocol, and D012-B remains secondary unless feasibility recall
+becomes the dominant scientific question.
 
 The current paper can already report a high-value negative result: under a
 source-bound laptop-feasible campaign with strong controls and locked splits,

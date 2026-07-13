@@ -227,6 +227,15 @@ reinterpretation, or Gate 6. The current recommendation is classical-first
 residual and safety-filter hardening before any further QML experiment, unless
 the paper explicitly needs a new prospectively frozen QML branch.
 
+D013-C is accepted as that planning-only recommended path. It does not run a
+new experiment. It records the long-term invention goal: after the experimental
+program is complete, use the labeled evidence to design a new QML method that
+beats the strongest documented NASA-relevant and repository baselines under
+fair locked-split tests. The repository does not claim NASA used a specific QML
+method unless a cited public source identifies one. Each result now needs an
+invention-readiness label separating useful design evidence from prohibited
+post-outcome rescue use.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -243,6 +252,10 @@ model. A negative result is an acceptable outcome. Any QML model must be tested
 against strong, tuned classical baselines under identical data splits,
 optimization budgets, random scenarios, safety constraints, and reporting
 rules.
+
+The long-term aim is not to make the current failed QML variants look better.
+It is to learn from every valid failure, stop, and negative result so a later
+prospectively frozen QML invention can be tested against stronger baselines.
 
 The phrase quantum advantage is prohibited unless an end-to-end hardware
 experiment demonstrates a practical advantage after data encoding, sampling,
@@ -280,6 +293,9 @@ through a dated deviation record.
 - docs/research_figure_policy.md: required visual, provenance, and claim-boundary workflow.
 - docs/research_execution_map.md: work ownership and future decision gates.
 - docs/post_gate5_exploratory_protocol.md: prospective exploratory Q01b/FQK protocol opened after the accepted Gate 5 negative result.
+- docs/post_gate5_d012_future_protocol_discussion.md: discussion-only interpretation of the D011-R1 negative results.
+- docs/post_gate5_d013_classical_first_protocol.md: planning-only classical-first residual and safety-filter path before QML invention.
+- docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
 - docs/post_gate5_compute_preflight.md: D009 synthetic-only clean-source compute-admission contract and pass/stop rules.
 - docs/post_gate5_telemetry_correction.md: D010 typed-memory correction, independent validation, and one-rerun authority.

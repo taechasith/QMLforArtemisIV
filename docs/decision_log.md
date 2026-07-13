@@ -1372,3 +1372,34 @@ Reporting:
 RFIG-026 through RFIG-028 remain the D011-R1 reached evidence. RFIG-029 remains
 the future-research firewall figure. No new figure is required for D012 unless
 a later D013 protocol is prospectively prepared.
+
+### D013-C accepted - classical-first planning before QML invention
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Accepted; planning-only; no experiment authorized**
+Authority: Human research lead instructed the assistant to choose and commit the recommended next decision before the QML invention phase
+
+Decision:
+
+- Select D012-C as the next path because it is the scientifically safest
+  response to D011-R1: both tested QML tracks were weaker than strong classical
+  controls.
+- Open planning for stronger classical residual-cost and safety-filter
+  baselines before inventing a new QML method.
+- Record the long-term invention goal: after the experimental program is
+  complete, use labeled evidence to design a new QML method that can beat the
+  strongest documented NASA-relevant and repository baselines under fair
+  locked-split tests.
+- Do not claim NASA used a specific QML method unless a cited public source
+  identifies one.
+- Require every completed result, technical stop, and negative result to label
+  its useful signal for later QML invention and its prohibited post-outcome
+  rescue use.
+
+Boundary:
+
+D013-C authorizes no implementation, new experiment, refit, rerank, retry,
+calibration/final-test read, hardware/GPU execution, Gate 5 reinterpretation,
+quantum-advantage claim, or Gate 6. D014 is required before any executable
+successor work.

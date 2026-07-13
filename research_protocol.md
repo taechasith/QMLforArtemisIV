@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.18
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; Gate 6 unauthorized
+Version: 0.6.19
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: Use D012 only to discuss whether a future D013 protocol should be proposed; no experiment, refit, rerank, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, or Gate 6 is authorized
+Recommended next action: Prepare D014 implementation-freeze and compute-admission proposal for D013-C only if another development-only experiment is needed; no experiment, refit, rerank, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, or Gate 6 is authorized by D013-C
 
 ## 1. Proposed title
 
@@ -17,6 +17,14 @@ This study will determine whether a quantum machine-learning surrogate can
 improve robust trajectory-correction planning for a crewed cislunar spacecraft
 when compared fairly with strong classical machine-learning and numerical
 optimization methods.
+
+The long-term invention objective is to use the complete experimental record to
+design a new QML method that can beat the strongest documented NASA-relevant
+and repository baselines under fair locked-split tests. This objective is
+subordinate to scientific correctness: no NASA-used QML method is asserted
+unless a cited public source identifies it, and every completed result must
+label what evidence is useful for a later invention and what use is prohibited
+as post-outcome rescue.
 
 The experiment has two linked parts:
 
@@ -46,6 +54,13 @@ assistant supplies:
 
 The human research lead answers accept, reject, or revise. Decisions and
 post-freeze deviations are recorded in docs/decision_log.md.
+
+After D013-C, the assistant may choose and commit the recommended planning
+path when the human research lead has explicitly delegated that choice, but
+the following remain non-delegable without a separate prospective record:
+calibration access, final-test access, hardware/GPU execution, Gate 5
+reinterpretation, Gate 6, and public claims of superiority or operational
+readiness.
 
 ## 4. Scope
 
@@ -987,6 +1002,15 @@ class-sensitive feasibility quantum kernels, and classical-first residual plus
 safety-filter hardening. None is authorized for implementation or execution.
 Any successor requires a separate prospective D013 decision, and Gate 6 remains
 unauthorized.
+
+D013-C was then accepted as the assistant-recommended planning path. It chooses
+classical-first residual and safety-filter hardening before inventing a new QML
+method, because D011-R1 showed both tested QML tracks were weaker than strong
+classical controls. D013-C creates `docs/qml_invention_readiness_ledger.md` so
+each result labels the useful signal for later QML invention and the prohibited
+post-outcome use. D013-C authorizes no implementation, experiment, refit,
+rerank, calibration/final-test access, hardware/GPU execution, Gate 5
+reinterpretation, quantum-advantage claim, or Gate 6.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

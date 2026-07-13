@@ -1,0 +1,87 @@
+schema_version: "0.1.0"
+decision_id: "D013-C"
+protocol_id: "P001"
+status: "accepted_planning_only_no_execution"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+acceptance_basis: "human research lead authorized the assistant to choose and commit the recommended next decision before any QML invention phase; assistant selected D012-C classical-first residual and safety-filter hardening"
+
+authority:
+  planning_authorized: true
+  implementation_authorized: false
+  experiment_authorized: false
+  refit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate5_reinterpretation_authorized: false
+  gate6_authorized: false
+  next_required_decision: "D014 must prospectively freeze implementation and compute admission before any D013-C code execution or data fitting"
+
+long_term_invention_goal:
+  objective: "After the current benchmark and any prospectively approved follow-up experiments are complete, use the labeled evidence to design a new QML method that can beat the strongest documented NASA-relevant and repository classical baselines under fair locked-split tests."
+  nasa_claim_discipline: "Do not claim NASA used a specific QML method unless a cited public source identifies that method; until then, comparisons are to NASA-relevant mission-design baselines and the strongest controls in this repository."
+  scientific_correctness_priority: "scientific correctness has priority: the invention target is subordinate to leakage control, fair baselines, negative-result reporting, and mission-safety gates."
+  evidence_label_rule: "Every completed result, stop, or negative outcome must label what information is useful for later QML invention and what use is prohibited as post-outcome rescue."
+
+selected_path:
+  candidate_id: "D012-C"
+  title: "Classical-first residual and safety-filter hardening"
+  reason: "D011-R1 showed both near-term QML tracks were weaker than strong classical controls, so the next scientifically correct step is to harden the residual and safety-filter baselines that any invented QML method must later beat."
+  relation_to_qml_invention: "This path does not replace the invention goal; it defines the stronger target and diagnostics needed before proposing a new QML architecture."
+
+planning_scope:
+  allowed:
+    - "write protocol requirements"
+    - "map existing negative results to invention-use labels"
+    - "identify controls any later QML method must beat"
+    - "define pre-execution evidence needed for D014"
+  prohibited:
+    - "new model implementation"
+    - "development-data fitting"
+    - "calibration or final-test reads"
+    - "hardware or GPU execution"
+    - "Gate 5 reinterpretation"
+    - "Gate 6 work"
+
+baseline_hardening_targets:
+  residual_cost:
+    purpose: "establish a stronger cost-regression target before inventing a new QML residual model"
+    candidate_controls:
+      - "physics_residual_control"
+      - "C06-T17"
+      - "A02 exact classical RBF"
+      - "random_feature_rbf"
+      - "compressed_mlp"
+    required_outputs:
+      - "locked feature/residual definition"
+      - "fold-local preprocessing rule"
+      - "fair compute budget"
+      - "regime diagnostics that show where residual errors remain"
+  safety_filter:
+    purpose: "establish a stronger feasibility and intervention baseline before inventing a QML safety-aware model"
+    candidate_controls:
+      - "C02-T02"
+      - "calibrated logistic safety head"
+      - "class-weighted tree ensemble"
+      - "conformal or quantile safety threshold"
+    required_outputs:
+      - "frozen threshold-selection rule"
+      - "false-negative priority statement"
+      - "calibration and recall diagnostics"
+      - "mission-safety non-inferiority boundary"
+
+invention_readiness_labels:
+  required_fields:
+    - "result_id"
+    - "observed_result"
+    - "useful_signal_for_invention"
+    - "prohibited_use"
+    - "required_future_control"
+    - "claim_boundary"
+  ledger: "docs/qml_invention_readiness_ledger.md"
+
+claim_boundary: "D013-C is a planning-only decision. It prepares stronger classical residual and safety-filter baselines so a later invented QML method has a fair target. It does not authorize implementation, experiments, refits, reranking, calibration/final-test access, hardware/GPU execution, Gate 5 reinterpretation, quantum-advantage claims, or Gate 6."

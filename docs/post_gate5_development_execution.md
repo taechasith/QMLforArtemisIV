@@ -197,3 +197,9 @@ D012 was then opened as discussion-only future-protocol interpretation. It
 records candidate directions for a possible D013 protocol but does not
 authorize implementation, a new experiment, refit, rerank, calibration or
 final-test access, hardware/GPU execution, Gate 5 reinterpretation, or Gate 6.
+
+D013-C selected the classical-first residual and safety-filter hardening path
+as planning-only preparation before any new QML invention. It adds an
+invention-readiness ledger for useful signals from the negative results, but it
+does not authorize implementation, refit, rerank, calibration or final-test
+access, hardware/GPU execution, Gate 5 reinterpretation, or Gate 6.

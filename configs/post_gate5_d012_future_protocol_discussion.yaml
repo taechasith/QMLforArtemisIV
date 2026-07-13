@@ -84,3 +84,12 @@ future_protocol_candidates:
     authorization_status: "discussion_only"
 
 claim_boundary: "D012 is a future-protocol discussion opened from negative development-only evidence. It does not authorize new experiments, refits, reranking, calibration/final-test access, hardware/GPU execution, Gate 5 reinterpretation, quantum-advantage claims, or Gate 6."
+
+selected_successor:
+  decision_id: "D013-C"
+  selected_candidate: "D012-C"
+  status: "accepted_planning_only_no_execution"
+  reason: "The assistant selected the classical-first residual and safety-filter hardening path because both D011-R1 QML tracks were weaker than strong classical controls."
+  invention_goal: "Use the complete labeled evidence record to design a later prospectively frozen QML method that can beat the strongest documented NASA-relevant and repository baselines."
+  nasa_claim_discipline: "Do not claim NASA used a specific QML method unless a cited public source identifies that method."
+  gate6_authorized: false
