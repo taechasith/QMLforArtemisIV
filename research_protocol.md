@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.12
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D009 compute preflight ended in technical STOP; research fitting and Gate 6 unauthorized
+Version: 0.6.13
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D010 telemetry correction and one unchanged synthetic preflight rerun accepted; research fitting and Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-13
-Recommended next decision: Review the D009 telemetry STOP; any corrected preflight requires a new prospective decision; development-row fitting and Gate 6 remain unauthorized
+Recommended next action: Run the D010 telemetry-only validation and, only if it passes, the single authorized unchanged synthetic preflight attempt; development-row fitting and Gate 6 remain unauthorized
 
 ## 1. Proposed title
 
@@ -849,6 +849,19 @@ and no evidence that the workload fits or exceeds the laptop. P001 execution
 remains locked. P001-FR001 records a future-only telemetry-adapter validation;
 it does not authorize a correction or retry. RFIG-029 records this boundary,
 while RFIG-030 remains absent because no resource-margin result exists.
+
+D010 is accepted prospectively to correct only that telemetry interface and
+to run one unchanged synthetic preflight as attempt 2. The correction declares
+the Windows `GetProcessMemoryInfo` and `GlobalMemoryStatusEx` argument and
+return types explicitly, validates the adapter against PowerShell
+`WorkingSet64` within the larger of 64 MiB or 25%, and hashes committed Git
+blobs so checkout line endings cannot alter provenance. The D009 benchmark,
+477.5-work-unit projection, 25% margin, controls, seed, rows, circuits, and all
+resource ceilings remain unchanged. The required order is a telemetry-only
+check followed by at most one full synthetic rerun. D009 evidence remains
+immutable. A D010 PASS may support preparation of D011 only; no development,
+calibration, final-test, hardware/GPU, Gate 5 reinterpretation, or Gate 6 work
+is authorized.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

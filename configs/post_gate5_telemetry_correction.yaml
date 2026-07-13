@@ -1,0 +1,81 @@
+schema_version: "0.1.0"
+decision_id: "D010"
+protocol_id: "P001"
+status: "accepted_telemetry_correction_and_one_preflight_rerun_authorized"
+prepared_date: "2026-07-13"
+accepted_date: "2026-07-13"
+preflight_execution_authorized: true
+research_data_fitting_authorized: false
+exploratory_execution_authorized: false
+
+authority:
+  scope: "telemetry-only correction, independent telemetry validation, and one unchanged synthetic preflight rerun"
+  acceptance_basis: "human research lead instruction to perform the next step after the D009 technical STOP"
+  corrected_decision: "D009"
+  corrected_attempt: 1
+  authorized_rerun_attempt: 2
+  next_decision_if_pass: "D011 may consider development-only P001 execution"
+  action_if_stop: "record the governed stop and future-research discussion; do not retry or reduce the active design"
+
+base_preflight_contract:
+  path: "configs/post_gate5_preflight.yaml"
+  source_commit: "14e6b0e15ffdc9dd9a764a3c83246d27210c5d23"
+  git_blob_sha256: "1ecdf4bf37c6db107b69f5a0227b9f93a70650ab31edc0a1ebc2481df72169d1"
+  inherited_unchanged_sections:
+    - benchmark
+    - campaign_projection
+    - ceilings
+  unchanged_workload_statement: "same seed, synthetic rows, feature widths, q=8/two-layer circuit, shared heads, controls, landmarks, 477.5 work units, 25% margin, and ceilings as D009"
+
+authorized_correction:
+  telemetry_backend: "Windows GetProcessMemoryInfo from psapi with explicit HANDLE, DWORD, BOOL, pointer, and structure types"
+  total_memory_backend: "Windows GlobalMemoryStatusEx with explicit pointer and BOOL types"
+  independent_validator: "PowerShell Get-Process WorkingSet64 for the running Python process"
+  validation_absolute_tolerance_mib: 64
+  validation_relative_tolerance: 0.25
+  validation_rule: "adapter current working set must be positive, peak must be at least current, and adapter-versus-independent difference must be within max(64 MiB, 25%)"
+  provenance_rule: "hash committed Git blob bytes from the clean source commit, independent of checkout line endings"
+  telemetry_only_check_required_before_rerun: true
+  scientific_code_change_authorized: false
+  benchmark_contract_change_authorized: false
+
+locks:
+  gate5_result_unchanged: true
+  d006_d007_evidence_immutable: true
+  d008_scientific_design_unchanged: true
+  d009_failure_evidence_immutable: true
+  development_rows_read: 0
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate6_authorized: false
+  allowed_data_scope: "synthetic"
+  rerun_limit: 1
+
+source_binding:
+  require_clean_git_worktree: true
+  require_main_branch: true
+  implementation_config: "configs/post_gate5_exploratory.yaml"
+  base_preflight_config: "configs/post_gate5_preflight.yaml"
+  correction_config: "configs/post_gate5_telemetry_correction.yaml"
+  model_registry: "experiments/phase1_model_registry.yaml"
+  qml_source: "src/openqfuel/qml.py"
+  model_source: "src/openqfuel/models.py"
+  guard_source: "src/openqfuel/post_gate5.py"
+  benchmark_script: "scripts/run_post_gate5_compute_preflight.py"
+  lockfile: "uv.lock"
+  output: "data/processed/reporting/post_gate5_compute_preflight_rerun.json"
+
+reporting:
+  prior_failure_figure: "RFIG-029"
+  pass_figure: "RFIG-030"
+  pass_figure_generator: "scripts/make_post_gate5_preflight_result_figure.py"
+  pass_figure_content: "conservative projected resource utilization against accepted laptop ceilings"
+  claim_boundary: "synthetic compute admission only; not QML performance, research-data fitting, Gate 5 reinterpretation, or Gate 6 evidence"
+  stop_figure_rule: "update RFIG-029 and the future-research register if attempt 2 stops"
+
+outcome:
+  current_status: "pending_telemetry_validation_and_rerun"
+  pass_effect: "permits preparation of D011 only; development-row fitting remains unauthorized"
+  stop_effect: "P001 execution remains locked and no further preflight retry is authorized"

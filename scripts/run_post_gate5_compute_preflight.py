@@ -1,8 +1,8 @@
-"""Run the accepted D009 synthetic-only compute admission benchmark."""
+"""Run the D010 corrected rerun of the D009 synthetic compute preflight."""
 
 from __future__ import annotations
 
-import ctypes
+import argparse
 import hashlib
 import importlib.metadata
 import json
@@ -10,7 +10,6 @@ import os
 import platform
 import shutil
 import subprocess
-import sys
 import time
 from pathlib import Path
 from typing import Any, Callable
@@ -33,7 +32,10 @@ from openqfuel.post_gate5 import (  # noqa: E402
     assert_post_gate5_scope,
     equivalent_preflight_work_units,
     evaluate_preflight_admission,
+    process_memory_observation,
     project_preflight_resources,
+    total_physical_memory_bytes,
+    validate_memory_telemetry,
 )
 from openqfuel.qml import (  # noqa: E402
     deterministic_landmark_indices,
@@ -45,12 +47,9 @@ from openqfuel.qml import (  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "configs/post_gate5_preflight.yaml"
+BASE_CONFIG = ROOT / "configs/post_gate5_preflight.yaml"
+CORRECTION_CONFIG = ROOT / "configs/post_gate5_telemetry_correction.yaml"
 MODEL_REGISTRY = ROOT / "experiments/phase1_model_registry.yaml"
-
-
-def _sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def _git(*args: str) -> str:
@@ -67,69 +66,49 @@ def _git(*args: str) -> str:
 def _clean_source() -> tuple[str, str]:
     dirty = _git("status", "--porcelain")
     if dirty:
-        raise RuntimeError("D009 requires a clean Git worktree")
+        raise RuntimeError("D010 requires a clean Git worktree")
     branch = _git("branch", "--show-current")
     if branch != "main":
-        raise RuntimeError("D009 is accepted only on main")
+        raise RuntimeError("D010 is accepted only on main")
     return _git("rev-parse", "HEAD"), branch
 
 
-def _peak_working_set_bytes() -> int:
-    if sys.platform == "win32":
-        class ProcessMemoryCounters(ctypes.Structure):
-            _fields_ = [
-                ("cb", ctypes.c_ulong),
-                ("PageFaultCount", ctypes.c_ulong),
-                ("PeakWorkingSetSize", ctypes.c_size_t),
-                ("WorkingSetSize", ctypes.c_size_t),
-                ("QuotaPeakPagedPoolUsage", ctypes.c_size_t),
-                ("QuotaPagedPoolUsage", ctypes.c_size_t),
-                ("QuotaPeakNonPagedPoolUsage", ctypes.c_size_t),
-                ("QuotaNonPagedPoolUsage", ctypes.c_size_t),
-                ("PagefileUsage", ctypes.c_size_t),
-                ("PeakPagefileUsage", ctypes.c_size_t),
-            ]
-
-        counters = ProcessMemoryCounters()
-        counters.cb = ctypes.sizeof(counters)
-        handle = ctypes.windll.kernel32.GetCurrentProcess()
-        success = ctypes.windll.psapi.GetProcessMemoryInfo(
-            handle, ctypes.byref(counters), counters.cb
-        )
-        if not success:
-            raise OSError("Unable to read Windows process memory counters")
-        return int(counters.PeakWorkingSetSize)
-
-    try:
-        import resource
-
-        value = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
-        return value if sys.platform == "darwin" else value * 1024
-    except (ImportError, OSError):
-        return 0
+def _git_blob_sha256(commit: str, relative_path: str) -> str:
+    completed = subprocess.run(
+        ["git", "show", f"{commit}:{relative_path}"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+    )
+    return hashlib.sha256(completed.stdout).hexdigest()
 
 
-def _total_physical_memory_bytes() -> int:
-    if sys.platform == "win32":
-        class MemoryStatus(ctypes.Structure):
-            _fields_ = [
-                ("dwLength", ctypes.c_ulong),
-                ("dwMemoryLoad", ctypes.c_ulong),
-                ("ullTotalPhys", ctypes.c_ulonglong),
-                ("ullAvailPhys", ctypes.c_ulonglong),
-                ("ullTotalPageFile", ctypes.c_ulonglong),
-                ("ullAvailPageFile", ctypes.c_ulonglong),
-                ("ullTotalVirtual", ctypes.c_ulonglong),
-                ("ullAvailVirtual", ctypes.c_ulonglong),
-                ("ullAvailExtendedVirtual", ctypes.c_ulonglong),
-            ]
+def _independent_working_set_bytes() -> int:
+    completed = subprocess.run(
+        [
+            "powershell",
+            "-NoProfile",
+            "-Command",
+            f"(Get-Process -Id {os.getpid()}).WorkingSet64",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return int(completed.stdout.strip())
 
-        status = MemoryStatus()
-        status.dwLength = ctypes.sizeof(status)
-        if not ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(status)):
-            raise OSError("Unable to read Windows physical memory")
-        return int(status.ullTotalPhys)
-    return 0
+
+def _validate_telemetry(correction: dict[str, Any]) -> dict[str, Any]:
+    settings = correction["authorized_correction"]
+    observation = process_memory_observation()
+    return validate_memory_telemetry(
+        observation,
+        independent_current_bytes=_independent_working_set_bytes(),
+        absolute_tolerance_bytes=(
+            int(settings["validation_absolute_tolerance_mib"]) * 1024**2
+        ),
+        relative_tolerance=float(settings["validation_relative_tolerance"]),
+    )
 
 
 def _timed(
@@ -143,7 +122,8 @@ def _timed(
             "step": name,
             "wall_seconds": time.perf_counter() - wall_started,
             "cpu_seconds": time.process_time() - cpu_started,
-            "peak_working_set_gib": _peak_working_set_bytes() / float(1024**3),
+            "peak_working_set_gib": process_memory_observation().peak_bytes
+            / float(1024**3),
         }
     )
     return result
@@ -263,16 +243,56 @@ def _control_predictions(
     return predictions
 
 
-def main() -> None:
-    config = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
-    assert_post_gate5_scope(config, action="compute_preflight", data_scope="synthetic")
+def _load_committed_yaml(commit: str, relative_path: str) -> dict[str, Any]:
+    completed = subprocess.run(
+        ["git", "show", f"{commit}:{relative_path}"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    payload = yaml.safe_load(completed.stdout)
+    if not isinstance(payload, dict):
+        raise TypeError(f"Committed YAML must contain a mapping: {relative_path}")
+    return payload
+
+
+def main(*, telemetry_only: bool = False) -> None:
     source_commit, branch = _clean_source()
+    correction_path = CORRECTION_CONFIG.relative_to(ROOT).as_posix()
+    correction = _load_committed_yaml(source_commit, correction_path)
+    assert_post_gate5_scope(
+        correction, action="compute_preflight", data_scope="synthetic"
+    )
+
+    base_binding = correction["base_preflight_contract"]
+    base_path = str(base_binding["path"])
+    pinned_base_hash = str(base_binding["git_blob_sha256"])
+    historical_base_hash = _git_blob_sha256(
+        str(base_binding["source_commit"]), base_path
+    )
+    current_base_hash = _git_blob_sha256(source_commit, base_path)
+    if historical_base_hash != pinned_base_hash:
+        raise RuntimeError("D010 pinned D009 contract hash is invalid")
+    if current_base_hash != pinned_base_hash:
+        raise RuntimeError("D009 base contract changed after the D010 freeze")
+    config = _load_committed_yaml(source_commit, base_path)
+
     expected_units = float(
         config["campaign_projection"]["expected_equivalent_1024_row_work_units"]
     )
     actual_units = equivalent_preflight_work_units(config)
     if not np.isclose(actual_units, expected_units, rtol=0.0, atol=1e-12):
-        raise ValueError("D009 campaign work-unit formula differs from its frozen value")
+        raise ValueError("D010 campaign work-unit formula differs from D009")
+
+    telemetry_validation = _validate_telemetry(correction)
+    if telemetry_only:
+        print(json.dumps(telemetry_validation, indent=2, sort_keys=True))
+        if telemetry_validation["status"] != "PASS":
+            raise SystemExit(2)
+        return
+    if telemetry_validation["status"] != "PASS":
+        raise RuntimeError("D010 memory telemetry validation did not pass")
 
     benchmark = config["benchmark"]
     rng = np.random.default_rng(int(benchmark["seed"]))
@@ -431,7 +451,7 @@ def main() -> None:
 
     benchmark_wall_seconds = time.perf_counter() - benchmark_wall_started
     benchmark_cpu_seconds = time.process_time() - benchmark_cpu_started
-    peak_rss_gib = _peak_working_set_bytes() / float(1024**3)
+    peak_rss_gib = process_memory_observation().peak_bytes / float(1024**3)
     free_disk_gib = shutil.disk_usage(ROOT).free / float(1024**3)
     projected = project_preflight_resources(
         config,
@@ -442,11 +462,13 @@ def main() -> None:
     )
     admission = evaluate_preflight_admission(config, projected)
 
-    source_paths = config["source_binding"]
+    source_paths = correction["source_binding"]
     source_hashes = {
-        key: _sha256(ROOT / source_paths[key])
+        key: _git_blob_sha256(source_commit, str(source_paths[key]))
         for key in (
             "implementation_config",
+            "base_preflight_config",
+            "correction_config",
             "model_registry",
             "qml_source",
             "model_source",
@@ -457,20 +479,31 @@ def main() -> None:
     }
     payload = {
         "schema_version": "0.1.0",
-        "decision_id": "D009",
+        "decision_id": "D010",
+        "corrects_decision_id": "D009",
+        "attempt": 2,
         "protocol_id": "P001",
         "status": admission["status"],
         "evidence_scope": "deterministic synthetic compute admission only",
         "source_commit": source_commit,
         "branch": branch,
+        "source_hash_scope": "committed Git blob bytes",
         "source_hashes": source_hashes,
+        "base_preflight_contract": {
+            "path": base_path,
+            "historical_source_commit": str(base_binding["source_commit"]),
+            "pinned_git_blob_sha256": pinned_base_hash,
+            "current_git_blob_sha256": current_base_hash,
+            "equivalent_1024_row_work_units": actual_units,
+        },
+        "telemetry_validation": telemetry_validation,
         "machine": {
             "platform": platform.platform(),
             "python": platform.python_version(),
             "numpy": importlib.metadata.version("numpy"),
             "scikit_learn": importlib.metadata.version("scikit-learn"),
             "logical_processors": os.cpu_count(),
-            "physical_memory_gib": _total_physical_memory_bytes()
+            "physical_memory_gib": total_physical_memory_bytes()
             / float(1024**3),
             "declared_reference_cpu": config["ceilings"].get(
                 "reference_cpu", "Intel Core i9-13900HX"
@@ -511,7 +544,7 @@ def main() -> None:
             "research-data, Gate 5 reinterpretation, hardware, or Gate 6 claim."
         ),
         "next_step": (
-            "Prepare D010 development-only execution decision"
+            "Prepare D011 development-only execution decision"
             if admission["status"] == "PASS"
             else "Record governed STOP and keep P001 execution locked"
         ),
@@ -527,4 +560,11 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--telemetry-only",
+        action="store_true",
+        help="Validate corrected memory telemetry without running the benchmark",
+    )
+    arguments = parser.parse_args()
+    main(telemetry_only=arguments.telemetry_only)

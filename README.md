@@ -130,6 +130,16 @@ without a new prospective decision, and RFIG-029 records the stop plus its
 future-research firewall. RFIG-030 remains absent because no resource-margin
 result exists.
 
+D010 is now accepted as a prospective telemetry-only correction. It replaces
+the untyped Windows process-memory call with explicitly typed operating-system
+interfaces, requires agreement with an independent PowerShell working-set
+reading, and binds provenance to committed Git blobs. D009 remains an
+immutable technical `STOP`. D010 permits one telemetry-only check followed by
+one unchanged synthetic preflight attempt; it changes no seed, row count,
+circuit, control, projection, margin, or resource ceiling. Development,
+calibration, final-test, hardware/GPU, and Gate 6 work remain locked. A PASS
+would permit preparation of D011 only, not research-data fitting.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -185,6 +195,7 @@ through a dated deviation record.
 - docs/post_gate5_exploratory_protocol.md: prospective exploratory Q01b/FQK protocol opened after the accepted Gate 5 negative result.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
 - docs/post_gate5_compute_preflight.md: D009 synthetic-only clean-source compute-admission contract and pass/stop rules.
+- docs/post_gate5_telemetry_correction.md: D010 typed-memory correction, independent validation, and one-rerun authority.
 - docs/decision_log.md: acceptance and deviation history.
 - data/processed/reporting/gate5_literature_hardening_matrix.csv: D004 source-to-control matrix for RFIG-019.
 - data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv: P001 near-term versus appendix/future QML boundary for RFIG-024.
@@ -200,7 +211,7 @@ through a dated deviation record.
 - scripts/make_gate5_result_figures.py: predeclared RFIG-021 through RFIG-023 development-result figures.
 - scripts/make_post_gate5_exploratory_figures.py: RFIG-024 protocol-boundary diagram generator.
 - scripts/make_post_gate5_implementation_figure.py: RFIG-025 D008 implementation-freeze and future-research-firewall diagram generator.
-- scripts/run_post_gate5_compute_preflight.py: accepted D009 synthetic-only resource benchmark; it cannot read research rows or authorize fitting.
+- scripts/run_post_gate5_compute_preflight.py: D010-corrected D009 synthetic-only resource benchmark; it cannot read research rows or authorize fitting.
 - src/openqfuel/post_gate5.py: D008 synthetic-only scope guard and future-research firewall validator.
 - scripts/fetch_public_data.py: immutable-source downloader.
 - scripts/extract_artemis2_oem.py: safe nested-archive extraction and hashing.

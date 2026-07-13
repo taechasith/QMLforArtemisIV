@@ -20,7 +20,8 @@ def test_post_gate5_exploratory_protocol_scope_is_narrow() -> None:
     )
     protocol = config["post_gate5_exploratory_protocol"]
     assert protocol["status"] == (
-        "d008_accepted_implementation_and_synthetic_validation_authorized_research_fit_locked"
+        "d010_accepted_telemetry_correction_preflight_rerun_pending_"
+        "research_fit_locked"
     )
     assert protocol["implementation_freeze_decision"] == "accepted_by_human_research_lead"
     assert protocol["implementation_authorized"] is True
@@ -29,11 +30,11 @@ def test_post_gate5_exploratory_protocol_scope_is_narrow() -> None:
     assert protocol["synthetic_validation_completed_date"] == "2026-07-13"
     assert protocol["research_data_fitting_authorized"] is False
     assert protocol["research_data_execution_decision"] == (
-        "d009_terminal_technical_stop; no_resource_admission; "
-        "corrective_rerun_requires_new_prospective_decision"
+        "d010_accepted_telemetry_only_correction_and_one_unchanged_synthetic_"
+        "preflight_rerun; pending; research_fit_locked"
     )
-    assert protocol["compute_preflight_decision"] == "D009"
-    assert protocol["compute_preflight_execution_authorized"] is False
+    assert protocol["compute_preflight_decision"] == "D010"
+    assert protocol["compute_preflight_execution_authorized"] is True
     assert protocol["gate5_result_unchanged"] is True
     assert protocol["calibration_access"] is False
     assert protocol["final_test_access"] is False

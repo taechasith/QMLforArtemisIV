@@ -1063,3 +1063,38 @@ P001 research-data fitting remains locked. The failed D009 run will not be
 silently retried. Any telemetry correction and preflight rerun require a new
 prospective human decision; the scientific design, rows, folds, controls,
 thresholds, and Gate 5 result remain unchanged.
+
+### D010 accepted - telemetry-only D009 correction and one unchanged rerun
+
+Date prepared: 2026-07-13
+Date accepted: 2026-07-13
+Status: **Accepted; telemetry validation and one synthetic attempt-2 rerun pending; research-data execution unauthorized**
+Authority: Human research lead instruction to perform the next process step
+
+Decision:
+
+D010 corrects only the process-memory interface that stopped D009. It permits
+one telemetry-only validation and, only after a PASS, one rerun of the
+unchanged D009 synthetic compute preflight. D009 attempt 1 and P001-FR001
+remain immutable historical evidence.
+
+Authorized correction:
+
+- Declare the Windows PSAPI process handle, pointer, integer, and Boolean types
+  explicitly and type `GlobalMemoryStatusEx` in the same manner.
+- Compare the adapter's current working set with PowerShell `WorkingSet64` and
+  require positive, internally consistent counters within the larger of
+  64 MiB or 25%.
+- Hash committed Git blobs rather than checkout-dependent file bytes.
+- Preserve the D009 seed, synthetic rows, feature widths, q=8/two-layer
+  circuit, heads, controls, landmarks, 477.5 work units, 25% margin, and every
+  resource ceiling.
+
+Execution and consequence:
+
+The corrected source and tests must be committed before either accepted check
+runs. The full preflight may run once only after the telemetry-only check
+passes. A PASS permits preparation of D011 but does not unlock development
+rows. A STOP is terminal for this authority and must be recorded under the
+future-research firewall. Calibration/final-test access, hardware/GPU work,
+Gate 5 reinterpretation, and Gate 6 remain prohibited.

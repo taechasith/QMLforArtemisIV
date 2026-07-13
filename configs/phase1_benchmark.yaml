@@ -1,7 +1,7 @@
 schema_version: "0.4.2"
 status: "gate_4_accepted_development_generation_authorized"
 gate5_status: "accepted_technical_trigger_fail_new_algorithm_rejected"
-post_gate5_exploratory_status: "d008_accepted_implementation_and_synthetic_validation_authorized_research_fit_locked"
+post_gate5_exploratory_status: "d010_accepted_telemetry_correction_preflight_rerun_pending_research_fit_locked"
 prepared_date: "2026-07-12"
 scenario_generation_config: "configs/scenario_generation.yaml"
 
@@ -343,7 +343,7 @@ gate5_literature_hardening:
   claim_boundary_rule: "apparent QML gains must be checked against bandwidth, entanglement removal, random-feature approximation, parameter count, sample selection, and no-reference-feasible concentration before any trigger recommendation"
 
 post_gate5_exploratory_protocol:
-  status: "d008_accepted_implementation_and_synthetic_validation_authorized_research_fit_locked"
+  status: "d010_accepted_telemetry_correction_preflight_rerun_pending_research_fit_locked"
   opened_date: "2026-07-13"
   protocol_doc: "docs/post_gate5_exploratory_protocol.md"
   source_matrix: "data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv"
@@ -359,13 +359,15 @@ post_gate5_exploratory_protocol:
   synthetic_validation_completed_date: "2026-07-13"
   synthetic_validation_scope: "synthetic arrays only; no development, calibration, final-test, hardware, or Gate 6 execution"
   research_data_fitting_authorized: false
-  research_data_execution_decision: "d009_terminal_technical_stop; no_resource_admission; corrective_rerun_requires_new_prospective_decision"
-  compute_preflight_decision: "D009"
-  compute_preflight_status: "STOP_technical_failure"
+  research_data_execution_decision: "d010_accepted_telemetry_only_correction_and_one_unchanged_synthetic_preflight_rerun; pending; research_fit_locked"
+  compute_preflight_decision: "D010"
+  compute_preflight_status: "pending_telemetry_validation_and_one_unchanged_rerun"
   compute_preflight_config: "configs/post_gate5_preflight.yaml"
   compute_preflight_doc: "docs/post_gate5_compute_preflight.md"
+  compute_preflight_correction_config: "configs/post_gate5_telemetry_correction.yaml"
+  compute_preflight_correction_doc: "docs/post_gate5_telemetry_correction.md"
   compute_preflight_figure: "RFIG-030"
-  compute_preflight_execution_authorized: false
+  compute_preflight_execution_authorized: true
   compute_preflight_failure_evidence: "data/processed/reporting/post_gate5_compute_preflight.json"
   compute_preflight_future_research_record: "P001-FR001"
   gate5_result_unchanged: true
@@ -399,7 +401,7 @@ post_gate5_exploratory_protocol:
     - "qaoa"
     - "new_variational_qml_architectures"
     - "larger_qubit_or_hardware_runs"
-  execution_rule: "D008 permits implementation and synthetic validation. D009 ended in a technical STOP and cannot be rerun. Research-data fitting remains locked; any telemetry correction and preflight rerun require a new prospective human decision."
+  execution_rule: "D009 remains an immutable technical STOP. D010 prospectively permits only typed telemetry validation and one unchanged synthetic attempt-2 rerun. Research-data fitting remains locked; a PASS permits preparation of D011 only."
   failure_discussion_rule: "Every failure, resource stop, undefined metric, terminal nonadvancement, or scientific negative must be committed with an evidence-based future-research improvement that cannot alter or retry the active pipeline."
 
 gate5_runner_freeze:

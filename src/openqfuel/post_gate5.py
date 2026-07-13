@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import ctypes
 import math
+import sys
+from dataclasses import dataclass
 from typing import Any, Mapping
 
 from .gate4 import FinalTestAccessError
@@ -16,6 +19,15 @@ LOCKED_DATA_SCOPES = {
     "out_of_distribution_final_test",
     "gate6",
 }
+
+
+@dataclass(frozen=True)
+class ProcessMemoryObservation:
+    """Current and peak process working set from one operating-system backend."""
+
+    current_bytes: int
+    peak_bytes: int
+    backend: str
 
 
 def _post_gate5_block(config: Mapping[str, Any]) -> Mapping[str, Any]:
@@ -193,6 +205,131 @@ def evaluate_preflight_admission(
     return {
         "status": "PASS" if all(check["passed"] for check in checks.values()) else "STOP",
         "checks": checks,
+    }
+
+
+def process_memory_observation() -> ProcessMemoryObservation:
+    """Read process memory with explicitly typed operating-system interfaces."""
+
+    if sys.platform == "win32":
+        from ctypes import wintypes
+
+        class ProcessMemoryCounters(ctypes.Structure):
+            _fields_ = [
+                ("cb", wintypes.DWORD),
+                ("PageFaultCount", wintypes.DWORD),
+                ("PeakWorkingSetSize", ctypes.c_size_t),
+                ("WorkingSetSize", ctypes.c_size_t),
+                ("QuotaPeakPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaPeakNonPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaNonPagedPoolUsage", ctypes.c_size_t),
+                ("PagefileUsage", ctypes.c_size_t),
+                ("PeakPagefileUsage", ctypes.c_size_t),
+            ]
+
+        kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        psapi = ctypes.WinDLL("psapi", use_last_error=True)
+        kernel32.GetCurrentProcess.argtypes = []
+        kernel32.GetCurrentProcess.restype = wintypes.HANDLE
+        psapi.GetProcessMemoryInfo.argtypes = [
+            wintypes.HANDLE,
+            ctypes.POINTER(ProcessMemoryCounters),
+            wintypes.DWORD,
+        ]
+        psapi.GetProcessMemoryInfo.restype = wintypes.BOOL
+        counters = ProcessMemoryCounters()
+        counters.cb = ctypes.sizeof(counters)
+        success = psapi.GetProcessMemoryInfo(
+            kernel32.GetCurrentProcess(), ctypes.byref(counters), counters.cb
+        )
+        if not success:
+            raise ctypes.WinError(ctypes.get_last_error())
+        observation = ProcessMemoryObservation(
+            current_bytes=int(counters.WorkingSetSize),
+            peak_bytes=int(counters.PeakWorkingSetSize),
+            backend="windows_psapi_typed",
+        )
+    else:
+        import resource
+
+        peak = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
+        if sys.platform != "darwin":
+            peak *= 1024
+        observation = ProcessMemoryObservation(
+            current_bytes=peak,
+            peak_bytes=peak,
+            backend="posix_getrusage_peak",
+        )
+    if (
+        observation.current_bytes <= 0
+        or observation.peak_bytes < observation.current_bytes
+    ):
+        raise OSError("Process memory telemetry returned inconsistent counters")
+    return observation
+
+
+def total_physical_memory_bytes() -> int:
+    """Return installed physical memory using an explicitly typed Windows API."""
+
+    if sys.platform != "win32":
+        return 0
+    from ctypes import wintypes
+
+    class MemoryStatus(ctypes.Structure):
+        _fields_ = [
+            ("dwLength", wintypes.DWORD),
+            ("dwMemoryLoad", wintypes.DWORD),
+            ("ullTotalPhys", ctypes.c_ulonglong),
+            ("ullAvailPhys", ctypes.c_ulonglong),
+            ("ullTotalPageFile", ctypes.c_ulonglong),
+            ("ullAvailPageFile", ctypes.c_ulonglong),
+            ("ullTotalVirtual", ctypes.c_ulonglong),
+            ("ullAvailVirtual", ctypes.c_ulonglong),
+            ("ullAvailExtendedVirtual", ctypes.c_ulonglong),
+        ]
+
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    kernel32.GlobalMemoryStatusEx.argtypes = [ctypes.POINTER(MemoryStatus)]
+    kernel32.GlobalMemoryStatusEx.restype = wintypes.BOOL
+    status = MemoryStatus()
+    status.dwLength = ctypes.sizeof(status)
+    if not kernel32.GlobalMemoryStatusEx(ctypes.byref(status)):
+        raise ctypes.WinError(ctypes.get_last_error())
+    return int(status.ullTotalPhys)
+
+
+def validate_memory_telemetry(
+    observation: ProcessMemoryObservation,
+    *,
+    independent_current_bytes: int,
+    absolute_tolerance_bytes: int,
+    relative_tolerance: float,
+) -> dict[str, Any]:
+    """Compare the adapter's current working set with an independent reading."""
+
+    if independent_current_bytes <= 0 or absolute_tolerance_bytes < 0:
+        raise ValueError("Memory validation byte values are invalid")
+    if not math.isfinite(relative_tolerance) or relative_tolerance < 0.0:
+        raise ValueError("Memory validation relative tolerance is invalid")
+    difference = abs(observation.current_bytes - independent_current_bytes)
+    tolerance = max(
+        int(absolute_tolerance_bytes),
+        int(math.ceil(relative_tolerance * independent_current_bytes)),
+    )
+    counters_consistent = (
+        observation.current_bytes > 0
+        and observation.peak_bytes >= observation.current_bytes
+    )
+    return {
+        "status": "PASS" if counters_consistent and difference <= tolerance else "STOP",
+        "backend": observation.backend,
+        "adapter_current_bytes": observation.current_bytes,
+        "adapter_peak_bytes": observation.peak_bytes,
+        "independent_current_bytes": int(independent_current_bytes),
+        "absolute_difference_bytes": difference,
+        "allowed_difference_bytes": tolerance,
+        "counters_consistent": counters_consistent,
     }
 
 

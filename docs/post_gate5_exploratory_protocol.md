@@ -1,8 +1,8 @@
 # Post-Gate-5 Exploratory Protocol
 
-Version: 0.2.4
+Version: 0.2.5
 Opened: 2026-07-13
-Status: Opened prospectively; D008 implementation and synthetic validation complete; D009 preflight ended in technical STOP; research-data execution remains unauthorized
+Status: Opened prospectively; D008 implementation and synthetic validation complete; D010 telemetry correction and one unchanged synthetic preflight rerun accepted; research-data execution remains unauthorized
 
 ## Purpose
 
@@ -146,6 +146,16 @@ projection. No head, matched control, or resource admission result exists.
 P001-FR001 records a possible telemetry validation for a later protocol, but
 the active runner is not corrected or retried. A new prospective human
 decision is required before any further preflight execution.
+
+D010 supplies that prospective decision for a telemetry-only correction and
+one unchanged attempt-2 rerun. It explicitly types the Windows memory APIs,
+compares current process memory with an independent PowerShell reading, and
+uses committed Git blobs for source hashes. The D009 benchmark sections
+`benchmark`, `campaign_projection`, and `ceilings` are pinned and inherited
+unchanged. The telemetry-only check must pass before the full synthetic rerun.
+A PASS permits preparation of D011 only; development rows, calibration,
+final-test data, hardware/GPU execution, Gate 5 reinterpretation, and Gate 6
+remain locked.
 
 ## Machine-readable source
 
