@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import json
 from pathlib import Path
+import runpy
 
 import numpy as np
 import yaml
@@ -25,10 +26,15 @@ from openqfuel.post_gate5_reporting import evaluate_exploratory_signal
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs/post_gate5_development_execution.yaml"
+C1_CONFIG = ROOT / "configs/post_gate5_d011_c1_launcher_correction.yaml"
 
 
 def _config() -> dict:
     return yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
+
+
+def _c1_config() -> dict:
+    return yaml.safe_load(C1_CONFIG.read_text(encoding="utf-8"))
 
 
 def _context(*, constant_compressed: bool = False) -> FoldContext:
@@ -145,6 +151,42 @@ def test_d011_prelaunch_stop_has_no_scientific_or_admission_result() -> None:
     assert future["active_pipeline_change_authorized"] == "false"
     assert future["post_outcome_retry_authorized"] == "false"
     assert future["reporting_commit"] == evidence["reporting_commit"]
+
+
+def test_d011_c1_freezes_launcher_only_correction() -> None:
+    config = _c1_config()
+    assert config["decision_id"] == "D011-C1"
+    assert config["status"] == "accepted_launcher_correction_and_one_preflight_attempt"
+    assert config["authority"]["corrected_decision"] == "D011"
+    assert config["authority"]["authorized_preflight_attempts"] == 1
+    assert config["authority"]["research_data_fitting_authorized"] is False
+    assert config["authority"]["campaign_execution_authorized"] is False
+    assert config["authorized_correction"]["scientific_workload_change_authorized"] is False
+    assert config["locks"]["allowed_data_scope"] == "synthetic"
+    assert config["locks"]["development_rows_read"] == 0
+    assert config["locks"]["calibration_rows_read"] == 0
+    assert config["locks"]["final_test_rows_read"] == 0
+    assert config["unchanged_preflight_contract"]["training_rows"] == 1024
+    assert config["unchanged_preflight_contract"]["validation_rows"] == 9750
+    assert config["unchanged_preflight_contract"]["total_worst_fold_bundle_units"] == 1220
+    assert config["source_binding"]["output"].endswith(
+        "post_gate5_d011_c1_fold_shape_preflight.json"
+    )
+    assert config["source_binding"]["output"] != _config()["fold_shape_correction"]["output"]
+    for path in config["source_binding"]["additional_sources"].values():
+        assert (ROOT / path).is_file()
+
+
+def test_d011_c1_launcher_import_is_package_safe() -> None:
+    namespace = runpy.run_path(
+        str(ROOT / "scripts/run_post_gate5_fold_shape_preflight.py"),
+        run_name="__d011_c1_import_smoke__",
+    )
+    assert callable(namespace["main"])
+    assert namespace["timed"].__module__ == "openqfuel.post_gate5_preflight_runner"
+    assert namespace["nystrom_features"].__module__ == (
+        "openqfuel.post_gate5_preflight_runner"
+    )
 
 
 def test_fold_shape_projection_and_admission_are_conservative() -> None:

@@ -1185,3 +1185,41 @@ launcher/import and clean-source import-only smoke test for a later prospective
 decision, without changing or retrying D011. RFIG-029 is updated cumulatively;
 RFIG-031 and RFIG-026 through RFIG-028 remain absent because their governed
 evidence was not reached.
+
+### D011-C1 accepted - launcher correction and one unchanged preflight attempt
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Initial status: **Accepted; import smoke test and one corrected preflight pending**
+Authority: Human research lead accepted D011-C1 launcher correction and one unchanged preflight attempt
+
+Finding before correction:
+
+D011 did not reach its governed preflight. The direct-file launcher failed while
+importing another script module, before authority verification, source-hash
+verification, synthetic arrays, resource admission, development rows,
+calibration rows, final-test rows, hardware/GPU work, or Gate 6.
+
+Decision:
+
+- Preserve the original D011 terminal STOP evidence as immutable.
+- Correct only the launcher/import path by moving shared synthetic-preflight
+  helpers into an importable `openqfuel` module.
+- Require a clean-source import-only smoke test before running the preflight.
+- Run at most one unchanged D011-shaped preflight attempt with the same 1,024
+  training rows, 9,750 validation rows, q=8/two-layer benchmark, controls,
+  1,220 bundle-unit accounting, 25% margin, and laptop ceilings.
+- Open no development payload under D011-C1. A PASS can support a later human
+  decision on campaign resumption only; it does not itself authorize campaign
+  execution.
+- If the smoke test or preflight stops, record the stop and future-only
+  improvement without retrying or reducing the active design.
+
+Reporting:
+
+D011-C1 writes separate evidence at
+`data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json`.
+RFIG-031 records reached corrected admission. RFIG-029 is updated only if a
+governed D011-C1 stop occurs. RFIG-026 through RFIG-028 remain unauthorized
+until a later decision permits and the campaign actually reaches development
+evidence.

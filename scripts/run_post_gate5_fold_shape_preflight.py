@@ -28,27 +28,31 @@ from openqfuel.post_gate5_campaign import (  # noqa: E402
     evaluate_fold_shape_admission,
     git_blob_sha256,
     project_fold_shape_resources,
+    verify_d011_c1_launcher_correction,
     verify_d011_authority,
 )
-from openqfuel.qml import projected_quantum_features  # noqa: E402
-from scripts.run_post_gate5_compute_preflight import (  # noqa: E402
-    _control_predictions,
-    _fit_two_heads,
-    _nystrom_features,
-    _registry_models,
-    _timed,
+from openqfuel.post_gate5_preflight_runner import (  # noqa: E402
+    control_predictions,
+    fit_two_heads,
+    nystrom_features,
+    registry_models,
+    timed,
 )
+from openqfuel.qml import projected_quantum_features  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def _record_resource_stop(config: dict[str, Any], payload: dict[str, Any]) -> None:
+def _record_resource_stop(
+    config: dict[str, Any], correction: dict[str, Any], payload: dict[str, Any]
+) -> None:
     path = ROOT / str(config["failure_policy"]["future_discussion_register"])
     with path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
-    if any(row["step_id"] == "D011_fold_shape_preflight" for row in rows):
-        raise PermissionError("D011 fold-shape STOP was already recorded")
+    step_id = "D011_C1_fold_shape_preflight"
+    if any(row["step_id"] == step_id for row in rows):
+        raise PermissionError("D011-C1 fold-shape STOP was already recorded")
     fields = list(rows[0])
     identifiers = [
         int(row["record_id"].split("FR")[-1])
@@ -65,9 +69,9 @@ def _record_resource_stop(config: dict[str, Any], payload: dict[str, Any]) -> No
         "record_id": f"P001-FR{max(identifiers, default=0) + 1:03d}",
         "recorded_date": "2026-07-13",
         "track_id": "shared",
-        "step_id": "D011_fold_shape_preflight",
+        "step_id": step_id,
         "terminal_status": "resource_stop",
-        "evidence_paths": "data/processed/reporting/post_gate5_d011_fold_shape_preflight.json",
+        "evidence_paths": str(correction["source_binding"]["output"]),
         "observed_finding": (
             "The source-bound D011 largest-fold synthetic workload exceeded "
             "one or more unchanged admission boundaries: " + ", ".join(failed) + "."
@@ -132,6 +136,7 @@ def main() -> None:
         action="fold_shape_preflight",
         require_fold_shape_pass=False,
     )
+    correction = verify_d011_c1_launcher_correction(ROOT, source_commit)
     benchmark = _benchmark_contract(config)
     runner_config = {"benchmark": benchmark}
     rng = np.random.default_rng(int(benchmark["seed"]))
@@ -163,7 +168,7 @@ def main() -> None:
     records: list[dict[str, Any]] = []
     wall_started = time.perf_counter()
     cpu_started = time.process_time()
-    projected_train = _timed(
+    projected_train = timed(
         records,
         "Q01b_FQK_shared_training_projection",
         lambda: projected_quantum_features(
@@ -174,7 +179,7 @@ def main() -> None:
             entangle=bool(benchmark["entangle"]),
         ),
     )
-    projected_validation = _timed(
+    projected_validation = timed(
         records,
         "Q01b_FQK_largest_fold_validation_projection",
         lambda: projected_quantum_features(
@@ -185,10 +190,10 @@ def main() -> None:
             entangle=bool(benchmark["entangle"]),
         ),
     )
-    q_train, q_validation, q_diagnostics = _timed(
+    q_train, q_validation, q_diagnostics = timed(
         records,
         "Q01b_FQK_projected_kernel_geometry",
-        lambda: _nystrom_features(
+        lambda: nystrom_features(
             projected_train,
             projected_validation,
             row_ids,
@@ -196,10 +201,10 @@ def main() -> None:
             projected_quantum=True,
         ),
     )
-    _timed(
+    timed(
         records,
         "Q01b_FQK_two_head_fit_and_inference",
-        lambda: _fit_two_heads(
+        lambda: fit_two_heads(
             q_train,
             q_validation,
             cost_target,
@@ -208,10 +213,10 @@ def main() -> None:
         ),
     )
 
-    a02_train, a02_validation, a02_diagnostics = _timed(
+    a02_train, a02_validation, a02_diagnostics = timed(
         records,
         "A02_classical_RBF_geometry",
-        lambda: _nystrom_features(
+        lambda: nystrom_features(
             compressed_train,
             compressed_validation,
             row_ids,
@@ -219,10 +224,10 @@ def main() -> None:
             projected_quantum=False,
         ),
     )
-    _timed(
+    timed(
         records,
         "A02_classical_RBF_two_head_fit_and_inference",
-        lambda: _fit_two_heads(
+        lambda: fit_two_heads(
             a02_train,
             a02_validation,
             cost_target,
@@ -231,7 +236,7 @@ def main() -> None:
         ),
     )
 
-    models = _registry_models()
+    models = registry_models()
     seed = int(benchmark["seed"])
     regression_controls = {
         "C06-T17_cost": (models["C06-T17"], raw_train, raw_validation),
@@ -247,11 +252,11 @@ def main() -> None:
         ),
     }
     for name, (trial, train, validation) in regression_controls.items():
-        _timed(
+        timed(
             records,
             name,
             lambda trial=trial, train=train, validation=validation: (
-                _control_predictions(
+                control_predictions(
                     trial,
                     train,
                     validation,
@@ -274,11 +279,11 @@ def main() -> None:
     ]
     for trial_id, train, validation in classifier_specs:
         trial = models[trial_id]
-        _timed(
+        timed(
             records,
             f"{trial_id}_feasibility",
             lambda trial=trial, train=train, validation=validation: (
-                _control_predictions(
+                control_predictions(
                     trial,
                     train,
                     validation,
@@ -302,20 +307,27 @@ def main() -> None:
     )
     admission = evaluate_fold_shape_admission(config, projected)
 
-    source_paths = config["source_binding"]
+    source_paths = {
+        **dict(config["source_binding"]),
+        **dict(correction["source_binding"]["additional_sources"]),
+    }
     source_hashes = {
         key: git_blob_sha256(ROOT, source_commit, str(path))
         for key, path in source_paths.items()
     }
     payload = {
         "schema_version": "0.1.0",
-        "decision_id": "D011",
+        "decision_id": "D011-C1",
+        "corrects_decision_id": "D011",
+        "unchanged_preflight_contract": "D011 largest-fold synthetic compute admission",
+        "attempt": 1,
         "protocol_id": "P001",
         "status": admission["status"],
         "evidence_scope": "largest-fold synthetic compute admission only",
         "source_commit": source_commit,
         "branch": branch,
         "source_hash_scope": "committed Git blob bytes",
+        "source_paths": source_paths,
         "source_hashes": source_hashes,
         "benchmark": {
             **benchmark,
@@ -359,19 +371,19 @@ def main() -> None:
             "or Gate 6 claim."
         ),
         "next_step": (
-            "Run the single authorized D011 development-only campaign"
+            "Request human decision on whether to resume the D011 development-only campaign"
             if admission["status"] == "PASS"
             else "Record governed resource STOP; do not open development data"
         ),
     }
-    output = ROOT / str(config["fold_shape_correction"]["output"])
+    output = ROOT / str(correction["source_binding"]["output"])
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(
         json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     print(json.dumps({"status": admission["status"], **projected}, indent=2))
     if admission["status"] != "PASS":
-        _record_resource_stop(config, payload)
+        _record_resource_stop(config, correction, payload)
         raise SystemExit(2)
 
 

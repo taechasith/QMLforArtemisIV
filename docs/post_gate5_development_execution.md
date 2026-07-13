@@ -147,3 +147,13 @@ the laptop. P001-FR002 records a package-safe launcher/import and import-only
 smoke test for a later prospective decision. It cannot modify or retry D011.
 RFIG-029 is updated; RFIG-031 and RFIG-026 through RFIG-028 remain absent
 because their required evidence was not reached.
+
+## D011-C1 correction boundary
+
+The human research lead accepted D011-C1 on 2026-07-14 as a separate
+launcher-only correction. D011-C1 does not revise the D011 STOP or change the
+scientific contract above. It permits an importable-package helper correction,
+one clean-source import smoke test, and one unchanged corrected fold-shape
+preflight attempt recorded in a separate D011-C1 evidence file. Development
+campaign execution remains locked unless a later human decision explicitly
+authorizes resumption after a D011-C1 PASS.

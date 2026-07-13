@@ -1,0 +1,99 @@
+schema_version: "0.1.0"
+decision_id: "D011-C1"
+protocol_id: "P001"
+status: "accepted_launcher_correction_and_one_preflight_attempt"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+acceptance_basis: "human research lead accepted D011-C1 launcher correction and one unchanged preflight attempt"
+
+authority:
+  scope: "package-safe launcher/import correction and one unchanged D011 largest-fold synthetic preflight attempt"
+  corrected_decision: "D011"
+  corrected_failure_stage: "launcher_import_before_authority_verification"
+  authorized_preflight_attempts: 1
+  import_smoke_test_required_before_preflight: true
+  research_data_fitting_authorized: false
+  campaign_execution_authorized: false
+  reporting_authorized: true
+  next_decision_if_pass: "human lead must decide whether to resume the D011 development-only campaign authority"
+  action_if_stop: "record the governed stop and future-research discussion; do not retry or reduce the active design"
+
+accepted_dependencies:
+  d011_source_commit: "65dd687344b5f578282cc1fe8373bd9d6d2b2583"
+  d011_config:
+    path: "configs/post_gate5_development_execution.yaml"
+    source_commit: "65dd687344b5f578282cc1fe8373bd9d6d2b2583"
+    git_blob_sha256: "8c743ef623496dc79ea7bc9478d3db8dbda6e827ee191b2d05e6db4c33ae2bdc"
+  d011_stop_evidence:
+    path: "data/processed/reporting/post_gate5_d011_fold_shape_preflight.json"
+    source_commit: "65dd687344b5f578282cc1fe8373bd9d6d2b2583"
+    git_blob_sha256: "71d368b502832508419e94d9b044547f313b481785be88bfe372716227c4be00"
+  d011_launcher_script:
+    path: "scripts/run_post_gate5_fold_shape_preflight.py"
+    source_commit: "65dd687344b5f578282cc1fe8373bd9d6d2b2583"
+    git_blob_sha256: "039f8016dc4ca8ffa33724a80069c01be4531705e051b4c4bf8c244d45162e31"
+
+authorized_correction:
+  root_cause: "direct_file_scripts_namespace_import"
+  implementation: "move shared synthetic-preflight helper imports to an importable openqfuel module and import them from the direct-file launcher"
+  import_smoke_test_command: "uv run --frozen python -c \"import runpy; ns = runpy.run_path('scripts/run_post_gate5_fold_shape_preflight.py', run_name='__d011_c1_import_smoke__'); assert callable(ns['main'])\""
+  preflight_command: "uv run --frozen python scripts/run_post_gate5_fold_shape_preflight.py"
+  scientific_workload_change_authorized: false
+  benchmark_rows_change_authorized: false
+  fold_or_split_change_authorized: false
+  model_family_change_authorized: false
+  threshold_change_authorized: false
+  seed_change_authorized: false
+  ceiling_change_authorized: false
+
+locks:
+  gate5_result_unchanged: true
+  d006_d007_evidence_immutable: true
+  d008_scientific_design_unchanged: true
+  d009_failure_evidence_immutable: true
+  d010_compute_result_immutable: true
+  d011_scientific_design_unchanged: true
+  d011_stop_evidence_immutable: true
+  no_model_refit_authorized: true
+  no_threshold_change_authorized: true
+  no_seed_or_split_change_authorized: true
+  allowed_data_scope: "synthetic"
+  development_rows_read: 0
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  hardware_jobs_submitted: 0
+  gpu_execution_authorized: false
+  gate6_runs: 0
+  gate6_authorized: false
+
+unchanged_preflight_contract:
+  inherited_config: "configs/post_gate5_development_execution.yaml"
+  training_rows: 1024
+  validation_rows: 9750
+  qubits: 8
+  layers: 2
+  total_worst_fold_bundle_units: 1220
+  projection_margin: 1.25
+  ceiling_policy: "same D011 CPU, wall-clock, artifact, memory, disk, and zero-GPU ceilings"
+  output_attempt: "data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json"
+
+source_binding:
+  output: "data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json"
+  additional_sources:
+    d011_c1_correction_config: "configs/post_gate5_d011_c1_launcher_correction.yaml"
+    preflight_helper_source: "src/openqfuel/post_gate5_preflight_runner.py"
+
+reporting:
+  preflight_figure: "RFIG-031"
+  failure_figure: "RFIG-029"
+  figure_generator: "scripts/make_post_gate5_result_figures.py"
+  missing_value_rule: "missing or unauthorized results remain absent and are never plotted as zero"
+  claim_boundary: "synthetic launcher-corrected compute admission only; not QML performance, research-data fitting, Gate 5 reinterpretation, hardware, or Gate 6 evidence"
+
+outcome:
+  current_status: "accepted_not_yet_run"
+  import_smoke_test_status: "pending"
+  preflight_status: "pending"
+  source_commit: "pending_clean_source_commit"
+  result: "data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json"
+  retry_authorized_after_attempt: false

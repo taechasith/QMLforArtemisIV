@@ -178,6 +178,16 @@ post-Gate-5 technical stops. RFIG-031 and RFIG-026 through RFIG-028 remain
 absent because their governed evidence stages were not reached. A separate
 prospective human decision is required before any corrected preflight attempt.
 
+D011-C1 was accepted on 2026-07-14 as that prospective launcher-only
+correction. It moves shared synthetic-preflight helpers into the importable
+`openqfuel` package, requires a clean-source import-only smoke test, and permits
+one unchanged D011-shaped synthetic preflight attempt. The original D011 STOP
+evidence remains immutable and D011-C1 writes a separate evidence file. No
+development-row fitting, calibration/final-test access, hardware/GPU work, Gate
+5 reinterpretation, or Gate 6 work is authorized by D011-C1. A D011-C1 PASS
+would record corrected synthetic compute admission only and require a later
+human decision before the development campaign can resume.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -235,6 +245,7 @@ through a dated deviation record.
 - docs/post_gate5_compute_preflight.md: D009 synthetic-only clean-source compute-admission contract and pass/stop rules.
 - docs/post_gate5_telemetry_correction.md: D010 typed-memory correction, independent validation, and one-rerun authority.
 - docs/post_gate5_development_execution.md: D011 corrected fold-shape admission, one-campaign authority, endpoint rules, and reporting contract.
+- docs/post_gate5_d011_c1_launcher_correction.md: D011-C1 launcher-only correction, import smoke test, and one unchanged preflight attempt.
 - docs/decision_log.md: acceptance and deviation history.
 - data/processed/reporting/gate5_literature_hardening_matrix.csv: D004 source-to-control matrix for RFIG-019.
 - data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv: P001 near-term versus appendix/future QML boundary for RFIG-024.
@@ -255,6 +266,7 @@ through a dated deviation record.
 - scripts/make_post_gate5_implementation_figure.py: RFIG-025 D008 implementation-freeze and future-research-firewall diagram generator.
 - scripts/make_post_gate5_preflight_result_figure.py: RFIG-030 D010 laptop resource-admission chart generator.
 - scripts/run_post_gate5_compute_preflight.py: D010-corrected D009 synthetic-only resource benchmark; it cannot read research rows or authorize fitting.
+- scripts/run_post_gate5_fold_shape_preflight.py: D011-C1 guarded largest-fold synthetic preflight launcher.
 - src/openqfuel/post_gate5.py: D008 synthetic-only scope guard and future-research firewall validator.
 - scripts/fetch_public_data.py: immutable-source downloader.
 - scripts/extract_artemis2_oem.py: safe nested-archive extraction and hashing.

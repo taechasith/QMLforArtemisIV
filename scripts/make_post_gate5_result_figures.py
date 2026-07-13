@@ -23,6 +23,9 @@ import yaml  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 REPORTING = ROOT / "data/processed/reporting/post_gate5_p001"
 PREFLIGHT = ROOT / "data/processed/reporting/post_gate5_d011_fold_shape_preflight.json"
+C1_PREFLIGHT = (
+    ROOT / "data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json"
+)
 FUTURE = ROOT / "data/processed/reporting/post_gate5_future_research_discussion.csv"
 OUTPUT = ROOT / "artifacts/research_figures"
 REGISTRY = OUTPUT / "figure_registry.csv"
@@ -83,9 +86,10 @@ def _float(value: Any) -> float | None:
 
 
 def _validated_preflight() -> dict[str, Any]:
-    preflight = _json(PREFLIGHT)
+    source_path = C1_PREFLIGHT if C1_PREFLIGHT.is_file() else PREFLIGHT
+    preflight = _json(source_path)
     if (
-        preflight.get("decision_id") != "D011"
+        preflight.get("decision_id") not in {"D011", "D011-C1"}
         or preflight.get("status") not in {"PASS", "STOP"}
         or int(preflight.get("development_rows_read", -1)) != 0
         or int(preflight.get("calibration_rows_read", -1)) != 0
@@ -93,16 +97,25 @@ def _validated_preflight() -> dict[str, Any]:
     ):
         raise PermissionError("D011 preflight figure source is invalid")
     source_commit = str(preflight["source_commit"])
-    config = yaml.safe_load(
-        _git_blob(
-            source_commit, "configs/post_gate5_development_execution.yaml"
-        ).decode("utf-8")
-    )
+    if "source_paths" in preflight:
+        source_paths = {
+            str(key): str(value) for key, value in preflight["source_paths"].items()
+        }
+    else:
+        config = yaml.safe_load(
+            _git_blob(
+                source_commit, "configs/post_gate5_development_execution.yaml"
+            ).decode("utf-8")
+        )
+        source_paths = {
+            str(key): str(value) for key, value in config["source_binding"].items()
+        }
     for key, expected in preflight["source_hashes"].items():
-        path = str(config["source_binding"][key])
+        path = source_paths[str(key)]
         actual = hashlib.sha256(_git_blob(source_commit, path)).hexdigest()
         if actual != expected:
             raise PermissionError(f"D011 figure source hash mismatch: {key}")
+    preflight["_source_path"] = source_path.relative_to(ROOT).as_posix()
     return preflight
 
 
@@ -690,11 +703,16 @@ def draw_rfig029(decision: Mapping[str, Any]) -> tuple[Path, Path] | None:
 def draw_preflight_stop_rfig029(
     preflight: Mapping[str, Any],
 ) -> tuple[Path, Path]:
+    step_id = (
+        "D011_C1_fold_shape_preflight"
+        if preflight.get("decision_id") == "D011-C1"
+        else "D011_fold_shape_preflight"
+    )
     records = [
-        row for row in _rows(FUTURE) if row["step_id"] == "D011_fold_shape_preflight"
+        row for row in _rows(FUTURE) if row["step_id"] == step_id
     ]
     if len(records) != 1 or records[0]["terminal_status"] != "resource_stop":
-        raise PermissionError("D011 resource STOP lacks its future-research record")
+        raise PermissionError("D011 preflight STOP lacks its future-research record")
     record = records[0]
     failed = [
         (name, check)
@@ -841,7 +859,7 @@ def main() -> None:
                 "D011 largest-fold synthetic compute admission",
                 "Methods: corrected compute admission",
                 "synthetic_fold_shape_compute_admission",
-                PREFLIGHT.relative_to(ROOT).as_posix(),
+                str(preflight["_source_path"]),
                 caption,
                 draw_rfig031(preflight),
             )
@@ -853,7 +871,7 @@ def main() -> None:
                     "D011 resource stop and future-research firewall",
                     "Methods: compute limitations and failed execution",
                     "governed_resource_stop",
-                    "data/processed/reporting/post_gate5_d011_fold_shape_preflight.json;data/processed/reporting/post_gate5_future_research_discussion.csv",
+                    f"{preflight['_source_path']};data/processed/reporting/post_gate5_future_research_discussion.csv",
                     "The corrected largest-fold workload stopped at unchanged laptop boundaries; its future suggestion cannot alter or retry P001.",
                     draw_preflight_stop_rfig029(preflight),
                 )
@@ -871,7 +889,7 @@ def main() -> None:
             "D011 largest-fold synthetic compute admission",
             "Methods: corrected compute admission",
             "synthetic_fold_shape_compute_admission",
-            PREFLIGHT.relative_to(ROOT).as_posix(),
+            str(preflight["_source_path"]),
             "The largest frozen validation-fold shape passed every unchanged laptop boundary under conservative no-reuse accounting.",
             draw_rfig031(preflight),
         ),

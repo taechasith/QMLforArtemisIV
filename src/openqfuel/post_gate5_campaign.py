@@ -53,6 +53,7 @@ from .qml import (
 D011_ACCEPTED_STATUS = (
     "accepted_conditional_fold_shape_preflight_and_development_campaign_authorized"
 )
+D011_C1_ACCEPTED_STATUS = "accepted_launcher_correction_and_one_preflight_attempt"
 TRACK_IDS = ("Q01b", "FQK")
 RUNG_SAMPLES = (128, 256, 512, 1024)
 
@@ -166,6 +167,66 @@ def _verify_dependency_blobs(
         raise PermissionError("D011 requires the accepted D010 PASS result")
 
 
+def verify_d011_c1_launcher_correction(
+    root: Path, source_commit: str
+) -> dict[str, Any]:
+    """Validate the prospective D011-C1 launcher-only correction authority."""
+
+    relative = "configs/post_gate5_d011_c1_launcher_correction.yaml"
+    config = committed_yaml(root, source_commit, relative)
+    if (
+        config.get("decision_id") != "D011-C1"
+        or config.get("status") != D011_C1_ACCEPTED_STATUS
+    ):
+        raise PermissionError("The accepted D011-C1 correction is not active")
+    authority = config["authority"]
+    if (
+        authority.get("corrected_decision") != "D011"
+        or int(authority.get("authorized_preflight_attempts", -1)) != 1
+        or bool(authority.get("research_data_fitting_authorized"))
+    ):
+        raise PermissionError("D011-C1 authority is not limited to one preflight")
+    locks = config["locks"]
+    for field in (
+        "d011_scientific_design_unchanged",
+        "d011_stop_evidence_immutable",
+        "no_model_refit_authorized",
+        "no_threshold_change_authorized",
+        "no_seed_or_split_change_authorized",
+    ):
+        if not bool(locks.get(field)):
+            raise PermissionError(f"D011-C1 lock is invalid: {field}")
+    for field in (
+        "development_rows_read",
+        "calibration_rows_read",
+        "final_test_rows_read",
+        "hardware_jobs_submitted",
+        "gate6_runs",
+    ):
+        if int(locks.get(field, -1)) != 0:
+            raise PermissionError(f"D011-C1 prohibited access is nonzero: {field}")
+
+    dependencies = config["accepted_dependencies"]
+    for name in ("d011_config", "d011_stop_evidence", "d011_launcher_script"):
+        dependency = dependencies[name]
+        path = str(dependency["path"])
+        expected = str(dependency["git_blob_sha256"])
+        historical = git_blob_sha256(root, str(dependency["source_commit"]), path)
+        if historical != expected:
+            raise PermissionError(f"D011-C1 dependency hash is invalid: {name}")
+        if name != "d011_launcher_script":
+            current = git_blob_sha256(root, source_commit, path)
+            if current != expected:
+                raise PermissionError(f"D011-C1 immutable dependency changed: {name}")
+
+    correction = config["authorized_correction"]
+    if correction.get("root_cause") != "direct_file_scripts_namespace_import":
+        raise PermissionError("D011-C1 root cause is not the recorded launcher failure")
+    if correction.get("scientific_workload_change_authorized") is not False:
+        raise PermissionError("D011-C1 cannot change the scientific workload")
+    return config
+
+
 def verify_d011_authority(
     root: Path,
     *,
@@ -188,6 +249,10 @@ def verify_d011_authority(
     if action == "fold_shape_preflight":
         if not bool(authority.get("fold_shape_preflight_authorized")):
             raise PermissionError("D011 fold-shape preflight is not authorized")
+        if config.get("outcome", {}).get("current_status") == (
+            "terminal_prelaunch_technical_stop"
+        ):
+            verify_d011_c1_launcher_correction(root, source_commit)
     elif action == "development_campaign":
         if not bool(authority.get("campaign_execution_authorized")):
             raise PermissionError("D011 development campaign is not authorized")

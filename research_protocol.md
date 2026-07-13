@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.16
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011 ended in a pre-launch technical STOP; Gate 6 unauthorized
+Version: 0.6.17
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-C1 launcher correction accepted for one unchanged preflight attempt; Gate 6 unauthorized
 Prepared: 2026-07-10  
-Updated: 2026-07-13
-Recommended next action: Decide whether to open a new prospective launcher-only correction for one corrected D011-shape preflight; do not retry D011 or open development payloads; Gate 6 remains unauthorized
+Updated: 2026-07-14
+Recommended next action: Run the D011-C1 import smoke test and one unchanged corrected fold-shape preflight from clean source; do not open development payloads unless a later human decision authorizes campaign resumption; Gate 6 remains unauthorized
 
 ## 1. Proposed title
 
@@ -924,6 +924,18 @@ seeds, and ceilings. It does not authorize a correction or retry. RFIG-029 is
 updated cumulatively; RFIG-031 and RFIG-026 through RFIG-028 remain absent
 because their evidence was not reached. A new prospective human decision is
 required before any corrected preflight attempt.
+
+D011-C1 was accepted prospectively by the human research lead on 2026-07-14.
+It corrects only the launcher/import path by moving shared synthetic-preflight
+helpers into an importable `openqfuel` module and requiring an import-only
+smoke test before one unchanged corrected fold-shape preflight attempt. The
+original D011 STOP file remains immutable; D011-C1 writes separate evidence at
+`data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json`.
+D011-C1 does not alter rows, folds, models, controls, thresholds, seeds,
+splits, margins, laptop ceilings, or claim boundaries. A PASS records synthetic
+compute admission only and requires a later human decision before any
+development campaign resumes. A STOP is terminal for D011-C1 and must be
+recorded with future-only discussion and paper figures.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:
