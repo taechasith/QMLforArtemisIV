@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.23
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C synthetic compute admission PASS; Gate 6 unauthorized
+Version: 0.6.24
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C synthetic compute admission PASS; D016-C1 A02 exact-RBF preflight accepted; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: Prepare D017 development-data fitting decision if CRES/CSAFE source-bound fitting is to proceed; D016-C alone does not authorize development fitting, refit, rerank, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, or Gate 6
+Recommended next action: Run exactly one D016-C1 clean-source synthetic A02 exact-RBF compute preflight before D017; D016-C1 does not authorize development fitting, refit, rerank, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, or Gate 6
 
 ## 1. Proposed title
 
@@ -1051,6 +1051,16 @@ development-data fitting, calibration/final-test reads, refit, rerank, retry,
 hardware/GPU execution, Gate 5 reinterpretation, QML invention claims,
 quantum-advantage claims, and Gate 6. D017 is required before any
 development-data fitting.
+
+A pre-D017 audit then found that D016-C did not include the D014-C required A02
+exact classical RBF control in its synthetic workload. D016-C1 is therefore
+accepted as a narrow correction before any development rows are opened. It
+authorizes one clean-source synthetic preflight for the missing A02 exact RBF
+residual-cost and feasibility heads using the same largest-fold shape,
+five-fold, 20-seed, 25%-margin accounting. D016-C1 still prohibits
+development-data fitting, calibration/final-test reads, refit, rerank, retry,
+hardware/GPU execution, Gate 5 reinterpretation, QML invention claims,
+quantum-advantage claims, and Gate 6.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

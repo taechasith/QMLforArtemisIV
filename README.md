@@ -263,6 +263,11 @@ calibration/final-test reads, hardware/GPU execution, Gate 5 reinterpretation,
 QML invention claim, quantum-advantage claim, or Gate 6. D017 remains required
 before any development rows can be fit.
 
+A pre-D017 audit found that D016-C did not benchmark the D014-C required A02
+exact classical RBF control. D016-C1 is accepted as a narrow synthetic
+compute-admission correction for that missing control before any development
+row is opened.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:

@@ -1505,3 +1505,27 @@ Outcome:
   calibration, final-test, hardware, GPU, and Gate 6 reads/runs.
 - RFIG-033 records the compute-admission margins.
 - Development-data fitting remains unauthorized and requires D017.
+
+### D016-C1 accepted - A02 exact-RBF compute correction
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Accepted; one synthetic A02 preflight pending**
+Authority: Assistant-selected correction after pre-D017 audit
+
+Decision:
+
+- Record that D016-C passed but did not benchmark the D014-C required A02 exact
+  classical RBF control.
+- Authorize exactly one clean-source synthetic preflight for A02 exact RBF
+  residual-cost and feasibility heads.
+- Use the same 1,024-training/9,750-validation largest-fold shape and project
+  five folds and 20 seeds with 25% margin.
+- Generate RFIG-036 if terminal evidence is reached.
+
+Boundary:
+
+D016-C1 authorizes no development-data fitting, calibration/final-test read,
+refit, rerank, retry, hardware/GPU execution, Gate 5 reinterpretation, QML
+invention claim, quantum-advantage claim, or Gate 6. D017 cannot proceed until
+D016-C1 is terminal.

@@ -76,7 +76,7 @@ def test_d013c_docs_are_registered_in_project_governance() -> None:
         "README.md": "D013-C is accepted as that planning-only recommended path",
         "docs/decision_log.md": "D013-C accepted - classical-first planning",
         "docs/computational_methodology.md": "D013-C classical-first planning accepted",
-        "docs/research_execution_map.md": "D016-C synthetic CRES/CSAFE compute admission PASS",
+        "docs/research_execution_map.md": "D016-C1 accepted for missing A02 exact-RBF synthetic preflight",
         "docs/post_gate5_d013_classical_first_protocol.md": (
             "Planning-only accepted; no experiment authorized"
         ),
