@@ -19,17 +19,27 @@ def test_post_gate5_exploratory_protocol_scope_is_narrow() -> None:
         (ROOT / "configs/phase1_benchmark.yaml").read_text(encoding="utf-8")
     )
     protocol = config["post_gate5_exploratory_protocol"]
-    assert protocol["status"] == (
-        "d010_compute_admission_pass_d011_required_research_fit_locked"
+    assert protocol["status"] == "d011_accepted_pending_largest_fold_preflight"
+    assert (
+        protocol["implementation_freeze_decision"] == "accepted_by_human_research_lead"
     )
-    assert protocol["implementation_freeze_decision"] == "accepted_by_human_research_lead"
     assert protocol["implementation_authorized"] is True
     assert protocol["synthetic_validation_authorized"] is True
-    assert protocol["implementation_status"] == "implemented_synthetic_validation_passed"
+    assert (
+        protocol["implementation_status"] == "implemented_synthetic_validation_passed"
+    )
     assert protocol["synthetic_validation_completed_date"] == "2026-07-13"
-    assert protocol["research_data_fitting_authorized"] is False
+    assert protocol["research_data_fitting_authorized"] is True
+    assert (
+        "largest-fold synthetic preflight"
+        in protocol["research_data_fitting_condition"]
+    )
     assert protocol["research_data_execution_decision"] == (
-        "d010_compute_admission_pass; d011_required_before_development_fit"
+        "D011 accepted conditionally by the human research lead on 2026-07-13"
+    )
+    assert protocol["development_execution_decision"] == "D011"
+    assert protocol["development_execution_status"] == (
+        "pending_largest_fold_synthetic_preflight"
     )
     assert protocol["compute_preflight_decision"] == "D010"
     assert protocol["compute_preflight_status"] == "PASS_synthetic_compute_admission"
@@ -66,7 +76,10 @@ def test_post_gate5_protocol_matrix_matches_config_boundary() -> None:
     assert near_term == {"Q01b", "FQK"}
     assert {"QRL", "QAOA", "VAR", "HW"} <= future_only
     for row in rows:
-        assert "final-test" in row["claim_boundary"] or row["authorized_data_scope"] == "No execution authorized"
+        assert (
+            "final-test" in row["claim_boundary"]
+            or row["authorized_data_scope"] == "No execution authorized"
+        )
 
 
 def test_post_gate5_protocol_doc_keeps_gate5_and_locked_splits_closed() -> None:
@@ -74,7 +87,9 @@ def test_post_gate5_protocol_doc_keeps_gate5_and_locked_splits_closed() -> None:
         encoding="utf-8"
     )
     assert "Gate 5 result remains unchanged" in text
-    assert "Calibration rows, final-test rows, and Gate 6 mission scenarios remain" in text
+    assert (
+        "Calibration rows, final-test rows, and Gate 6 mission scenarios remain" in text
+    )
     assert "`Q01b`" in text
     assert "`FQK`" in text
     assert "Quantum reinforcement learning" in text

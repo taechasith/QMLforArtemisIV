@@ -35,6 +35,17 @@ data/processed/reporting/*
 !data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv
 !data/processed/reporting/post_gate5_exploratory_trial_manifest.csv
 !data/processed/reporting/post_gate5_future_research_discussion.csv
+!data/processed/reporting/post_gate5_p001/
+data/processed/reporting/post_gate5_p001/*
+!data/processed/reporting/post_gate5_p001/campaign_summary.json
+!data/processed/reporting/post_gate5_p001/control_summary.csv
+!data/processed/reporting/post_gate5_p001/evidence_manifest.json
+!data/processed/reporting/post_gate5_p001/exploratory_decision.json
+!data/processed/reporting/post_gate5_p001/kernel_diagnostics.csv
+!data/processed/reporting/post_gate5_p001/q01b_regime_comparisons.csv
+!data/processed/reporting/post_gate5_p001/selected_summary.csv
+!data/processed/reporting/post_gate5_p001/sensitivity_summary.csv
+!data/processed/reporting/post_gate5_p001/tuning_summary.csv
 data/processed/artemis2/*
 !data/processed/artemis2/oem_inventory.csv
 !data/processed/artemis2/oem_release_revisions.csv

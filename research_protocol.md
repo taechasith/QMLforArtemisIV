@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.14
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D010 synthetic compute admission PASS; D011, research fitting, and Gate 6 unauthorized
+Version: 0.6.15
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011 accepted conditionally; largest-fold synthetic preflight pending; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-13
-Recommended next decision: Review and freeze D011 development-only P001 execution authority; no development-row fitting or Gate 6 work is authorized yet
+Recommended next action: Run the source-bound D011 largest-fold synthetic preflight; open development payloads only after a PASS; Gate 6 remains unauthorized
 
 ## 1. Proposed title
 
@@ -875,6 +875,39 @@ final-test rows; it submitted no hardware/GPU or Gate 6 job. RFIG-030 records
 the margins. D010 is now closed to rerun. This PASS establishes laptop compute
 admission only and permits preparation of D011; it is not QML performance,
 Gate 5 reinterpretation, or research-data execution authority.
+
+D011 is accepted prospectively by the human research lead. The pre-execution
+runner audit identified an accounting-shape gap rather than a change to D010:
+D010 validly benchmarked its frozen 256-row validation bundle, while D011 must
+predict 6,500 or 9,750 held-out rows per grouped fold and 39,000 rows per
+complete five-fold task. D011 therefore requires a new largest-fold synthetic
+preflight with 1,024 training rows, 9,750 validation rows, q=8, two layers,
+both projected heads, A02, and every matched control. The projection charges
+1,220 worst-fold bundles with a 25% margin and takes no credit for smaller
+folds, smaller qubit maps, shared controls, shared projections, or cached
+states. The D008 ceilings remain unchanged.
+
+Only a source-bound `PASS` on every D011 preflight check authorizes the first
+development payload read. A `STOP` is terminal under this decision and must be
+committed with a future-only improvement. After a PASS, exactly one resumable
+development-only P001 campaign may run. Q01b and FQK advance independently
+through the frozen 128/256/512/1,024-row rungs, one selected configuration per
+reached track runs seeds 1-20, and 1,024-shot, 4,096-shot, and fixed Gate 4
+noise conditions remain report-only sensitivities. The fixed Q01b regime
+analysis uses fidelity, uncertainty family, base-trajectory family,
+boundary/tail status, and reference-feasibility status; a cell must cover all
+five folds and all 20 seeds, and its paired-bootstrap upper bound must be below
+zero versus A01, A02, and compressed C05. No sensitivity may rerank or rescue a
+track.
+
+D011 checkpoints and compact reports bind the clean source commit and preserve
+zero calibration/final-test reads. Governed undefined folds are recorded as
+ineligible; technical integrity failures stop the campaign and cannot be
+silently retried. RFIG-031 reports corrected resource admission, RFIG-026
+through RFIG-028 report reached development evidence, and RFIG-029 remains the
+cumulative failure/future-research firewall. D011 cannot revise Gate 5,
+authorize hardware/GPU work, make a quantum-advantage claim, or open Gate 6.
+The current outcome is pending preflight; no D011 development result exists.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

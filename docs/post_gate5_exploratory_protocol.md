@@ -1,8 +1,8 @@
 # Post-Gate-5 Exploratory Protocol
 
-Version: 0.2.6
+Version: 0.2.7
 Opened: 2026-07-13
-Status: Opened prospectively; D008 implementation and synthetic validation complete; D010 synthetic compute admission PASS; D011 and research-data execution remain unauthorized
+Status: Opened prospectively; D011 accepted conditionally; largest-fold synthetic preflight pending; no development outcome read
 
 ## Purpose
 
@@ -128,8 +128,9 @@ D008 now provides the accepted implementation freeze in
 implementation and synthetic validation only; a separate clean-source
 execution decision is still required before any development-row fit.
 
-D008 implementation and synthetic validation are complete. The implementation
-adds projected-kernel primitives, deterministic landmarks, estimator wrappers,
+D008 implementation and synthetic validation complete the prerequisite
+implementation phase. The implementation adds projected-kernel primitives,
+deterministic landmarks, estimator wrappers,
 scope guards, and synthetic tests only. It does not create model-performance
 evidence or authorize development-row execution.
 
@@ -166,6 +167,30 @@ and final-test read counters are zero, and no hardware/GPU or Gate 6 job ran.
 RFIG-030 records the source-bound resource margins. D010 is closed to rerun;
 this compute PASS permits preparation of D011 only and is not model-performance
 or research-data evidence.
+
+D011 is now the accepted conditional execution authority. A code-level audit
+before outcome access found that D010's frozen 256-row validation benchmark did
+not represent the 9,750-row largest grouped fold. D011 preserves D010 as valid
+historical evidence and adds a conservative largest-fold synthetic admission:
+1,024 training rows, 9,750 validation rows, both projected heads, A02, every
+matched control, 1,220 worst-fold units, and the unchanged 25% margin and
+laptop limits. It credits no cache, control sharing, smaller fold, or smaller
+qubit shape.
+
+No development payload may be opened before that source-bound preflight
+passes. A PASS authorizes one resumable development-only P001 campaign under
+`configs/post_gate5_development_execution.yaml`; a STOP is terminal for D011.
+The runner may reuse mathematically identical exact projected states and
+fold-local transforms within that one invocation because these operations do
+not change predictions, rows, or model definitions. Q01b/FQK authorization,
+ranking, stopping, controls, 20 selected seeds, and sensitivity conditions
+remain frozen. Finite-shot and fixed-noise outputs are report-only.
+
+RFIG-031 records corrected admission. RFIG-026 through RFIG-028 report reached
+outcomes, while RFIG-029 remains the cumulative failure and future-research
+firewall. Calibration/final-test access, hardware/GPU work, Gate 5 revision,
+and Gate 6 remain prohibited. The current D011 status is pending preflight;
+there is no development-model result to interpret.
 
 ## Machine-readable source
 

@@ -5,7 +5,7 @@ Decision: D010
 Protocol: P001
 Prepared: 2026-07-13
 Accepted: 2026-07-13
-Status: Completed with synthetic compute admission PASS; D011 and research-data execution unauthorized
+Status: Completed with synthetic compute admission PASS; D010 grants no research-data authority; D011 conditional authority is recorded separately
 
 ## Decision
 

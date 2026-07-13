@@ -152,6 +152,22 @@ margins. This is compute-admission evidence only, not QML performance. D010 is
 closed to rerun, and a separately accepted D011 is required before any
 development-row fitting.
 
+D011 is now prospectively accepted by the human research lead. A runner audit
+found that D010's valid frozen benchmark used 256 validation rows, whereas the
+largest real grouped-CV fold has 9,750 validation rows and a complete task has
+39,000 held-out predictions. Before any development payload is opened, D011
+therefore requires one source-bound 1,024-training/9,750-validation synthetic
+bundle containing both projected heads, A02, and every matched control. The
+conservative projection charges 1,220 largest-fold bundles with 25% margin
+against the unchanged laptop ceilings and gives no credit for cache reuse,
+smaller folds, or smaller qubit maps. A preflight `STOP` is terminal and opens
+no research data. A `PASS` authorizes exactly one resumable P001
+development-only campaign with frozen Q01b/FQK advancement, 20 selected seeds,
+report-only shot/noise sensitivities, and RFIG-026 through RFIG-031 reporting.
+Calibration, final-test, hardware/GPU, Gate 5 reinterpretation, and Gate 6
+remain prohibited. The current status is pending the D011 largest-fold
+synthetic preflight; no P001 development outcome has been read.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -208,12 +224,15 @@ through a dated deviation record.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
 - docs/post_gate5_compute_preflight.md: D009 synthetic-only clean-source compute-admission contract and pass/stop rules.
 - docs/post_gate5_telemetry_correction.md: D010 typed-memory correction, independent validation, and one-rerun authority.
+- docs/post_gate5_development_execution.md: D011 corrected fold-shape admission, one-campaign authority, endpoint rules, and reporting contract.
 - docs/decision_log.md: acceptance and deviation history.
 - data/processed/reporting/gate5_literature_hardening_matrix.csv: D004 source-to-control matrix for RFIG-019.
 - data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv: P001 near-term versus appendix/future QML boundary for RFIG-024.
 - data/processed/reporting/post_gate5_exploratory_trial_manifest.csv: 30 balanced paired projected-kernel configurations frozen but not run.
 - data/processed/reporting/post_gate5_future_research_discussion.csv: schema-locked register for evidence-based future-work suggestions after failures or stops.
 - data/processed/reporting/post_gate5_compute_preflight_rerun.json: source-bound D010 synthetic compute-admission PASS evidence.
+- data/processed/reporting/post_gate5_d011_fold_shape_preflight.json: reserved source-bound D011 largest-fold synthetic admission result.
+- data/processed/reporting/post_gate5_p001/: reserved compact D011 campaign, comparison, sensitivity, and decision evidence.
 - data/processed/reporting/gate5_cv_fold_manifest.csv: label-agnostic D005 whole-group CV assignment for RFIG-020.
 - data/processed/reporting/gate5_preflight_audit.json: development-only Gate 5 data and lock audit.
 - data/processed/reporting/gate5_initial_execution_plan.csv: all 450 accepted D006 first-stage tasks (270 candidates and 180 non-winning matched-control views), ready under the clean-source fit guard.

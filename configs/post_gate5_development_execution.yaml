@@ -1,0 +1,202 @@
+schema_version: "0.1.0"
+decision_id: "D011"
+protocol_id: "P001"
+status: "accepted_conditional_fold_shape_preflight_and_development_campaign_authorized"
+prepared_date: "2026-07-13"
+accepted_date: "2026-07-13"
+acceptance_basis: "human research lead instruction to proceed with the next step after D010"
+
+authority:
+  fold_shape_preflight_authorized: true
+  research_data_fitting_authorized: true
+  research_data_fitting_condition: "the source-bound D011 fold-shape preflight must PASS every unchanged ceiling before the first development payload is opened"
+  campaign_execution_authorized: true
+  campaign_count_limit: 1
+  checkpoint_resume_authorized: true
+  silent_task_retry_authorized: false
+  reporting_authorized: true
+  next_decision: "D012 may interpret the completed P001 exploratory signal; no Gate 6 authority follows automatically"
+
+accepted_dependencies:
+  accepted_result_commit: "903fa8752aba8d2acbad63c3a1fbaee080ed50a5"
+  d008_config:
+    path: "configs/post_gate5_exploratory.yaml"
+    git_blob_sha256: "5459bd93d476e891ef197dd3c513c88d674f866e4a23d382c46ef3f5d9a1fc59"
+  d010_result:
+    path: "data/processed/reporting/post_gate5_compute_preflight_rerun.json"
+    git_blob_sha256: "2ed361a3acd6b7d27b5cf11f7a09244d215e652dea58867c39e8b101ac1f02f6"
+    required_status: "PASS"
+  trial_manifest:
+    path: "data/processed/reporting/post_gate5_exploratory_trial_manifest.csv"
+    git_blob_sha256: "4192d421928c9c07294f441d10f0776f2c2b634db4be6f7d5257cd4543a72796"
+  fold_manifest:
+    path: "data/processed/reporting/gate5_cv_fold_manifest.csv"
+    git_blob_sha256: "f467d6efef27d768e3f86d6e174f27c631b7f7942b4777fa87ebe95df97f94a3"
+  model_registry:
+    path: "experiments/phase1_model_registry.yaml"
+    git_blob_sha256: "7ea0bfec43ebf425b7668d68bef318538be2c2e6f9c524c52cdeeebc6596c5d1"
+
+locks:
+  gate5_result_unchanged: true
+  d006_d007_evidence_immutable: true
+  d008_scientific_design_unchanged: true
+  d009_failure_evidence_immutable: true
+  d010_compute_result_immutable: true
+  allowed_data_scope: "development"
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  final_payload_access_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate6_authorized: false
+  allowed_track_ids: [Q01b, FQK]
+  allowed_qubits: [4, 6, 8]
+
+fold_shape_correction:
+  finding: "D010 benchmarked 256 validation rows, while the largest frozen grouped-CV validation fold contains 9750 rows and all five validation folds total 39000 rows per rung"
+  interpretation: "D010 remains a valid result under its frozen benchmark, but it is not the final campaign-shape admission"
+  benchmark_training_rows: 1024
+  benchmark_validation_rows: 9750
+  benchmark_primary_control_feature_count: 64
+  benchmark_compressed_feature_count: 8
+  benchmark_qubits: 8
+  benchmark_layers: 2
+  maximum_union_projection_ids_by_rung:
+    128: 30
+    256: 30
+    512: 16
+    1024: 8
+  tuning_fold_bundle_units: 420
+  selected_seed_fold_bundle_units: 200
+  sensitivity_fold_bundle_units: 600
+  total_worst_fold_bundle_units: 1220
+  projection_margin: 1.25
+  accounting_rule: "charge one complete q=8 largest-fold bundle, both projected heads, A02, and every classical control to every unit; do not credit smaller folds, smaller qubit maps, cache reuse, control reuse, or a shared selected configuration"
+  artifact_bytes_per_unit: 2097152
+  ceilings:
+    cpu_core_hours: 250.0
+    wall_clock_days: 5.0
+    new_artifacts_gib: 20.0
+    peak_working_set_gib: 24.0
+    minimum_free_disk_gib: 20.0
+    gpu_hours: 0.0
+  output: "data/processed/reporting/post_gate5_d011_fold_shape_preflight.json"
+  figure: "RFIG-031"
+
+campaign:
+  grouped_folds: 5
+  validation_rows_by_fold:
+    CV01: 6500
+    CV02: 9750
+    CV03: 9750
+    CV04: 6500
+    CV05: 6500
+  validation_rows_per_complete_task: 39000
+  tuning_rungs:
+    - {development_samples: 128, retain_per_track: 30}
+    - {development_samples: 256, retain_per_track: 15}
+    - {development_samples: 512, retain_per_track: 8}
+    - {development_samples: 1024, retain_per_track: 4}
+  advancement_floor: "select the best eligible projection for each of q=4, q=6, and q=8, then add the missing entanglement state if needed and slots permit, then fill by endpoint rank"
+  track_specific_authorization: "after each rung Q01b and FQK advance independently; a projection in the union may share states, but an endpoint not authorized for that projection/rung is not scored"
+  selected_configuration_count_per_track: 1
+  selected_seed_indices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  training_row_selection: "unchanged nested SHA-256 gate5_learning_row_v1 ranking from training groups only"
+  validation_row_selection: "every row in the held-out whole-group fold"
+  preprocessing: "fit imputation, encoding, scaling, target standardization, and PCA inside each training fold/rung only"
+  projected_state_cache: "mathematically identical states may be reused only within one source-bound invocation for the same rung, fold, qubits, layers, feature scale, entanglement, and sensitivity condition"
+  control_reuse: "one control fit may serve all projection IDs only when control parameters, seed, rows, fold-local transform, input dimension, stage, and endpoint are identical"
+  q01b_auxiliary_feasibility_head: "fit the paired FQK head when Q01b is active because frozen regret is its first tie-breaker; do not score that head as an advanced FQK endpoint unless FQK is separately authorized"
+  checkpoint_unit: "one fold, stage, rung, projection/control identity, endpoint authorization, seed index, and sensitivity condition"
+  checkpoint_root: "results/post_gate5_p001"
+  output_root: "data/processed/reporting/post_gate5_p001"
+
+randomness:
+  tuning_landmark_seed: "low unsigned 32 bits of SHA-256(P001|D011|projection_id|fold_id)"
+  selected_landmark_seed: "the frozen selected seed index 1 through 20"
+  control_seed: "low unsigned 32 bits of SHA-256(P001|D011|stage|rung|control_id|fold_id|seed_index)"
+  shot_seed: "low unsigned 32 bits of SHA-256(P001|D011|track_id|projection_id|fold_id|seed_index|sensitivity_condition|train_or_validation_partition)"
+
+endpoints:
+  Q01b:
+    primary: "pooled out-of-fold NRMSE"
+    rank_order: [lower_pooled_nrmse, lower_mean_regret_m_s, lower_regularized_condition_number, lower_qubits, lower_layers, projection_id]
+    promising_rule: "mean selected-seed relative NRMSE gap versus C06 no greater than 0.05, all five folds and 20 seeds complete, and at least one preregistered regime has an upper 95% paired-bootstrap Q01b-minus-control NRMSE bound below zero versus A01, A02, and compressed C05"
+  FQK:
+    primary: "pooled out-of-fold Brier score"
+    rank_order: [lower_pooled_brier, higher_recall_at_0_5, higher_auroc, higher_precision_at_0_5, lower_regularized_condition_number, lower_qubits, projection_id]
+    promising_rule: "mean Brier no more than 5% above the strongest classical feasibility comparator, mean AUROC no more than 0.01 lower, mean recall no more than 0.02 lower, and all five folds and 20 seeds complete"
+  threshold: 0.5
+  confidence_level: 0.95
+  bootstrap_replicates: 10000
+  comparison_scope: "development-only exploratory signal; cannot revise Gate 5 or authorize Gate 6"
+  q01b_regime_analysis:
+    dimensions: [fidelity, uncertainty_family, base_trajectory_family, boundary_or_tail, reference_feasible_status]
+    cell_eligibility: "the same cell must be present in all five grouped folds for Q01b, A01, A02, and compressed C05 at every selected seed index 1 through 20"
+    pooled_metric: "pool squared error and row count across folds, divide RMSE by the unchanged full-development target standard deviation"
+    paired_unit: "selected seed index"
+    comparators: [A01-T04, A02, C05-T17-compressed]
+    qualification: "the upper two-sided 95% paired-bootstrap confidence bound for Q01b-minus-comparator NRMSE is below zero for all three comparators"
+    multiplicity: "no multiplicity-adjusted significance claim; this preregistered exploratory rule is a conjunction across controls and supports only the promising_for_new_protocol label"
+
+controls:
+  Q01b: [C06-T17, A01-T04, A02, C05-T17-compressed]
+  FQK: [C01-T18, C02-T02, C03-T13, C04-T28, C05-T12, C06-T17, A01-T04, A02, C05-T17-compressed]
+  A02_rule: "classical RBF on identical fold-local PCA rows with its own training-fold median Euclidean bandwidth multiplier and the same alpha, landmark IDs, and Nystrom construction as the paired projection ID"
+  historical_reference: "Q01-T17 is report-only and is never rerun"
+
+sensitivities:
+  conditions: [exact_statevector, 1024_shots, 4096_shots, fixed_gate4_noise_model]
+  primary_condition: "exact_statevector"
+  fixed_noise_shots: 4096
+  fixed_noise_model:
+    one_qubit_depolarizing_probability: 0.001
+    two_qubit_depolarizing_probability: 0.01
+    readout_bit_flip_probability: 0.02
+  sampling_rule: "sample each Pauli X/Y/Z expectation independently as a binomial plus/minus-one measurement using the frozen shot seed"
+  noise_rule: "apply the frozen Gate 4 observable attenuation before 4096-shot sampling"
+  use_rule: "report-only after selection; never rerank, retune, or change the promising-signal decision based on sensitivity outcomes"
+
+failure_policy:
+  continue_after_governed_ineligible_fold: true
+  stop_after_technical_integrity_failure: true
+  future_discussion_register: "data/processed/reporting/post_gate5_future_research_discussion.csv"
+  required_boolean_values:
+    new_protocol_required: true
+    active_pipeline_change_authorized: false
+    post_outcome_retry_authorized: false
+  no_post_outcome_rescue: true
+
+source_binding:
+  decision_config: "configs/post_gate5_development_execution.yaml"
+  d008_config: "configs/post_gate5_exploratory.yaml"
+  d010_result: "data/processed/reporting/post_gate5_compute_preflight_rerun.json"
+  phase1_config: "configs/phase1_benchmark.yaml"
+  trial_manifest: "data/processed/reporting/post_gate5_exploratory_trial_manifest.csv"
+  fold_manifest: "data/processed/reporting/gate5_cv_fold_manifest.csv"
+  model_registry: "experiments/phase1_model_registry.yaml"
+  gate5_source: "src/openqfuel/gate5.py"
+  preprocessing_source: "src/openqfuel/preprocessing.py"
+  qml_source: "src/openqfuel/qml.py"
+  model_source: "src/openqfuel/models.py"
+  metric_source: "src/openqfuel/phase1_analysis.py"
+  guard_source: "src/openqfuel/post_gate5.py"
+  campaign_source: "src/openqfuel/post_gate5_campaign.py"
+  d010_preflight_script: "scripts/run_post_gate5_compute_preflight.py"
+  preflight_script: "scripts/run_post_gate5_fold_shape_preflight.py"
+  campaign_script: "scripts/run_post_gate5_campaign.py"
+  reporting_script: "scripts/report_post_gate5_campaign.py"
+  reporting_source: "src/openqfuel/post_gate5_reporting.py"
+  figure_script: "scripts/make_post_gate5_result_figures.py"
+  lockfile: "uv.lock"
+
+reporting:
+  preflight_figure: "RFIG-031"
+  result_figures: [RFIG-026, RFIG-027, RFIG-028]
+  failure_figure: "RFIG-029"
+  missing_value_rule: "missing or unauthorized results remain absent and are never plotted as zero"
+  negative_result_rule: "a non-promising track is a valid exploratory negative result and requires a committed future-only discussion record"
+  claim_boundary: "development-only exploratory model evidence; no calibration, final-test, mission, hardware, quantum-advantage, Gate 5 revision, or Gate 6 claim"
+
+outcome:
+  current_status: "pending_fold_shape_preflight"

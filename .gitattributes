@@ -11,3 +11,15 @@ experiments/phase1_tuning_fold_metrics.csv text eol=lf
 experiments/phase1_tuning_regime_metrics.csv text eol=lf
 experiments/phase1_tuning_results.csv text eol=lf
 artifacts/research_figures/*.svg text eol=lf whitespace=-trailing-space
+
+# D011 hashes committed source and compact reporting bytes.
+configs/post_gate5_development_execution.yaml text eol=lf
+src/openqfuel/post_gate5_campaign.py text eol=lf
+src/openqfuel/post_gate5_reporting.py text eol=lf
+scripts/run_post_gate5_fold_shape_preflight.py text eol=lf
+scripts/run_post_gate5_campaign.py text eol=lf
+scripts/report_post_gate5_campaign.py text eol=lf
+scripts/make_post_gate5_result_figures.py text eol=lf
+data/processed/reporting/post_gate5_d011_fold_shape_preflight.json text eol=lf
+data/processed/reporting/post_gate5_p001/*.csv text eol=lf
+data/processed/reporting/post_gate5_p001/*.json text eol=lf

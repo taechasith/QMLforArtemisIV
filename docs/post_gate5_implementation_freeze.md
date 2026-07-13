@@ -1,11 +1,11 @@
 # Post-Gate-5 Exploratory Implementation Freeze
 
-Version: 0.1.4
+Version: 0.1.5
 Decision: D008
 Protocol: P001
 Prepared: 2026-07-13
 Accepted: 2026-07-13
-Status: Accepted by human research lead; implementation and synthetic validation complete; D009 preflight stopped on telemetry; research-data execution remains unauthorized
+Status: Accepted by human research lead as the implementation basis; D011 conditionally authorizes execution only after a largest-fold synthetic PASS
 
 ## Decision
 
@@ -191,3 +191,12 @@ The D009 attempt produced a technical `STOP` before resource admission because
 the Windows memory telemetry probe failed. The D008 scientific design was not
 reduced or retried. RFIG-029 and P001-FR001 record the failure and a
 future-only telemetry improvement; neither authorizes an active correction.
+
+D010 subsequently corrected only that telemetry interface and passed its
+unchanged frozen synthetic benchmark. D011 leaves both D009 and D010
+unchanged, but corrects campaign-shape accounting prospectively: the largest
+real validation fold has 9,750 rows rather than D010's frozen 256. The accepted
+D011 contract in `docs/post_gate5_development_execution.md` requires a
+largest-fold synthetic PASS before any development read, then permits exactly
+one resumable P001 campaign. It changes no D008 scientific method. Hardware,
+calibration/final-test data, Gate 5 reinterpretation, and Gate 6 remain locked.

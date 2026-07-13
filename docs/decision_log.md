@@ -1120,3 +1120,50 @@ D010 is closed and cannot be rerun. The result establishes synthetic compute
 admission on the reference laptop only. It permits preparation of D011 but
 does not authorize development-row fitting, claim QML performance, reinterpret
 Gate 5, or open Gate 6.
+
+### D011 accepted - corrected fold-shape admission and one P001 campaign
+
+Date prepared: 2026-07-13
+Date accepted: 2026-07-13
+Status: **Accepted conditionally; largest-fold synthetic preflight pending**
+Authority: Human research lead instruction to proceed with the next step
+
+Finding before outcome access:
+
+D010 remains valid under its frozen 1,024-training/256-validation benchmark,
+but the D011 runner audit found that the real validation folds contain 6,500
+or 9,750 rows and that each complete five-fold task predicts 39,000 held-out
+rows. Treating D010 as final campaign-shape admission would therefore
+understate validation projection and inference work.
+
+Decision:
+
+- Freeze a 1,024-training/9,750-validation synthetic bundle with q=8, two
+  layers, both projected heads, A02, and every matched control.
+- Project 1,220 largest-fold bundle units with 25% margin against the unchanged
+  250 core-hour, five-day, 20 GiB artifact, 24 GiB memory, and 20 GiB minimum
+  free-disk boundaries. Credit no smaller folds/qubits, sharing, or cache reuse.
+- Open no development payload unless every source-bound preflight check passes.
+- After a PASS, authorize exactly one source-bound, resumable P001 development
+  campaign. Process interruption may resume valid checkpoints; a recorded
+  technical failure or governed STOP cannot be silently retried.
+- Preserve the D008 trial manifest, grouped folds, rows, transforms, endpoints,
+  thresholds, controls, seed indices, sensitivity conditions, and claim limits.
+- Keep all calibration/final-test payloads, hardware/GPU execution, Gate 5
+  reinterpretation, and Gate 6 locked.
+
+Prospective reporting freeze:
+
+Q01b and FQK rank and stop independently. Q01b's fixed regime cells are the
+five predeclared Gate 5 dimensions and must be complete in all five folds and
+20 selected seeds. The paired seed-index bootstrap must place the upper 95%
+Q01b-minus-control NRMSE bound below zero against A01, A02, and compressed C05
+for a qualifying dequantization regime. FQK retains the frozen Brier, AUROC,
+recall, and completeness conjunction. Exact statevector is primary;
+finite-shot/noise results cannot affect selection or the promising label.
+
+RFIG-031 will record corrected admission. RFIG-026 through RFIG-028 will report
+reached outcomes, and RFIG-029 will be updated for any governed ineligibility,
+terminal nonadvancement, technical failure, resource STOP, or scientific
+negative. Every future-research suggestion requires a new protocol and cannot
+alter or rescue P001. No D011 outcome was read when this decision was frozen.
