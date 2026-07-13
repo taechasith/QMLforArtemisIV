@@ -58,6 +58,7 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     expected_ids.add("RFIG-029")
     expected_ids.add("RFIG-030")
     expected_ids.add("RFIG-031")
+    expected_ids.add("RFIG-032")
     expected_ids.update({"RFIG-026", "RFIG-027", "RFIG-028"})
     assert expected_ids <= figure_ids
     assert {"RFIG-010", "RFIG-013"}.isdisjoint(figure_ids)
@@ -76,6 +77,7 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
             "development_only_exploratory_model_evidence",
             "development_only_kernel_diagnostics",
             "development_only_feasibility_evidence",
+            "classical_first_freeze_proposal",
         }
     for row in rows:
         assert "final_test" not in row["source_data"]
@@ -110,6 +112,14 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     )
     assert rfig030["figure_generator_sha256"] == sha256_file(
         ROOT / rfig030["generator"]
+    )
+    rfig032 = next(row for row in rows if row["figure_id"] == "RFIG-032")
+    assert rfig032["source_data"] == (
+        "configs/post_gate5_d014_classical_first_freeze.yaml"
+    )
+    assert rfig032["evidence_status"] == "classical_first_freeze_proposal"
+    assert rfig032["figure_generator_sha256"] == sha256_file(
+        ROOT / rfig032["generator"]
     )
 
 
