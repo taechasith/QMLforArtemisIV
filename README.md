@@ -87,8 +87,12 @@ The official technical trigger is `FAIL`: Q01's mean NRMSE is 0.6466 versus
 0.00874 for C06, the relative gap is 72.99, and no regime qualifies. RFIG-021
 through RFIG-023 preserve the reached-rung, 20-seed, and regime evidence. This
 negative result applies only to the preregistered development benchmark; it
-does not establish that QML can never work. A separate human Gate 5 decision
-is still required, and Gate 6 remains unauthorized.
+does not establish that QML can never work. The human research lead accepted
+this technical `FAIL` as the official Gate 5 result on 2026-07-13. Gate 5 is
+therefore closed, and the proposed new algorithm is not authorized under the
+frozen trigger. This decision does not authorize refitting, new algorithm work,
+calibration or final-test access, or Gate 6. RFIG-001 records the accepted gate
+state; RFIG-021 through RFIG-023 remain the unchanged scientific evidence.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 

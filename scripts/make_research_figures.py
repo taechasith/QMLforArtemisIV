@@ -191,7 +191,7 @@ def draw_gate_timeline(path: Path) -> None:
     ax.text(
         0.0,
         0.98,
-        "Research governance decision diagram through Gate 4",
+        "Research governance decision diagram through Gate 5",
         transform=ax.transAxes,
         ha="left",
         va="top",
@@ -205,7 +205,7 @@ def draw_gate_timeline(path: Path) -> None:
         "Gate 2": "Data/numeric freeze",
         "Gate 3": "Simulator credibility",
         "Gate 4": "Phase 1 freeze",
-        "Gate 5": "Development generation",
+        "Gate 5": "Algorithm trigger: FAIL",
         "Gate 6": "Mission experiment",
         "Gate 7": "Claims and release",
     }
@@ -1320,13 +1320,13 @@ def specs() -> list[FigureSpec]:
         FigureSpec(
             "RFIG-001",
             "gate_decision_timeline",
-            "Research governance timeline through Gate 4",
+            "Research governance timeline through Gate 5",
             "governance",
             "Methods: governance",
             "accepted_decision_record",
             "data/processed/reporting/gate_timeline.csv",
-            "Human decisions closed Gates 0-4 by 2026-07-12; Gate 5 remains in progress.",
-            "Dates and statuses only; this figure does not imply scientific success.",
+            "Human decisions closed Gates 0-5 by 2026-07-13; Gate 5 closed as a preregistered technical FAIL, while Gate 6 remains unopened.",
+            "Decision-state evidence only; the FAIL applies to the preregistered development benchmark and is not a universal claim about QML.",
             draw_gate_timeline,
         ),
         FigureSpec(

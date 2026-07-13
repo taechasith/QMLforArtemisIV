@@ -1,8 +1,8 @@
 # Phase 1 Model Registry
 
-Version: 0.3.5
+Version: 0.3.6
 Prepared: 2026-07-12
-Status: D007 reporting complete; Gate 5 technical trigger FAIL pending separate human decision
+Status: Gate 5 accepted with technical outcome FAIL; proposed new algorithm not authorized; Gate 6 unauthorized
 
 ## Registered candidates
 
@@ -147,7 +147,7 @@ collapsed. Only signed, eligible completed seed rows are registered. The
 source-bound campaign audit and mandatory D004 claim-boundary diagnostic
 package must be complete before a technical Gate 5 pass can be reported.
 
-## Provisional D006 development selection
+## D006 development selection and D007 reporting outcome
 
 The immutable source-bound selection contains C01-T18, C02-T02, C03-T13,
 C04-T28, C05-T12, C06-T17, and Q01-T17. Q01-T17 uses four effective qubits at
@@ -158,8 +158,11 @@ completed.
 Q02 and Q03 have no finalist. At rung 128, 8/30 Q02 tasks and 4/30 Q03 tasks
 were eligible, below the frozen retain count of 15. All 150 fold diagnostics
 per family exist, and the ranking records terminal nonadvancement; later rungs
-and selected-configuration seed reruns were never authorized. D007 proposes to
-report those absences as `not_reached_under_frozen_eligibility` rather than as
-terminal campaign failures. Until D007 is accepted and derived reporting is
-regenerated, `experiments/phase1_model_registry.yaml` remains provisional and
-the official technical trigger remains `UNAVAILABLE`.
+and selected-configuration seed reruns were never authorized. Accepted D007
+reporting records those absences as `not_reached_under_frozen_eligibility`, not
+as terminal campaign failures. The source-bound reporting package is complete:
+Q01 mean NRMSE is 0.6466 versus 0.00874 for C06, and zero preregistered regimes
+qualify. The human research lead accepted the resulting technical `FAIL` on
+2026-07-13. No proposed new algorithm is authorized, and calibration,
+final-test access, refitting, and Gate 6 remain locked pending a separate
+prospective decision.

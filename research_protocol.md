@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.5
-Status: Gates 1-4 accepted; D007 reporting complete; Gate 5 technical trigger FAIL pending separate human decision
+Version: 0.6.6
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-13
-Recommended next decision: Accept, reject, or revise the official Gate 5 technical trigger FAIL; Gate 6 remains unauthorized
+Recommended next decision: Pause experiments and preregister the post-Gate-5 path; Gate 6 remains unauthorized
 
 ## 1. Proposed title
 
@@ -784,7 +784,13 @@ and produced an official technical trigger `FAIL`: Q01 mean NRMSE
 zero qualifying regimes. RFIG-021 through RFIG-023 preserve the reached-rung,
 20-seed, and regime-trigger evidence. This is not a claim that QML can never
 work; it is a negative result for this preregistered development benchmark.
-The separate human Gate 5 decision remains pending.
+The human research lead accepted this unchanged technical `FAIL` as the
+official Gate 5 result on 2026-07-13. This closes Gate 5 and rejects development
+of the proposed new model under the frozen trigger. Acceptance does not
+authorize refitting, reranking, new algorithm work, calibration or final-test
+access, or Gate 6. Any later experiment requires a new, prospectively approved
+protocol decision; the accepted result cannot be reinterpreted as a universal
+claim that QML cannot work.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

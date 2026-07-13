@@ -821,4 +821,32 @@ Reporting completion:
 - The official technical trigger is `FAIL`: Q01 mean NRMSE is `0.6466136067`, C06 mean NRMSE is `0.0087390408`, the relative gap is `72.9913708168`, and zero preregistered regimes qualify.
 - Q02 and Q03 are `verified_terminal_nonadvancing`; their absent later rungs and seed reruns are `not_reached_under_frozen_eligibility`, not task failures.
 - All 871 campaign tasks remain complete with zero failures, zero calibration reads, and zero final-test reads. Immutable D006 evidence did not change.
-- The human accept/reject/revise decision on this technical `FAIL` remains pending. Gate 6 and new algorithm work remain unauthorized.
+- The resulting technical `FAIL` was subsequently accepted under the separate Gate 5 human decision below. RFIG-021 through RFIG-023 and all D006 evidence remain unchanged.
+
+### Decision Gate 5 - Technical FAIL accepted
+
+Date: 2026-07-13
+Status: **Accepted with technical outcome `FAIL`**
+Authority: Human research lead
+
+Evidence basis:
+
+- Official D007 reporting package published at commit `8ab1ba5114dbf7c5ae1f0ae4e490d501e784796d`.
+- All 871 D006 campaign tasks are complete with zero failures, zero calibration reads, and zero final-test reads.
+- Q01 mean NRMSE is `0.6466136067` versus C06 at `0.0087390408`; the relative gap is `72.9913708168`, and zero preregistered regimes qualify.
+- Q02 and Q03 are verified terminally nonadvancing; later rungs and seed reruns are `not_reached_under_frozen_eligibility`, not failed experiments.
+
+Human decision:
+
+The human research lead accepts the unchanged technical `FAIL` as the official
+Gate 5 result. The accepted inference is limited to this preregistered
+development benchmark: the registered QML evidence did not satisfy the frozen
+algorithm trigger. It is not a universal claim that QML cannot work.
+
+Consequence:
+
+- Gate 5 is closed, and development of the proposed new algorithm is rejected under the frozen trigger.
+- No refit, rerank, retry, threshold change, new family, or post-outcome rescue analysis is authorized.
+- Calibration and final-test data remain locked. Gate 6 remains unauthorized and requires a separate prospective human decision.
+- The D007 report package remains byte-unchanged as the pre-decision evidence snapshot, so its internal `pending_human_accept_reject_or_revise` status is historical rather than the current governance state. `configs/phase1_benchmark.yaml`, this log, and the gate timeline carry the accepted decision.
+- RFIG-001 is updated to record the accepted gate state. RFIG-021 through RFIG-023 remain the unchanged scientific evidence.

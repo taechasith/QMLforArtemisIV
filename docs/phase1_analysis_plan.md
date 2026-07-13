@@ -1,8 +1,8 @@
 # Frozen Phase 1 Analysis Plan
 
-Version: 0.6.5
+Version: 0.6.6
 Prepared: 2026-07-12
-Status: D007 reporting complete; Gate 5 technical trigger FAIL pending separate human decision; Gate 6 unauthorized
+Status: Gate 5 accepted with technical outcome FAIL; proposed new algorithm not authorized; Gate 6 unauthorized
 
 ## Analysis sequence
 
@@ -111,7 +111,7 @@ any condition rejects new-algorithm development. This development-only trigger
 does not use calibration, ID-final, OOD-final, finite-shot confirmation, or a
 post-result threshold change.
 
-## D007 post-fit reporting conformance candidate
+## D007 post-fit reporting conformance
 
 The completed D006 campaign contains 871/871 terminally complete tasks and no
 task failures. Q02 and Q03 reached the 128-row rung but could not fill the
@@ -119,8 +119,8 @@ frozen retain count of 15: 8/30 and 4/30 tasks were eligible. Their immutable
 rankings therefore record terminal nonadvancement. The current reporter
 incorrectly treats the absence of later authorization as missing evidence.
 
-D007 would change only the reporting denominator after explicit human
-acceptance. A stopped family counts as complete scientific evidence only when
+D007 changed only the reporting denominator after explicit human acceptance.
+A stopped family counts as complete scientific evidence only when
 all tasks and five-fold diagnostics at every authorized/reached rung are
 signed, source-matched, zero-read, digest-valid, and reproduce eligibility
 below the frozen retain count; the ranking must contain no selected row and the
@@ -129,6 +129,12 @@ Q02/Q03 later rungs and seed reruns remain
 `not_reached_under_frozen_eligibility`, not missing or imputed. Any failed or
 inconsistent artifact remains `UNAVAILABLE`. Models, rankings, thresholds,
 controls, and statistical trigger conditions do not change.
+
+Reporting from the clean accepted source validated that contract and returned
+a technical `FAIL`: Q01 mean NRMSE is 0.6466 versus 0.00874 for C06, with zero
+qualifying regimes. The human research lead accepted this unchanged result on
+2026-07-13. Gate 5 is closed, the proposed new algorithm is not authorized,
+and no calibration, final-test, refit, or Gate 6 access is unlocked.
 
 ## Endpoints
 

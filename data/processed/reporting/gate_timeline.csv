@@ -4,6 +4,6 @@ Gate 1,2026-07-10,accepted,NASA-first protocol scope accepted
 Gate 2,2026-07-11,accepted,Data and numeric freeze accepted
 Gate 3,2026-07-12,accepted,Simulator credibility accepted with RTC3 outside the validation claim
 Gate 4,2026-07-12,accepted,Phase 1 benchmark freeze and D002 accepted
-Gate 5,,in_progress,Development generation and algorithm-trigger analysis in progress
+Gate 5,2026-07-13,accepted,Technical FAIL accepted for the preregistered development benchmark
 Gate 6,,not_open,Mission experiment not opened
 Gate 7,,not_open,Claims and release not opened
