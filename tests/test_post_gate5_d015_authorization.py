@@ -16,7 +16,7 @@ def _config() -> dict:
 def test_d015c_authorizes_only_implementation_and_synthetic_validation() -> None:
     config = _config()
     assert config["decision_id"] == "D015-C"
-    assert config["status"] == "accepted_implementation_and_synthetic_validation_only"
+    assert config["status"] == "completed_synthetic_scaffolds_only"
     authority = config["authority"]
     assert authority["implementation_authorized"] is True
     assert authority["synthetic_validation_authorized"] is True
@@ -51,10 +51,10 @@ def test_d015c_limits_validation_to_synthetic_arrays() -> None:
 def test_d015c_docs_are_registered() -> None:
     required = {
         "docs/post_gate5_d015_implementation_synthetic_validation.md": (
-            "Implementation and synthetic validation authorized; no data fitting"
+            "Implementation and synthetic validation complete; no data fitting"
         ),
         "configs/post_gate5_d015_implementation_synthetic_validation.yaml": (
-            "accepted_implementation_and_synthetic_validation_only"
+            "completed_synthetic_scaffolds_only"
         ),
     }
     for relative, phrase in required.items():

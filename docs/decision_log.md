@@ -1457,3 +1457,13 @@ refit, rerank, retry, hardware/GPU execution, Gate 5 reinterpretation, QML
 invention claim, quantum-advantage claim, or Gate 6. D016 is required before
 clean-source synthetic compute admission, and a later decision is required
 before any development-data fitting.
+
+Outcome:
+
+- Implemented synthetic-only CRES/CSAFE scaffolds in
+  `src/openqfuel/post_gate5_classical.py`.
+- Added tests for D015 scope guards, residual target equations, residual-cost
+  metrics, training-only safety-threshold selection, held-out safety metrics,
+  invalid-input rejection, and invention-readiness labels.
+- No development, calibration, final-test, hardware/GPU, Gate 5
+  reinterpretation, QML invention claim, or Gate 6 path was opened.

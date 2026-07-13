@@ -249,6 +249,11 @@ create CRES/CSAFE scaffolds and synthetic-array tests, but it still cannot fit
 development data, read calibration/final-test data, run hardware/GPU work,
 reinterpret Gate 5, claim a new QML invention, or open Gate 6.
 
+D015-C synthetic scaffolds are implemented in `src/openqfuel/
+post_gate5_classical.py` with tests that use synthetic arrays only. They cover
+explicit residual targets, residual-cost metrics, safety threshold selection,
+held-out safety metrics, scope guards, and invention-readiness labels.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:

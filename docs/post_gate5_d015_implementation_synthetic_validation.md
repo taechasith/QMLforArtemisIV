@@ -5,7 +5,7 @@ Decision: D015-C
 Protocol: P001
 Prepared: 2026-07-14
 Accepted: 2026-07-14
-Status: Implementation and synthetic validation authorized; no data fitting
+Status: Implementation and synthetic validation complete; no data fitting
 
 ## Decision
 
@@ -41,3 +41,20 @@ development payload is opened.
 D016 must prospectively authorize a clean-source synthetic compute-admission
 preflight before any D014-C development-data fitting. Missing or unauthorized
 RFIG-033 through RFIG-035 remain absent.
+
+## Implementation Outcome
+
+The D015-C synthetic scaffolds are implemented in
+`src/openqfuel/post_gate5_classical.py`. They are array-only helpers for CRES
+and CSAFE:
+
+- D015 scope guard.
+- Explicit high-minus-low residual target construction.
+- Residual-cost RMSE, NRMSE, MAE, and tail-error metrics.
+- Training-only safety-threshold selection.
+- Held-out Brier, AUROC, recall, precision, false-negative, false-positive,
+  expected-calibration-error, and intervention-rate metrics.
+- Invention-readiness labels that require prohibited rescue use to be stated.
+
+The corresponding tests use synthetic arrays only. Development-data fitting
+remains unauthorized.
