@@ -1,0 +1,18 @@
+{
+  "claim_boundary": "Development-only interpretation; no calibration, final-test, hardware/GPU, Gate 5 reinterpretation, QML invention, quantum advantage, mission, or Gate 6 claim.",
+  "csafe_best_brier_mean_brier": 0.13110998581436642,
+  "csafe_best_brier_mean_recall": 0.013889174500238285,
+  "csafe_decision": "failed_safety_utility_under_frozen_selection",
+  "csafe_future_only_signal": "calibrated_logistic had mean Brier 0.14223067742525214 and mean recall 0.8042533959907271; useful only for a future recall-first protocol",
+  "decision_id": "D018-C",
+  "development_rows_interpreted": 39000,
+  "calibration_rows_read": 0,
+  "final_test_rows_read": 0,
+  "gate6_runs": 0,
+  "cres_best_mean_nrmse": 0.8264947126512747,
+  "cres_best_model": "ridge_residual",
+  "cres_decision": "development_baseline_only_not_qualifying",
+  "official_status": "NO_ADVANCE",
+  "protocol_id": "P001",
+  "source_d017_commit": "419844a690d625502718e00b3e4dcafc6d99286c"
+}

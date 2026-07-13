@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.27
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C development-only campaign complete; Gate 6 unauthorized
+Version: 0.6.28
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: Prepare D018 interpretation of the D017-C development-only CRES/CSAFE result; no calibration/final-test access, refit, rerank, retry, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized
+Recommended next action: prepare the discussion/future-work section or open a future-only D019 safety-objective redesign discussion; no experiment, calibration/final-test access, refit, rerank, retry, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized
 
 ## 1. Proposed title
 
@@ -1090,6 +1090,15 @@ zero. CRES selected `ridge_residual` as the best mean residual-NRMSE model
 but that same model had very low mean recall (0.0139). RFIG-034 and RFIG-035
 record the development-only evidence. D018 is required to interpret whether the
 CRES/CSAFE branch is useful, failed, or needs future-only redesign.
+
+D018-C interpreted D017-C as `NO_ADVANCE`. CRES is useful as a development
+baseline only, not a qualifying result for locked-data or mission authority.
+CSAFE fails safety utility under the frozen selection rule because the best
+Brier model had mean recall 0.0139. The logistic head's higher recall is a
+future-only signal for a recall-first safety objective, not an active rescue
+selection. RFIG-037 records this interpretation boundary. No new experiment,
+calibration, final-test, hardware/GPU, mission-loop, QML invention,
+quantum-advantage, Gate 5 reinterpretation, or Gate 6 authority follows.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

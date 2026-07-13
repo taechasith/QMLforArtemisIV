@@ -45,6 +45,8 @@ data/processed/reporting/post_gate5_d017_classical_first/*
 !data/processed/reporting/post_gate5_d017_classical_first/csafe_fold_metrics.csv
 !data/processed/reporting/post_gate5_d017_classical_first/csafe_summary.csv
 !data/processed/reporting/post_gate5_d017_classical_first/evidence_manifest.json
+!data/processed/reporting/post_gate5_d018_interpretation.json
+!data/processed/reporting/post_gate5_d018_interpretation_matrix.csv
 !data/processed/reporting/post_gate5_p001/
 data/processed/reporting/post_gate5_p001/*
 !data/processed/reporting/post_gate5_p001/campaign_summary.json

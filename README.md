@@ -279,6 +279,11 @@ must interpret the safety result before any successor step. No hardware/GPU,
 mission-loop, Gate 5 reinterpretation, QML invention, quantum-advantage, or
 Gate 6 claim is authorized.
 
+D018-C interprets D017-C as `NO_ADVANCE`. CRES is useful only as a development
+baseline. CSAFE fails safety utility because the best-Brier model has mean
+recall 0.0139. The higher-recall logistic signal is future-only and cannot
+rescue D017. RFIG-037 records the interpretation boundary.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:

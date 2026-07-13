@@ -1,0 +1,56 @@
+schema_version: "0.1.0"
+decision_id: "D018-C"
+protocol_id: "P001"
+status: "completed_development_only_interpretation"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+acceptance_basis: "assistant-selected interpretation step after D017-C completed with mixed CRES/CSAFE development-only evidence"
+
+authority:
+  interpretation_authorized: true
+  experiment_authorized: false
+  development_data_fitting_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  refit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate5_reinterpretation_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+  mission_loop_authorized: false
+  gate6_authorized: false
+
+source_evidence:
+  d017_summary: "data/processed/reporting/post_gate5_d017_classical_first/campaign_summary.json"
+  cres_summary: "data/processed/reporting/post_gate5_d017_classical_first/cres_summary.csv"
+  csafe_summary: "data/processed/reporting/post_gate5_d017_classical_first/csafe_summary.csv"
+  d017_figures:
+    - "RFIG-034"
+    - "RFIG-035"
+
+interpretation:
+  cres:
+    status: "development_baseline_only_not_qualifying"
+    best_model: "ridge_residual"
+    mean_residual_nrmse: 0.8264947126512747
+    decision: "useful as a simple classical residual baseline and future QML target; not strong enough to request calibration, final-test, mission-loop, or Gate 6 authority"
+  csafe:
+    status: "failed_safety_utility_under_frozen_selection"
+    best_brier_model: "class_weighted_tree"
+    mean_brier: 0.13110998581436642
+    mean_recall: 0.013889174500238285
+    decision: "best Brier conflicts with safety recall; do not promote this safety filter"
+  alternative_signal:
+    logistic_mean_brier: 0.14223067742525214
+    logistic_mean_recall: 0.8042533959907271
+    use: "future-only signal for a recall-first safety objective; not an active rescue selection"
+
+outcome:
+  official_status: "NO_ADVANCE"
+  next_recommended_step: "write discussion or open a future-only D019 safety-objective redesign; do not run calibration, final-test, mission-loop, hardware, or Gate 6"
+  figure: "RFIG-037"
+  result: "data/processed/reporting/post_gate5_d018_interpretation.json"
+  claim_boundary: "Development-only interpretation; no calibration, final-test, hardware/GPU, Gate 5 reinterpretation, QML invention, quantum advantage, mission, or Gate 6 claim."

@@ -1580,6 +1580,31 @@ Outcome:
 - D018 must interpret the result before any claim, successor experiment,
   calibration/final-test access, hardware/GPU work, mission-loop work, or Gate 6.
 
+### D018-C completed - D017 development-only interpretation
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Completed; official status NO_ADVANCE**
+Authority: Assistant-selected interpretation step after D017-C
+
+Decision:
+
+- Interpret D017-C as development-only evidence that does not advance to
+  calibration, final-test, mission-loop, hardware, or Gate 6.
+- Treat CRES as a useful baseline and future QML target, not a qualifying
+  result.
+- Treat CSAFE as failed safety utility under the frozen selection rule because
+  the best-Brier model has mean recall 0.0139.
+- Treat the logistic head's higher recall as future-only signal for a later
+  recall-first safety objective, not an active rescue selection.
+- Generate RFIG-037 for the interpretation boundary.
+
+Boundary:
+
+D018-C authorizes no experiment, development refit, rerank, retry,
+calibration/final-test read, hardware/GPU execution, mission-loop work, Gate 5
+reinterpretation, QML invention claim, quantum-advantage claim, or Gate 6.
+
 Correction note:
 
 - The first D017-C launch stopped before development data were opened because

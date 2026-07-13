@@ -1,0 +1,4 @@
+track,selected_model,primary_metric,primary_value,safety_recall,interpretation,decision
+CRES,ridge_residual,mean_residual_nrmse,0.8264947126512747,,development baseline only; not strong enough for locked-data or mission authority,NO_ADVANCE
+CSAFE,class_weighted_tree,mean_brier,0.13110998581436642,0.013889174500238285,best Brier conflicts with safety recall; do not promote safety filter,NO_ADVANCE
+CSAFE_future_signal,calibrated_logistic,mean_brier,0.14223067742525214,0.8042533959907271,future-only recall-first signal; not active rescue selection,FUTURE_ONLY
