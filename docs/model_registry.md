@@ -1,8 +1,8 @@
 # Phase 1 Model Registry
 
-Version: 0.3.3
+Version: 0.3.4
 Prepared: 2026-07-12
-Status: D006 development campaign complete; provisional selection recorded; D007 reporting candidate pending human acceptance
+Status: D006 development campaign complete; provisional selection recorded; D007 reporting correction accepted and regeneration authorized
 
 ## Registered candidates
 

@@ -69,12 +69,15 @@ visible.
 The first derived report is preserved as `UNAVAILABLE`, because the frozen
 reporter calls those registered early stops `incomplete_with_terminal_failures`
 despite the zero-failure audit and also demands nonexistent later-rung/seed
-diagnostics. D007 is a reporting-only candidate to recognize this exact
-source-bound terminal-nonadvancement case, evaluate D004 completeness over
-authorized/reached stages, and leave every model score, ranking, threshold,
-seed, and campaign digest unchanged. The report and RFIG-021 through RFIG-023
-will not be regenerated unless the human lead explicitly accepts D007; both
-reporting entry points now enforce that authorization before writing. Any
+diagnostics. The human research lead accepted D007 on 2026-07-13 from candidate
+commit `7a726c8917a85f24313208eb18c33e1ccb5f703e`. This reporting-only correction
+recognizes the exact
+source-bound terminal-nonadvancement case, evaluates D004 completeness over
+authorized/reached stages, and leaves every model score, ranking, threshold,
+seed, and campaign digest unchanged. Only the report and RFIG-021 through
+RFIG-023 are now authorized for regeneration; both reporting entry points
+verify the accepted candidate before writing. The official result remains
+`UNAVAILABLE` until that unchanged evidence validates cleanly. Any
 accepted report will preserve `6e5a620` as the campaign source while separately
 recording the accepted D007 candidate, the clean reporting-source commit, and
 reporter/generator hashes. Publication also byte-checks the reporter and every

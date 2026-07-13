@@ -1,6 +1,6 @@
 # Research Execution Map
 
-Version: 0.6.3
+Version: 0.6.4
 Prepared: 2026-07-10
 Updated: 2026-07-13
 
@@ -20,7 +20,7 @@ the final authority for scope, methodological deviations, claims, and release.
 | 2. Data and numeric freeze | Audit public files; freeze variables, uncertainty, splits, tolerances, practical effect, and compute budget | Accepted 2026-07-11 | Frozen Gate 2 package |
 | 3. Simulator credibility | Implement F0/F1/F2 dynamics, mass depletion, events, crew constraints, numerical verification, GMAT comparison, and held-out validation | Accepted 2026-07-12 with RTC3 explicitly outside the validation claim | 67 evaluable checks passed, 0 failed; all 10 repaired GMAT endpoints passed unchanged limits; RTC3 was not tested with eligible evidence |
 | 4. Phase 1 freeze | Execute bounded literature synthesis; freeze manifest-only identities, grouped splits, features, models, controls, tuning, seeds, and analysis without research outcomes | Accepted with D002 on 2026-07-12 | 65,000 identities committed, final payloads absent, 23 evidence records frozen; post-acceptance refresh has 4,218 unique discovery rows and 926 open full-text screens without changing the freeze |
-| 5. Development and algorithm trigger | Generate and validate unlocked payloads, run only preregistered development analysis, and test whether the residual-QML trigger passes | In progress: the D006 campaign completed; decide D007 before regenerating the report, then decide the technical Gate 5 outcome separately | Pre-D003 F0 excluded; the bounded benchmark passed; all 671 tuning and 200 seed tasks completed with zero task failures and zero calibration/final reads; Q01 advanced while Q02/Q03 stopped under the frozen retention rule; the preserved report remains `UNAVAILABLE` pending explicit D007 acceptance; Gate 6 remains unauthorized |
+| 5. Development and algorithm trigger | Generate and validate unlocked payloads, run only preregistered development analysis, and test whether the residual-QML trigger passes | In progress: D007 was accepted for reporting-only regeneration; validate the regenerated report, then decide the technical Gate 5 outcome separately | Pre-D003 F0 excluded; the bounded benchmark passed; all 671 tuning and 200 seed tasks completed with zero task failures and zero calibration/final reads; Q01 advanced while Q02/Q03 stopped under the frozen retention rule; the preserved report remains `UNAVAILABLE` until D007 regeneration validates cleanly; Gate 6 remains unauthorized |
 | 6. Mission experiment | Freeze safety filter and mission scenarios; run paired Monte Carlo with common random numbers and sequential precision stopping | Approve the final mission experiment and interpretation boundary | Scenario card, safety-filter tests, paired results |
 | 7. Claims and release | Draft results and discussion, perform robustness and negative-result analysis, audit reproducibility, prepare paper, archive, and GitHub release | Accept or reject each main claim and public release | Manuscript, result tables, model/simulation cards, tagged archive |
 

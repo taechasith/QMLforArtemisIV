@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.3
-Status: Gates 1-4 accepted; D006 campaign complete; D007 reporting candidate pending human acceptance
+Version: 0.6.4
+Status: Gates 1-4 accepted; D006 campaign complete; D007 reporting correction accepted; official reporting-only regeneration authorized
 Prepared: 2026-07-10  
 Updated: 2026-07-13
-Recommended next decision: Accept, reject, or revise D007 before regenerating the post-fit Gate 5 report; the later Gate 5 trigger decision remains separate
+Recommended next decision: Regenerate and validate the official Gate 5 report under accepted D007, then accept, reject, or revise the technical Gate 5 outcome separately
 
 ## 1. Proposed title
 
@@ -762,15 +762,17 @@ because the implemented selection/reporting contract incorrectly describes
 those registered early stops as terminal failures and requires diagnostics
 from later stages that were never authorized.
 
-Deviation D007 was opened after outcomes became visible. It proposes a
-reporting-only, fail-closed recognition of the exact source-bound
+Deviation D007 was opened after outcomes became visible and accepted by the
+human research lead on 2026-07-13 from candidate commit
+`7a726c8917a85f24313208eb18c33e1ccb5f703e`. It authorizes a reporting-only,
+fail-closed recognition of the exact source-bound
 terminal-nonadvancement case. Every task, fold, digest, eligibility value, and
 ranking must remain unchanged; later rungs or seed results are explicitly not
-imputed. If D007 is accepted, Q02/Q03 trainability is reported from their 150
+imputed. Under D007, Q02/Q03 trainability is reported from their 150
 completed tuning folds per family, Q01 retains its four-rung/20-seed evidence,
-and the unchanged trigger is evaluated only over eligible finalists. No report
-or figure regeneration is authorized until explicit acceptance, which both
-entry points enforce before writing. Regenerated evidence must keep the D006
+and the unchanged trigger is evaluated only over eligible finalists. This
+acceptance authorizes only report and figure regeneration, which both entry
+points verify before writing. Regenerated evidence must keep the D006
 campaign source distinct from the accepted D007 candidate, clean reporting
 commit, and reporter/generator hashes. The accepted Git snapshot byte-anchors
 both the reporting implementation and every immutable D006 campaign evidence

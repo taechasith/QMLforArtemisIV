@@ -15,6 +15,7 @@ from openqfuel.gate5_reporting import (
     REPORTING_PACKAGE_ARTIFACTS,
     _assert_d007_candidate_snapshot,
     _scientific_elimination_evidence,
+    assert_gate5_report_regeneration_authorized,
     evaluate_claim_boundary_diagnostics,
     evaluate_gate5_trigger,
     validate_campaign_evidence,
@@ -462,14 +463,17 @@ def test_real_terminal_nonadvancement_is_complete_negative_evidence(
 def test_gate5_report_publication_requires_explicit_d007_acceptance(
     tmp_path: Path,
 ) -> None:
-    experiment_dir = tmp_path / "experiments"
-    reporting_dir = tmp_path / "reporting"
+    config_path = tmp_path / "configs" / "phase1_benchmark.yaml"
+    config_path.parent.mkdir(parents=True)
+    config_path.write_text(
+        "gate5_runner_freeze:\n"
+        "  post_fit_reporting_refinement: d007_candidate_pending_human_acceptance\n"
+        "  report_regeneration_authorized: false\n",
+        encoding="utf-8",
+    )
 
     with pytest.raises(RuntimeError, match="explicit D007 acceptance"):
-        write_gate5_report(ROOT, experiment_dir, reporting_dir)
-
-    assert not experiment_dir.exists()
-    assert not reporting_dir.exists()
+        assert_gate5_report_regeneration_authorized(tmp_path)
 
 
 def test_unpublished_gate5_report_cannot_target_official_outputs() -> None:
@@ -488,7 +492,7 @@ def test_accepted_candidate_snapshot_anchors_code_and_raw_evidence(
     for relative in (*D007_IMPLEMENTATION_PATHS, *D006_IMMUTABLE_EVIDENCE_PATHS):
         path = tmp_path / relative
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(f"frozen:{relative}\n", encoding="utf-8")
+        path.write_bytes(f"frozen:{relative}\n".encode())
     subprocess.check_call(["git", "init", "-q"], cwd=tmp_path)
     subprocess.check_call(
         ["git", "config", "user.email", "gate5-test@example.invalid"], cwd=tmp_path

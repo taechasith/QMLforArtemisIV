@@ -1,0 +1,12 @@
+# D007 publication compares these working-tree bytes with the accepted Git blobs.
+src/openqfuel/gate5_reporting.py text eol=lf
+scripts/report_gate5_results.py text eol=lf
+scripts/make_gate5_result_figures.py text eol=lf
+experiments/gate5_campaign_audit.json text eol=lf
+experiments/phase1_rung_rankings.csv text eol=lf
+experiments/phase1_seed_fold_metrics.csv text eol=lf
+experiments/phase1_seed_regime_metrics.csv text eol=lf
+experiments/phase1_seed_results.csv text eol=lf
+experiments/phase1_tuning_fold_metrics.csv text eol=lf
+experiments/phase1_tuning_regime_metrics.csv text eol=lf
+experiments/phase1_tuning_results.csv text eol=lf

@@ -753,8 +753,8 @@ decision after development-only evidence is published.
 ### Deviation D007 - Post-fit terminal-nonadvancement reporting conformance
 
 Date opened: 2026-07-13
-Status: **Candidate; explicit human acceptance required before report regeneration**
-Authority requested: Human research lead
+Status: **Accepted for reporting-only regeneration on 2026-07-13**
+Authority: Human research lead
 
 Original rule:
 
@@ -799,12 +799,16 @@ post-outcome human acceptance is required.
 
 Human decision:
 
-Pending. D006 acceptance does not imply D007 acceptance.
+Accepted on 2026-07-13 against candidate commit
+`7a726c8917a85f24313208eb18c33e1ccb5f703e`. This post-outcome acceptance is
+limited to the reporting semantics above. It does not accept the resulting
+technical Gate 5 outcome and does not authorize refitting, reranking,
+calibration/final-test access, Gate 6, or new algorithm work.
 
-Consequence if accepted:
+Consequence:
 
-Regenerate only the report, diagnostic summary, model registry, reporting
-CSVs, and RFIG-021 through RFIG-023 from unchanged D006 evidence. The resulting
-technical outcome will still require a separate human Gate 5
+Regeneration is authorized only for the report, diagnostic summary, model
+registry, reporting CSVs, and RFIG-021 through RFIG-023 from unchanged D006
+evidence. The resulting technical outcome still requires a separate human Gate 5
 accept/reject/revise decision. Calibration, final tests, Gate 6, and new
 algorithm work remain unauthorized.
