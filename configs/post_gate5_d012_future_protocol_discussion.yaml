@@ -1,0 +1,86 @@
+schema_version: "0.1.0"
+decision_id: "D012"
+protocol_id: "P001"
+status: "opened_discussion_only"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+acceptance_basis: "human research lead instructed the project to open a future protocol discussion from the D011-R1 negative results while keeping Gate 6 unauthorized"
+
+authority:
+  discussion_authorized: true
+  experiment_authorized: false
+  refit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate5_reinterpretation_authorized: false
+  gate6_authorized: false
+  next_required_decision: "D013 would be required before any new implementation, compute preflight, development run, calibration/final-test access, hardware/GPU execution, or Gate 6 work"
+
+evidence_inputs:
+  d011_r1_result_commit: "77398003dd4fb2c494cf85425512c45f42d6538b"
+  d011_r1_provenance_commit: "b66a60e2dd930c807826b0e34df1a0c63fbd139f"
+  campaign_summary: "data/processed/reporting/post_gate5_p001/campaign_summary.json"
+  exploratory_decision: "data/processed/reporting/post_gate5_p001/exploratory_decision.json"
+  future_discussion_register: "data/processed/reporting/post_gate5_future_research_discussion.csv"
+  figure_evidence: [RFIG-026, RFIG-027, RFIG-028, RFIG-029, RFIG-031]
+
+locked_findings:
+  gate5_result: "technical_FAIL_accepted"
+  d011_r1_scope: "development_only_exploratory"
+  q01b:
+    status: "valid_exploratory_negative"
+    selected_projection_id: "PX-03"
+    mean_pooled_oof_nrmse: 0.6612067570884528
+    c06_mean_pooled_oof_nrmse: 0.006832811015144496
+    mean_relative_nrmse_gap_vs_c06: 95.76936119306231
+    qualified_dequantization_regimes: 0
+    discussion_record: "P001-FR004"
+  fqk:
+    status: "valid_exploratory_negative"
+    selected_projection_id: "PX-03"
+    mean_auroc: 0.7435706337524658
+    mean_pooled_oof_brier: 0.15610274255475928
+    mean_recall_at_0_5: 0.10885965928844592
+    strongest_comparator_id: "C02-T02"
+    strongest_comparator_mean_auroc: 0.9133640486826338
+    strongest_comparator_mean_brier: 0.1062453551031565
+    strongest_comparator_mean_recall_at_0_5: 0.32330513385096765
+    discussion_record: "P001-FR005"
+
+discussion_questions:
+  - "Which D011 failure modes are likely representation limits rather than optimization or compute limits?"
+  - "What future QML variant could be prospectively specified without reusing D011 outcomes for tuning?"
+  - "Which stronger classical controls must accompany any future QML attempt?"
+  - "What minimum development-only evidence would be required before asking for calibration, final-test, hardware, or Gate 6 authority?"
+
+future_protocol_candidates:
+  - id: "D012-A"
+    title: "Task-informed local-observable projected kernel"
+    source_negative: "P001-FR004"
+    rationale: "Q01b had poor cost-regression NRMSE and zero qualifying regimes, suggesting the one-RDM Pauli projection did not encode the cost target usefully."
+    prospective_change: "Define richer local observable projections or task-informed encodings before any new outcome is visible."
+    required_controls: [A02, random_feature_rbf, compressed_mlp, physics_residual_control, C06]
+    near_term_priority: "highest_if_future_QML_is_pursued"
+    authorization_status: "discussion_only"
+  - id: "D012-B"
+    title: "Class-sensitive feasibility quantum kernel"
+    source_negative: "P001-FR005"
+    rationale: "FQK underperformed C02-T02 on AUROC, Brier, and recall; the frozen 0.5 threshold produced high false-negative rate."
+    prospective_change: "Specify class-sensitive kernel training and a separately frozen safety threshold selection rule."
+    required_controls: [C02_T02, calibrated_logistic, class_weighted_tree_ensemble, A02, C06]
+    near_term_priority: "secondary_if_future_QML_is_pursued"
+    authorization_status: "discussion_only"
+  - id: "D012-C"
+    title: "Classical-first residual and safety-filter hardening"
+    source_negative: "P001-FR004_and_P001-FR005"
+    rationale: "Both QML tracks were weaker than classical controls, so publication impact may be higher if the next protocol first hardens classical residual and safety-filter baselines."
+    prospective_change: "Improve physics-residual controls and safety-filter calibration before proposing another QML branch."
+    required_controls: [C06, C02_T02, physics_residual_control, conformal_or_quantile_safety_filter]
+    near_term_priority: "recommended_before_any_new_QML_experiment"
+    authorization_status: "discussion_only"
+
+claim_boundary: "D012 is a future-protocol discussion opened from negative development-only evidence. It does not authorize new experiments, refits, reranking, calibration/final-test access, hardware/GPU execution, Gate 5 reinterpretation, quantum-advantage claims, or Gate 6."

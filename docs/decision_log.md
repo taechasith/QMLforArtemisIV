@@ -1338,3 +1338,37 @@ Result:
 - P001-FR004 and P001-FR005 record future-only improvements. These suggestions
   require a new protocol and do not alter, rescue, or extend the active P001
   experiment.
+
+### D012 opened - future protocol discussion from D011-R1 negatives
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Opened; discussion-only**
+Authority: Human research lead instructed the project to open a future protocol discussion while keeping Gate 6 unauthorized
+
+Decision:
+
+- Open D012 only as interpretation and future-protocol discussion from the
+  completed D011-R1 negative results.
+- Do not authorize implementation, new experiments, refits, reranking, retries,
+  calibration/final-test reads, hardware/GPU execution, Gate 5 reinterpretation,
+  quantum-advantage claims, or Gate 6.
+- Preserve D011-R1 as valid development-only exploratory negative evidence.
+- Reserve D013 as the next required prospective decision before any successor
+  protocol can be implemented or run.
+
+Discussion candidates:
+
+- D012-A: task-informed local-observable projected kernel, motivated by Q01b
+  NRMSE failure and zero qualified dequantization regimes.
+- D012-B: class-sensitive feasibility quantum kernel, motivated by FQK
+  AUROC/Brier/recall underperformance and high false-negative rate.
+- D012-C: classical-first residual and safety-filter hardening, recommended
+  before any new QML experiment because both QML tracks were weaker than strong
+  classical controls.
+
+Reporting:
+
+RFIG-026 through RFIG-028 remain the D011-R1 reached evidence. RFIG-029 remains
+the future-research firewall figure. No new figure is required for D012 unless
+a later D013 protocol is prospectively prepared.

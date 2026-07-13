@@ -192,3 +192,8 @@ seeds, but it was a valid exploratory negative: mean AUROC/Brier/recall were
 0.9134/0.1062/0.3233. P001-FR004 and P001-FR005 record future-only
 improvements; those suggestions require a new protocol and cannot alter, retry,
 or extend P001.
+
+D012 was then opened as discussion-only future-protocol interpretation. It
+records candidate directions for a possible D013 protocol but does not
+authorize implementation, a new experiment, refit, rerank, calibration or
+final-test access, hardware/GPU execution, Gate 5 reinterpretation, or Gate 6.

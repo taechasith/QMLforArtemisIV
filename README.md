@@ -220,6 +220,13 @@ qualifying dequantization regime, and FQK selected PX-03 but averaged AUROC
 0.9134, 0.1062, and 0.3233. RFIG-026 through RFIG-028 record the reached
 development evidence; RFIG-029 records the future-only discussion boundary.
 
+D012 is now open as discussion-only future-protocol interpretation. It may
+compare possible D013 directions, but it does not authorize implementation,
+refit, rerank, calibration/final-test access, hardware/GPU execution, Gate 5
+reinterpretation, or Gate 6. The current recommendation is classical-first
+residual and safety-filter hardening before any further QML experiment, unless
+the paper explicitly needs a new prospectively frozen QML branch.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
