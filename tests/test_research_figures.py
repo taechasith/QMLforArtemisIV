@@ -58,6 +58,7 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     expected_ids.add("RFIG-029")
     expected_ids.add("RFIG-030")
     expected_ids.add("RFIG-031")
+    expected_ids.update({"RFIG-026", "RFIG-027", "RFIG-028"})
     assert expected_ids <= figure_ids
     assert {"RFIG-010", "RFIG-013"}.isdisjoint(figure_ids)
     assert {row["evidence_status"] for row in rows} >= {
@@ -70,9 +71,12 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
         "pre_fit_runner_freeze",
         "post_gate5_exploratory_protocol",
         "pre_execution_implementation_freeze_accepted",
-        "technical_failure_preflight_stop",
-        "synthetic_compute_admission_pass",
-    }
+            "governed_failure_or_exploratory_negative",
+            "synthetic_compute_admission_pass",
+            "development_only_exploratory_model_evidence",
+            "development_only_kernel_diagnostics",
+            "development_only_feasibility_evidence",
+        }
     for row in rows:
         assert "final_test" not in row["source_data"]
         for kind in ("png", "svg"):
@@ -81,15 +85,14 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
             assert path.stat().st_size == int(row[f"{kind}_bytes"])
             assert sha256_file(path) == row[f"{kind}_sha256"]
     rfig029 = next(row for row in rows if row["figure_id"] == "RFIG-029")
-    d011_c1_failure = json.loads(
+    summary = json.loads(
         (
-            ROOT
-            / "data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json"
+            ROOT / "data/processed/reporting/post_gate5_p001/campaign_summary.json"
         ).read_text(encoding="utf-8")
     )
-    assert rfig029["reporting_source_commit"] == d011_c1_failure["reporting_commit"]
-    assert "post_gate5_d011_fold_shape_preflight.json" in rfig029["source_data"]
-    assert "post_gate5_d011_c1_fold_shape_preflight.json" in rfig029["source_data"]
+    assert rfig029["reporting_source_commit"] == summary["source_commit"]
+    assert "post_gate5_future_research_discussion.csv" in rfig029["source_data"]
+    assert "post_gate5_p001/exploratory_decision.json" in rfig029["source_data"]
     assert rfig029["figure_generator_sha256"] == sha256_file(
         ROOT / rfig029["generator"]
     )
@@ -97,9 +100,7 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     assert rfig031["source_data"] == (
         "data/processed/reporting/post_gate5_d011_c2_fold_shape_preflight.json"
     )
-    assert rfig031["reporting_source_commit"] == (
-        "06381d1ac28af1122a971a51d08f25ab3b40335a"
-    )
+    assert rfig031["reporting_source_commit"] == summary["source_commit"]
     rfig030 = next(row for row in rows if row["figure_id"] == "RFIG-030")
     assert rfig030["reporting_source_commit"] == (
         "882bfd58d1154194b011dfc6fcef974cfe96ead3"

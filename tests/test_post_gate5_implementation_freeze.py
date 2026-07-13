@@ -131,8 +131,13 @@ def test_failure_discussion_register_records_d009_and_remains_firewalled() -> No
         "P001-FR001",
         "P001-FR002",
         "P001-FR003",
+        "P001-FR004",
+        "P001-FR005",
     }
-    assert {row["terminal_status"] for row in rows} == {"technical_failure"}
+    assert {row["terminal_status"] for row in rows} == {
+        "technical_failure",
+        "scientific_negative",
+    }
     assert {row["new_protocol_required"] for row in rows} == {"true"}
     assert {row["active_pipeline_change_authorized"] for row in rows} == {"false"}
     assert {row["post_outcome_retry_authorized"] for row in rows} == {"false"}
