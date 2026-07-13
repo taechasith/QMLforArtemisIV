@@ -19,7 +19,7 @@ def test_post_gate5_exploratory_protocol_scope_is_narrow() -> None:
         (ROOT / "configs/phase1_benchmark.yaml").read_text(encoding="utf-8")
     )
     protocol = config["post_gate5_exploratory_protocol"]
-    assert protocol["status"] == "d011_accepted_pending_largest_fold_preflight"
+    assert protocol["status"] == "d011_terminal_prelaunch_technical_stop"
     assert (
         protocol["implementation_freeze_decision"] == "accepted_by_human_research_lead"
     )
@@ -29,18 +29,22 @@ def test_post_gate5_exploratory_protocol_scope_is_narrow() -> None:
         protocol["implementation_status"] == "implemented_synthetic_validation_passed"
     )
     assert protocol["synthetic_validation_completed_date"] == "2026-07-13"
-    assert protocol["research_data_fitting_authorized"] is True
+    assert protocol["research_data_fitting_authorized"] is False
     assert (
-        "largest-fold synthetic preflight"
+        "Not satisfied"
         in protocol["research_data_fitting_condition"]
     )
     assert protocol["research_data_execution_decision"] == (
-        "D011 accepted conditionally by the human research lead on 2026-07-13"
+        "D011 conditional authority ended in a terminal pre-launch technical STOP on 2026-07-13"
     )
     assert protocol["development_execution_decision"] == "D011"
     assert protocol["development_execution_status"] == (
-        "pending_largest_fold_synthetic_preflight"
+        "terminal_prelaunch_technical_stop"
     )
+    assert protocol["largest_fold_preflight_figure_status"] == "absent_not_reached"
+    assert protocol["development_payload_rows_read"] == 0
+    assert protocol["development_campaign_started"] is False
+    assert protocol["d011_retry_authorized"] is False
     assert protocol["compute_preflight_decision"] == "D010"
     assert protocol["compute_preflight_status"] == "PASS_synthetic_compute_admission"
     assert protocol["compute_preflight_execution_authorized"] is False

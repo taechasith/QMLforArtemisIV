@@ -199,4 +199,15 @@ reporting:
   claim_boundary: "development-only exploratory model evidence; no calibration, final-test, mission, hardware, quantum-advantage, Gate 5 revision, or Gate 6 claim"
 
 outcome:
-  current_status: "pending_fold_shape_preflight"
+  current_status: "terminal_prelaunch_technical_stop"
+  completed_date: "2026-07-13"
+  source_commit: "30faf170b1a9a76da5f9e60ac3f4239600ee6d54"
+  result: "data/processed/reporting/post_gate5_d011_fold_shape_preflight.json"
+  failed_stage: "launcher_import_before_authority_verification"
+  authority_verification_reached: false
+  synthetic_workload_started: false
+  resource_admission_status: "NOT_REACHED"
+  development_payload_opened: false
+  future_research_record: "P001-FR002"
+  retry_authorized: false
+  effect: "D011 is terminally stopped; a separate prospective launcher-correction decision is required before any new preflight attempt"

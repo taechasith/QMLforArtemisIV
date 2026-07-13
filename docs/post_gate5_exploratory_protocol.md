@@ -1,8 +1,8 @@
 # Post-Gate-5 Exploratory Protocol
 
-Version: 0.2.7
+Version: 0.2.8
 Opened: 2026-07-13
-Status: Opened prospectively; D011 accepted conditionally; largest-fold synthetic preflight pending; no development outcome read
+Status: Opened prospectively; D011 ended in a pre-launch technical STOP; no development outcome read
 
 ## Purpose
 
@@ -186,11 +186,21 @@ not change predictions, rows, or model definitions. Q01b/FQK authorization,
 ranking, stopping, controls, 20 selected seeds, and sensitivity conditions
 remain frozen. Finite-shot and fixed-noise outputs are report-only.
 
-RFIG-031 records corrected admission. RFIG-026 through RFIG-028 report reached
-outcomes, while RFIG-029 remains the cumulative failure and future-research
+RFIG-031 was reserved for reached corrected admission. RFIG-026 through
+RFIG-028 report reached outcomes, while RFIG-029 remains the cumulative failure and future-research
 firewall. Calibration/final-test access, hardware/GPU work, Gate 5 revision,
-and Gate 6 remain prohibited. The current D011 status is pending preflight;
-there is no development-model result to interpret.
+and Gate 6 remain prohibited.
+
+The formal D011 direct-file command failed during import because Python could
+not resolve the repository `scripts` namespace. Authority verification,
+source-hash verification, synthetic work, resource admission, and development
+execution were not reached. D011 is terminally stopped without retry, with
+zero development/calibration/final-test reads and no hardware/GPU or Gate 6
+job. P001-FR002 records only a possible package-safe launcher and clean-source
+import smoke test for a later prospective protocol. RFIG-029 records the stop;
+RFIG-031 and RFIG-026 through RFIG-028 remain absent rather than displaying
+missing evidence as zero. There is no D011 model or resource result to
+interpret.
 
 ## Machine-readable source
 

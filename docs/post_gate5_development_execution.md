@@ -1,11 +1,11 @@
 # D011 Development-Only Exploratory Execution Freeze
 
-Version: 0.1.0
+Version: 0.1.1
 Decision: D011
 Protocol: P001
 Prepared: 2026-07-13
 Accepted: 2026-07-13
-Status: Accepted conditionally; fold-shaped synthetic admission must pass before development outcomes are read
+Status: Terminal pre-launch technical STOP; conditional development authority never activated
 
 ## Decision
 
@@ -39,7 +39,8 @@ limits are 250 CPU-core-hours, five wall-days, 20 GiB new artifacts, 24 GiB
 peak process memory, at least 20 GiB free disk, and zero GPU-hours.
 
 No development payload may be opened unless this corrected preflight passes.
-RFIG-031 records the accounting correction and admission result.
+RFIG-031 was reserved to record the accounting correction and admission result
+if admission was reached.
 
 ## Frozen execution schedule
 
@@ -124,3 +125,25 @@ row. Its suggestion requires a new protocol and cannot alter or retry P001.
 RFIG-026 through RFIG-028 report reached results; RFIG-029 remains the failure
 and future-research firewall figure. Missing or unauthorized values are never
 shown as zero.
+
+## Execution outcome
+
+The formal source-bound command was:
+
+```text
+uv run --frozen python scripts/run_post_gate5_fold_shape_preflight.py
+```
+
+It exited with code 1 during module import because the direct-file execution
+could not resolve `scripts.run_post_gate5_compute_preflight`. The exception
+occurred before `verify_d011_authority`, source-hash verification, synthetic
+array construction, resource measurement, or admission evaluation. No
+development, calibration, or final-test row was read; no hardware/GPU or Gate
+6 job ran.
+
+D011 is closed as a pre-launch technical `STOP`. This result says nothing
+about Q01b/FQK performance or whether the corrected fold-shaped workload fits
+the laptop. P001-FR002 records a package-safe launcher/import and import-only
+smoke test for a later prospective decision. It cannot modify or retry D011.
+RFIG-029 is updated; RFIG-031 and RFIG-026 through RFIG-028 remain absent
+because their required evidence was not reached.

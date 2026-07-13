@@ -80,12 +80,18 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
             assert path.stat().st_size == int(row[f"{kind}_bytes"])
             assert sha256_file(path) == row[f"{kind}_sha256"]
     rfig029 = next(row for row in rows if row["figure_id"] == "RFIG-029")
-    assert rfig029["reporting_source_commit"] == (
-        "89cb841d8b48fd6a7c0c60a6d95a651dbcfaf5ab"
+    d011_failure = json.loads(
+        (
+            ROOT
+            / "data/processed/reporting/post_gate5_d011_fold_shape_preflight.json"
+        ).read_text(encoding="utf-8")
     )
+    assert rfig029["reporting_source_commit"] == d011_failure["reporting_commit"]
+    assert "post_gate5_d011_fold_shape_preflight.json" in rfig029["source_data"]
     assert rfig029["figure_generator_sha256"] == sha256_file(
         ROOT / rfig029["generator"]
     )
+    assert "RFIG-031" not in figure_ids
     rfig030 = next(row for row in rows if row["figure_id"] == "RFIG-030")
     assert rfig030["reporting_source_commit"] == (
         "882bfd58d1154194b011dfc6fcef974cfe96ead3"

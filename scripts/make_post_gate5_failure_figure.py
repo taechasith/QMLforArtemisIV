@@ -15,7 +15,13 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FAILURE = ROOT / "data/processed/reporting/post_gate5_compute_preflight.json"
+D009_FAILURE = ROOT / "data/processed/reporting/post_gate5_compute_preflight.json"
+D010_RESULT = (
+    ROOT / "data/processed/reporting/post_gate5_compute_preflight_rerun.json"
+)
+D011_FAILURE = (
+    ROOT / "data/processed/reporting/post_gate5_d011_fold_shape_preflight.json"
+)
 DISCUSSION = (
     ROOT / "data/processed/reporting/post_gate5_future_research_discussion.csv"
 )
@@ -39,7 +45,7 @@ plt.rcParams.update(
         "font.size": 9,
         "figure.facecolor": "white",
         "savefig.facecolor": "white",
-        "svg.hashsalt": "qmlforartemisiv-rfig029-d009-stop-v1",
+        "svg.hashsalt": "qmlforartemisiv-rfig029-cumulative-stop-v2",
     }
 )
 
@@ -145,28 +151,57 @@ def _save(fig: plt.Figure, path: Path) -> tuple[Path, Path]:
     return png, svg
 
 
-def draw(path: Path) -> tuple[Path, Path]:
-    failure = json.loads(FAILURE.read_text(encoding="utf-8"))
+def _validated_sources() -> tuple[dict, dict, dict, dict[str, dict[str, str]]]:
+    d009 = json.loads(D009_FAILURE.read_text(encoding="utf-8"))
+    d010 = json.loads(D010_RESULT.read_text(encoding="utf-8"))
+    d011 = json.loads(D011_FAILURE.read_text(encoding="utf-8"))
     rows = _read_csv(DISCUSSION)
-    if failure["status"] != "STOP" or failure["terminal_status"] != "technical_failure":
-        raise ValueError("RFIG-029 requires a governed terminal failure or stop")
-    matching = [row for row in rows if row["record_id"] == "P001-FR001"]
-    if len(matching) != 1:
-        raise ValueError("RFIG-029 requires exactly one P001-FR001 record")
-    future = matching[0]
+    if d009.get("status") != "STOP" or d009.get("terminal_status") != "technical_failure":
+        raise ValueError("RFIG-029 requires the governed D009 technical STOP")
+    if d010.get("decision_id") != "D010" or d010.get("status") != "PASS":
+        raise ValueError("RFIG-029 requires the closed D010 correction PASS")
+    progress = d011.get("workload_progress", {})
+    integrity = d011.get("integrity", {})
     if (
-        future["new_protocol_required"].lower() != "true"
-        or future["active_pipeline_change_authorized"].lower() != "false"
-        or future["post_outcome_retry_authorized"].lower() != "false"
+        d011.get("status") != "STOP"
+        or d011.get("terminal_status") != "technical_failure"
+        or d011.get("failed_stage") != "launcher_import_before_authority_verification"
+        or progress.get("authority_verification_reached") is not False
+        or progress.get("synthetic_workload_started") is not False
+        or progress.get("resource_admission_evaluated") is not False
+        or any(
+            int(integrity.get(key, -1)) != 0
+            for key in (
+                "development_rows_read",
+                "calibration_rows_read",
+                "final_test_rows_read",
+                "hardware_jobs_submitted",
+                "gate6_runs",
+            )
+        )
     ):
-        raise ValueError("RFIG-029 future-research firewall is invalid")
+        raise ValueError("RFIG-029 requires the governed pre-launch D011 STOP")
+    futures = {row["record_id"]: row for row in rows}
+    if set(futures) != {"P001-FR001", "P001-FR002"}:
+        raise ValueError("RFIG-029 requires the two governed future records")
+    for future in futures.values():
+        if (
+            future["new_protocol_required"].lower() != "true"
+            or future["active_pipeline_change_authorized"].lower() != "false"
+            or future["post_outcome_retry_authorized"].lower() != "false"
+        ):
+            raise ValueError("RFIG-029 future-research firewall is invalid")
+    return d009, d010, d011, futures
 
-    fig, ax = plt.subplots(figsize=(11.8, 6.2), constrained_layout=True)
+
+def draw(path: Path) -> tuple[Path, Path]:
+    _, _, _, futures = _validated_sources()
+    fig, ax = plt.subplots(figsize=(13.2, 7.2), constrained_layout=True)
     ax.set_axis_off()
     ax.text(
         0.0,
         0.985,
-        "D009 synthetic compute preflight technical stop",
+        "Post-Gate-5 technical stops and future-research firewall",
         transform=ax.transAxes,
         ha="left",
         va="top",
@@ -177,7 +212,7 @@ def draw(path: Path) -> tuple[Path, Path]:
     ax.text(
         0.0,
         0.940,
-        "Clean source commit 7aade60; zero research-row reads; no head, matched-control, or resource-admission result",
+        "Execution disposition through D011; missing D011 admission and model evidence is not plotted as zero",
         transform=ax.transAxes,
         ha="left",
         va="top",
@@ -185,58 +220,30 @@ def draw(path: Path) -> tuple[Path, Path]:
         color=GRAY,
     )
 
-    _card(
-        ax,
-        0.02,
-        0.65,
-        0.25,
-        0.19,
-        "Authorized synthetic workload",
-        "q=8; two layers\n1,024 train + 256 validation\nShared Q01b/FQK projection\nAll matched controls required",
-        facecolor=PALE_BLUE,
-        edgecolor=BLUE,
-    )
-    _card(
-        ax,
-        0.38,
-        0.65,
-        0.23,
-        0.19,
-        "Reached",
-        "Synthetic arrays created\nShared training projection complete\nNo persisted statevector\nNo locked data read",
-        facecolor=PALE_GRAY,
-        edgecolor=GRAY,
-    )
-    _card(
-        ax,
-        0.72,
-        0.65,
-        0.26,
-        0.19,
-        "STOP: telemetry failure",
-        "Windows peak-working-set probe\nreturned no valid counters\nHeads and controls not reached\nAdmission unavailable",
-        facecolor=PALE_ORANGE,
-        edgecolor=ORANGE,
-    )
-    _arrow(ax, (0.27, 0.745), (0.38, 0.745))
-    _arrow(ax, (0.61, 0.745), (0.72, 0.745), color=ORANGE)
+    ax.text(0.02, 0.875, "Governed execution disposition", transform=ax.transAxes,
+            fontsize=10, fontweight="bold", color=INK)
+    _card(ax, 0.02, 0.64, 0.54, 0.18, "D009  TECHNICAL STOP",
+          "Reached the first shared 1,024-row synthetic projection.\n"
+          "Windows process-memory telemetry then failed.\n"
+          "Projected heads, controls, and admission were not reached.",
+          facecolor=PALE_ORANGE, edgecolor=ORANGE)
+    _card(ax, 0.02, 0.39, 0.54, 0.18, "D010  CORRECTION PASS (CLOSED)",
+          "Typed telemetry passed independent validation.\n"
+          "The unchanged D009-shaped synthetic workload passed admission.\n"
+          "This historical PASS did not authorize research-data fitting.",
+          facecolor=PALE_BLUE, edgecolor=BLUE)
+    _card(ax, 0.02, 0.14, 0.54, 0.18, "D011  PRE-LAUNCH TECHNICAL STOP",
+          "Direct-file execution could not import the scripts namespace.\n"
+          "Authority/source verification and synthetic work were not reached.\n"
+          "Admission unavailable; development/calibration/final reads = 0.",
+          facecolor=PALE_ORANGE, edgecolor=ORANGE)
+    _arrow(ax, (0.29, 0.64), (0.29, 0.575), color=GRAY)
+    _arrow(ax, (0.29, 0.39), (0.29, 0.325), color=ORANGE)
 
-    ax.add_patch(
-        patches.FancyBboxPatch(
-            (0.02, 0.15),
-            0.96,
-            0.34,
-            boxstyle="round,pad=0.012,rounding_size=0.014",
-            transform=ax.transAxes,
-            facecolor=PALE_MAGENTA,
-            edgecolor=MAGENTA,
-            linewidth=1.15,
-        )
-    )
     ax.text(
-        0.04,
-        0.455,
-        "Failure and future-research firewall",
+        0.62,
+        0.875,
+        "Future-only records",
         transform=ax.transAxes,
         ha="left",
         va="top",
@@ -244,47 +251,28 @@ def draw(path: Path) -> tuple[Path, Path]:
         fontweight="bold",
         color=INK,
     )
-    _card(
-        ax,
-        0.05,
-        0.215,
-        0.25,
-        0.17,
-        "Observed evidence",
-        "Memory telemetry interface failed.\nNo resource ceiling was tested.\nNo QML outcome exists.",
-        facecolor="white",
-        edgecolor=MAGENTA,
-    )
-    _card(
-        ax,
-        0.375,
-        0.215,
-        0.25,
-        0.17,
-        "Future-only improvement",
-        "Validate a typed Windows adapter\nagainst an independent OS reading\nbefore a later preflight.",
-        facecolor="white",
-        edgecolor=MAGENTA,
-        linestyle="--",
-    )
-    _card(
-        ax,
-        0.70,
-        0.215,
-        0.25,
-        0.17,
-        "Still locked",
-        "No active correction or retry\nNew prospective decision required\nNo research fit or Gate 6",
-        facecolor="white",
-        edgecolor=INK,
-    )
-    _arrow(ax, (0.30, 0.30), (0.375, 0.30), color=MAGENTA)
-    _arrow(ax, (0.625, 0.30), (0.70, 0.30), color=MAGENTA)
+    _card(ax, 0.62, 0.59, 0.36, 0.23, "P001-FR001  telemetry adapter",
+          "Later protocol: validate typed Windows memory telemetry\n"
+          "against an independent OS reading.\n\n"
+          "New protocol: YES   Active change: NO   Retry: NO",
+          facecolor=PALE_MAGENTA, edgecolor=MAGENTA, linestyle="--")
+    _card(ax, 0.62, 0.31, 0.36, 0.23, "P001-FR002  launcher/import",
+          "Later decision: freeze package-safe invocation/import and\n"
+          "a clean-source import-only smoke test. Scientific design unchanged.\n\n"
+          "New protocol: YES   Active change: NO   Retry: NO",
+          facecolor=PALE_MAGENTA, edgecolor=MAGENTA, linestyle="--")
+    _card(ax, 0.62, 0.10, 0.36, 0.15, "Boundary retained",
+          "No D011 correction or retry. No research fit, Gate 5 revision,\n"
+          "hardware claim, or Gate 6. New human decision required.",
+          facecolor=PALE_GRAY, edgecolor=INK)
+
+    if futures["P001-FR002"]["step_id"] != "D011_fold_shape_preflight_launcher":
+        raise ValueError("P001-FR002 is not bound to the D011 launcher stop")
 
     ax.text(
         0.0,
         0.055,
-        "Source: post_gate5_compute_preflight.json and P001-FR001. Missing admission values are not plotted as zero.",
+        "Sources: D009 STOP, D010 PASS, D011 STOP, and P001-FR001/FR002. D011 RFIG-031 is absent because admission was not reached.",
         transform=ax.transAxes,
         ha="left",
         va="bottom",
@@ -295,7 +283,7 @@ def draw(path: Path) -> tuple[Path, Path]:
 
 
 def register(png: Path, svg: Path) -> None:
-    failure = json.loads(FAILURE.read_text(encoding="utf-8"))
+    _, _, failure, _ = _validated_sources()
     existing = _read_csv(REGISTRY)
     fields = list(existing[0])
     by_id = {row["figure_id"]: row for row in existing}
@@ -303,13 +291,15 @@ def register(png: Path, svg: Path) -> None:
     row.update(
         {
             "figure_id": "RFIG-029",
-            "title": "D009 synthetic compute preflight technical stop",
+            "title": "Post-Gate-5 technical stops and future-research firewall",
             "phase": "Post-Gate-5 exploratory protocol",
             "paper_section": "Methods: compute limitations and failed execution",
             "evidence_status": "technical_failure_preflight_stop",
             "source_data": ";".join(
                 [
-                    str(FAILURE.relative_to(ROOT)).replace("\\", "/"),
+                    str(D009_FAILURE.relative_to(ROOT)).replace("\\", "/"),
+                    str(D010_RESULT.relative_to(ROOT)).replace("\\", "/"),
+                    str(D011_FAILURE.relative_to(ROOT)).replace("\\", "/"),
                     str(DISCUSSION.relative_to(ROOT)).replace("\\", "/"),
                 ]
             ),
@@ -321,14 +311,15 @@ def register(png: Path, svg: Path) -> None:
             "svg_sha256": _sha256(svg),
             "svg_bytes": str(svg.stat().st_size),
             "caption": (
-                "The single D009 preflight attempt stopped after its first shared "
-                "synthetic projection because Windows process-memory telemetry failed; "
-                "no projected head, matched control, or resource admission was reached."
+                "D009 stopped at process-memory telemetry, D010 passed its closed "
+                "telemetry correction and unchanged synthetic benchmark, and D011 "
+                "stopped at launcher import before authority verification or admission."
             ),
             "claim_boundary": (
-                "Technical preflight-stop evidence only. P001-FR001 is future research "
-                "and cannot alter or retry P001; no QML performance, resource-limit, "
-                "research-data, Gate 5, hardware, or Gate 6 claim."
+                "Technical execution-disposition evidence only. P001-FR001 and "
+                "P001-FR002 require new prospective authority and cannot alter or retry "
+                "their stopped attempts; no D011 resource, QML, research-data, Gate 5, "
+                "hardware, or Gate 6 claim."
             ),
             "reporting_source_commit": str(failure["reporting_commit"]),
             "figure_generator_sha256": _sha256(Path(__file__)),
@@ -346,9 +337,9 @@ def register(png: Path, svg: Path) -> None:
 
 def main() -> None:
     OUTPUT.mkdir(parents=True, exist_ok=True)
-    png, svg = draw(OUTPUT / "post_gate5_d009_technical_stop")
+    png, svg = draw(OUTPUT / "post_gate5_cumulative_technical_stops")
     register(png, svg)
-    print("Generated RFIG-029 D009 technical-stop figure")
+    print("Generated cumulative RFIG-029 technical-stop figure through D011")
 
 
 if __name__ == "__main__":

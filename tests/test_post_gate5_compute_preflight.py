@@ -193,8 +193,7 @@ def test_d009_stop_is_source_bound_and_has_no_research_or_admission_result() -> 
     )
     with discussion_path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
-    assert len(rows) == 1
-    row = rows[0]
+    row = next(row for row in rows if row["record_id"] == "P001-FR001")
     assert row["record_id"] == "P001-FR001"
     assert row["terminal_status"] == "technical_failure"
     assert row["new_protocol_required"] == "true"

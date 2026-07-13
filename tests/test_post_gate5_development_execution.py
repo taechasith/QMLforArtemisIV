@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import json
 from pathlib import Path
 
@@ -86,7 +87,9 @@ def _spec() -> ProjectionSpec:
 def test_d011_contract_keeps_locked_scope_and_fold_shape() -> None:
     config = _config()
     assert config["decision_id"] == "D011"
-    assert config["outcome"]["current_status"] == "pending_fold_shape_preflight"
+    assert config["outcome"]["current_status"] == (
+        "terminal_prelaunch_technical_stop"
+    )
     assert config["locks"]["allowed_data_scope"] == "development"
     assert config["locks"]["calibration_rows_read"] == 0
     assert config["locks"]["final_test_rows_read"] == 0
@@ -105,6 +108,43 @@ def test_d011_contract_keeps_locked_scope_and_fold_shape() -> None:
     for path in config["source_binding"].values():
         if isinstance(path, str):
             assert (ROOT / path).is_file()
+
+
+def test_d011_prelaunch_stop_has_no_scientific_or_admission_result() -> None:
+    evidence = json.loads(
+        (
+            ROOT
+            / "data/processed/reporting/post_gate5_d011_fold_shape_preflight.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert evidence["status"] == "STOP"
+    assert evidence["terminal_status"] == "technical_failure"
+    assert evidence["failed_stage"] == (
+        "launcher_import_before_authority_verification"
+    )
+    assert evidence["admission_status"] == "NOT_REACHED"
+    assert evidence["retry_authorized"] is False
+    assert evidence["workload_progress"] == {
+        "launcher_imports_completed": False,
+        "authority_verification_reached": False,
+        "source_hash_verification_reached": False,
+        "synthetic_arrays_created": False,
+        "synthetic_workload_started": False,
+        "resource_admission_evaluated": False,
+        "development_campaign_started": False,
+    }
+    assert all(value == 0 for value in evidence["integrity"].values())
+
+    with (
+        ROOT / "data/processed/reporting/post_gate5_future_research_discussion.csv"
+    ).open(newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    future = next(row for row in rows if row["record_id"] == "P001-FR002")
+    assert future["step_id"] == "D011_fold_shape_preflight_launcher"
+    assert future["new_protocol_required"] == "true"
+    assert future["active_pipeline_change_authorized"] == "false"
+    assert future["post_outcome_retry_authorized"] == "false"
+    assert future["reporting_commit"] == evidence["reporting_commit"]
 
 
 def test_fold_shape_projection_and_admission_are_conservative() -> None:

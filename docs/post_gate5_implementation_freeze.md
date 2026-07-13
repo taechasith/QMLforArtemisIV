@@ -1,11 +1,11 @@
 # Post-Gate-5 Exploratory Implementation Freeze
 
-Version: 0.1.5
+Version: 0.1.6
 Decision: D008
 Protocol: P001
 Prepared: 2026-07-13
 Accepted: 2026-07-13
-Status: Accepted by human research lead as the implementation basis; D011 conditionally authorizes execution only after a largest-fold synthetic PASS
+Status: Accepted by human research lead as the implementation basis; D011 conditional authority ended in a pre-launch technical STOP
 
 ## Decision
 
@@ -200,3 +200,9 @@ D011 contract in `docs/post_gate5_development_execution.md` requires a
 largest-fold synthetic PASS before any development read, then permits exactly
 one resumable P001 campaign. It changes no D008 scientific method. Hardware,
 calibration/final-test data, Gate 5 reinterpretation, and Gate 6 remain locked.
+
+The D011 command later stopped during direct-file launcher import, before its
+authority check or synthetic workload. The conditional campaign authority
+never activated and no research payload was opened. P001-FR002 keeps a
+package-safe launcher/import check in future research only; D008 methods and
+the stopped D011 attempt remain unchanged.

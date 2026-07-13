@@ -163,10 +163,20 @@ against the unchanged laptop ceilings and gives no credit for cache reuse,
 smaller folds, or smaller qubit maps. A preflight `STOP` is terminal and opens
 no research data. A `PASS` authorizes exactly one resumable P001
 development-only campaign with frozen Q01b/FQK advancement, 20 selected seeds,
-report-only shot/noise sensitivities, and RFIG-026 through RFIG-031 reporting.
+report-only shot/noise sensitivities, and planned RFIG-026 through RFIG-031 reporting.
 Calibration, final-test, hardware/GPU, Gate 5 reinterpretation, and Gate 6
-remain prohibited. The current status is pending the D011 largest-fold
-synthetic preflight; no P001 development outcome has been read.
+remain prohibited.
+
+The formal D011 command then stopped during Python import with
+`ModuleNotFoundError: No module named 'scripts'`. The failure occurred before
+the D011 authority and source-hash checks, before synthetic arrays or resource
+admission, and before any development payload was opened. D011 is therefore a
+terminal pre-launch technical `STOP`, not a QML or laptop-capacity result.
+P001-FR002 records a package-safe launcher and import-only smoke test as
+future-only work; it cannot correct or retry D011. RFIG-029 now records both
+post-Gate-5 technical stops. RFIG-031 and RFIG-026 through RFIG-028 remain
+absent because their governed evidence stages were not reached. A separate
+prospective human decision is required before any corrected preflight attempt.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
@@ -231,7 +241,7 @@ through a dated deviation record.
 - data/processed/reporting/post_gate5_exploratory_trial_manifest.csv: 30 balanced paired projected-kernel configurations frozen but not run.
 - data/processed/reporting/post_gate5_future_research_discussion.csv: schema-locked register for evidence-based future-work suggestions after failures or stops.
 - data/processed/reporting/post_gate5_compute_preflight_rerun.json: source-bound D010 synthetic compute-admission PASS evidence.
-- data/processed/reporting/post_gate5_d011_fold_shape_preflight.json: reserved source-bound D011 largest-fold synthetic admission result.
+- data/processed/reporting/post_gate5_d011_fold_shape_preflight.json: source-bound D011 pre-launch technical-STOP evidence; corrected fold-shape admission was not reached.
 - data/processed/reporting/post_gate5_p001/: reserved compact D011 campaign, comparison, sensitivity, and decision evidence.
 - data/processed/reporting/gate5_cv_fold_manifest.csv: label-agnostic D005 whole-group CV assignment for RFIG-020.
 - data/processed/reporting/gate5_preflight_audit.json: development-only Gate 5 data and lock audit.

@@ -1125,7 +1125,8 @@ Gate 5, or open Gate 6.
 
 Date prepared: 2026-07-13
 Date accepted: 2026-07-13
-Status: **Accepted conditionally; largest-fold synthetic preflight pending**
+Initial status: **Accepted conditionally; largest-fold synthetic preflight required**
+Current status: **Terminal pre-launch technical STOP; conditional campaign authority never activated**
 Authority: Human research lead instruction to proceed with the next step
 
 Finding before outcome access:
@@ -1167,3 +1168,20 @@ reached outcomes, and RFIG-029 will be updated for any governed ineligibility,
 terminal nonadvancement, technical failure, resource STOP, or scientific
 negative. Every future-research suggestion requires a new protocol and cannot
 alter or rescue P001. No D011 outcome was read when this decision was frozen.
+
+Execution outcome:
+
+The formal command
+`uv run --frozen python scripts/run_post_gate5_fold_shape_preflight.py`
+exited with code 1 during import. Direct-file Python execution could not
+resolve `scripts.run_post_gate5_compute_preflight`, so the failure preceded
+`verify_d011_authority`, source-hash verification, synthetic arrays, resource
+admission, and all research-data access. Development, calibration, and
+final-test reads are zero; no hardware/GPU or Gate 6 job ran.
+
+D011 is closed as a terminal pre-launch technical `STOP`. It provides no QML
+performance or laptop-capacity result. P001-FR002 records a package-safe
+launcher/import and clean-source import-only smoke test for a later prospective
+decision, without changing or retrying D011. RFIG-029 is updated cumulatively;
+RFIG-031 and RFIG-026 through RFIG-028 remain absent because their governed
+evidence was not reached.

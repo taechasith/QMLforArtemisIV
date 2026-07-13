@@ -1,7 +1,7 @@
 schema_version: "0.4.2"
 status: "gate_4_accepted_development_generation_authorized"
 gate5_status: "accepted_technical_trigger_fail_new_algorithm_rejected"
-post_gate5_exploratory_status: "d011_accepted_pending_largest_fold_preflight"
+post_gate5_exploratory_status: "d011_terminal_prelaunch_technical_stop"
 prepared_date: "2026-07-12"
 scenario_generation_config: "configs/scenario_generation.yaml"
 
@@ -343,7 +343,7 @@ gate5_literature_hardening:
   claim_boundary_rule: "apparent QML gains must be checked against bandwidth, entanglement removal, random-feature approximation, parameter count, sample selection, and no-reference-feasible concentration before any trigger recommendation"
 
 post_gate5_exploratory_protocol:
-  status: "d011_accepted_pending_largest_fold_preflight"
+  status: "d011_terminal_prelaunch_technical_stop"
   opened_date: "2026-07-13"
   protocol_doc: "docs/post_gate5_exploratory_protocol.md"
   source_matrix: "data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv"
@@ -358,15 +358,20 @@ post_gate5_exploratory_protocol:
   implementation_status: "implemented_synthetic_validation_passed"
   synthetic_validation_completed_date: "2026-07-13"
   synthetic_validation_scope: "synthetic arrays only; no development, calibration, final-test, hardware, or Gate 6 execution"
-  research_data_fitting_authorized: true
-  research_data_fitting_condition: "D011 largest-fold synthetic preflight must pass every unchanged laptop ceiling before the first development payload is opened"
-  research_data_execution_decision: "D011 accepted conditionally by the human research lead on 2026-07-13"
+  research_data_fitting_authorized: false
+  research_data_fitting_condition: "Not satisfied: D011 stopped before authority verification, so no largest-fold synthetic admission result exists"
+  research_data_execution_decision: "D011 conditional authority ended in a terminal pre-launch technical STOP on 2026-07-13"
   development_execution_decision: "D011"
   development_execution_config: "configs/post_gate5_development_execution.yaml"
   development_execution_doc: "docs/post_gate5_development_execution.md"
-  development_execution_status: "pending_largest_fold_synthetic_preflight"
+  development_execution_status: "terminal_prelaunch_technical_stop"
   largest_fold_preflight_result: "data/processed/reporting/post_gate5_d011_fold_shape_preflight.json"
   largest_fold_preflight_figure: "RFIG-031"
+  largest_fold_preflight_figure_status: "absent_not_reached"
+  development_payload_rows_read: 0
+  development_campaign_started: false
+  d011_future_research_record: "P001-FR002"
+  d011_retry_authorized: false
   compute_preflight_decision: "D010"
   compute_preflight_status: "PASS_synthetic_compute_admission"
   compute_preflight_config: "configs/post_gate5_preflight.yaml"
@@ -411,7 +416,7 @@ post_gate5_exploratory_protocol:
     - "qaoa"
     - "new_variational_qml_architectures"
     - "larger_qubit_or_hardware_runs"
-  execution_rule: "D009 remains an immutable technical STOP and D010 remains a valid closed PASS under its frozen 256-validation-row benchmark. D011 must pass a 9750-validation-row largest-fold synthetic preflight before one source-bound development-only campaign may run. A STOP opens no development payload; a PASS authorizes only P001 development execution and reporting."
+  execution_rule: "D009 remains an immutable technical STOP and D010 remains a valid closed PASS under its frozen 256-validation-row benchmark. D011 stopped at launcher import before authority verification, opened no development payload, and is closed to retry. Any package-safe launcher correction and new preflight attempt require a separate prospective human decision; P001 development execution remains unauthorized."
   failure_discussion_rule: "Every failure, resource stop, undefined metric, terminal nonadvancement, or scientific negative must be committed with an evidence-based future-research improvement that cannot alter or retry the active pipeline."
 
 gate5_runner_freeze:

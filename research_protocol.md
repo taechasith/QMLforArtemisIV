@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.15
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011 accepted conditionally; largest-fold synthetic preflight pending; Gate 6 unauthorized
+Version: 0.6.16
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011 ended in a pre-launch technical STOP; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-13
-Recommended next action: Run the source-bound D011 largest-fold synthetic preflight; open development payloads only after a PASS; Gate 6 remains unauthorized
+Recommended next action: Decide whether to open a new prospective launcher-only correction for one corrected D011-shape preflight; do not retry D011 or open development payloads; Gate 6 remains unauthorized
 
 ## 1. Proposed title
 
@@ -903,11 +903,27 @@ track.
 D011 checkpoints and compact reports bind the clean source commit and preserve
 zero calibration/final-test reads. Governed undefined folds are recorded as
 ineligible; technical integrity failures stop the campaign and cannot be
-silently retried. RFIG-031 reports corrected resource admission, RFIG-026
-through RFIG-028 report reached development evidence, and RFIG-029 remains the
-cumulative failure/future-research firewall. D011 cannot revise Gate 5,
+silently retried. RFIG-031 was reserved for reached corrected resource
+admission, RFIG-026 through RFIG-028 for reached development evidence, and
+RFIG-029 remains the cumulative failure/future-research firewall. D011 cannot revise Gate 5,
 authorize hardware/GPU work, make a quantum-advantage claim, or open Gate 6.
-The current outcome is pending preflight; no D011 development result exists.
+
+The first formal D011 command stopped before governed execution. Direct-file
+Python execution could not resolve the repository `scripts` namespace while
+importing `scripts.run_post_gate5_compute_preflight`, raising
+`ModuleNotFoundError` before `verify_d011_authority` ran. Consequently, source
+hash verification, synthetic array creation, corrected fold-shape admission,
+and the development campaign were not reached. Development, calibration, and
+final-test reads are all zero; no hardware/GPU or Gate 6 job ran.
+
+This is a terminal pre-launch technical `STOP`, not resource-admission or QML
+evidence. P001-FR002 proposes a package-safe invocation/import plus a
+clean-source import-only smoke test for a later prospective decision, while
+freezing all D011 scientific rows, methods, folds, controls, thresholds,
+seeds, and ceilings. It does not authorize a correction or retry. RFIG-029 is
+updated cumulatively; RFIG-031 and RFIG-026 through RFIG-028 remain absent
+because their evidence was not reached. A new prospective human decision is
+required before any corrected preflight attempt.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

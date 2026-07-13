@@ -1,0 +1,47 @@
+{
+  "schema_version": "0.1.0",
+  "decision_id": "D011",
+  "protocol_id": "P001",
+  "status": "STOP",
+  "terminal_status": "technical_failure",
+  "evidence_scope": "pre-launch command and import integrity only",
+  "source_commit": "30faf170b1a9a76da5f9e60ac3f4239600ee6d54",
+  "branch": "main",
+  "attempt": 1,
+  "reporting_commit": "pending_result_commit",
+  "command": "uv run --frozen python scripts/run_post_gate5_fold_shape_preflight.py",
+  "exit_code": 1,
+  "failed_stage": "launcher_import_before_authority_verification",
+  "exception_type": "ModuleNotFoundError",
+  "exception_message": "No module named 'scripts'",
+  "failure_location": "scripts/run_post_gate5_fold_shape_preflight.py import of scripts.run_post_gate5_compute_preflight",
+  "pre_invocation_state": {
+    "working_tree_clean": true,
+    "source_and_origin_equal": true
+  },
+  "workload_progress": {
+    "launcher_imports_completed": false,
+    "authority_verification_reached": false,
+    "source_hash_verification_reached": false,
+    "synthetic_arrays_created": false,
+    "synthetic_workload_started": false,
+    "resource_admission_evaluated": false,
+    "development_campaign_started": false
+  },
+  "admission_status": "NOT_REACHED",
+  "integrity": {
+    "development_rows_read": 0,
+    "calibration_rows_read": 0,
+    "final_test_rows_read": 0,
+    "hardware_jobs_submitted": 0,
+    "gpu_jobs_submitted": 0,
+    "gate6_runs": 0,
+    "statevectors_persisted": 0,
+    "kernel_matrices_persisted": 0
+  },
+  "bounded_interpretation": "D011 stopped while Python was importing the direct-file launcher, before the governed authority check or any synthetic workload. This is a launcher/import-path failure, not Q01b or FQK evidence and not a laptop resource-admission result.",
+  "future_research_record": "P001-FR002",
+  "retry_authorized": false,
+  "claim_boundary": "Pre-launch technical-stop evidence only; no synthetic admission, model-performance, development-data, calibration, final-test, hardware, Gate 5 reinterpretation, or Gate 6 claim.",
+  "next_step": "Keep D011 terminally stopped. A package-safe launcher correction and any new preflight attempt require a separate prospective human decision."
+}
