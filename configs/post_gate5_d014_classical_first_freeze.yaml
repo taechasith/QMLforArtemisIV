@@ -102,3 +102,11 @@ reporting:
   failure_policy: "Every technical stop, resource stop, terminal nonadvancement, or negative result must append an invention-readiness label and future-only discussion record."
 
 claim_boundary: "D014-C is a freeze proposal only. It authorizes no implementation, synthetic validation, experiment, development-data fitting, calibration/final-test access, hardware/GPU execution, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, or Gate 6."
+
+selected_successor:
+  decision_id: "D015-C"
+  status: "accepted_implementation_and_synthetic_validation_only"
+  implementation_config: "configs/post_gate5_d015_implementation_synthetic_validation.yaml"
+  implementation_doc: "docs/post_gate5_d015_implementation_synthetic_validation.md"
+  freeze_figure: "RFIG-032"
+  gate6_authorized: false

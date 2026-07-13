@@ -1,0 +1,54 @@
+schema_version: "0.1.0"
+decision_id: "D015-C"
+protocol_id: "P001"
+status: "accepted_implementation_and_synthetic_validation_only"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+acceptance_basis: "assistant-selected next step after D014-C; authorize implementation and synthetic validation only for the frozen CRES/CSAFE protocol"
+
+authority:
+  implementation_authorized: true
+  synthetic_validation_authorized: true
+  development_data_fitting_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  refit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate5_reinterpretation_authorized: false
+  qml_invention_claim_authorized: false
+  gate6_authorized: false
+  next_required_decision: "D016 must authorize clean-source synthetic compute admission before any development-data fitting."
+
+authorized_scope:
+  implementation:
+    - "CRES residual-cost hardening scaffolds and metrics"
+    - "CSAFE safety-filter hardening scaffolds and metrics"
+    - "synthetic-only validators for preprocessing, metrics, thresholds, and invention-readiness labels"
+  synthetic_validation:
+    allowed_rows: "synthetic arrays only"
+    required_checks:
+      - "fold-local preprocessing does not fit on validation rows"
+      - "residual target equations are explicit"
+      - "safety threshold selection is isolated from held-out folds"
+      - "invention-readiness labels are emitted for pass/fail synthetic cases"
+      - "locked splits and Gate 6 guards fail closed"
+
+prohibited_scope:
+  - "development-data fitting"
+  - "calibration or final-test reads"
+  - "new QML architecture implementation"
+  - "hardware/GPU execution"
+  - "Gate 5 reinterpretation"
+  - "Gate 6 work"
+  - "model-performance claim"
+
+source_requirements:
+  freeze_config: "configs/post_gate5_d014_classical_first_freeze.yaml"
+  freeze_figure: "RFIG-032"
+  implementation_doc: "docs/post_gate5_d015_implementation_synthetic_validation.md"
+  figure_generator: "scripts/make_post_gate5_d014_freeze_figure.py"
+
+claim_boundary: "D015-C authorizes implementation and synthetic validation only. It does not authorize development-data fitting, calibration/final-test access, hardware/GPU execution, Gate 5 reinterpretation, QML invention claims, quantum-advantage claims, or Gate 6."

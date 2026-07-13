@@ -1433,3 +1433,27 @@ fitting, refit, rerank, retry, calibration/final-test read, hardware/GPU
 execution, Gate 5 reinterpretation, QML invention claim, quantum-advantage
 claim, or Gate 6. D015 is required before implementation or synthetic
 validation.
+
+### D015-C accepted - implementation and synthetic validation only
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Accepted; implementation and synthetic validation only**
+Authority: Assistant-selected next step after D014-C
+
+Decision:
+
+- Authorize implementation scaffolding for CRES residual-cost hardening and
+  CSAFE safety-filter hardening.
+- Authorize synthetic-array validation of preprocessing isolation, residual
+  equations, safety-threshold isolation, invention-readiness labels, and
+  fail-closed split/Gate 6 guards.
+- Generate RFIG-032 from the D014-C freeze proposal.
+
+Boundary:
+
+D015-C authorizes no development-data fitting, calibration/final-test read,
+refit, rerank, retry, hardware/GPU execution, Gate 5 reinterpretation, QML
+invention claim, quantum-advantage claim, or Gate 6. D016 is required before
+clean-source synthetic compute admission, and a later decision is required
+before any development-data fitting.

@@ -244,6 +244,11 @@ implementation, synthetic validation, development-data fitting,
 calibration/final-test access, hardware/GPU execution, Gate 5 reinterpretation,
 or Gate 6.
 
+D015-C is accepted for implementation and synthetic validation only. It may
+create CRES/CSAFE scaffolds and synthetic-array tests, but it still cannot fit
+development data, read calibration/final-test data, run hardware/GPU work,
+reinterpret Gate 5, claim a new QML invention, or open Gate 6.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -304,6 +309,7 @@ through a dated deviation record.
 - docs/post_gate5_d012_future_protocol_discussion.md: discussion-only interpretation of the D011-R1 negative results.
 - docs/post_gate5_d013_classical_first_protocol.md: planning-only classical-first residual and safety-filter path before QML invention.
 - docs/post_gate5_d014_classical_first_freeze.md: freeze proposal for CRES/CSAFE tracks before any implementation.
+- docs/post_gate5_d015_implementation_synthetic_validation.md: implementation and synthetic-validation authorization without data fitting.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
 - docs/post_gate5_compute_preflight.md: D009 synthetic-only clean-source compute-admission contract and pass/stop rules.

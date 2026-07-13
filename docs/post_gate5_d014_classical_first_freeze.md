@@ -109,6 +109,5 @@ zero.
 
 ## Current Recommendation
 
-Proceed next with D015 only if implementation and synthetic validation are
-needed. D015 should still avoid development-data fitting. Gate 6 remains
-unauthorized.
+D015-C has been accepted for implementation and synthetic validation only. It
+still avoids development-data fitting. Gate 6 remains unauthorized.

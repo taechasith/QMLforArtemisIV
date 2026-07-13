@@ -1,0 +1,43 @@
+# D015-C Implementation And Synthetic Validation Authorization
+
+Version: 0.1.0
+Decision: D015-C
+Protocol: P001
+Prepared: 2026-07-14
+Accepted: 2026-07-14
+Status: Implementation and synthetic validation authorized; no data fitting
+
+## Decision
+
+D015-C authorizes implementation scaffolding and synthetic-only validation for
+the D014-C classical-first freeze. The allowed work is limited to CRES
+residual-cost hardening and CSAFE safety-filter hardening infrastructure.
+
+This does not authorize development-data fitting. A later clean-source compute
+admission decision, currently reserved as D016, is required before any
+development payload is opened.
+
+## Allowed Work
+
+- Implement CRES residual-cost metrics and scaffolds.
+- Implement CSAFE safety-filter metrics and scaffolds.
+- Add synthetic-only tests for fold-local preprocessing, residual equations,
+  safety-threshold isolation, invention-readiness labels, and fail-closed
+  locked-split guards.
+- Generate RFIG-032 from D014-C freeze evidence.
+
+## Prohibited Work
+
+- Development-data fitting.
+- Calibration or final-test reads.
+- New QML architecture implementation.
+- Hardware or GPU execution.
+- Gate 5 reinterpretation.
+- QML invention or quantum-advantage claims.
+- Gate 6.
+
+## Required Next Boundary
+
+D016 must prospectively authorize a clean-source synthetic compute-admission
+preflight before any D014-C development-data fitting. Missing or unauthorized
+RFIG-033 through RFIG-035 remain absent.
