@@ -61,7 +61,7 @@ def test_d017_docs_are_registered() -> None:
         "research_protocol.md": "D017-C",
         "docs/decision_log.md": "D017-C",
         "README.md": "D017-C",
-        "docs/research_execution_map.md": "D017-C accepted",
+        "docs/research_execution_map.md": "D017-C complete",
     }
     for relative, phrase in required.items():
         text = (ROOT / relative).read_text(encoding="utf-8")
@@ -84,3 +84,5 @@ def test_d017_result_if_present_is_development_only() -> None:
     assert payload["final_test_rows_read"] == 0
     assert payload["hardware_jobs_submitted"] == 0
     assert payload["gate6_runs"] == 0
+    assert payload["cres_best_mean_nrmse_model"] == "ridge_residual"
+    assert payload["csafe_best_mean_brier_model"] == "class_weighted_tree"

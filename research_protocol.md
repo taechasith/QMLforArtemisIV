@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.26
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C development-only campaign accepted; Gate 6 unauthorized
+Version: 0.6.27
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C development-only campaign complete; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: Run exactly one D017-C development-only CRES/CSAFE campaign from clean source; no calibration/final-test access, refit, rerank, retry, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized
+Recommended next action: Prepare D018 interpretation of the D017-C development-only CRES/CSAFE result; no calibration/final-test access, refit, rerank, retry, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized
 
 ## 1. Proposed title
 
@@ -1081,6 +1081,15 @@ runner incorrectly tried to hash the generated output directory as a committed
 source blob. This was a source-binding bug, not model evidence. The correction
 excludes `source_binding.output_root` from committed source hashes and changes
 no scientific workload, split, model, seed, threshold, or claim boundary.
+
+The corrected D017-C campaign completed from clean source commit
+`419844a690d625502718e00b3e4dcafc6d99286c`. It read 39,000 development rows and
+zero calibration/final-test rows; hardware/GPU and Gate 6 counters remained
+zero. CRES selected `ridge_residual` as the best mean residual-NRMSE model
+(0.8265). CSAFE selected `class_weighted_tree` by mean Brier score (0.1311),
+but that same model had very low mean recall (0.0139). RFIG-034 and RFIG-035
+record the development-only evidence. D018 is required to interpret whether the
+CRES/CSAFE branch is useful, failed, or needs future-only redesign.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

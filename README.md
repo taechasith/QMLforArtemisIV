@@ -270,11 +270,14 @@ exact classical RBF control. D016-C1 corrected that omission and passed:
 zero GPU-hours. RFIG-036 records the correction. Development fitting still
 requires D017.
 
-D017-C is now accepted for exactly one development-only CRES/CSAFE
-classical-first campaign over the original grouped development split. It does
-not authorize calibration/final-test reads, refit, rerank, retry, hardware/GPU
-execution, Gate 5 reinterpretation, QML invention claims, quantum-advantage
-claims, mission-loop work, or Gate 6.
+D017-C completed exactly one development-only CRES/CSAFE classical-first
+campaign over the original grouped development split. It read 39,000
+development rows and zero calibration/final-test rows. CRES best mean residual
+NRMSE was `ridge_residual` at 0.8265. CSAFE best mean Brier was
+`class_weighted_tree` at 0.1311, but its mean recall was only 0.0139, so D018
+must interpret the safety result before any successor step. No hardware/GPU,
+mission-loop, Gate 5 reinterpretation, QML invention, quantum-advantage, or
+Gate 6 claim is authorized.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 

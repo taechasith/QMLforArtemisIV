@@ -1,14 +1,14 @@
 schema_version: "0.1.0"
 decision_id: "D017-C"
 protocol_id: "P001"
-status: "accepted_development_only_classical_first_campaign_pending"
+status: "completed_development_only_classical_first_campaign"
 prepared_date: "2026-07-14"
 accepted_date: "2026-07-14"
 acceptance_basis: "D016-C and D016-C1 both passed source-bound synthetic compute admission; assistant-selected next step under delegated post-Gate-5 execution authority"
 
 authority:
   scope: "one development-only CRES/CSAFE classical-first campaign over the original grouped development split"
-  campaign_execution_authorized: true
+  campaign_execution_authorized: false
   authorized_campaigns: 1
   development_data_fitting_authorized: true
   calibration_access_authorized: false
@@ -89,6 +89,21 @@ reporting:
   claim_boundary: "Development-only classical-first model evidence; no calibration, final-test, hardware/GPU, Gate 5 reinterpretation, QML invention, quantum advantage, mission, or Gate 6 claim."
 
 outcome:
-  current_status: "PENDING"
-  result: ""
-  figures: []
+  current_status: "complete"
+  completed_date: "2026-07-14"
+  source_commit: "419844a690d625502718e00b3e4dcafc6d99286c"
+  result: "data/processed/reporting/post_gate5_d017_classical_first/campaign_summary.json"
+  figures:
+    - "RFIG-034"
+    - "RFIG-035"
+  development_rows_read: 39000
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  hardware_jobs_submitted: 0
+  gate6_runs: 0
+  cres_best_mean_nrmse_model: "ridge_residual"
+  cres_best_mean_nrmse: 0.8264947126512747
+  csafe_best_mean_brier_model: "class_weighted_tree"
+  csafe_best_mean_brier: 0.13110998581436642
+  csafe_best_brier_mean_recall: 0.013889174500238285
+  interpretation_required: "D018 must interpret the development-only result before any successor claim or experiment."

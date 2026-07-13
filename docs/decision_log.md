@@ -1548,7 +1548,7 @@ Outcome:
 
 Date prepared: 2026-07-14
 Date accepted: 2026-07-14
-Status: **Accepted; one development-only campaign pending**
+Status: **Completed; development-only evidence requires D018 interpretation**
 Authority: Assistant-selected next step after D016-C and D016-C1 PASS
 
 Decision:
@@ -1565,6 +1565,20 @@ D017-C authorizes no calibration/final-test read, refit, rerank, retry,
 hardware/GPU execution, Gate 5 reinterpretation, QML invention claim,
 quantum-advantage claim, mission-loop work, or Gate 6. D018 must interpret any
 terminal D017-C result before another successor step.
+
+Outcome:
+
+- Completed from clean source commit
+  `419844a690d625502718e00b3e4dcafc6d99286c`.
+- Read 39,000 development rows and zero calibration/final-test rows.
+- Hardware jobs, GPU hours, and Gate 6 runs remained zero.
+- CRES best mean residual NRMSE: `ridge_residual`, 0.8265.
+- CSAFE best mean Brier: `class_weighted_tree`, 0.1311, but mean recall was
+  only 0.0139.
+- RFIG-034 records residual-cost results; RFIG-035 records safety-filter
+  results.
+- D018 must interpret the result before any claim, successor experiment,
+  calibration/final-test access, hardware/GPU work, mission-loop work, or Gate 6.
 
 Correction note:
 

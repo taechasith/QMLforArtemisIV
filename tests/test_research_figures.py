@@ -60,6 +60,8 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     expected_ids.add("RFIG-031")
     expected_ids.add("RFIG-032")
     expected_ids.add("RFIG-033")
+    expected_ids.add("RFIG-034")
+    expected_ids.add("RFIG-035")
     expected_ids.add("RFIG-036")
     expected_ids.update({"RFIG-026", "RFIG-027", "RFIG-028"})
     assert expected_ids <= figure_ids
@@ -81,6 +83,8 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
             "development_only_feasibility_evidence",
             "classical_first_freeze_proposal",
             "classical_first_synthetic_compute_admission",
+            "development_only_classical_first_residual_cost",
+            "development_only_classical_first_safety_filter",
             "a02_exact_rbf_synthetic_compute_admission",
         }
     for row in rows:
@@ -137,6 +141,26 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     )
     assert rfig033["figure_generator_sha256"] == sha256_file(
         ROOT / rfig033["generator"]
+    )
+    rfig034 = next(row for row in rows if row["figure_id"] == "RFIG-034")
+    assert rfig034["evidence_status"] == (
+        "development_only_classical_first_residual_cost"
+    )
+    assert rfig034["reporting_source_commit"] == (
+        "419844a690d625502718e00b3e4dcafc6d99286c"
+    )
+    assert rfig034["figure_generator_sha256"] == sha256_file(
+        ROOT / rfig034["generator"]
+    )
+    rfig035 = next(row for row in rows if row["figure_id"] == "RFIG-035")
+    assert rfig035["evidence_status"] == (
+        "development_only_classical_first_safety_filter"
+    )
+    assert rfig035["reporting_source_commit"] == (
+        "419844a690d625502718e00b3e4dcafc6d99286c"
+    )
+    assert rfig035["figure_generator_sha256"] == sha256_file(
+        ROOT / rfig035["generator"]
     )
     rfig036 = next(row for row in rows if row["figure_id"] == "RFIG-036")
     assert rfig036["source_data"] == (

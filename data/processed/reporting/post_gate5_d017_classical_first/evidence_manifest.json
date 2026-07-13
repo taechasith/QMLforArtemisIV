@@ -1,0 +1,23 @@
+{
+  "decision_id": "D017-C",
+  "files": {
+    "cres_fold_metrics.csv": {
+      "bytes": 53458,
+      "sha256": "1f83df6fc0881cb4d2b80cda038ab42377269e125c9919c2151f5da8736a580c"
+    },
+    "cres_summary.csv": {
+      "bytes": 2086,
+      "sha256": "7176bf80a002993205d51b43ffb6a99c8086d8bf0d7c49fb407cc8734962a24d"
+    },
+    "csafe_fold_metrics.csv": {
+      "bytes": 58787,
+      "sha256": "c558e874b5ff0a028cf5b6c3544844abd4aa1331c8d8f8387293130f87d7b5cb"
+    },
+    "csafe_summary.csv": {
+      "bytes": 1952,
+      "sha256": "80933bcf39370c9dabe8b712cfe6ad36a93cabbded084573e7a6e3453ddac500"
+    }
+  },
+  "schema_version": "0.1.0",
+  "source_commit": "419844a690d625502718e00b3e4dcafc6d99286c"
+}
