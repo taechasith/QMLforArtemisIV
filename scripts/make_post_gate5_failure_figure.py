@@ -295,6 +295,7 @@ def draw(path: Path) -> tuple[Path, Path]:
 
 
 def register(png: Path, svg: Path) -> None:
+    failure = json.loads(FAILURE.read_text(encoding="utf-8"))
     existing = _read_csv(REGISTRY)
     fields = list(existing[0])
     by_id = {row["figure_id"]: row for row in existing}
@@ -329,6 +330,8 @@ def register(png: Path, svg: Path) -> None:
                 "and cannot alter or retry P001; no QML performance, resource-limit, "
                 "research-data, Gate 5, hardware, or Gate 6 claim."
             ),
+            "reporting_source_commit": str(failure["reporting_commit"]),
+            "figure_generator_sha256": _sha256(Path(__file__)),
         }
     )
     by_id[row["figure_id"]] = row

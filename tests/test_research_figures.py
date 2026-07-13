@@ -77,6 +77,13 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
             assert path.is_file()
             assert path.stat().st_size == int(row[f"{kind}_bytes"])
             assert sha256_file(path) == row[f"{kind}_sha256"]
+    rfig029 = next(row for row in rows if row["figure_id"] == "RFIG-029")
+    assert rfig029["reporting_source_commit"] == (
+        "89cb841d8b48fd6a7c0c60a6d95a651dbcfaf5ab"
+    )
+    assert rfig029["figure_generator_sha256"] == sha256_file(
+        ROOT / rfig029["generator"]
+    )
 
 
 def test_full_f1_audit_is_valid_and_final_test_remains_unread() -> None:

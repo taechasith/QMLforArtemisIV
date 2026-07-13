@@ -8,6 +8,7 @@
   "source_commit": "7aade60d61897781076730676aafca000ca52ad0",
   "branch": "main",
   "attempt": 1,
+  "reporting_commit": "89cb841d8b48fd6a7c0c60a6d95a651dbcfaf5ab",
   "failed_step": "peak_working_set_probe_after_Q01b_FQK_shared_training_projection",
   "exception_type": "OSError",
   "exception_message": "Unable to read Windows process memory counters",

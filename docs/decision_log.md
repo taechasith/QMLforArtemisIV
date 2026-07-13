@@ -1054,6 +1054,8 @@ D009 execution outcome:
   prospective preflight. It authorizes no active correction or retry.
 - RFIG-029 records the failure/stop disposition. RFIG-030 remains absent
   because no resource-margin values exist.
+- Failure evidence and P001-FR001 are anchored to reporting commit
+  `89cb841d8b48fd6a7c0c60a6d95a651dbcfaf5ab`.
 
 Consequence after STOP:
 

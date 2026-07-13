@@ -165,6 +165,9 @@ def test_d009_stop_is_source_bound_and_has_no_research_or_admission_result() -> 
     assert evidence["source_commit"] == (
         "7aade60d61897781076730676aafca000ca52ad0"
     )
+    assert evidence["reporting_commit"] == (
+        "89cb841d8b48fd6a7c0c60a6d95a651dbcfaf5ab"
+    )
     progress = evidence["workload_progress"]
     assert progress["shared_training_projection_completed"] is True
     assert progress["projected_heads_completed"] is False
@@ -197,6 +200,7 @@ def test_d009_stop_is_source_bound_and_has_no_research_or_admission_result() -> 
     assert row["new_protocol_required"] == "true"
     assert row["active_pipeline_change_authorized"] == "false"
     assert row["post_outcome_retry_authorized"] == "false"
+    assert row["reporting_commit"] == evidence["reporting_commit"]
 
 
 def test_governance_records_d009_without_unlocking_research_fit() -> None:

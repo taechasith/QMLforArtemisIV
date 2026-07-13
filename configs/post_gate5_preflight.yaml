@@ -110,6 +110,7 @@ outcome:
   completed_date: "2026-07-13"
   attempt_count: 1
   failure_evidence: "data/processed/reporting/post_gate5_compute_preflight.json"
+  failure_reporting_commit: "89cb841d8b48fd6a7c0c60a6d95a651dbcfaf5ab"
   future_research_record: "P001-FR001"
   observed_failure: "Windows peak-working-set telemetry returned no valid process counters after the first shared synthetic projection"
   bounded_interpretation: "resource admission unavailable; no QML or matched-control result exists"
