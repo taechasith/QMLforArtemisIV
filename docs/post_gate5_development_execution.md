@@ -169,3 +169,8 @@ hash-consistency smoke test, and permits one unchanged corrected fold-shape
 preflight attempt with separate evidence. Development campaign execution
 remains locked unless a later human decision explicitly authorizes resumption
 after a D011-C2 PASS.
+
+The D011-C2 smoke tests and corrected fold-shape synthetic preflight passed
+from clean source commit `06381d1`. This establishes corrected synthetic compute
+admission only. Development campaign execution remains locked pending the next
+human decision.

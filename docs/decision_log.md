@@ -1245,6 +1245,7 @@ reached.
 Date prepared: 2026-07-14
 Date accepted: 2026-07-14
 Initial status: **Accepted; hash smoke test and one corrected preflight pending**
+Current status: **Completed with synthetic corrected fold-shape admission PASS; development campaign still requires separate human decision**
 Authority: Human research lead supported D011-C2 after review of the D011-C1 hash mismatch, docs, and evidence
 
 Finding before correction:
@@ -1280,3 +1281,17 @@ RFIG-031 records reached corrected admission. RFIG-029 is updated only if a
 governed D011-C2 stop occurs. RFIG-026 through RFIG-028 remain unauthorized
 until a later decision permits and the campaign actually reaches development
 evidence.
+
+Execution outcome:
+
+The hash-consistency smoke test and direct-file import smoke test both passed
+from clean source commit `06381d1`. The single unchanged D011-C2 preflight then
+passed all five unchanged laptop boundaries: 4.7259 of 250 CPU-core-hours,
+0.2002 of five wall-days, 2.9785 of 20 GiB new artifacts, 0.6339 of 24 GiB peak
+process memory, and 45.3606 GiB free disk after artifacts against the 20 GiB
+minimum. Development, calibration, and final-test reads were zero; hardware,
+GPU, and Gate 6 runs were zero.
+
+D011-C2 is closed to rerun. This PASS is corrected synthetic compute-admission
+evidence only. It does not authorize development execution by itself; the next
+human decision is whether to resume the single D011 development-only campaign.

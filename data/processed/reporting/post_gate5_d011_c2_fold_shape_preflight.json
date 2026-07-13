@@ -1,0 +1,277 @@
+{
+  "accounting_correction": {
+    "complete_task_validation_rows": 39000,
+    "d010_validation_rows": 256,
+    "d011_validation_rows": 9750,
+    "no_cache_or_smaller_shape_credit": true,
+    "validation_row_ratio": 38.0859375,
+    "worst_fold_bundle_units": 1220
+  },
+  "admission": {
+    "checks": {
+      "cpu_core_hours": {
+        "comparison": "less_than_or_equal",
+        "limit": 250.0,
+        "observed": 4.725911458333333,
+        "passed": true,
+        "utilization_fraction": 0.018903645833333333
+      },
+      "free_disk_after_artifacts_gib": {
+        "comparison": "greater_than_or_equal",
+        "limit": 20.0,
+        "observed": 45.36056137084961,
+        "passed": true,
+        "utilization_fraction": 0.4409116509050249
+      },
+      "new_artifacts_gib": {
+        "comparison": "less_than_or_equal",
+        "limit": 20.0,
+        "observed": 2.978515625,
+        "passed": true,
+        "utilization_fraction": 0.14892578125
+      },
+      "peak_working_set_gib": {
+        "comparison": "less_than_or_equal",
+        "limit": 24.0,
+        "observed": 0.6339454650878906,
+        "passed": true,
+        "utilization_fraction": 0.02641439437866211
+      },
+      "wall_clock_days": {
+        "comparison": "less_than_or_equal",
+        "limit": 5.0,
+        "observed": 0.2002281173901321,
+        "passed": true,
+        "utilization_fraction": 0.04004562347802642
+      }
+    },
+    "status": "PASS"
+  },
+  "attempt": 1,
+  "benchmark": {
+    "classical_rbf_diagnostics": {
+      "clipped_eigenvalues": 0,
+      "gamma": 0.060184605778217014,
+      "landmarks": 256,
+      "maximum_negative_eigenvalue": 0.0,
+      "minimum_eigenvalue_before_clip": 0.0005523368966249644
+    },
+    "compressed_feature_count": 8,
+    "cpu_seconds": 11.15625,
+    "data_reupload_layers": 2,
+    "entangle": true,
+    "feature_scale": 2.0,
+    "fold_id": "D011-SYNTHETIC-CV02",
+    "gamma_multiplier": 1.0,
+    "gpu_hours": 0.0,
+    "nystrom_landmarks": 256,
+    "primary_control_feature_count": 64,
+    "projected_kernel_diagnostics": {
+      "clipped_eigenvalues": 0,
+      "gamma": 2.3956503057559284,
+      "landmarks": 256,
+      "maximum_negative_eigenvalue": 0.0,
+      "minimum_eigenvalue_before_clip": 0.00017531526627989435
+    },
+    "projection_id": "D011-Q8-L2-LARGEST-FOLD",
+    "qubits": 8,
+    "regularization_alpha": 0.01,
+    "seed": 20260713,
+    "seed_index": 1,
+    "statevector_concurrency": 1,
+    "steps": [
+      {
+        "cpu_seconds": 0.109375,
+        "peak_working_set_gib": 0.14193344116210938,
+        "step": "Q01b_FQK_shared_training_projection",
+        "wall_seconds": 0.11349090002477169
+      },
+      {
+        "cpu_seconds": 1.25,
+        "peak_working_set_gib": 0.2776069641113281,
+        "step": "Q01b_FQK_largest_fold_validation_projection",
+        "wall_seconds": 1.2563731999835
+      },
+      {
+        "cpu_seconds": 0.109375,
+        "peak_working_set_gib": 0.2776069641113281,
+        "step": "Q01b_FQK_projected_kernel_geometry",
+        "wall_seconds": 0.10898600000655279
+      },
+      {
+        "cpu_seconds": 0.0,
+        "peak_working_set_gib": 0.2776069641113281,
+        "step": "Q01b_FQK_two_head_fit_and_inference",
+        "wall_seconds": 0.004893400007858872
+      },
+      {
+        "cpu_seconds": 0.109375,
+        "peak_working_set_gib": 0.2776069641113281,
+        "step": "A02_classical_RBF_geometry",
+        "wall_seconds": 0.10674809996271506
+      },
+      {
+        "cpu_seconds": 0.0,
+        "peak_working_set_gib": 0.2776069641113281,
+        "step": "A02_classical_RBF_two_head_fit_and_inference",
+        "wall_seconds": 0.0036763999960385263
+      },
+      {
+        "cpu_seconds": 0.921875,
+        "peak_working_set_gib": 0.2776069641113281,
+        "step": "C06-T17_cost",
+        "wall_seconds": 0.9227610000525601
+      },
+      {
+        "cpu_seconds": 0.015625,
+        "peak_working_set_gib": 0.2776069641113281,
+        "step": "A01-T04_cost",
+        "wall_seconds": 0.022445200011134148
+      },
+      {
+        "cpu_seconds": 0.09375,
+        "peak_working_set_gib": 0.2776069641113281,
+        "step": "C05-T17_compressed_cost",
+        "wall_seconds": 0.08721349999541417
+      },
+      {
+        "cpu_seconds": 1.375,
+        "peak_working_set_gib": 0.2776069641113281,
+        "step": "C01-T18_feasibility",
+        "wall_seconds": 1.4057775000110269
+      },
+      {
+        "cpu_seconds": 0.84375,
+        "peak_working_set_gib": 0.2776069641113281,
+        "step": "C02-T02_feasibility",
+        "wall_seconds": 0.8823341999668628
+      },
+      {
+        "cpu_seconds": 0.34375,
+        "peak_working_set_gib": 0.2776069641113281,
+        "step": "C03-T13_feasibility",
+        "wall_seconds": 0.33425590000115335
+      },
+      {
+        "cpu_seconds": 5.015625,
+        "peak_working_set_gib": 0.6339454650878906,
+        "step": "C04-T28_feasibility",
+        "wall_seconds": 5.101004199997988
+      },
+      {
+        "cpu_seconds": 0.078125,
+        "peak_working_set_gib": 0.6339454650878906,
+        "step": "C05-T12_feasibility",
+        "wall_seconds": 0.09542319999309257
+      },
+      {
+        "cpu_seconds": 0.75,
+        "peak_working_set_gib": 0.6339454650878906,
+        "step": "C06-T17_feasibility",
+        "wall_seconds": 0.7649855999625288
+      },
+      {
+        "cpu_seconds": 0.03125,
+        "peak_working_set_gib": 0.6339454650878906,
+        "step": "A01-T04_feasibility",
+        "wall_seconds": 0.025967800000216812
+      },
+      {
+        "cpu_seconds": 0.09375,
+        "peak_working_set_gib": 0.6339454650878906,
+        "step": "C05-T17_feasibility",
+        "wall_seconds": 0.09571299998788163
+      }
+    ],
+    "training_rows": 1024,
+    "validation_rows": 9750,
+    "wall_seconds": 11.34407170000486
+  },
+  "branch": "main",
+  "calibration_rows_read": 0,
+  "campaign_projection": {
+    "observed_free_disk_gib": 48.33907699584961,
+    "observed_peak_rss_gib": 0.6339454650878906,
+    "projected_cpu_core_hours": 4.725911458333333,
+    "projected_free_disk_after_artifacts_gib": 45.36056137084961,
+    "projected_new_artifacts_gib": 2.978515625,
+    "projected_wall_clock_days": 0.2002281173901321,
+    "projection_margin": 1.25,
+    "worst_fold_bundle_units": 1220.0
+  },
+  "claim_boundary": "Synthetic fold-shape compute evidence only; no model-performance, development-outcome, calibration, final-test, hardware, Gate 5, or Gate 6 claim.",
+  "corrects_decision_id": "D011-C1",
+  "decision_id": "D011-C2",
+  "development_rows_read": 0,
+  "evidence_scope": "largest-fold synthetic compute admission only",
+  "final_test_rows_read": 0,
+  "gate6_runs": 0,
+  "hardware_jobs_submitted": 0,
+  "machine": {
+    "declared_reference_cpu": "Intel Core i9-13900HX",
+    "declared_reference_gpu": "NVIDIA GeForce RTX 4060 Laptop GPU; unused",
+    "logical_processors": 32,
+    "numpy": "2.5.1",
+    "physical_memory_gib": 31.70067596435547,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.6",
+    "scikit_learn": "1.9.0"
+  },
+  "next_step": "Request human decision on whether to resume the D011 development-only campaign",
+  "protocol_id": "P001",
+  "schema_version": "0.1.0",
+  "source_commit": "06381d1ac28af1122a971a51d08f25ab3b40335a",
+  "source_hash_scope": "committed Git blob bytes",
+  "source_hashes": {
+    "campaign_script": "54f75cd0bff30643cee4e83895bc7a3a26971cbef9b03daef1724cb61b8d5305",
+    "campaign_source": "a4c57910ff689118d8176ff60f1d6fc6f91213bcf4624ef30eb1dcff15b76c07",
+    "d008_config": "5459bd93d476e891ef197dd3c513c88d674f866e4a23d382c46ef3f5d9a1fc59",
+    "d010_preflight_script": "a427d961f23241ad6d21a747920a0d7c0e46d6d91b2ab6e158922f1b7f7e8491",
+    "d010_result": "2ed361a3acd6b7d27b5cf11f7a09244d215e652dea58867c39e8b101ac1f02f6",
+    "d011_c2_correction_config": "84524127a4b39d0faa7d2056d4471188e24a93dc98d9e1d2484c59fcb264c912",
+    "decision_config": "11c086c8ee5ef5b01cd3512b8e476a7d4e303208410291b0b91fce745014edd4",
+    "figure_script": "6ba6e0746566f48001f00604bcd2890dd550c5e420492c16e38f2256aedcd77c",
+    "fold_manifest": "f467d6efef27d768e3f86d6e174f27c631b7f7942b4777fa87ebe95df97f94a3",
+    "gate5_source": "2d84d0007d33f3bbde9bdf10f1b569889e00475a39105d33e37c90fa45f00c57",
+    "guard_source": "919b423771f9eb9aa7ef353abdebefc22d06e2b32c6aa9f7898f0a300146bfc6",
+    "lockfile": "6b3fc5c79950d5fdfc70d7b0dfda62bae207a441a4610d9504b67bab20edbb99",
+    "metric_source": "1f6cf846278d3f324e047b717c1b7294296d4e3fd2a86373f394872663db5cca",
+    "model_registry": "7ea0bfec43ebf425b7668d68bef318538be2c2e6f9c524c52cdeeebc6596c5d1",
+    "model_source": "26340ffb72eb307946c2b428f85d49a1abba0e511b2e217711103b36b90b6308",
+    "phase1_config": "168436cf63f6492d7255b5731660f488e4b45d9973cf02fb1335e63ff85290da",
+    "preflight_helper_source": "88cb367cd143888138e2b610b619e3077f29e7684d7bbf2e1961fef892339d0f",
+    "preflight_script": "b884c4ec9e0ec5876f5ac4cac064fb1abbf492aa98dbeeade1d7f1c6c1db15a0",
+    "preprocessing_source": "a99cf8a7b8d6ad001ea5ef840c18623f9d84e4c470530a9f33ec685a168aa7c6",
+    "qml_source": "76b31373ce99a0739386e09712149abad2c372eae84a00955dd8360ce2d7e8f2",
+    "reporting_script": "7b882433ae2bbbe57efc02254d2680ae3686d6917c95a7f9a206cba698456f31",
+    "reporting_source": "6ef7bb72c34ff1a85fd1be5422793c5492c5a2e3da31331fc6717b986d034e3a",
+    "trial_manifest": "4192d421928c9c07294f441d10f0776f2c2b634db4be6f7d5257cd4543a72796"
+  },
+  "source_paths": {
+    "campaign_script": "scripts/run_post_gate5_campaign.py",
+    "campaign_source": "src/openqfuel/post_gate5_campaign.py",
+    "d008_config": "configs/post_gate5_exploratory.yaml",
+    "d010_preflight_script": "scripts/run_post_gate5_compute_preflight.py",
+    "d010_result": "data/processed/reporting/post_gate5_compute_preflight_rerun.json",
+    "d011_c2_correction_config": "configs/post_gate5_d011_c2_hash_correction.yaml",
+    "decision_config": "configs/post_gate5_development_execution.yaml",
+    "figure_script": "scripts/make_post_gate5_result_figures.py",
+    "fold_manifest": "data/processed/reporting/gate5_cv_fold_manifest.csv",
+    "gate5_source": "src/openqfuel/gate5.py",
+    "guard_source": "src/openqfuel/post_gate5.py",
+    "lockfile": "uv.lock",
+    "metric_source": "src/openqfuel/phase1_analysis.py",
+    "model_registry": "experiments/phase1_model_registry.yaml",
+    "model_source": "src/openqfuel/models.py",
+    "phase1_config": "configs/phase1_benchmark.yaml",
+    "preflight_helper_source": "src/openqfuel/post_gate5_preflight_runner.py",
+    "preflight_script": "scripts/run_post_gate5_fold_shape_preflight.py",
+    "preprocessing_source": "src/openqfuel/preprocessing.py",
+    "qml_source": "src/openqfuel/qml.py",
+    "reporting_script": "scripts/report_post_gate5_campaign.py",
+    "reporting_source": "src/openqfuel/post_gate5_reporting.py",
+    "trial_manifest": "data/processed/reporting/post_gate5_exploratory_trial_manifest.csv"
+  },
+  "status": "PASS",
+  "unchanged_preflight_contract": "D011 largest-fold synthetic compute admission"
+}

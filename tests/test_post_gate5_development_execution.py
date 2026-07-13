@@ -256,7 +256,31 @@ def test_d011_c2_freezes_raw_blob_hash_correction() -> None:
     }
     for key, expected in expected_hashes.items():
         assert config["accepted_dependencies"][key]["git_blob_sha256"] == expected
-    assert config["outcome"]["current_status"] == "accepted_not_yet_run"
+    assert config["outcome"]["current_status"] == "PASS"
+    assert config["outcome"]["all_five_admission_checks_passed"] is True
+
+
+def test_d011_c2_preflight_pass_is_synthetic_only() -> None:
+    evidence = json.loads(
+        (
+            ROOT
+            / "data/processed/reporting/post_gate5_d011_c2_fold_shape_preflight.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert evidence["decision_id"] == "D011-C2"
+    assert evidence["corrects_decision_id"] == "D011-C1"
+    assert evidence["status"] == "PASS"
+    assert evidence["admission"]["status"] == "PASS"
+    assert all(check["passed"] for check in evidence["admission"]["checks"].values())
+    assert evidence["benchmark"]["training_rows"] == 1024
+    assert evidence["benchmark"]["validation_rows"] == 9750
+    assert evidence["accounting_correction"]["worst_fold_bundle_units"] == 1220
+    assert evidence["development_rows_read"] == 0
+    assert evidence["calibration_rows_read"] == 0
+    assert evidence["final_test_rows_read"] == 0
+    assert evidence["hardware_jobs_submitted"] == 0
+    assert evidence["gate6_runs"] == 0
+    assert "Request human decision" in evidence["next_step"]
 
 
 def test_fold_shape_projection_and_admission_are_conservative() -> None:

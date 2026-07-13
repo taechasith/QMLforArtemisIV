@@ -57,6 +57,7 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     }
     expected_ids.add("RFIG-029")
     expected_ids.add("RFIG-030")
+    expected_ids.add("RFIG-031")
     assert expected_ids <= figure_ids
     assert {"RFIG-010", "RFIG-013"}.isdisjoint(figure_ids)
     assert {row["evidence_status"] for row in rows} >= {
@@ -92,7 +93,13 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     assert rfig029["figure_generator_sha256"] == sha256_file(
         ROOT / rfig029["generator"]
     )
-    assert "RFIG-031" not in figure_ids
+    rfig031 = next(row for row in rows if row["figure_id"] == "RFIG-031")
+    assert rfig031["source_data"] == (
+        "data/processed/reporting/post_gate5_d011_c2_fold_shape_preflight.json"
+    )
+    assert rfig031["reporting_source_commit"] == (
+        "06381d1ac28af1122a971a51d08f25ab3b40335a"
+    )
     rfig030 = next(row for row in rows if row["figure_id"] == "RFIG-030")
     assert rfig030["reporting_source_commit"] == (
         "882bfd58d1154194b011dfc6fcef974cfe96ead3"

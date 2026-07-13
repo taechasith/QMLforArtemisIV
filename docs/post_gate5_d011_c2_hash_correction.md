@@ -5,7 +5,7 @@ Decision: D011-C2
 Protocol: P001
 Prepared: 2026-07-14
 Accepted: 2026-07-14
-Status: Accepted; hash smoke test and one unchanged preflight attempt pending
+Status: Completed with synthetic corrected fold-shape admission PASS; development campaign still requires separate human decision
 
 ## Decision
 
@@ -39,10 +39,23 @@ evidence file at
 
 ## Consequence
 
-A D011-C2 `PASS` records corrected synthetic compute admission only and asks
-for a human decision on whether to resume the D011 development-only campaign
-authority. It does not itself authorize campaign execution.
+## Outcome
 
-A D011-C2 `STOP` is terminal for this correction attempt. It must update the
-future-research register and paper figures, and it cannot be retried or rescued
-by reducing the active design.
+The hash-consistency smoke test and direct-file import smoke test both passed
+from clean source commit `06381d1`. The single unchanged D011-C2 preflight then
+passed all five unchanged laptop boundaries:
+
+- 4.7259 CPU-core-hours against a 250 core-hour maximum.
+- 0.2002 sequential wall-days against a five-day maximum.
+- 2.9785 GiB new artifacts against a 20 GiB maximum.
+- 0.6339 GiB peak process memory against a 24 GiB maximum.
+- 45.3606 GiB projected free disk after artifacts against a 20 GiB minimum.
+
+The result used synthetic rows only. Development, calibration, and final-test
+reads remained zero; hardware, GPU, and Gate 6 runs remained zero. RFIG-031
+records corrected fold-shape compute admission.
+
+D011-C2 is closed to rerun. Its PASS is synthetic compute-admission evidence
+only and asks for a human decision on whether to resume the D011
+development-only campaign authority. It does not itself authorize campaign
+execution.

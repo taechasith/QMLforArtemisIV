@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
 Version: 0.6.18
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-C2 raw-blob hash correction accepted for one unchanged preflight attempt; Gate 6 unauthorized
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-C2 corrected fold-shape preflight PASS; D011 development campaign awaits human decision; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: Run the D011-C2 hash-consistency smoke test, import smoke test, and one unchanged corrected fold-shape preflight from clean source; do not open development payloads unless a later human decision authorizes campaign resumption; Gate 6 remains unauthorized
+Recommended next action: Decide whether to resume the single D011 development-only campaign now that D011-C2 synthetic corrected fold-shape admission passed; calibration/final-test, hardware/GPU, Gate 5 reinterpretation, and Gate 6 remain unauthorized
 
 ## 1. Proposed title
 
@@ -951,6 +951,16 @@ evidence at
 D011 and D011-C1 STOP evidence remain immutable. D011-C2 does not authorize any
 development payload, calibration/final-test access, hardware/GPU work, Gate 5
 reinterpretation, or Gate 6 work.
+
+The D011-C2 hash-consistency smoke test and import smoke test passed from clean
+source commit `06381d1`. The one unchanged corrected fold-shape synthetic
+preflight also passed every unchanged laptop boundary: 4.7259 CPU-core-hours of
+250, 0.2002 wall-days of five, 2.9785 GiB artifacts of 20, 0.6339 GiB peak
+working set of 24, and 45.3606 GiB projected free disk against the 20 GiB
+minimum. Development, calibration, and final-test reads remained zero; hardware,
+GPU, and Gate 6 runs remained zero. RFIG-031 records this corrected admission.
+The PASS is synthetic compute-admission evidence only and requires a human
+decision before the D011 development campaign can resume.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

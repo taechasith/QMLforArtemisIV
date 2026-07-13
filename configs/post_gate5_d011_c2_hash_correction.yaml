@@ -107,10 +107,19 @@ reporting:
   claim_boundary: "synthetic hash-corrected compute admission only; not QML performance, research-data fitting, Gate 5 reinterpretation, hardware, or Gate 6 evidence"
 
 outcome:
-  current_status: "accepted_not_yet_run"
-  hash_consistency_smoke_test_status: "pending"
-  import_smoke_test_status: "pending"
-  preflight_status: "pending"
-  source_commit: "pending_clean_source_commit"
+  current_status: "PASS"
+  completed_date: "2026-07-14"
+  hash_consistency_smoke_test_status: "PASS"
+  import_smoke_test_status: "PASS"
+  preflight_status: "PASS"
+  source_commit: "06381d1ac28af1122a971a51d08f25ab3b40335a"
   result: "data/processed/reporting/post_gate5_d011_c2_fold_shape_preflight.json"
+  figure: "RFIG-031"
+  projected_cpu_core_hours: 4.725911458333333
+  projected_wall_clock_days: 0.2002281173901321
+  projected_new_artifacts_gib: 2.978515625
+  observed_peak_rss_gib: 0.6339454650878906
+  projected_free_disk_after_artifacts_gib: 45.36056137084961
+  all_five_admission_checks_passed: true
+  pass_effect: "permits a later human decision on D011 development-campaign resumption; development-row fitting remains unauthorized by D011-C2"
   retry_authorized_after_attempt: false

@@ -242,15 +242,16 @@ def draw_rfig031(preflight: Mapping[str, Any]) -> tuple[Path, Path]:
     ax.set_xlim(0.0, max(115.0, float(np.max(pressure)) * 1.25 + 12.0))
     ax.set_xlabel("Fraction of accepted resource boundary (%)")
     ax.set_title(
-        f"D011 largest-fold compute admission: {preflight['status']}",
+        f"{preflight['decision_id']} largest-fold compute admission: {preflight['status']}",
         loc="left",
         fontsize=14,
         fontweight="bold",
         color=INK,
+        pad=26,
     )
     ax.text(
         0.0,
-        1.015,
+        1.005,
         "1,024 training + 9,750 validation rows; 1,220 worst-fold bundles; 25% margin",
         transform=ax.transAxes,
         color=GRAY,
