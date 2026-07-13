@@ -1,14 +1,14 @@
 schema_version: "0.1.0"
 decision_id: "D016-C"
 protocol_id: "P001"
-status: "accepted_clean_source_synthetic_preflight_pending"
+status: "completed_synthetic_compute_admission_pass"
 prepared_date: "2026-07-14"
 accepted_date: "2026-07-14"
 acceptance_basis: "assistant-selected next step after D015-C synthetic scaffolds; perform clean-source synthetic compute admission before any CRES/CSAFE development-data fitting"
 
 authority:
   scope: "one clean-source synthetic compute-admission preflight for D014-C CRES/CSAFE classical-first scaffolds"
-  preflight_execution_authorized: true
+  preflight_execution_authorized: false
   authorized_preflight_attempts: 1
   implementation_authorized: false
   synthetic_validation_authorized: false
@@ -97,7 +97,15 @@ reporting:
   claim_boundary: "Synthetic compute-admission evidence only; not model performance, development-data fitting, Gate 5 reinterpretation, QML invention, quantum advantage, hardware, or Gate 6 evidence."
 
 outcome:
-  current_status: "PENDING"
-  result: ""
-  figure: ""
+  current_status: "PASS"
+  completed_date: "2026-07-14"
+  source_commit: "45409a86a5e450d72ba7f043715956fa5b916974"
+  result: "data/processed/reporting/post_gate5_d016_classical_preflight.json"
+  figure: "RFIG-033"
+  projected_cpu_core_hours: 0.017903645833333332
+  projected_wall_clock_days: 0.0007879703414598933
+  projected_new_artifacts_gib: 1.220703125
+  observed_peak_rss_gib: 0.17125701904296875
+  projected_free_disk_after_artifacts_gib: 46.5274543762207
+  all_admission_checks_passed: true
   pass_effect: "A PASS would permit preparation of D017 only; development-data fitting remains unauthorized by D016."

@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.22
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C synthetic compute preflight accepted; Gate 6 unauthorized
+Version: 0.6.23
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C synthetic compute admission PASS; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: Run exactly one D016-C clean-source synthetic compute-admission preflight; no development-data fitting, refit, rerank, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, or Gate 6 is authorized
+Recommended next action: Prepare D017 development-data fitting decision if CRES/CSAFE source-bound fitting is to proceed; D016-C alone does not authorize development fitting, refit, rerank, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, or Gate 6
 
 ## 1. Proposed title
 
@@ -1039,14 +1039,18 @@ The tests use synthetic arrays only and do not open development, calibration,
 final-test, hardware/GPU, or Gate 6 pathways.
 
 D016-C was accepted as the assistant-selected clean-source synthetic compute
-preflight for the D014-C CRES/CSAFE classical-first scaffolds. It authorizes
-one committed-source synthetic benchmark and RFIG-033 if the result is reached.
-The preflight projects the largest-fold scaffold workload across five folds and
-20 seeds with 25% margin and no cache or early-stop credit. D016-C still
-prohibits development-data fitting, calibration/final-test reads, refit,
-rerank, retry, hardware/GPU execution, Gate 5 reinterpretation, QML invention
-claims, quantum-advantage claims, and Gate 6. A later D017 decision is required
-before any development-data fitting, even if D016-C passes.
+preflight for the D014-C CRES/CSAFE classical-first scaffolds. The single
+authorized preflight ran from clean source commit `45409a86a5e450d72ba7f043715956fa5b916974`
+and passed every admission check. With five folds, 20 seeds, 25% margin, and no
+cache or early-stop credit, it projected 0.0179 CPU-core-hours, 0.000788
+wall-days, 1.2207 GiB new artifacts, 0.1713 GiB peak process memory, 46.5275
+GiB free disk after artifacts, and zero GPU-hours. The run used synthetic rows
+only; development, calibration, final-test, hardware/GPU, and Gate 6 counters
+remained zero. RFIG-033 records the admission margins. D016-C still prohibits
+development-data fitting, calibration/final-test reads, refit, rerank, retry,
+hardware/GPU execution, Gate 5 reinterpretation, QML invention claims,
+quantum-advantage claims, and Gate 6. D017 is required before any
+development-data fitting.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

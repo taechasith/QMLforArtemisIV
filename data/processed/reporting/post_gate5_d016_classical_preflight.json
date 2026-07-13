@@ -1,0 +1,214 @@
+{
+  "admission": {
+    "checks": {
+      "cpu_core_hours": {
+        "comparison": "less_than_or_equal",
+        "limit": 250.0,
+        "observed": 0.017903645833333332,
+        "passed": true,
+        "utilization_fraction": 7.161458333333333e-05
+      },
+      "free_disk_after_artifacts_gib": {
+        "comparison": "greater_than_or_equal",
+        "limit": 20.0,
+        "observed": 46.5274543762207,
+        "passed": true,
+        "utilization_fraction": 0.42985373406161714
+      },
+      "gpu_hours": {
+        "comparison": "less_than_or_equal",
+        "limit": 0.0,
+        "observed": 0.0,
+        "passed": true,
+        "utilization_fraction": 0.0
+      },
+      "new_artifacts_gib": {
+        "comparison": "less_than_or_equal",
+        "limit": 20.0,
+        "observed": 1.220703125,
+        "passed": true,
+        "utilization_fraction": 0.06103515625
+      },
+      "peak_working_set_gib": {
+        "comparison": "less_than_or_equal",
+        "limit": 24.0,
+        "observed": 0.17125701904296875,
+        "passed": true,
+        "utilization_fraction": 0.007135709126790364
+      },
+      "wall_clock_days": {
+        "comparison": "less_than_or_equal",
+        "limit": 5.0,
+        "observed": 0.0007879703414598933,
+        "passed": true,
+        "utilization_fraction": 0.00015759406829197865
+      }
+    },
+    "status": "PASS"
+  },
+  "benchmark": {
+    "calibration_bins": 10,
+    "compressed_feature_count": 24,
+    "cpu_seconds": 0.515625,
+    "gpu_hours": 0.0,
+    "mlp_hidden_units": 64,
+    "mlp_max_iter": 50,
+    "primary_feature_count": 96,
+    "random_feature_count": 512,
+    "safety_maximum_intervention_rate": 1.0,
+    "safety_minimum_recall": 0.95,
+    "seed": 20260714,
+    "steps": [
+      {
+        "cpu_seconds": 0.015625,
+        "peak_working_set_gib": 0.1298065185546875,
+        "step": "synthetic_largest_fold_payload",
+        "wall_seconds": 0.022596700000576675
+      },
+      {
+        "cpu_seconds": 0.015625,
+        "peak_working_set_gib": 0.13774871826171875,
+        "step": "CRES_ridge_residual_fit_predict",
+        "wall_seconds": 0.007405600044876337
+      },
+      {
+        "cpu_seconds": 0.09375,
+        "peak_working_set_gib": 0.17125701904296875,
+        "step": "CRES_random_feature_rbf_residual_fit_predict",
+        "wall_seconds": 0.09087510005338117
+      },
+      {
+        "cpu_seconds": 0.0625,
+        "peak_working_set_gib": 0.17125701904296875,
+        "step": "CRES_compressed_mlp_residual_fit_predict",
+        "wall_seconds": 0.09074320003855973
+      },
+      {
+        "cpu_seconds": 0.015625,
+        "peak_working_set_gib": 0.17125701904296875,
+        "step": "CSAFE_calibrated_logistic_fit_predict",
+        "wall_seconds": 0.006747799983713776
+      },
+      {
+        "cpu_seconds": 0.1875,
+        "peak_working_set_gib": 0.17125701904296875,
+        "step": "CSAFE_class_weighted_tree_fit_predict",
+        "wall_seconds": 0.2020388999953866
+      }
+    ],
+    "training_rows": 1024,
+    "tree_count": 64,
+    "tree_max_depth": 8,
+    "validation_rows": 9750,
+    "wall_seconds": 0.5446451000170782
+  },
+  "branch": "main",
+  "campaign_projection": {
+    "largest_fold_seed_units": 100.0,
+    "observed_free_disk_gib": 47.7481575012207,
+    "observed_peak_rss_gib": 0.17125701904296875,
+    "projected_cpu_core_hours": 0.017903645833333332,
+    "projected_free_disk_after_artifacts_gib": 46.5274543762207,
+    "projected_new_artifacts_gib": 1.220703125,
+    "projected_wall_clock_days": 0.0007879703414598933,
+    "projection_margin": 1.25
+  },
+  "claim_boundary": "Synthetic compute-admission evidence only; not model performance, development-data fitting, Gate 5 reinterpretation, QML invention, quantum advantage, hardware, or Gate 6 evidence.",
+  "decision_id": "D016-C",
+  "evidence_scope": "clean-source synthetic classical-first compute admission only",
+  "integrity": {
+    "calibration_rows_read": 0,
+    "clean_source_verified_before_execution": true,
+    "development_rows_read": 0,
+    "final_test_rows_read": 0,
+    "gate6_runs": 0,
+    "gpu_hours": 0.0,
+    "hardware_jobs_submitted": 0,
+    "synthetic_rows_used": 10774
+  },
+  "machine": {
+    "declared_reference_cpu": "Intel Core i9-13900HX",
+    "declared_reference_gpu": "NVIDIA GeForce RTX 4060 Laptop GPU; unused",
+    "logical_processors": 32,
+    "numpy": "2.5.1",
+    "physical_memory_gib": 31.70067596435547,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.6",
+    "scikit_learn": "1.9.0"
+  },
+  "next_step": "Prepare D017 development-data-fitting decision",
+  "protocol_id": "P001",
+  "schema_version": "0.1.0",
+  "source_commit": "45409a86a5e450d72ba7f043715956fa5b916974",
+  "source_hash_scope": "committed Git blob bytes",
+  "source_hashes": {
+    "classical_source": "0f3115b082cc1f4e72fd702a9c06e99473f16d65db820f692494e0cf2c6cddd6",
+    "d014_freeze_config": "cbcf3987314be979a3c1f1169f695ccb471b957b66811f8071afbba83c2c5863",
+    "d015_config": "f04237a00eb6fb404e35a1c3dcbc43e2f44392039be44c5103c5e23c9d736494",
+    "figure_generator": "2b53556b663b21ff04c63e792a69b687a332f1a5203d0d1ff15fc60a76b0f958",
+    "implementation_config": "365d68f75ffe1c7d88c2d0eb0a3700c27f0588429e312118ea0c2fe34d3caffc",
+    "lockfile": "6b3fc5c79950d5fdfc70d7b0dfda62bae207a441a4610d9504b67bab20edbb99",
+    "preflight_script": "786dd009ee82c09c8802204ca47a7415c98afd45c140ff44aa39206d899ad1e9"
+  },
+  "source_paths": {
+    "classical_source": "src/openqfuel/post_gate5_classical.py",
+    "d014_freeze_config": "configs/post_gate5_d014_classical_first_freeze.yaml",
+    "d015_config": "configs/post_gate5_d015_implementation_synthetic_validation.yaml",
+    "figure_generator": "scripts/make_post_gate5_d016_preflight_figure.py",
+    "implementation_config": "configs/post_gate5_d016_classical_compute_preflight.yaml",
+    "lockfile": "uv.lock",
+    "output": "data/processed/reporting/post_gate5_d016_classical_preflight.json",
+    "preflight_script": "scripts/run_post_gate5_d016_preflight.py"
+  },
+  "status": "PASS",
+  "synthetic_metrics": {
+    "residual_cost": {
+      "compressed_mlp": {
+        "mae": 0.11094201750033053,
+        "nrmse": 0.8434527107392885,
+        "rmse": 0.14240787544885772,
+        "tail_abs_error_q90": 0.22962345136028464,
+        "tail_abs_error_q95": 0.284417599439568
+      },
+      "random_feature_rbf": {
+        "mae": 0.08312624382296965,
+        "nrmse": 0.6594539154672892,
+        "rmse": 0.11134166724748996,
+        "tail_abs_error_q90": 0.17718304459552753,
+        "tail_abs_error_q95": 0.22366713344234604
+      },
+      "ridge": {
+        "mae": 0.08972479909348549,
+        "nrmse": 0.7345365723617925,
+        "rmse": 0.12401856248448537,
+        "tail_abs_error_q90": 0.1953388648389356,
+        "tail_abs_error_q95": 0.2594306804869928
+      }
+    },
+    "safety_filter": {
+      "class_weighted_tree": {
+        "auroc": 0.9543522102042176,
+        "brier": 0.13769729054877727,
+        "expected_calibration_error": 0.21985937410856704,
+        "false_negative_rate": 0.998645903859174,
+        "false_positive_rate": 0.0,
+        "intervention_rate": 0.0008205128205128205,
+        "precision": 1.0,
+        "recall": 0.0013540961408259986,
+        "threshold": 0.875
+      },
+      "logistic": {
+        "auroc": 0.976858815916586,
+        "brier": 0.05932860487848491,
+        "expected_calibration_error": 0.021659011387860715,
+        "false_negative_rate": 0.18686526743398782,
+        "false_positive_rate": 0.022384174908901613,
+        "intervention_rate": 0.5015384615384615,
+        "precision": 0.9824130879345603,
+        "recall": 0.8131347325660122,
+        "threshold": 0.875
+      },
+      "threshold": 0.875
+    }
+  }
+}

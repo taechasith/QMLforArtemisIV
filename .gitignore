@@ -35,6 +35,7 @@ data/processed/reporting/*
 !data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv
 !data/processed/reporting/post_gate5_exploratory_trial_manifest.csv
 !data/processed/reporting/post_gate5_future_research_discussion.csv
+!data/processed/reporting/post_gate5_d016_classical_preflight.json
 !data/processed/reporting/post_gate5_p001/
 data/processed/reporting/post_gate5_p001/*
 !data/processed/reporting/post_gate5_p001/campaign_summary.json

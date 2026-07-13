@@ -5,7 +5,7 @@ Decision: D016-C
 Protocol: P001
 Prepared: 2026-07-14
 Accepted: 2026-07-14
-Status: Accepted for one clean-source synthetic preflight; result pending
+Status: Completed with synthetic compute admission PASS; development fitting unauthorized
 
 ## Decision
 
@@ -41,3 +41,22 @@ work.
 If D016-C passes, D017 is still required before any development-data fitting.
 If D016-C stops, the stop must be recorded as future-only discussion and must
 not reduce or retry the active workload.
+
+## Outcome
+
+The single authorized D016-C preflight ran from clean source commit
+`45409a86a5e450d72ba7f043715956fa5b916974` and passed every admission check.
+The projected five-fold, 20-seed scaffold workload used:
+
+- 0.0179 CPU-core-hours of the 250-hour limit.
+- 0.000788 wall-days of the five-day limit.
+- 1.2207 GiB new artifacts of the 20 GiB limit.
+- 0.1713 GiB peak process memory of the 24 GiB limit.
+- 46.5275 GiB projected free disk after artifacts against the 20 GiB minimum.
+- 0 GPU-hours.
+
+The run used 10,774 synthetic rows and read zero development, calibration, or
+final-test rows. It submitted no hardware/GPU job and ran no Gate 6 scenario.
+RFIG-033 records the resource margins. The bounded MLP component reached the
+configured 50-iteration synthetic limit without convergence, which is retained
+as compute-workload evidence only and is not a model-performance claim.

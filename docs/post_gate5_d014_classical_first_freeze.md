@@ -109,5 +109,6 @@ zero.
 
 ## Current Recommendation
 
-D015-C has been accepted for implementation and synthetic validation only. It
-still avoids development-data fitting. Gate 6 remains unauthorized.
+D015-C has implemented synthetic scaffolds, and D016-C has passed synthetic
+compute admission for those scaffolds. Development-data fitting still requires
+D017. Gate 6 remains unauthorized.

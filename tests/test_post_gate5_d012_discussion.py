@@ -71,7 +71,7 @@ def test_d012_docs_and_top_level_protocol_record_gate6_lock() -> None:
         "research_protocol.md": "D012 future-protocol discussion opened",
         "README.md": "D012 is now open as discussion-only",
         "docs/decision_log.md": "D012 opened - future protocol discussion",
-        "docs/research_execution_map.md": "D016-C accepted for one clean-source synthetic CRES/CSAFE compute preflight",
+        "docs/research_execution_map.md": "D016-C synthetic CRES/CSAFE compute admission PASS",
     }
     for relative, phrase in required.items():
         text = (ROOT / relative).read_text(encoding="utf-8")

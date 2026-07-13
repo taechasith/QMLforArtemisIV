@@ -38,9 +38,9 @@ development payload is opened.
 
 ## Required Next Boundary
 
-D016 must prospectively authorize a clean-source synthetic compute-admission
-preflight before any D014-C development-data fitting. Missing or unauthorized
-RFIG-033 through RFIG-035 remain absent.
+D016 has passed clean-source synthetic compute admission for the D014-C
+CRES/CSAFE scaffolds. D017 must prospectively authorize any development-data
+fitting. Missing or unauthorized RFIG-034 through RFIG-035 remain absent.
 
 ## Implementation Outcome
 

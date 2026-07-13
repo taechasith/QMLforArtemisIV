@@ -1472,7 +1472,7 @@ Outcome:
 
 Date prepared: 2026-07-14
 Date accepted: 2026-07-14
-Status: **Accepted; one synthetic compute preflight pending**
+Status: **Completed; synthetic compute admission PASS**
 Authority: Assistant-selected next step after D015-C synthetic scaffolds
 
 Decision:
@@ -1491,3 +1491,17 @@ D016-C authorizes no development-data fitting, calibration/final-test read,
 refit, rerank, retry, hardware/GPU execution, Gate 5 reinterpretation, QML
 invention claim, quantum-advantage claim, or Gate 6. A PASS permits only
 preparation of D017; it does not itself open development rows.
+
+Outcome:
+
+- The single authorized preflight ran from clean source commit
+  `45409a86a5e450d72ba7f043715956fa5b916974`.
+- Admission status: `PASS`.
+- Projected resource use after 25% margin: 0.0179/250 CPU-core-hours,
+  0.000788/5 wall-days, 1.2207/20 GiB artifacts, 0.1713/24 GiB peak working
+  set, 46.5275 GiB free disk after artifacts against the 20 GiB minimum, and
+  zero GPU-hours.
+- Integrity counters: 10,774 synthetic rows used; zero development,
+  calibration, final-test, hardware, GPU, and Gate 6 reads/runs.
+- RFIG-033 records the compute-admission margins.
+- Development-data fitting remains unauthorized and requires D017.
