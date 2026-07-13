@@ -60,5 +60,5 @@
   "retry_authorized": false,
   "future_research_record": "P001-FR003",
   "next_step": "Keep D011-C1 terminally stopped. Any hash-corrected launcher correction and preflight attempt require a separate prospective human decision.",
-  "reporting_commit": "pending_result_commit"
+  "reporting_commit": "d364628c3fc9d6f964ec21ca2bd8c563278d2c80"
 }

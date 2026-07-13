@@ -127,7 +127,11 @@ def test_tracks_have_distinct_endpoints_and_strong_controls() -> None:
 def test_failure_discussion_register_records_d009_and_remains_firewalled() -> None:
     config = _config()["failure_and_stop_policy"]
     rows = _rows(DISCUSSION)
-    assert {row["record_id"] for row in rows} == {"P001-FR001", "P001-FR002"}
+    assert {row["record_id"] for row in rows} == {
+        "P001-FR001",
+        "P001-FR002",
+        "P001-FR003",
+    }
     assert {row["terminal_status"] for row in rows} == {"technical_failure"}
     assert {row["new_protocol_required"] for row in rows} == {"true"}
     assert {row["active_pipeline_change_authorized"] for row in rows} == {"false"}
