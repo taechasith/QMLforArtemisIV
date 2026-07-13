@@ -1,0 +1,110 @@
+schema_version: "0.1.0"
+decision_id: "D009"
+protocol_id: "P001"
+status: "accepted_synthetic_compute_preflight_authorized"
+prepared_date: "2026-07-13"
+accepted_date: "2026-07-13"
+preflight_execution_authorized: true
+research_data_fitting_authorized: false
+exploratory_execution_authorized: false
+
+authority:
+  scope: "one source-bound synthetic compute preflight only"
+  acceptance_basis: "human research lead instruction to proceed with the recommended next step"
+  result_use: "compute admission for a later execution decision; never model selection or Gate 5 reinterpretation"
+  next_decision_if_pass: "D010 may consider development-only P001 execution"
+  action_if_stop: "record the governed stop and future-research discussion; do not reduce or retry the active design"
+
+locks:
+  gate5_result_unchanged: true
+  d006_d007_evidence_immutable: true
+  development_rows_read: 0
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate6_authorized: false
+  allowed_data_scope: "synthetic"
+
+source_binding:
+  require_clean_git_worktree: true
+  require_main_branch: true
+  implementation_config: "configs/post_gate5_exploratory.yaml"
+  model_registry: "experiments/phase1_model_registry.yaml"
+  qml_source: "src/openqfuel/qml.py"
+  model_source: "src/openqfuel/models.py"
+  guard_source: "src/openqfuel/post_gate5.py"
+  benchmark_script: "scripts/run_post_gate5_compute_preflight.py"
+  lockfile: "uv.lock"
+  output: "data/processed/reporting/post_gate5_compute_preflight.json"
+
+benchmark:
+  seed: 20260713
+  training_rows: 1024
+  validation_rows: 256
+  primary_control_feature_count: 64
+  compressed_feature_count: 8
+  qubits: 8
+  data_reupload_layers: 2
+  feature_scale: 2.0
+  entangle: true
+  gamma_multiplier: 1.0
+  regularization_alpha: 0.01
+  nystrom_landmarks: 256
+  projection_id: "D009-Q8-L2-SYNTHETIC"
+  fold_id: "D009-SYNTHETIC"
+  seed_index: 1
+  execution_repeats: 1
+  statevector_concurrency: 1
+  cpu_thread_limit_per_process: 1
+  persist_statevectors: false
+  persist_kernel_matrices: false
+  required_projected_heads: [Q01b_cost, FQK_feasibility]
+  required_controls:
+    - "C06-T17 cost and feasibility"
+    - "A01-T04 cost and feasibility"
+    - "A02 classical RBF cost and feasibility"
+    - "C05-T17 compressed cost and feasibility"
+    - "C01-T18 feasibility"
+    - "C02-T02 feasibility"
+    - "C03-T13 feasibility"
+    - "C04-T28 feasibility"
+    - "C05-T12 feasibility"
+  output_validity_rule: "every fit and prediction must finish with finite outputs; synthetic feasibility labels must contain both classes"
+
+campaign_projection:
+  grouped_folds: 5
+  tuning_rungs:
+    - {development_samples: 128, trials_retained: 30}
+    - {development_samples: 256, trials_retained: 15}
+    - {development_samples: 512, trials_retained: 8}
+    - {development_samples: 1024, trials_retained: 4}
+  selected_configuration_seeds: 20
+  selected_exact_units_per_seed_fold: 1.0
+  report_only_sensitivity_conditions: 3
+  sensitivity_units_per_seed_fold: 1.0
+  expected_equivalent_1024_row_work_units: 477.5
+  projection_margin: 1.25
+  artifact_bytes_per_work_unit: 2097152
+  accounting_rule: "charge the complete q=8 benchmark, both heads, and every control to every equivalent work unit; this intentionally overestimates sequential execution and does not assume cache reuse"
+
+ceilings:
+  branch_cpu_core_hours: 250.0
+  branch_wall_clock_days: 5.0
+  branch_new_artifacts_gib: 20.0
+  max_total_project_working_set_gib: 24.0
+  minimum_free_disk_gib: 20.0
+  branch_gpu_hours: 0.0
+
+reporting:
+  result_json: "data/processed/reporting/post_gate5_compute_preflight.json"
+  figure_id: "RFIG-030"
+  figure_generator: "scripts/make_post_gate5_preflight_figure.py"
+  figure_content: "D009 conservative projected resource utilization against accepted laptop ceilings"
+  figure_claim_boundary: "synthetic compute-admission evidence only; not model performance, research-data fitting, Gate 5 reinterpretation, or Gate 6 evidence"
+
+outcome:
+  current_status: "pending_frozen_preflight_execution"
+  pass_rule: "PASS only when the source is clean and bound, all required synthetic workloads complete with finite outputs, all research-row read counters remain zero, and every resource check passes"
+  pass_effect: "permits preparation of D010 only; development-row fitting remains unauthorized"
+  stop_effect: "P001 execution remains locked and the failure/future-research firewall applies"

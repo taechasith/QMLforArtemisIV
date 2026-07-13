@@ -1,8 +1,8 @@
 # Post-Gate-5 Exploratory Protocol
 
-Version: 0.2.2
+Version: 0.2.3
 Opened: 2026-07-13
-Status: Opened prospectively; D008 implementation and synthetic validation complete; research-data execution remains unauthorized
+Status: Opened prospectively; D008 implementation and synthetic validation complete; D009 synthetic compute preflight accepted and pending; research-data execution remains unauthorized
 
 ## Purpose
 
@@ -132,6 +132,13 @@ D008 implementation and synthetic validation are complete. The implementation
 adds projected-kernel primitives, deterministic landmarks, estimator wrappers,
 scope guards, and synthetic tests only. It does not create model-performance
 evidence or authorize development-row execution.
+
+D009 now authorizes one clean-source synthetic compute preflight under
+`configs/post_gate5_preflight.yaml` and
+`docs/post_gate5_compute_preflight.md`. The benchmark may measure only the
+frozen q=8/two-layer synthetic workload and matched controls. It reads zero
+development, calibration, or final-test rows. Its result can support a later
+D010 execution proposal, but cannot itself unlock P001 fitting or Gate 6.
 
 ## Machine-readable source
 

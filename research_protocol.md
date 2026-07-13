@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.10
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D008 exploratory implementation and synthetic validation complete; Gate 6 unauthorized
+Version: 0.6.11
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D009 synthetic compute preflight accepted and pending execution; research fitting and Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-13
-Recommended next decision: Prepare D009 clean-source compute preflight before any exploratory development-row fit; Gate 6 remains unauthorized
+Recommended next action: Execute the frozen D009 synthetic compute preflight; development-row fitting and Gate 6 remain unauthorized
 
 ## 1. Proposed title
 
@@ -829,6 +829,16 @@ regression and feasibility classification, PSD clipping diagnostics, and
 Post-Gate-5 scope guards. Validation used synthetic arrays only and did not
 read development payloads for fitting, calibration rows, final-test rows,
 hardware devices, or Gate 6 scenarios.
+
+D009 is accepted for one clean-source synthetic compute preflight. The frozen
+benchmark uses 1,024 synthetic training rows, 256 synthetic validation rows,
+eight qubits, two layers, shared Q01b/FQK projected features, and every D008
+matched control. It projects 477.5 conservative equivalent work units with a
+25% margin against 250 CPU-core-hours, five wall-clock days, 20 GiB new
+artifacts, a 24 GiB process working set, and a 20 GiB post-projection free-disk
+floor. A PASS permits preparation of D010 only; it does not authorize any
+development-row fit. A STOP invokes the frozen future-research firewall and
+cannot be rescued by reducing the active design.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

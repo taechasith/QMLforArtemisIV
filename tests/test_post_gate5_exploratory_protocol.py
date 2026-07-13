@@ -29,8 +29,11 @@ def test_post_gate5_exploratory_protocol_scope_is_narrow() -> None:
     assert protocol["synthetic_validation_completed_date"] == "2026-07-13"
     assert protocol["research_data_fitting_authorized"] is False
     assert protocol["research_data_execution_decision"] == (
-        "pending_separate_clean_source_preflight_and_execution_decision"
+        "d009_synthetic_compute_preflight_accepted_pending_execution; "
+        "later_d010_required_for_any_research_fit"
     )
+    assert protocol["compute_preflight_decision"] == "D009"
+    assert protocol["compute_preflight_execution_authorized"] is True
     assert protocol["gate5_result_unchanged"] is True
     assert protocol["calibration_access"] is False
     assert protocol["final_test_access"] is False

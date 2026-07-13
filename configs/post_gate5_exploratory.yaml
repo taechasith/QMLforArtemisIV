@@ -10,7 +10,7 @@ implementation_status: "implemented_synthetic_validation_passed"
 synthetic_validation_completed_date: "2026-07-13"
 synthetic_validation_scope: "synthetic arrays only; no development, calibration, final-test, hardware, or Gate 6 execution"
 research_data_fitting_authorized: false
-research_data_execution_decision: "pending_separate_clean_source_preflight_and_execution_decision"
+research_data_execution_decision: "d009_synthetic_compute_preflight_accepted_pending_execution; later_d010_required_for_any_research_fit"
 execution_authorized: false
 
 provenance:

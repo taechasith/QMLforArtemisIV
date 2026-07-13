@@ -986,3 +986,52 @@ The next allowed process step is a separate clean-source compute preflight and
 execution decision before any exploratory development-row fit. A failure in a
 future step must still commit a future-research discussion record without
 changing or retrying the active P001 pipeline.
+
+### D009 accepted - clean-source synthetic compute preflight
+
+Date prepared: 2026-07-13
+Date accepted: 2026-07-13
+Status: **Accepted for one synthetic compute preflight; outcome pending; research-data execution unauthorized**
+Authority required: Human research lead
+
+Decision:
+
+The human research lead instructed the project to proceed with the recommended
+next step. D009 therefore authorizes exactly one clean-source synthetic compute
+admission benchmark for the accepted D008 implementation. It does not
+authorize a development-row fit, calibration/final-test access, model
+selection, hardware/GPU execution, Gate 5 reinterpretation, or Gate 6.
+
+Accepted preflight:
+
+- Use 1,024 deterministic synthetic training rows and 256 deterministic
+  synthetic validation rows, with 64 primary-control features and eight
+  compressed circuit features.
+- Benchmark the worst admitted near-term circuit size: eight qubits, two
+  data-reupload layers, entanglement enabled, one exact statevector task, and
+  256 deterministic Nystrom landmarks.
+- Share the quantum projection across Q01b cost and FQK feasibility heads.
+- Execute every unique D008 matched control using its frozen Gate 5 parameter
+  record, including C01-C06 where applicable, A01-T04, A02 classical RBF, and
+  compressed C05-T17.
+- Project the complete branch as 477.5 equivalent 1,024-row units and charge
+  the full benchmark to every unit before applying a 25% margin. This is a
+  conservative admission bound and assumes no cache savings.
+- Require no more than 250 CPU-core-hours, five sequential wall-clock days,
+  20 GiB new artifacts, and 24 GiB peak process working set, while retaining at
+  least 20 GiB free disk after projected artifacts.
+
+Evidence frozen before execution:
+
+- `configs/post_gate5_preflight.yaml` is the machine-readable authority.
+- `docs/post_gate5_compute_preflight.md` records the human-readable contract.
+- `scripts/run_post_gate5_compute_preflight.py` is the synthetic-only runner.
+- `tests/test_post_gate5_compute_preflight.py` verifies scope, accounting,
+  controls, and fail-closed admission logic.
+- RFIG-030 is reserved for source-bound compute margins after execution.
+
+Consequence:
+
+A PASS permits preparation of D010 only; it does not unlock research-data
+fitting. A STOP must be committed with the D008 future-research discussion
+record and cannot reduce, retry, or rescue the active P001 design.

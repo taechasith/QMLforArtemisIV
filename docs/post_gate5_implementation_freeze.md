@@ -1,11 +1,11 @@
 # Post-Gate-5 Exploratory Implementation Freeze
 
-Version: 0.1.2
+Version: 0.1.3
 Decision: D008
 Protocol: P001
 Prepared: 2026-07-13
 Accepted: 2026-07-13
-Status: Accepted by human research lead; implementation and synthetic validation complete; research-data execution remains unauthorized
+Status: Accepted by human research lead; implementation and synthetic validation complete; D009 synthetic preflight accepted; research-data execution remains unauthorized
 
 ## Decision
 
@@ -182,3 +182,7 @@ landmarks, estimator wrappers, scope guards, and synthetic tests are complete.
 The implementation result is not performance evidence. It only permits the
 next governance step: a separate clean-source compute preflight proposal before
 any development-row fitting can be considered.
+
+D009 accepted that next step as a synthetic-only compute-admission benchmark.
+The benchmark outcome remains separate from research execution: even a PASS
+can authorize only preparation of D010, not development-row fitting.

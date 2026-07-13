@@ -40,7 +40,8 @@ def test_d008_is_accepted_and_research_fit_remains_locked() -> None:
     assert config["synthetic_validation_completed_date"] == "2026-07-13"
     assert config["research_data_fitting_authorized"] is False
     assert config["research_data_execution_decision"] == (
-        "pending_separate_clean_source_preflight_and_execution_decision"
+        "d009_synthetic_compute_preflight_accepted_pending_execution; "
+        "later_d010_required_for_any_research_fit"
     )
     assert config["execution_authorized"] is False
     assert config["acceptance"]["current_decision"] == "accepted_by_human_research_lead"
