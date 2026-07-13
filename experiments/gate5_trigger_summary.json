@@ -1,0 +1,29 @@
+{
+  "best_qml_family_id": "Q01",
+  "best_qml_mean_nrmse": 0.6466136067266888,
+  "calibration_rows_read": 0,
+  "claim_boundary_diagnostics_complete": false,
+  "claim_boundary_handling": "mandatory_report_only_pending_human_interpretation",
+  "condition_1_within_five_percent": false,
+  "condition_2_reproducible_controlled_regime": false,
+  "condition_3_twenty_seed_grouped_stability": false,
+  "decision_available": false,
+  "decision_status": "repair_required_before_human_gate5_decision",
+  "evidence_contract_errors": [
+    "selection manifest is incomplete"
+  ],
+  "evidence_contract_valid": false,
+  "final_test_rows_read": 0,
+  "mean_relative_nrmse_gap": 72.99137081675265,
+  "paired_seed_count": 20,
+  "qualified_regime_count": 0,
+  "recommendation": "repair_or_complete_evidence_before_gate5_decision",
+  "relative_gap_bootstrap_lower": 71.88730067934766,
+  "relative_gap_bootstrap_upper": 74.09378223926319,
+  "source_commit": "6e5a6202eec486e88af6b969f6af86571fb0ce32",
+  "statistical_trigger_passed_before_audit_gates": false,
+  "strongest_classical_family_id": "C06",
+  "strongest_classical_mean_nrmse": 0.00873904077717515,
+  "technical_trigger_status": "UNAVAILABLE",
+  "trigger_passed": false
+}

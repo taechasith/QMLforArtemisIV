@@ -1,0 +1,7 @@
+schema_version: 0.1.0
+status: gate5_development_configurations_frozen_pending_human_decision
+selection_scope: development_only
+source_commit: 6e5a6202eec486e88af6b969f6af86571fb0ce32
+models: []
+calibration_rows_read: 0
+final_test_rows_read: 0

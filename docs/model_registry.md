@@ -2,7 +2,7 @@
 
 Version: 0.3.3
 Prepared: 2026-07-12
-Status: Gate 4 accepted; D004 diagnostics integrated; D005 and D006 accepted; development-only campaign authorized; no research model fitted
+Status: D006 development campaign complete; provisional selection recorded; D007 reporting candidate pending human acceptance
 
 ## Registered candidates
 
@@ -106,8 +106,9 @@ Phase 1 candidate ranking.
 - Frozen trial rows: `data/processed/simulator/tuning_manifest.csv`
 - Frozen random seeds: `data/processed/simulator/seed_manifest.csv`
 
-All registry statuses are `frozen_not_run`. Synthetic unit data were used only
-to verify interfaces, determinism, shapes, and access controls.
+At the Gate 4 freeze all registry statuses were `frozen_not_run`. The D006
+development campaign has now fitted the authorized grouped-CV tasks; no
+calibration or final-test model has been fitted.
 
 ## D005 implementation correction
 
@@ -145,3 +146,20 @@ one A01 or compressed-C05 trial selected at multiple dimensions cannot be
 collapsed. Only signed, eligible completed seed rows are registered. The
 source-bound campaign audit and mandatory D004 claim-boundary diagnostic
 package must be complete before a technical Gate 5 pass can be reported.
+
+## Provisional D006 development selection
+
+The immutable source-bound selection contains C01-T18, C02-T02, C03-T13,
+C04-T28, C05-T12, C06-T17, and Q01-T17. Q01-T17 uses four effective qubits at
+the 1,024-row rung. Its exact matched A01/C05-T17 views and independently tuned
+A01-T04/C05-T17 controls received the frozen 20 seed reruns. All 200 seed tasks
+completed.
+
+Q02 and Q03 have no finalist. At rung 128, 8/30 Q02 tasks and 4/30 Q03 tasks
+were eligible, below the frozen retain count of 15. All 150 fold diagnostics
+per family exist, and the ranking records terminal nonadvancement; later rungs
+and selected-configuration seed reruns were never authorized. D007 proposes to
+report those absences as `not_reached_under_frozen_eligibility` rather than as
+terminal campaign failures. Until D007 is accepted and derived reporting is
+regenerated, `experiments/phase1_model_registry.yaml` remains provisional and
+the official technical trigger remains `UNAVAILABLE`.

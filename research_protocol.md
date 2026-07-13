@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
 Version: 0.6.3
-Status: Gates 1-4 accepted; Gate 5 data qualified; D005 and D006 accepted; development-only fitting authorized
+Status: Gates 1-4 accepted; D006 campaign complete; D007 reporting candidate pending human acceptance
 Prepared: 2026-07-10  
-Updated: 2026-07-12
-Recommended next action: Run the bounded D006 qualification audit, then scale up only if it passes; later decide the Gate 5 trigger from development-only evidence
+Updated: 2026-07-13
+Recommended next decision: Accept, reject, or revise D007 before regenerating the post-fit Gate 5 report; the later Gate 5 trigger decision remains separate
 
 ## 1. Proposed title
 
@@ -752,6 +752,30 @@ itself authorize algorithm development. The maximum formal task count remains
 without overlap credit, for at most 1,285 executions inside those ceilings.
 Invalid or incomplete evidence yields `UNAVAILABLE` and repair, not a negative
 scientific result.
+
+The D006 campaign completed on 2026-07-13 from source commit `6e5a620`: 671
+tuning tasks and 200 exact seed reruns completed with zero task failures and
+zero calibration/final-test reads. Q01 advanced through all four rungs. Q02
+and Q03 stopped at rung 128 because only 8/30 and 4/30 tasks were eligible,
+below the frozen retain count of 15. The first report remains `UNAVAILABLE`
+because the implemented selection/reporting contract incorrectly describes
+those registered early stops as terminal failures and requires diagnostics
+from later stages that were never authorized.
+
+Deviation D007 was opened after outcomes became visible. It proposes a
+reporting-only, fail-closed recognition of the exact source-bound
+terminal-nonadvancement case. Every task, fold, digest, eligibility value, and
+ranking must remain unchanged; later rungs or seed results are explicitly not
+imputed. If D007 is accepted, Q02/Q03 trainability is reported from their 150
+completed tuning folds per family, Q01 retains its four-rung/20-seed evidence,
+and the unchanged trigger is evaluated only over eligible finalists. No report
+or figure regeneration is authorized until explicit acceptance, which both
+entry points enforce before writing. Regenerated evidence must keep the D006
+campaign source distinct from the accepted D007 candidate, clean reporting
+commit, and reporter/generator hashes. The accepted Git snapshot byte-anchors
+both the reporting implementation and every immutable D006 campaign evidence
+file; a complete derived-package digest manifest is written last and verified
+before figures.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

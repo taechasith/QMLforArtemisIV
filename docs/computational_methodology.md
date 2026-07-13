@@ -222,10 +222,11 @@ are never loosened to reduce runtime.
 Gate 3 was accepted on 2026-07-12 after the D001 repair and independent rerun.
 Gate 4 and D002 were accepted on 2026-07-12. Development generation is
 authorized. Corrected F0, F1, and F2 payloads pass their full D003 conformance
-audits. D005 and D006 were accepted on 2026-07-12. D006 freezes the exact
-matched-control campaign, immutable rung scheduler, 20-seed path, and
-equivalent vectorized statevector batch. Development-only fitting is authorized
-from a clean source commit, with scale-up contingent on the bounded benchmark.
+audits. D005 and D006 were accepted on 2026-07-12. The D006 development-only
+campaign completed on 2026-07-13 from source commit `6e5a620`: 871/871 tasks
+are complete and none failed. D007 now proposes a reporting-only correction for
+the registered Q02/Q03 terminal-nonadvancement outcome; report regeneration
+awaits explicit human acceptance.
 Calibration remains restricted to post-selection calibration, and final tests
 remain separately locked.
 
@@ -401,6 +402,7 @@ and scientific failures because they require different responses.
 | 2026-07-12 | Gate 5 literature hardening | The local QML space-fuel note contained useful leads but mixed primary literature, arXiv, vendor material, RequestPDF pages, and broad claims | Without source-grade controls, Gate 5 could overstate QML readiness or import adjacent QRL/annealing ideas into a supervised benchmark | Opened D004 before any research model fit, added source-vetting rules, kernel concentration/bandwidth diagnostics, trainability failure reporting, matched dequantization controls, fixed regime reports, and RFIG-019 | Preventive adaptation. Model families, thresholds, splits, tuning budgets, and final-test locks do not change; D004 strengthens interpretation and required graphing only |
 | 2026-07-12 | Gate 5 runner scientific audit | The freeze left exact folds, row hashes, fold-local transforms, and residual baseline indexing implicit; the implementation's default last-column baseline could select a one-hot or PCA component | Silent choices could leak validation statistics, distort unequal-fold weighting, or invalidate C06/Q03 physically | Opened D005 before model fitting; froze label-agnostic hashes, per-fold transforms, pooled OOF scoring, explicit target-scaled low-fidelity baselines, Q03 baseline exclusion from circuit angles, preflight tests, and RFIG-020 | Accepted by the human research lead from candidate commit `80ae35d`; 39,000 development rows passed preflight with zero calibration/final reads |
 | 2026-07-12 | Gate 5 matched-control campaign audit | D005's 330-task plan cycled control dimensions independently, so equal trial/seed indices did not always share a PCA dimension; it also lacked immutable multi-rung and 20-seed orchestration | Executing the plan could call unmatched or weak controls “matched,” permit incomplete-stage selection, under-project end-to-end runtime, or make the multi-day CPU run irreproducible | D006 repeats the same 30 A01/C05 trials at all three dimensions, advances controls independently while carrying exact QML-index views, freezes signed authorizations and terminal failures, benchmarks frozen 1,024-row worst-shape views with end-to-end timing, validates output containment and source-bound reports, and vectorizes identical state batches | Accepted by the human research lead from candidate commit `3ac9403`. The first stage has 450 tasks; no model family/trial/split/threshold changes, recorded state/feature/kernel differences are at most `2.67e-15`, and calibration/final reads remain prohibited |
+| 2026-07-13 | Gate 5 terminal-nonadvancement reporting audit | The completed campaign has 871 complete tasks and zero failures, but only 8/30 Q02 and 4/30 Q03 tasks were eligible at rung 128 versus retain=15 | The scheduler correctly stopped both families, while the reporter mislabeled their absent later authorization as terminal failure and demanded nonexistent later-rung/seed diagnostics | Opened D007 to verify the exact signed ranking/task/fold/digest chain, report trainability over authorized/reached stages, and keep stopped families excluded from selection and trigger evidence | Candidate pending human acceptance. No refit, rerank, threshold change, or locked read; the preserved report remains `UNAVAILABLE` until accepted |
 
 For RTC3 specifically, the qualified OEM predates the event by 15 hours 30
 minutes 41 seconds. A separate post-RTC3 trajectory product was not substituted

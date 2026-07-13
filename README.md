@@ -34,21 +34,21 @@ original cycled control dimensions were not exact matches for many QML trials.
 All 30 frozen A01 and compressed-C05 trials now repeat at 4/6/8 dimensions,
 with independently advanced strong controls and exact same-index QML controls;
 no hyperparameter trial or candidate family is added. Acceptance authorizes
-development-only research fitting under the frozen contract. No research model
-or scientific benchmark result exists yet; full scale-up remains contingent on
-the bounded qualification audit. Calibration and both final-test splits remain
-locked.
+development-only research fitting under the frozen contract. The authorization
+was published at commit `6e5a620`, and the campaign completed on 2026-07-13:
+671 tuning tasks and 200 exact seed reruns are terminally complete, with zero
+task failures, zero calibration reads, and zero final-test reads. Calibration
+and both final-test splits remain locked.
 
 The accepted D006 preflight verifies 39,000 development rows and 7,800
 complete decision sets with zero calibration/final-test reads. Its exact-lock
-validation passes 127 tests and 667 subtests; Ruff is clean. Recorded batched
+validation passes 132 tests and 667 subtests; Ruff is clean. Recorded batched
 state/feature/kernel outputs are within `2.67e-15` of the scalar path and reduce
 the measured 8-qubit/3-layer batch cost by roughly 7.5-19.4x depending on
 operation and rung.
-The campaign is now authorized from a clean tracked source commit. A bounded
-checkpoint using the frozen C04 trial plus the 1,024-row QML
-and matched-control views must pass the 25%-margin compute and storage
-projection before full scale-up. It uses end-to-end task timing, keeps
+The bounded qualification passed before scale-up: its 25%-margin ceiling case
+projected 328.84 core-hours, 13.15 wall-days with two classical workers, and
+0.081 GiB storage. The campaign used end-to-end task timing, kept
 preselection checkpoint scores outside ranking unless independently advanced,
 rejects every development output beneath the final-payload root, and preserves
 recoverable coordinator failures without freezing a stale scale-up decision.
@@ -59,6 +59,31 @@ and no-reference checks are mandatory report-only diagnostics; a technical
 trigger pass still requires the human lead's separate interpretation and
 decision. Invalid or incomplete evidence is reported as `UNAVAILABLE` and
 requires repair; it is never relabeled as a negative QML result.
+
+Q01-T17 became the only eligible QML finalist. Q02 and Q03 stopped at the
+128-row retention gate: 8/30 and 4/30 tasks, respectively, were eligible, below
+the frozen retain count of 15. All 300 associated tuning folds and optimizer
+diagnostics exist; neither family was refit or promoted after outcomes became
+visible.
+
+The first derived report is preserved as `UNAVAILABLE`, because the frozen
+reporter calls those registered early stops `incomplete_with_terminal_failures`
+despite the zero-failure audit and also demands nonexistent later-rung/seed
+diagnostics. D007 is a reporting-only candidate to recognize this exact
+source-bound terminal-nonadvancement case, evaluate D004 completeness over
+authorized/reached stages, and leave every model score, ranking, threshold,
+seed, and campaign digest unchanged. The report and RFIG-021 through RFIG-023
+will not be regenerated unless the human lead explicitly accepts D007; both
+reporting entry points now enforce that authorization before writing. Any
+accepted report will preserve `6e5a620` as the campaign source while separately
+recording the accepted D007 candidate, the clean reporting-source commit, and
+reporter/generator hashes. Publication also byte-checks the reporter and every
+immutable D006 campaign evidence file against the accepted candidate's Git
+snapshot. A digest-bound reporting-package manifest is written last, and the
+figure generator refuses incomplete, stale, or provenance-inconsistent inputs.
+Provisionally, Q01's mean NRMSE is 0.6466 versus 0.00874 for C06, the relative
+gap is 72.99, and no regime qualifies; these values are not yet an official
+Gate 5 `FAIL`.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
@@ -118,6 +143,7 @@ through a dated deviation record.
 - data/processed/reporting/gate5_preflight_audit.json: development-only Gate 5 data and lock audit.
 - data/processed/reporting/gate5_initial_execution_plan.csv: all 450 accepted D006 first-stage tasks (270 candidates and 180 non-winning matched-control views), ready under the clean-source fit guard.
 - scripts/run_gate5_campaign.py: immutable, resumable successive-halving and 20-seed Gate 5 scheduler.
+- experiments/: source-bound D006 campaign tables, audit, provisional `UNAVAILABLE` report, diagnostics, and model registry.
 - data/processed/reporting/gate5_statevector_batch_benchmark.json: locked-environment synthetic equivalence/runtime record for D006, bound to QML-source, benchmark-script, and lockfile hashes.
 - src/openqfuel/gate5_reporting.py: source-bound 20-seed, five-fold, matched-control trigger evaluator, D004 diagnostic auditor, and negative-result-safe report exporter.
 - scripts/make_gate5_result_figures.py: predeclared RFIG-021 through RFIG-023 development-result figures.

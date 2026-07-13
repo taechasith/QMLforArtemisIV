@@ -13,6 +13,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from openqfuel.gate5 import validate_development_output_path
+from openqfuel.gate5_reporting import (
+    assert_gate5_report_regeneration_authorized,
+    validate_gate5_reporting_package,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,6 +57,14 @@ def _learning_curve() -> tuple[Path, Path]:
     trigger = json.loads(
         (EXPERIMENTS / "gate5_trigger_summary.json").read_text(encoding="utf-8")
     )
+    diagnostics = json.loads(
+        (EXPERIMENTS / "gate5_claim_boundary_diagnostics.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    eliminated = set(
+        diagnostics.get("verified_terminal_nonadvancing_families", {})
+    )
     rows = (
         _rows(EXPERIMENTS / "phase1_tuning_results.csv")
         if trigger.get("decision_available")
@@ -91,12 +103,21 @@ def _learning_curve() -> tuple[Path, Path]:
                 color=colors[label],
                 label=label,
             )
+            if label in eliminated:
+                ax.annotate(
+                    "stopped at frozen retention gate",
+                    xy=points[-1],
+                    xytext=(8, 8),
+                    textcoords="offset points",
+                    fontsize=7.5,
+                    color=colors[label],
+                )
     if grouped:
         ax.set_xscale("log", base=2)
         ax.set_xticks([128, 256, 512, 1024], ["128", "256", "512", "1,024"])
         ax.set_xlabel("Training rows per grouped-CV fold")
         ax.set_ylabel("Mean pooled OOF NRMSE across authorized trials")
-        ax.set_title("Gate 5 development learning curves and matched controls")
+        ax.set_title("Gate 5 authorized learning-rung evidence and matched controls")
         ax.grid(alpha=0.22)
         ax.legend(frameon=False, ncols=3)
     else:
@@ -234,6 +255,22 @@ def _source_path(path: Path) -> str:
 def _register(paths: list[tuple[str, str, str, str, str, tuple[Path, Path]]]) -> None:
     existing = _rows(REGISTRY)
     fields = list(existing[0])
+    provenance_fields = [
+        "campaign_source_commit",
+        "reporting_source_commit",
+        "accepted_d007_candidate_commit",
+        "reporting_module_sha256",
+        "reporting_script_sha256",
+        "figure_generator_sha256",
+    ]
+    fields.extend(field for field in provenance_fields if field not in fields)
+    for row in existing:
+        for field in provenance_fields:
+            row.setdefault(field, "")
+    trigger = json.loads(
+        (EXPERIMENTS / "gate5_trigger_summary.json").read_text(encoding="utf-8")
+    )
+    provenance = trigger["reporting_provenance"]
     by_id = {row["figure_id"]: row for row in existing}
     for figure_id, title, source, caption, boundary, (png, svg) in paths:
         by_id[figure_id] = {
@@ -252,6 +289,14 @@ def _register(paths: list[tuple[str, str, str, str, str, tuple[Path, Path]]]) ->
             "svg_bytes": str(svg.stat().st_size),
             "caption": caption,
             "claim_boundary": boundary,
+            "campaign_source_commit": provenance["campaign_source_commit"],
+            "reporting_source_commit": provenance["reporting_source_commit"],
+            "accepted_d007_candidate_commit": provenance[
+                "accepted_d007_candidate_commit"
+            ],
+            "reporting_module_sha256": provenance["reporting_module_sha256"],
+            "reporting_script_sha256": provenance["reporting_script_sha256"],
+            "figure_generator_sha256": _sha(Path(__file__).resolve()),
         }
     ordered = sorted(
         by_id.values(), key=lambda row: int(row["figure_id"].split("-")[1])
@@ -267,11 +312,15 @@ def _register(paths: list[tuple[str, str, str, str, str, tuple[Path, Path]]]) ->
 def main() -> None:
     global EXPERIMENTS, REPORTING
     args = parse_args()
+    governance = assert_gate5_report_regeneration_authorized(ROOT)
     EXPERIMENTS = args.experiment_dir.resolve()
     REPORTING = args.reporting_dir.resolve()
     validate_development_output_path(ROOT, EXPERIMENTS)
     validate_development_output_path(ROOT, REPORTING)
     validate_development_output_path(ROOT, OUTPUT)
+    validate_gate5_reporting_package(
+        ROOT, EXPERIMENTS, REPORTING, governance
+    )
     learning = _learning_curve()
     seeds = _seed_summary()
     regime = _trigger_regime()
@@ -281,7 +330,7 @@ def main() -> None:
                 "RFIG-021",
                 "Gate 5 development learning curves and matched controls",
                 _source_path(EXPERIMENTS / "phase1_tuning_results.csv"),
-                "Pooled development-only learning curves retain identical rungs and matched PCA dimensions.",
+                "Pooled development-only evidence covers every authorized rung and matched PCA dimension; terminally nonadvancing families stop at their frozen retention gate.",
                 "Development model-selection evidence only; no calibration, final-test, mission, or hardware-advantage claim.",
                 learning,
             ),

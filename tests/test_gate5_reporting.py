@@ -2,12 +2,22 @@ from __future__ import annotations
 
 import csv
 import json
+import shutil
+import subprocess
 from pathlib import Path
 
-from openqfuel.gate4 import read_csv
+import pytest
+
+from openqfuel.gate4 import read_csv, sha256_file
 from openqfuel.gate5_reporting import (
+    D006_IMMUTABLE_EVIDENCE_PATHS,
+    D007_IMPLEMENTATION_PATHS,
+    REPORTING_PACKAGE_ARTIFACTS,
+    _assert_d007_candidate_snapshot,
+    _scientific_elimination_evidence,
     evaluate_claim_boundary_diagnostics,
     evaluate_gate5_trigger,
+    validate_campaign_evidence,
     write_gate5_report,
 )
 
@@ -135,7 +145,9 @@ def test_gate5_trigger_fails_when_qml_exceeds_five_percent() -> None:
     assert not trigger["condition_1_within_five_percent"]
 
 
-def test_no_eligible_finalist_still_writes_a_negative_report(tmp_path: Path) -> None:
+def test_no_eligible_finalist_writes_unavailable_repair_report(
+    tmp_path: Path,
+) -> None:
     experiment_dir = tmp_path / "experiments"
     reporting_dir = tmp_path / "reporting"
     experiment_dir.mkdir()
@@ -154,7 +166,9 @@ def test_no_eligible_finalist_still_writes_a_negative_report(tmp_path: Path) -> 
         encoding="utf-8",
     )
 
-    trigger = write_gate5_report(ROOT, experiment_dir, reporting_dir)
+    trigger = write_gate5_report(
+        ROOT, experiment_dir, reporting_dir, unpublished=True
+    )
 
     assert not trigger["trigger_passed"]
     assert not trigger["evidence_contract_valid"]
@@ -165,7 +179,21 @@ def test_no_eligible_finalist_still_writes_a_negative_report(tmp_path: Path) -> 
     )
     assert trigger["calibration_rows_read"] == 0
     assert trigger["final_test_rows_read"] == 0
+    assert trigger["reporting_provenance"]["mode"] == "unpublished_evaluation"
+    assert len(trigger["reporting_provenance"]["reporting_module_sha256"]) == 64
     assert (experiment_dir / "algorithm_trigger_report.md").is_file()
+    package = json.loads(
+        (experiment_dir / "gate5_reporting_package.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert package["status"] == "complete"
+    assert set(package["artifact_sha256"]) == set(REPORTING_PACKAGE_ARTIFACTS)
+    bases = {"experiment": experiment_dir, "reporting": reporting_dir}
+    for label, (location, filename) in REPORTING_PACKAGE_ARTIFACTS.items():
+        assert package["artifact_sha256"][label] == sha256_file(
+            bases[location] / filename
+        )
 
 
 def test_claim_boundary_diagnostics_cover_all_frozen_checks(tmp_path: Path) -> None:
@@ -373,3 +401,138 @@ def test_claim_boundary_diagnostics_cover_all_frozen_checks(tmp_path: Path) -> N
 
     assert diagnostics["status"] == "complete"
     assert all(diagnostics["checks"].values())
+
+
+def test_real_terminal_nonadvancement_is_complete_negative_evidence(
+    tmp_path: Path,
+) -> None:
+    source = ROOT / "experiments"
+    experiment_dir = tmp_path / "experiments"
+    reporting_dir = tmp_path / "reporting"
+    shutil.copytree(source, experiment_dir)
+    reporting_dir.mkdir()
+    audit = json.loads(
+        (experiment_dir / "gate5_campaign_audit.json").read_text(encoding="utf-8")
+    )
+    dispositions, errors = _scientific_elimination_evidence(
+        ROOT, experiment_dir, audit
+    )
+    assert not errors
+    assert dispositions["Q02"]["eligible_tasks"] == 8
+    assert dispositions["Q03"]["eligible_tasks"] == 4
+    assert all(
+        value["status"] == "verified_terminal_nonadvancing"
+        for value in dispositions.values()
+    )
+
+    seed_rows = read_csv(experiment_dir / "phase1_seed_results.csv")
+    regime_rows = read_csv(experiment_dir / "phase1_seed_regime_metrics.csv")
+    assert not validate_campaign_evidence(
+        ROOT, experiment_dir, audit, seed_rows, regime_rows
+    )
+    diagnostics = evaluate_claim_boundary_diagnostics(ROOT, experiment_dir)
+    assert diagnostics["status"] == "complete"
+    assert all(diagnostics["checks"].values())
+    by_family = {
+        row["family_id"]: row for row in diagnostics["variational_trainability"]
+    }
+    assert by_family["Q02"]["diagnostic_stage"] == "tuning_elimination_rung"
+    assert by_family["Q02"]["fold_rows"] == 150
+    assert by_family["Q03"]["fold_rows"] == 150
+    assert by_family["Q02"]["seed_rerun_status"] == (
+        "not_reached_under_frozen_eligibility"
+    )
+
+    trigger = write_gate5_report(
+        ROOT, experiment_dir, reporting_dir, unpublished=True
+    )
+    assert trigger["decision_available"]
+    assert trigger["evidence_contract_valid"]
+    assert trigger["claim_boundary_diagnostics_complete"]
+    assert trigger["technical_trigger_status"] == "FAIL"
+    assert not trigger["trigger_passed"]
+    assert trigger["selection_evidence_status"] == (
+        "complete_with_scientific_eliminations"
+    )
+    assert trigger["calibration_rows_read"] == 0
+    assert trigger["final_test_rows_read"] == 0
+    assert trigger["reporting_provenance"]["mode"] == "unpublished_evaluation"
+
+
+def test_gate5_report_publication_requires_explicit_d007_acceptance(
+    tmp_path: Path,
+) -> None:
+    experiment_dir = tmp_path / "experiments"
+    reporting_dir = tmp_path / "reporting"
+
+    with pytest.raises(RuntimeError, match="explicit D007 acceptance"):
+        write_gate5_report(ROOT, experiment_dir, reporting_dir)
+
+    assert not experiment_dir.exists()
+    assert not reporting_dir.exists()
+
+
+def test_unpublished_gate5_report_cannot_target_official_outputs() -> None:
+    with pytest.raises(RuntimeError, match="cannot write an official output path"):
+        write_gate5_report(
+            ROOT,
+            ROOT / "experiments",
+            ROOT / "data/processed/reporting",
+            unpublished=True,
+        )
+
+
+def test_accepted_candidate_snapshot_anchors_code_and_raw_evidence(
+    tmp_path: Path,
+) -> None:
+    for relative in (*D007_IMPLEMENTATION_PATHS, *D006_IMMUTABLE_EVIDENCE_PATHS):
+        path = tmp_path / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(f"frozen:{relative}\n", encoding="utf-8")
+    subprocess.check_call(["git", "init", "-q"], cwd=tmp_path)
+    subprocess.check_call(
+        ["git", "config", "user.email", "gate5-test@example.invalid"], cwd=tmp_path
+    )
+    subprocess.check_call(
+        ["git", "config", "user.name", "Gate 5 Test"], cwd=tmp_path
+    )
+    subprocess.check_call(["git", "add", "."], cwd=tmp_path)
+    subprocess.check_call(["git", "commit", "-qm", "freeze candidate"], cwd=tmp_path)
+    candidate = subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=tmp_path, text=True
+    ).strip()
+
+    _assert_d007_candidate_snapshot(tmp_path, candidate)
+    mutated = tmp_path / D006_IMMUTABLE_EVIDENCE_PATHS[0]
+    mutated.write_text("mutated audit and digest map\n", encoding="utf-8")
+    with pytest.raises(RuntimeError, match="immutable D006 evidence differs"):
+        _assert_d007_candidate_snapshot(tmp_path, candidate)
+
+
+def test_terminal_nonadvancement_semantics_fail_closed_on_selected_ranking(
+    tmp_path: Path,
+) -> None:
+    experiment_dir = tmp_path / "experiments"
+    experiment_dir.mkdir()
+    for filename in (
+        "phase1_tuning_results.csv",
+        "phase1_tuning_fold_metrics.csv",
+        "phase1_rung_rankings.csv",
+    ):
+        shutil.copy2(ROOT / "experiments" / filename, experiment_dir / filename)
+    audit = json.loads(
+        (ROOT / "experiments/gate5_campaign_audit.json").read_text(encoding="utf-8")
+    )
+    rankings = read_csv(experiment_dir / "phase1_rung_rankings.csv")
+    q02 = next(row for row in rankings if row["family_id"] == "Q02")
+    q02["selected_for_next_rung"] = "True"
+    _write_rows(experiment_dir / "phase1_rung_rankings.csv", rankings)
+    audit["evidence_sha256"]["phase1_rung_rankings.csv"] = sha256_file(
+        experiment_dir / "phase1_rung_rankings.csv"
+    )
+
+    dispositions, errors = _scientific_elimination_evidence(
+        ROOT, experiment_dir, audit
+    )
+    assert "Q02" not in dispositions
+    assert any("Q02 ranking" in error for error in errors)

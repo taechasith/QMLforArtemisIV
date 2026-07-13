@@ -1,0 +1,10 @@
+family_id,model_family,trial_id,effective_qubits,authorized_seed_rows,eligible_seed_rows,all_twenty_seeds_eligible,mean_pooled_oof_nrmse,mean_regret_m_s,calibration_rows_read,final_test_rows_read
+C01,ridge_elastic_net,C01-T18,,20,20,True,0.017520011540155554,15.595744351317435,0,0
+C02,extra_trees,C02-T02,,20,20,True,0.009950010614623616,17.539661667792537,0,0
+C03,histogram_gradient_boosting,C03-T13,,20,20,True,0.024628646047393732,17.066973906980603,0,0
+C04,sparse_gaussian_process,C04-T28,,20,20,True,0.069611068793644,19.907692307692304,0,0
+C05,multilayer_perceptron,C05-T12,,20,20,True,0.22307770331331342,17.213080090910903,0,0
+C06,physics_residual,C06-T17,,20,20,True,0.00873904077717515,17.10086269736719,0,0
+Q01,quantum_kernel,Q01-T17,4,20,20,True,0.6466136067266888,19.1407610458602,0,0
+Q02,,,,0,0,False,,,0,0
+Q03,,,,0,0,False,,,0,0

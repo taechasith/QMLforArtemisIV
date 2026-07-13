@@ -2,7 +2,7 @@
 
 Version: 0.6.3
 Prepared: 2026-07-12
-Status: Gate 4 accepted; D003 data qualified; D004 controls integrated; D005 and D006 accepted; development-only campaign authorized
+Status: D006 development campaign complete; D007 reporting candidate pending human acceptance; technical Gate 5 result remains UNAVAILABLE
 
 ## Analysis sequence
 
@@ -110,6 +110,25 @@ All intervals and tests use the already frozen 10,000 replicates. Failure of
 any condition rejects new-algorithm development. This development-only trigger
 does not use calibration, ID-final, OOD-final, finite-shot confirmation, or a
 post-result threshold change.
+
+## D007 post-fit reporting conformance candidate
+
+The completed D006 campaign contains 871/871 terminally complete tasks and no
+task failures. Q02 and Q03 reached the 128-row rung but could not fill the
+frozen retain count of 15: 8/30 and 4/30 tasks were eligible. Their immutable
+rankings therefore record terminal nonadvancement. The current reporter
+incorrectly treats the absence of later authorization as missing evidence.
+
+D007 would change only the reporting denominator after explicit human
+acceptance. A stopped family counts as complete scientific evidence only when
+all tasks and five-fold diagnostics at every authorized/reached rung are
+signed, source-matched, zero-read, digest-valid, and reproduce eligibility
+below the frozen retain count; the ranking must contain no selected row and the
+exact retention error. Q01 still requires all four rungs and 20 seed reruns.
+Q02/Q03 later rungs and seed reruns remain
+`not_reached_under_frozen_eligibility`, not missing or imputed. Any failed or
+inconsistent artifact remains `UNAVAILABLE`. Models, rankings, thresholds,
+controls, and statistical trigger conditions do not change.
 
 ## Endpoints
 

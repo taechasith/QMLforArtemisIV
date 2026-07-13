@@ -6,7 +6,9 @@ import csv
 import hashlib
 import json
 import math
-from collections import Counter, defaultdict
+import re
+import subprocess
+from collections import defaultdict
 from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
@@ -14,7 +16,7 @@ import numpy as np
 import yaml
 
 from .gate4 import read_csv, sha256_file
-from .gate5 import validate_development_output_path
+from .gate5 import _clean_source_commit, validate_development_output_path
 from .phase1_analysis import (
     holm_adjust,
     paired_bootstrap_mean_interval,
@@ -27,6 +29,92 @@ QML_IDS = ("Q01", "Q02", "Q03")
 SEED_COUNT = 20
 RELATIVE_GAP_LIMIT = 0.05
 FOLD_IDS = {"CV01", "CV02", "CV03", "CV04", "CV05"}
+FROZEN_QML_RETAIN_AT_128 = 15
+TERMINAL_NONADVANCEMENT_ERROR = (
+    "Too few eligible trials to satisfy the frozen retention count"
+)
+D007_IMPLEMENTATION_PATHS = (
+    "src/openqfuel/gate5_reporting.py",
+    "scripts/report_gate5_results.py",
+    "scripts/make_gate5_result_figures.py",
+)
+D006_IMMUTABLE_EVIDENCE_PATHS = (
+    "experiments/gate5_campaign_audit.json",
+    "experiments/phase1_rung_rankings.csv",
+    "experiments/phase1_seed_fold_metrics.csv",
+    "experiments/phase1_seed_regime_metrics.csv",
+    "experiments/phase1_seed_results.csv",
+    "experiments/phase1_tuning_fold_metrics.csv",
+    "experiments/phase1_tuning_regime_metrics.csv",
+    "experiments/phase1_tuning_results.csv",
+)
+REPORTING_PACKAGE_ARTIFACTS = {
+    "algorithm_trigger_report": ("experiment", "algorithm_trigger_report.md"),
+    "claim_boundary_diagnostics": (
+        "experiment",
+        "gate5_claim_boundary_diagnostics.json",
+    ),
+    "model_registry": ("experiment", "phase1_model_registry.yaml"),
+    "model_summary": ("reporting", "gate5_model_summary.csv"),
+    "regime_trigger": ("reporting", "gate5_regime_trigger.csv"),
+    "trigger_summary": ("experiment", "gate5_trigger_summary.json"),
+}
+
+
+def _assert_d007_candidate_snapshot(root: Path, candidate_commit: str) -> None:
+    """Anchor implementation and immutable D006 evidence to accepted Git bytes."""
+    ancestor = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", candidate_commit, "HEAD"],
+        cwd=root,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+    if ancestor.returncode != 0:
+        raise RuntimeError(
+            "Accepted D007 candidate commit does not exist in current Git history"
+        )
+    mismatches: list[str] = []
+    for relative in (*D007_IMPLEMENTATION_PATHS, *D006_IMMUTABLE_EVIDENCE_PATHS):
+        try:
+            accepted = subprocess.check_output(
+                ["git", "show", f"{candidate_commit}:{relative}"],
+                cwd=root,
+                stderr=subprocess.DEVNULL,
+            )
+        except subprocess.CalledProcessError:
+            mismatches.append(f"{relative} (absent from accepted candidate)")
+            continue
+        path = root / relative
+        if not path.is_file() or path.read_bytes() != accepted:
+            mismatches.append(relative)
+    if mismatches:
+        raise RuntimeError(
+            "Current reporting implementation or immutable D006 evidence differs "
+            "from the accepted D007 candidate: " + ", ".join(mismatches)
+        )
+
+
+def assert_gate5_report_regeneration_authorized(root: Path) -> dict[str, Any]:
+    """Fail closed until the post-outcome D007 reporting rule is accepted."""
+    config_path = root / "configs/phase1_benchmark.yaml"
+    config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    freeze = config.get("gate5_runner_freeze", {})
+    refinement = freeze.get("post_fit_reporting_refinement")
+    authorized = freeze.get("report_regeneration_authorized")
+    candidate_commit = str(freeze.get("d007_accepted_candidate_commit", ""))
+    if (
+        refinement != "d007_accepted"
+        or authorized is not True
+        or re.fullmatch(r"[0-9a-f]{40}", candidate_commit) is None
+    ):
+        raise RuntimeError(
+            "Gate 5 report regeneration is not authorized: explicit D007 "
+            "acceptance, its 40-character candidate commit, and "
+            "report_regeneration_authorized=true are required"
+        )
+    _assert_d007_candidate_snapshot(root, candidate_commit)
+    return freeze
 
 
 def _bool(value: Any) -> bool:
@@ -74,6 +162,138 @@ def _write_json(path: Path, value: Mapping[str, Any]) -> None:
     temporary.replace(path)
 
 
+def _reporting_package_paths(
+    experiment_dir: Path,
+    reporting_dir: Path,
+) -> dict[str, Path]:
+    bases = {"experiment": experiment_dir, "reporting": reporting_dir}
+    return {
+        label: bases[location] / filename
+        for label, (location, filename) in REPORTING_PACKAGE_ARTIFACTS.items()
+    }
+
+
+def validate_gate5_reporting_package(
+    root: Path,
+    experiment_dir: Path,
+    reporting_dir: Path,
+    governance: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Verify a complete official report package before rendering figures."""
+    errors: list[str] = []
+    package_path = experiment_dir / "gate5_reporting_package.json"
+    if not package_path.is_file():
+        raise RuntimeError("Gate 5 reporting package manifest is missing")
+    package = json.loads(package_path.read_text(encoding="utf-8"))
+    provenance = package.get("reporting_provenance", {})
+    candidate_commit = governance.get("d007_accepted_candidate_commit")
+    if package.get("status") != "complete":
+        errors.append("reporting package is not complete")
+    if not isinstance(provenance, Mapping):
+        errors.append("reporting package provenance is missing")
+        provenance = {}
+    if (
+        provenance.get("mode") != "official"
+        or provenance.get("accepted_d007_candidate_commit") != candidate_commit
+    ):
+        errors.append("reporting package is not bound to accepted D007")
+    head = subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=root, text=True
+    ).strip()
+    reporting_source = _text(provenance.get("reporting_source_commit"))
+    if not reporting_source or subprocess.run(
+        ["git", "merge-base", "--is-ancestor", reporting_source, head],
+        cwd=root,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    ).returncode != 0:
+        errors.append("reporting source commit is not in current Git history")
+    actual_code_hashes = {
+        "reporting_module_sha256": sha256_file(Path(__file__).resolve()),
+        "reporting_script_sha256": sha256_file(
+            root / "scripts/report_gate5_results.py"
+        ),
+        "figure_generator_sha256": sha256_file(
+            root / "scripts/make_gate5_result_figures.py"
+        ),
+    }
+    for field, actual in actual_code_hashes.items():
+        if provenance.get(field) != actual:
+            errors.append(f"reporting package {field} mismatch")
+
+    artifact_paths = _reporting_package_paths(experiment_dir, reporting_dir)
+    expected_hashes = package.get("artifact_sha256", {})
+    if not isinstance(expected_hashes, Mapping) or set(expected_hashes) != set(
+        artifact_paths
+    ):
+        errors.append("reporting package artifact map is incomplete")
+    else:
+        for label, path in artifact_paths.items():
+            if not path.is_file() or sha256_file(path) != expected_hashes.get(label):
+                errors.append(f"reporting package artifact mismatch: {label}")
+
+    structured_provenance: list[tuple[str, Any]] = []
+    trigger_path = artifact_paths["trigger_summary"]
+    diagnostics_path = artifact_paths["claim_boundary_diagnostics"]
+    registry_path = artifact_paths["model_registry"]
+    if trigger_path.is_file():
+        structured_provenance.append(
+            (
+                "trigger summary",
+                json.loads(trigger_path.read_text(encoding="utf-8")).get(
+                    "reporting_provenance"
+                ),
+            )
+        )
+    if diagnostics_path.is_file():
+        structured_provenance.append(
+            (
+                "claim-boundary diagnostics",
+                json.loads(diagnostics_path.read_text(encoding="utf-8")).get(
+                    "reporting_provenance"
+                ),
+            )
+        )
+    if registry_path.is_file():
+        structured_provenance.append(
+            (
+                "model registry",
+                yaml.safe_load(registry_path.read_text(encoding="utf-8")).get(
+                    "reporting_provenance"
+                ),
+            )
+        )
+    for label, embedded in structured_provenance:
+        if embedded != provenance:
+            errors.append(f"{label} provenance differs from reporting package")
+
+    csv_provenance_fields = (
+        "campaign_source_commit",
+        "reporting_source_commit",
+        "accepted_d007_candidate_commit",
+        "reporting_module_sha256",
+        "reporting_script_sha256",
+        "figure_generator_sha256",
+    )
+    for label in ("model_summary", "regime_trigger"):
+        path = artifact_paths[label]
+        rows = _seed_rows(path) if path.is_file() else []
+        if not rows or any(
+            row.get(field, "") != _text(provenance.get(field))
+            for row in rows
+            for field in csv_provenance_fields
+        ):
+            errors.append(f"{label} provenance differs from reporting package")
+    if not _zero_read_count(package.get("calibration_rows_read")) or not _zero_read_count(
+        package.get("final_test_rows_read")
+    ):
+        errors.append("reporting package does not preserve locked-split reads")
+    if errors:
+        raise RuntimeError("Invalid Gate 5 reporting package: " + "; ".join(errors))
+    return package
+
+
 def _text(value: Any) -> str:
     return "" if value is None else str(value)
 
@@ -93,6 +313,221 @@ def _task_identity(row: Mapping[str, Any]) -> tuple[str, str, str, str, str]:
         _text(row.get("rung_samples")),
         _text(row.get("matched_qubits")),
     )
+
+
+def _scientific_elimination_evidence(
+    root: Path,
+    experiment_dir: Path,
+    audit: Mapping[str, Any],
+) -> tuple[dict[str, dict[str, Any]], list[str]]:
+    """Verify D007's narrow, source-bound terminal-nonadvancement case.
+
+    This does not reinterpret a failed or interrupted campaign. It recognizes
+    only the exact D006 outcome where Q02/Q03 completed every authorized
+    128-row task and fold, but too few tasks satisfied the frozen optimizer
+    eligibility rule to fill the preregistered retain count of 15.
+    """
+
+    selection = audit.get("selection_manifest", {})
+    if not isinstance(selection, Mapping) or selection.get("status") == "complete":
+        return {}, []
+    errors: list[str] = []
+    if selection.get("status") != "incomplete_with_terminal_failures":
+        return {}, ["selection status is not a recognized D006 disposition"]
+    source_commit = _text(audit.get("source_commit"))
+    if not source_commit:
+        errors.append("campaign audit has no source commit")
+    if not _zero_read_count(audit.get("calibration_rows_read")) or not _zero_read_count(
+        audit.get("final_test_rows_read")
+    ):
+        errors.append("campaign audit does not preserve locked-split reads")
+    task_states = audit.get("task_states", {})
+    if not isinstance(task_states, Mapping) or not _zero_read_count(
+        task_states.get("failed")
+    ):
+        errors.append("campaign has terminal task failures")
+
+    missing = set(selection.get("missing_candidate_families", []))
+    if missing != {"Q02", "Q03"}:
+        errors.append("missing finalists are not exactly Q02 and Q03")
+    if selection.get("missing_tuned_controls") not in ([], ()):  # type: ignore[comparison-overlap]
+        errors.append("selection has missing tuned controls")
+    finalist_families = [
+        _text(row.get("family_id")) for row in selection.get("finalists", [])
+    ]
+    expected_families = set((*CLASSICAL_IDS, *QML_IDS))
+    if (
+        len(finalist_families) != len(set(finalist_families))
+        or set(finalist_families) | missing != expected_families
+        or set(finalist_families) & missing
+        or selection.get("candidate_family_count") != len(expected_families)
+        or selection.get("selected_family_count") != len(finalist_families)
+    ):
+        errors.append("selection family counts or identities are inconsistent")
+
+    required_files = (
+        "phase1_tuning_results.csv",
+        "phase1_tuning_fold_metrics.csv",
+        "phase1_rung_rankings.csv",
+    )
+    evidence_hashes = audit.get("evidence_sha256", {})
+    for filename in required_files:
+        path = experiment_dir / filename
+        expected = evidence_hashes.get(filename) if isinstance(evidence_hashes, Mapping) else None
+        if not path.is_file() or not expected:
+            errors.append(f"missing source-bound elimination file: {filename}")
+        elif sha256_file(path) != expected:
+            errors.append(f"elimination evidence digest mismatch: {filename}")
+    if errors:
+        return {}, sorted(set(errors))
+
+    tuning = _seed_rows(experiment_dir / "phase1_tuning_results.csv")
+    folds = _seed_rows(experiment_dir / "phase1_tuning_fold_metrics.csv")
+    rankings = _seed_rows(experiment_dir / "phase1_rung_rankings.csv")
+    if audit.get("authorized_tuning_tasks") != len(tuning):
+        errors.append("tuning-result count differs from campaign authorization")
+    if isinstance(task_states, Mapping) and task_states.get("complete") != (
+        int(audit.get("authorized_tuning_tasks", -1))
+        + int(audit.get("authorized_seed_tasks", -1))
+    ):
+        errors.append("complete task count differs from all authorizations")
+
+    frozen_manifest = read_csv(
+        root / "data/processed/simulator/tuning_manifest.csv"
+    )
+    dispositions: dict[str, dict[str, Any]] = {}
+    optimizer_fields = (
+        "cost_optimization_success",
+        "cost_optimization_message",
+        "cost_loss_improvement",
+        "cost_gradient_norm_proxy",
+        "cost_parameter_count",
+        "cost_logical_circuit_depth",
+        "cost_two_qubit_gate_count",
+        "feasibility_optimization_success",
+        "feasibility_optimization_message",
+        "feasibility_loss_improvement",
+        "feasibility_gradient_norm_proxy",
+        "feasibility_parameter_count",
+        "training_wall_time_s",
+        "inference_wall_time_s",
+    )
+    for family_id in sorted(missing):
+        frozen_ids = {
+            row["trial_id"] for row in frozen_manifest if row["family_id"] == family_id
+        }
+        family_results = [
+            row
+            for row in tuning
+            if row.get("family_id") == family_id
+            and row.get("candidate_role") == "primary_candidate"
+        ]
+        result_ids = {row.get("trial_id", "") for row in family_results}
+        if len(family_results) != 30 or result_ids != frozen_ids:
+            errors.append(f"{family_id} does not contain all 30 frozen tuning tasks")
+            continue
+        if any(
+            row.get("stage") != "tuning"
+            or row.get("status") != "complete"
+            or row.get("source_commit") != source_commit
+            or row.get("source_split") != "development"
+            or row.get("rung_samples") != "128"
+            or row.get("fold_count") != "5"
+            or not row.get("task_signature")
+            or not _zero_read_count(row.get("calibration_rows_read"))
+            or not _zero_read_count(row.get("final_test_rows_read"))
+            for row in family_results
+        ):
+            errors.append(f"{family_id} tuning tasks are not signed complete 128-row evidence")
+            continue
+
+        family_rankings = [
+            row
+            for row in rankings
+            if row.get("family_id") == family_id
+            and row.get("completed_rung") == "128"
+            and row.get("next_rung") == "256"
+        ]
+        if (
+            len(family_rankings) != 30
+            or {row.get("trial_id", "") for row in family_rankings} != frozen_ids
+            or any(
+                row.get("task_status") != "nonadvancing"
+                or row.get("advancement_error") != TERMINAL_NONADVANCEMENT_ERROR
+                or _bool(row.get("selected_for_next_rung"))
+                for row in family_rankings
+            )
+        ):
+            errors.append(f"{family_id} ranking is not frozen terminal nonadvancement")
+            continue
+
+        results_by_key = {row["task_key"]: row for row in family_results}
+        family_folds = [
+            row
+            for row in folds
+            if row.get("family_id") == family_id
+            and row.get("candidate_role") == "primary_candidate"
+        ]
+        folds_by_key: dict[str, list[Mapping[str, str]]] = defaultdict(list)
+        for row in family_folds:
+            folds_by_key[row.get("task_key", "")].append(row)
+        if len(family_folds) != 150 or set(folds_by_key) != set(results_by_key):
+            errors.append(f"{family_id} does not contain 150 matched tuning folds")
+            continue
+
+        recomputed_eligible: dict[str, bool] = {}
+        fold_error = False
+        for task_key, result in results_by_key.items():
+            task_folds = folds_by_key[task_key]
+            if (
+                {row.get("fold_id", "") for row in task_folds} != FOLD_IDS
+                or len(task_folds) != 5
+                or any(
+                    row.get("task_signature") != result.get("task_signature")
+                    or row.get("source_commit") != source_commit
+                    or row.get("source_split") != "development"
+                    or row.get("family_id") != family_id
+                    or row.get("trial_id") != result.get("trial_id")
+                    or row.get("rung_samples") != "128"
+                    or not _zero_read_count(row.get("calibration_rows_read"))
+                    or not _zero_read_count(row.get("final_test_rows_read"))
+                    or any(row.get(field, "") == "" for field in optimizer_fields)
+                    for row in task_folds
+                )
+            ):
+                fold_error = True
+                break
+            eligible = all(
+                _bool(row["cost_optimization_success"])
+                and _bool(row["feasibility_optimization_success"])
+                and _bool(row["eligible_to_advance"])
+                for row in task_folds
+            )
+            recomputed_eligible[task_key] = eligible
+            if eligible != _bool(result.get("eligible_to_advance")):
+                fold_error = True
+                break
+        if fold_error:
+            errors.append(f"{family_id} fold diagnostics do not reproduce task eligibility")
+            continue
+        eligible_count = sum(recomputed_eligible.values())
+        if eligible_count >= FROZEN_QML_RETAIN_AT_128:
+            errors.append(f"{family_id} had enough eligible trials to advance")
+            continue
+        dispositions[family_id] = {
+            "status": "verified_terminal_nonadvancing",
+            "last_authorized_rung": 128,
+            "blocked_next_rung": 256,
+            "authorized_tasks": 30,
+            "completed_folds": 150,
+            "eligible_tasks": eligible_count,
+            "required_retained_tasks": FROZEN_QML_RETAIN_AT_128,
+            "reason": TERMINAL_NONADVANCEMENT_ERROR,
+            "seed_rerun_status": "not_reached_under_frozen_eligibility",
+        }
+    if set(dispositions) != missing:
+        errors.append("not every missing family is verified terminal nonadvancing")
+    return dispositions, sorted(set(errors))
 
 
 def validate_campaign_evidence(
@@ -137,8 +572,17 @@ def validate_campaign_evidence(
         or benchmark.get("scale_up_authorized") is not True
     ):
         errors.append("bounded benchmark did not authorize scale-up")
+    elimination_dispositions, elimination_errors = _scientific_elimination_evidence(
+        root, experiment_dir, audit
+    )
     if isinstance(selection, Mapping) and selection.get("status") != "complete":
-        errors.append("selection manifest is incomplete")
+        missing = set(selection.get("missing_candidate_families", []))
+        if elimination_errors or set(elimination_dispositions) != missing:
+            errors.append("selection manifest is incomplete")
+            errors.extend(
+                f"selection elimination evidence: {error}"
+                for error in elimination_errors
+            )
 
     evidence_hashes = audit.get("evidence_sha256", {})
     if not isinstance(evidence_hashes, Mapping):
@@ -151,6 +595,7 @@ def validate_campaign_evidence(
             "phase1_tuning_results.csv",
             "phase1_tuning_fold_metrics.csv",
             "phase1_tuning_regime_metrics.csv",
+            "phase1_rung_rankings.csv",
         ):
             path = experiment_dir / filename
             expected = evidence_hashes.get(filename)
@@ -303,10 +748,20 @@ def evaluate_claim_boundary_diagnostics(
         "seeds": experiment_dir / "phase1_seed_results.csv",
         "seed_folds": experiment_dir / "phase1_seed_fold_metrics.csv",
         "regimes": experiment_dir / "phase1_seed_regime_metrics.csv",
+        "rankings": experiment_dir / "phase1_rung_rankings.csv",
     }
     rows = {
         name: _seed_rows(path) if path.is_file() else [] for name, path in paths.items()
     }
+    audit_path = experiment_dir / "gate5_campaign_audit.json"
+    audit = (
+        json.loads(audit_path.read_text(encoding="utf-8"))
+        if audit_path.is_file()
+        else {}
+    )
+    eliminated, elimination_errors = _scientific_elimination_evidence(
+        root, experiment_dir, audit
+    )
     manifest = {
         row["trial_id"]: json.loads(row["parameters_json"])
         for row in read_csv(root / "data/processed/simulator/tuning_manifest.csv")
@@ -365,9 +820,15 @@ def evaluate_claim_boundary_diagnostics(
         "kernel_rows",
         "nystrom_landmarks",
     )
-    variational_folds = [
+    variational_seed_folds = [
         row
         for row in rows["seed_folds"]
+        if row.get("family_id") in {"Q02", "Q03"}
+        and row.get("candidate_role") == "primary_candidate"
+    ]
+    variational_tuning_folds = [
+        row
+        for row in rows["folds"]
         if row.get("family_id") in {"Q02", "Q03"}
         and row.get("candidate_role") == "primary_candidate"
     ]
@@ -497,10 +958,54 @@ def evaluate_claim_boundary_diagnostics(
         if row.get("family_id") in {"Q02", "Q03"}
         and row.get("candidate_role") == "primary_candidate"
     ]
-    variational_seed_counts = Counter(row["family_id"] for row in variational_seed_rows)
+    expected_rung_order = (128, 256, 512, 1024)
+
+    def authorized_rungs_complete(label: str, rungs: set[int]) -> bool:
+        if rungs == expected_rungs:
+            return True
+        if label not in eliminated or not rungs:
+            return False
+        last_rung = int(eliminated[label]["last_authorized_rung"])
+        expected_prefix = set(
+            expected_rung_order[: expected_rung_order.index(last_rung) + 1]
+        )
+        return rungs == expected_prefix
+
+    def variational_family_diagnostics_complete(family_id: str) -> bool:
+        seed_rows = [
+            row for row in variational_seed_rows if row["family_id"] == family_id
+        ]
+        seed_folds = [
+            row for row in variational_seed_folds if row["family_id"] == family_id
+        ]
+        if seed_rows:
+            selected = seed_folds
+            seed_coverage = len(seed_rows) == SEED_COUNT
+        elif family_id in eliminated and not elimination_errors:
+            selected = [
+                row
+                for row in variational_tuning_folds
+                if row["family_id"] == family_id
+            ]
+            seed_coverage = True
+        else:
+            return False
+        return (
+            bool(selected)
+            and seed_coverage
+            and five_fold_task_coverage(selected)
+            and all(
+                all(row.get(field, "") != "" for field in variational_fields)
+                and "cost_gradient_norm_proxy" in row
+                and "feasibility_gradient_norm_proxy" in row
+                for row in selected
+            )
+        )
+
     checks = {
         "learning_curve_rungs_complete": all(
-            rungs == expected_rungs for rungs in rung_sets.values()
+            authorized_rungs_complete(label, rungs)
+            for label, rungs in rung_sets.items()
         ),
         "feature_scale_comparison_present": all(
             len(feature_scales[family_id]) >= 2 for family_id in QML_IDS
@@ -516,16 +1021,9 @@ def evaluate_claim_boundary_diagnostics(
             all(row.get(field, "") != "" for field in q01_required_fields)
             for row in [*q01_folds, *q01_seed_folds]
         ),
-        "variational_parameter_trainability_diagnostics_complete": bool(
-            variational_folds
-        )
-        and five_fold_task_coverage(variational_folds)
-        and variational_seed_counts == Counter({"Q02": 20, "Q03": 20})
-        and all(
-            all(row.get(field, "") != "" for field in variational_fields)
-            and "cost_gradient_norm_proxy" in row
-            and "feasibility_gradient_norm_proxy" in row
-            for row in variational_folds
+        "variational_parameter_trainability_diagnostics_complete": all(
+            variational_family_diagnostics_complete(family_id)
+            for family_id in ("Q02", "Q03")
         ),
         "random_feature_controls_present": any(
             row.get("family_id") == "A01" for row in controls
@@ -548,15 +1046,40 @@ def evaluate_claim_boundary_diagnostics(
     }
     variational_summary = []
     for family_id in ("Q02", "Q03"):
-        selected = [row for row in variational_folds if row["family_id"] == family_id]
+        selected_seed_folds = [
+            row for row in variational_seed_folds if row["family_id"] == family_id
+        ]
+        selected_tuning_folds = [
+            row for row in variational_tuning_folds if row["family_id"] == family_id
+        ]
         selected_seeds = [
             row for row in variational_seed_rows if row["family_id"] == family_id
         ]
+        selected_tuning_tasks = [
+            row
+            for row in complete_tuning
+            if row.get("family_id") == family_id
+            and row.get("candidate_role") == "primary_candidate"
+        ]
+        if selected_seed_folds:
+            selected = selected_seed_folds
+            diagnostic_stage = "selected_configuration_seed_reruns"
+            seed_rerun_status = "complete"
+        else:
+            selected = selected_tuning_folds
+            diagnostic_stage = "tuning_elimination_rung"
+            seed_rerun_status = (
+                "not_reached_under_frozen_eligibility"
+                if family_id in eliminated
+                else "missing"
+            )
         variational_summary.append(
             {
                 "family_id": family_id,
+                "diagnostic_stage": diagnostic_stage,
                 "fold_rows": len(selected),
                 "seed_rows": len(selected_seeds),
+                "seed_rerun_status": seed_rerun_status,
                 "seed_ineligibility_rate": (
                     float(
                         np.mean(
@@ -567,6 +1090,22 @@ def evaluate_claim_boundary_diagnostics(
                         )
                     )
                     if selected_seeds
+                    else None
+                ),
+                "tuning_task_ineligibility_rate": (
+                    float(
+                        np.mean(
+                            [
+                                not _bool(row["eligible_to_advance"])
+                                for row in selected_tuning_tasks
+                            ]
+                        )
+                    )
+                    if selected_tuning_tasks
+                    and all(
+                        row.get("eligible_to_advance", "") != ""
+                        for row in selected_tuning_tasks
+                    )
                     else None
                 ),
                 "cost_optimizer_failure_rate": (
@@ -649,6 +1188,16 @@ def evaluate_claim_boundary_diagnostics(
         "learning_curve_rungs": {
             label: sorted(values) for label, values in rung_sets.items()
         },
+        "learning_curve_dispositions": {
+            label: (
+                "full_four_rung_curve"
+                if values == expected_rungs
+                else eliminated.get(label, {}).get("status", "incomplete")
+            )
+            for label, values in rung_sets.items()
+        },
+        "verified_terminal_nonadvancing_families": eliminated,
+        "terminal_nonadvancement_errors": elimination_errors,
         "feature_scales": {
             family_id: sorted(feature_scales[family_id]) for family_id in QML_IDS
         },
@@ -1038,6 +1587,7 @@ def _model_registry(
     root: Path,
     seed_rows: Sequence[Mapping[str, str]],
     source_commit: str,
+    reporting_provenance: Mapping[str, Any],
 ) -> dict[str, Any]:
     tuning = {
         row["trial_id"]: row
@@ -1081,6 +1631,7 @@ def _model_registry(
         "status": "gate5_development_configurations_frozen_pending_human_decision",
         "selection_scope": "development_only",
         "source_commit": source_commit,
+        "reporting_provenance": dict(reporting_provenance),
         "models": sorted(
             entries,
             key=lambda row: (
@@ -1099,13 +1650,52 @@ def write_gate5_report(
     root: Path,
     experiment_dir: Path,
     reporting_dir: Path,
+    *,
+    unpublished: bool = False,
 ) -> dict[str, Any]:
+    if unpublished:
+        official_paths = {
+            (root / "experiments").resolve(),
+            (root / "data/processed/reporting").resolve(),
+        }
+        requested_paths = {experiment_dir.resolve(), reporting_dir.resolve()}
+        if official_paths & requested_paths:
+            raise RuntimeError(
+                "Unpublished Gate 5 evaluation cannot write an official output path"
+            )
+        governance = yaml.safe_load(
+            (root / "configs/phase1_benchmark.yaml").read_text(encoding="utf-8")
+        ).get("gate5_runner_freeze", {})
+        reporting_source_commit = "unpublished_working_tree"
+    else:
+        governance = assert_gate5_report_regeneration_authorized(root)
+        reporting_source_commit = _clean_source_commit(root)
     validate_development_output_path(root, experiment_dir)
     validate_development_output_path(root, reporting_dir)
+    package_path = experiment_dir / "gate5_reporting_package.json"
+    package_path.unlink(missing_ok=True)
     seed_rows = _seed_rows(experiment_dir / "phase1_seed_results.csv")
     regime_rows = _seed_rows(experiment_dir / "phase1_seed_regime_metrics.csv")
     audit = json.loads(
         (experiment_dir / "gate5_campaign_audit.json").read_text(encoding="utf-8")
+    )
+    reporting_provenance = {
+        "mode": "unpublished_evaluation" if unpublished else "official",
+        "campaign_source_commit": audit.get("source_commit"),
+        "reporting_source_commit": reporting_source_commit,
+        "accepted_d007_candidate_commit": governance.get(
+            "d007_accepted_candidate_commit"
+        ),
+        "reporting_module_sha256": sha256_file(Path(__file__).resolve()),
+        "reporting_script_sha256": sha256_file(
+            root / "scripts/report_gate5_results.py"
+        ),
+        "figure_generator_sha256": sha256_file(
+            root / "scripts/make_gate5_result_figures.py"
+        ),
+    }
+    eliminated_families, elimination_errors = _scientific_elimination_evidence(
+        root, experiment_dir, audit
     )
     evidence_errors = validate_campaign_evidence(
         root, experiment_dir, audit, seed_rows, regime_rows
@@ -1165,21 +1755,52 @@ def write_gate5_report(
             "statistical_trigger_passed_before_audit_gates": statistical_trigger_passed,
             "claim_boundary_diagnostics_complete": claim_boundary_complete,
             "claim_boundary_handling": claim_boundary["handling"],
+            "selection_evidence_status": (
+                "complete_with_scientific_eliminations"
+                if eliminated_families and not elimination_errors
+                else (
+                    "complete"
+                    if audit.get("selection_manifest", {}).get("status") == "complete"
+                    else "incomplete"
+                )
+            ),
+            "scientifically_eliminated_families": eliminated_families,
             "calibration_rows_read": audit.get("calibration_rows_read"),
             "final_test_rows_read": audit.get("final_test_rows_read"),
+            "reporting_provenance": reporting_provenance,
         }
     )
+    claim_boundary["reporting_provenance"] = reporting_provenance
     _write_json(experiment_dir / "gate5_trigger_summary.json", trigger)
     _write_json(
         experiment_dir / "gate5_claim_boundary_diagnostics.json", claim_boundary
     )
-    _write_csv(reporting_dir / "gate5_model_summary.csv", summaries)
-    _write_csv(reporting_dir / "gate5_regime_trigger.csv", regimes)
+    csv_provenance = {
+        "campaign_source_commit": reporting_provenance["campaign_source_commit"],
+        "reporting_source_commit": reporting_provenance["reporting_source_commit"],
+        "accepted_d007_candidate_commit": reporting_provenance[
+            "accepted_d007_candidate_commit"
+        ],
+        "reporting_module_sha256": reporting_provenance[
+            "reporting_module_sha256"
+        ],
+        "reporting_script_sha256": reporting_provenance[
+            "reporting_script_sha256"
+        ],
+        "figure_generator_sha256": reporting_provenance[
+            "figure_generator_sha256"
+        ],
+    }
+    summary_rows = [{**row, **csv_provenance} for row in summaries]
+    regime_output_rows = [{**row, **csv_provenance} for row in regimes]
+    _write_csv(reporting_dir / "gate5_model_summary.csv", summary_rows)
+    _write_csv(reporting_dir / "gate5_regime_trigger.csv", regime_output_rows)
 
     registry = _model_registry(
         root,
         seed_rows if not evidence_errors else [],
         str(audit.get("source_commit")),
+        reporting_provenance,
     )
     registry_path = experiment_dir / "phase1_model_registry.yaml"
     registry_path.write_text(
@@ -1190,7 +1811,12 @@ def write_gate5_report(
 
 Status: **Technical trigger {verdict}**
 Scope: development-only grouped CV; 20 frozen seed indices
-Source commit: `{audit.get("source_commit")}`
+Campaign source commit: `{audit.get("source_commit")}`
+Reporting source commit: `{reporting_provenance["reporting_source_commit"]}`
+Accepted D007 candidate commit: `{reporting_provenance["accepted_d007_candidate_commit"]}`
+Reporting module SHA-256: `{reporting_provenance["reporting_module_sha256"]}`
+Reporting script SHA-256: `{reporting_provenance["reporting_script_sha256"]}`
+Figure generator SHA-256: `{reporting_provenance["figure_generator_sha256"]}`
 
 ## Decision result
 
@@ -1211,6 +1837,11 @@ Recommendation: `{trigger["recommendation"]}`.
 
 Evidence-contract findings: `{trigger["evidence_contract_errors"]}`.
 
+Selection evidence: `{trigger["selection_evidence_status"]}`. Scientifically
+eliminated families: `{trigger["scientifically_eliminated_families"]}`. A
+terminally nonadvancing family remains excluded from seed comparisons and the
+trigger; no missing seed evidence is imputed.
+
 D004 claim-boundary handling: `{trigger["claim_boundary_handling"]}`. The
 feature-scale, entanglement-removal, random-feature, parameter-count,
 sample/rung, and no-reference summaries are frozen in
@@ -1228,5 +1859,19 @@ any new algorithm work.
 """
     (experiment_dir / "algorithm_trigger_report.md").write_text(
         report, encoding="utf-8"
+    )
+    artifact_paths = _reporting_package_paths(experiment_dir, reporting_dir)
+    _write_json(
+        package_path,
+        {
+            "schema_version": "0.1.0",
+            "status": "complete",
+            "reporting_provenance": reporting_provenance,
+            "artifact_sha256": {
+                label: sha256_file(path) for label, path in artifact_paths.items()
+            },
+            "calibration_rows_read": audit.get("calibration_rows_read"),
+            "final_test_rows_read": audit.get("final_test_rows_read"),
+        },
     )
     return trigger

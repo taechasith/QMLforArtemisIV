@@ -1,6 +1,6 @@
 schema_version: "0.4.2"
 status: "gate_4_accepted_development_generation_authorized"
-gate5_status: "d005_runner_and_d006_campaign_accepted_development_fitting_authorized"
+gate5_status: "d006_campaign_complete_d007_reporting_candidate_pending_human_acceptance"
 prepared_date: "2026-07-12"
 scenario_generation_config: "configs/scenario_generation.yaml"
 
@@ -350,6 +350,13 @@ gate5_runner_freeze:
   d006_accepted_date: "2026-07-12"
   d006_accepted_candidate_commit: "3ac9403bcba915afa7bea06fec13e7f1007d4caa"
   d006_acceptance_scope: "development-only research fitting under the frozen campaign contract; full scale-up remains contingent on the bounded benchmark audit"
+  campaign_source_commit: "6e5a6202eec486e88af6b969f6af86571fb0ce32"
+  campaign_completed_date: "2026-07-13"
+  campaign_terminal_tasks: 871
+  campaign_terminal_failures: 0
+  post_fit_reporting_refinement: "d007_candidate_pending_human_acceptance"
+  report_regeneration_authorized: false
+  reporting_provenance_required: "byte-match reporting code and immutable D006 evidence to the accepted D007 Git snapshot; preserve the campaign source separately from the clean reporting-source commit and code hashes; write and verify a complete derived-package digest manifest before figures"
   implementation: "scripts/run_phase1_development.py, scripts/run_gate5_campaign.py, openqfuel.gate5, and openqfuel.gate5_campaign"
   split_scope: "development only; calibration prohibited for fitting and selection; final payload absent and locked"
   cv_assignment:

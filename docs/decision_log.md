@@ -729,7 +729,7 @@ Controls and evidence:
 
 - `gate5_initial_execution_plan.csv` is regenerated with 270 candidate tasks and 180 non-winning control views.
 - `openqfuel.gate5_campaign` enforces stage authorization, exact control matching, independent control advancement, task validation, atomic locks, terminal-state selection, and formal 20-seed coverage.
-- Result CSV digests, task signatures, source commit, development scope, selection identity, control dimension/view, and zero locked-split reads are revalidated before reporting; malformed or incomplete evidence produces a negative report rather than a partial pass.
+- Result CSV digests, task signatures, source commit, development scope, selection identity, control dimension/view, and zero locked-split reads are revalidated before reporting; malformed or incomplete evidence produces an `UNAVAILABLE` repair report rather than a partial pass or negative QML result.
 - Statevector equivalence tests cover 4-12 qubits, one to three layers, kernels, features, finite shots, objectives, and numerical gradients.
 - Formal fitting still requires a clean tracked tree and leaves calibration and both final-test splits untouched.
 
@@ -749,3 +749,62 @@ authorized only if its frozen 25%-margin compute, wall-time, and storage audit
 passes. Calibration and both final-test splits remain locked, and the later
 Gate 5 scientific trigger remains a separate human accept/reject/revise
 decision after development-only evidence is published.
+
+### Deviation D007 - Post-fit terminal-nonadvancement reporting conformance
+
+Date opened: 2026-07-13
+Status: **Candidate; explicit human acceptance required before report regeneration**
+Authority requested: Human research lead
+
+Original rule:
+
+D006 requires complete, source-bound campaign evidence before the technical
+Gate 5 trigger can be classified as `PASS` or `FAIL`. The implemented reporter
+interprets completeness as requiring a finalist, all four learning rungs, and
+20 selected-configuration seed reruns from every registered QML family.
+
+Observed problem:
+
+The D006 campaign completed 671 tuning tasks and 200 seed tasks: 871/871 are
+terminally complete, none failed, and calibration/final-test reads remain zero.
+At the 128-row rung, 8/30 Q02 tasks and 4/30 Q03 tasks were eligible, below the
+frozen retain count of 15. The immutable ranking therefore recorded all 30
+tasks in each family as nonadvancing with `Too few eligible trials to satisfy
+the frozen retention count`. Q01 advanced through all four rungs.
+
+The selection artifact nevertheless labels the two registered scientific
+stops `incomplete_with_terminal_failures`. There were no terminal task
+failures. The reporter also ignores the 150 complete tuning-fold optimizer and
+trainability records per stopped family because it demands nonexistent seed
+reruns. The first report therefore remains `UNAVAILABLE`.
+
+Proposed revised rule:
+
+- Change reporting semantics only. Do not refit, rerank, retry, or add any model, trial, rung, seed, threshold, split, family, or control.
+- Leave every D006 campaign artifact, authorization, score, and digest unchanged.
+- Byte-match the reporter, figure generator, campaign audit, rung rankings, and all tuning/seed result, fold, and regime tables to the accepted D007 candidate's Git snapshot before publication. Preserve the D006 campaign source separately from the accepted candidate, clean reporting-source commit, and code hashes. Write the complete derived-package digest manifest last, and require it before figure generation.
+- Recognize only the exact Q02/Q03 source-bound terminal-nonadvancement case: all 30 frozen tasks and 150 folds must be signed complete, source-matched, development-only, zero-read, and diagnostically complete; task eligibility must recompute below retain=15; the immutable ranking must contain no selected row and the exact frozen retention error.
+- Treat any missing/failed task, digest mismatch, incomplete fold, inconsistent eligibility, unexpected missing family/control, or altered ranking as `UNAVAILABLE`.
+- Evaluate learning-rung and trainability completeness over authorized/reached stages. Q01 retains four-rung and 20-seed evidence. Q02/Q03 retain their complete 128-row tuning diagnostics, while later rungs and seed reruns are explicitly `not_reached_under_frozen_eligibility`.
+- Never substitute the qualification-only 1,024-row Q02/Q03 tasks into selection or trigger evidence. Evaluate the unchanged trigger only over eligible finalists.
+
+Outcome visibility and likely bias:
+
+Development outcomes are visible. Provisionally, Q01 has mean NRMSE 0.6466,
+C06 has 0.00874, their relative gap is 72.99, and no preregistered regime
+qualifies. D007 could therefore change the official status from `UNAVAILABLE`
+to a valid scientific `FAIL`. It cannot improve or recalculate a model score,
+but it changes whether existing evidence is decision-eligible, so explicit
+post-outcome human acceptance is required.
+
+Human decision:
+
+Pending. D006 acceptance does not imply D007 acceptance.
+
+Consequence if accepted:
+
+Regenerate only the report, diagnostic summary, model registry, reporting
+CSVs, and RFIG-021 through RFIG-023 from unchanged D006 evidence. The resulting
+technical outcome will still require a separate human Gate 5
+accept/reject/revise decision. Calibration, final tests, Gate 6, and new
+algorithm work remain unauthorized.

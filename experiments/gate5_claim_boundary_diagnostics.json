@@ -1,0 +1,8 @@
+{
+  "calibration_rows_read": 0,
+  "checks": {},
+  "final_test_rows_read": 0,
+  "handling": "mandatory_report_only_pending_human_interpretation",
+  "reason": "source-bound campaign evidence is invalid",
+  "status": "incomplete"
+}
