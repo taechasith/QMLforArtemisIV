@@ -132,9 +132,35 @@ def _validated_sources() -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]
     summary = _json(REPORTING / "campaign_summary.json")
     decision = _json(REPORTING / "exploratory_decision.json")
     source_commit = str(summary["source_commit"])
+    config = yaml.safe_load(
+        _git_blob(
+            source_commit, "configs/post_gate5_development_execution.yaml"
+        ).decode("utf-8")
+    )
+    resume = config.get("campaign_resume_decision", {})
+    c2_to_r1_chain = (
+        preflight.get("_source_path") == C2_PREFLIGHT.relative_to(ROOT).as_posix()
+        and preflight.get("decision_id") == "D011-C2"
+        and preflight.get("status") == "PASS"
+        and resume.get("decision_id") == "D011-R1"
+        and resume.get("prerequisite_result")
+        == C2_PREFLIGHT.relative_to(ROOT).as_posix()
+        and resume.get("prerequisite_status") == "PASS"
+        and resume.get("campaign_execution_authorized") is True
+        and int(resume.get("campaign_count_limit", 0)) == 1
+        and resume.get("development_rows_authorized") is True
+        and int(resume.get("calibration_rows_read", -1)) == 0
+        and int(resume.get("final_test_rows_read", -1)) == 0
+        and resume.get("hardware_execution_authorized") is False
+        and resume.get("gpu_execution_authorized") is False
+        and resume.get("gate6_authorized") is False
+    )
     if (
         preflight.get("status") != "PASS"
-        or preflight.get("source_commit") != source_commit
+        or (
+            preflight.get("source_commit") != source_commit
+            and not c2_to_r1_chain
+        )
         or summary.get("status") != "complete"
         or decision.get("status") != "complete"
         or decision.get("source_commit") != source_commit
@@ -432,7 +458,7 @@ def draw_rfig027() -> tuple[Path, Path]:
         if values:
             box = ax.boxplot(
                 values,
-                labels=active_labels,
+                tick_labels=active_labels,
                 patch_artist=True,
                 showfliers=False,
                 widths=0.58,

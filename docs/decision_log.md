@@ -1301,6 +1301,7 @@ human decision is whether to resume the single D011 development-only campaign.
 Date prepared: 2026-07-14
 Date accepted: 2026-07-14
 Initial status: **Accepted; campaign execution pending**
+Outcome status: **Completed; valid development-only exploratory negatives**
 Authority: Human research lead instructed the project to resume the D011 development-only campaign after D011-C2 PASS
 
 Decision:
@@ -1322,3 +1323,18 @@ Expected reporting:
 RFIG-026 through RFIG-028 report reached development evidence. RFIG-029 updates
 for any governed stop, terminal nonadvancement, or valid negative outcome.
 RFIG-031 remains the corrected synthetic compute-admission evidence.
+
+Result:
+
+- The campaign completed from source commit `083d777` with 39,000 development
+  rows read and zero calibration/final-test rows, hardware/GPU jobs, or Gate 6
+  runs.
+- Q01b completed all five folds and 20 selected seeds but was not promising:
+  mean pooled OOF NRMSE was 0.6612 versus C06 at 0.0068328, relative gap was
+  95.769x, and qualified dequantization regimes were zero.
+- FQK completed all five folds and 20 selected seeds but was not promising:
+  mean AUROC was 0.7436, mean Brier was 0.1561, and recall at 0.5 was 0.1089
+  versus C02-T02 at 0.9134, 0.1062, and 0.3233.
+- P001-FR004 and P001-FR005 record future-only improvements. These suggestions
+  require a new protocol and do not alter, rescue, or extend the active P001
+  experiment.

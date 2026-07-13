@@ -1,0 +1,45 @@
+{
+  "calibration_rows_read": 0,
+  "campaign_index_sha256": "936a131e62d7d58abdb53b9c9b8f3357e70da6a58e4fcf5bde728dd2e90db0f0",
+  "decision_id": "D011",
+  "files": {
+    "campaign_summary.json": {
+      "bytes": 2720,
+      "sha256": "1f948bc6c6613ec38d9f4403f09ff6ffcaac5b5bee4c936faabefdd2945e168f"
+    },
+    "control_summary.csv": {
+      "bytes": 49223,
+      "sha256": "bc701c64f10c8f83bd5b10a8298019a050e36ea807a71762ea8bf547548bfaff"
+    },
+    "exploratory_decision.json": {
+      "bytes": 1812,
+      "sha256": "b1f3945496f9828a67233e21d33cc0c7d4274ebdfcf8f030c93a459e68b55a6b"
+    },
+    "kernel_diagnostics.csv": {
+      "bytes": 21164,
+      "sha256": "31bfe42e41da1c6f4f11362d8b973e5b7fbc2c487a17091e3692ec3e018a86ba"
+    },
+    "q01b_regime_comparisons.csv": {
+      "bytes": 2439,
+      "sha256": "fbaec53ea0ae8784307210f48f55d81cf52f34a368bc9e8e097d78ea1f404fb7"
+    },
+    "selected_summary.csv": {
+      "bytes": 36904,
+      "sha256": "c8df2f5846dedeffa35e27cd39dbce47186c298598312130fa62b4f0cfdc7008"
+    },
+    "sensitivity_summary.csv": {
+      "bytes": 72250,
+      "sha256": "bea30e5d16c5b78f91f1d2ab9d7b9ff9c8de37091424c3d25fdc565222be15e2"
+    },
+    "tuning_summary.csv": {
+      "bytes": 121864,
+      "sha256": "e1f0725084135a8769a8121067cec5ed0f22222f608ac8ea5d7370de61abc5a3"
+    }
+  },
+  "final_test_rows_read": 0,
+  "future_discussion_register_sha256": "4e56f08852229c1dc3c320eb6a3752f89b81fb2d86939a9b0e46dce362d17727",
+  "protocol_id": "P001",
+  "schema_version": "0.1.0",
+  "source_commit": "083d777961a615885573c9f18efeb9802755890a",
+  "status": "complete"
+}

@@ -1,0 +1,44 @@
+{
+  "calibration_rows_read": 0,
+  "claim_boundary": "Development-only exploratory signal. A promising label can support a later protocol decision only and is not quantum advantage, mission performance, Gate 5 revision, or Gate 6 authority.",
+  "decision_id": "D011",
+  "final_test_rows_read": 0,
+  "gate5_result_unchanged": true,
+  "gate6_authorized": false,
+  "protocol_id": "P001",
+  "schema_version": "0.1.0",
+  "source_commit": "083d777961a615885573c9f18efeb9802755890a",
+  "status": "complete",
+  "tracks": {
+    "FQK": {
+      "all_five_folds_and_twenty_seeds": true,
+      "auroc_condition": false,
+      "brier_condition": false,
+      "mean_auroc": 0.7435706337524658,
+      "mean_false_negative_rate": 0.8911403407115541,
+      "mean_false_positive_rate": 0.08769056007375456,
+      "mean_pooled_oof_brier": 0.15610274255475928,
+      "mean_precision_at_0_5": 0.26074196503693897,
+      "mean_recall_at_0_5": 0.10885965928844592,
+      "promising": false,
+      "recall_condition": false,
+      "selected_projection_id": "PX-03",
+      "status": "valid_exploratory_negative",
+      "strongest_comparator_id": "C02-T02",
+      "strongest_comparator_mean_auroc": 0.9133640486826338,
+      "strongest_comparator_mean_brier": 0.1062453551031565,
+      "strongest_comparator_mean_recall_at_0_5": 0.32330513385096765
+    },
+    "Q01b": {
+      "all_five_folds_and_twenty_seeds": true,
+      "c06_mean_pooled_oof_nrmse": 0.006832811015144496,
+      "mean_pooled_oof_nrmse": 0.6612067570884528,
+      "mean_relative_nrmse_gap_vs_c06": 95.76936119306231,
+      "promising": false,
+      "qualified_dequantization_regimes": 0,
+      "selected_projection_id": "PX-03",
+      "status": "valid_exploratory_negative",
+      "within_five_percent_of_c06": false
+    }
+  }
+}

@@ -231,3 +231,29 @@ campaign_resume_decision:
   result_figures: [RFIG-026, RFIG-027, RFIG-028]
   failure_figure: "RFIG-029"
   claim_boundary: "development-only exploratory model evidence; no calibration, final-test, mission, hardware, quantum-advantage, Gate 5 revision, or Gate 6 claim"
+  outcome:
+    status: "completed_valid_exploratory_negatives"
+    source_commit: "083d777961a615885573c9f18efeb9802755890a"
+    result_root: "data/processed/reporting/post_gate5_p001"
+    development_rows_read: 39000
+    calibration_rows_read: 0
+    final_test_rows_read: 0
+    hardware_jobs_submitted: 0
+    gate6_runs: 0
+    q01b:
+      selected_projection_id: "PX-03"
+      status: "valid_exploratory_negative"
+      mean_pooled_oof_nrmse: 0.6612067570884528
+      c06_mean_pooled_oof_nrmse: 0.006832811015144496
+      mean_relative_nrmse_gap_vs_c06: 95.76936119306231
+      qualified_dequantization_regimes: 0
+    fqk:
+      selected_projection_id: "PX-03"
+      status: "valid_exploratory_negative"
+      mean_auroc: 0.7435706337524658
+      mean_pooled_oof_brier: 0.15610274255475928
+      mean_recall_at_0_5: 0.10885965928844592
+      strongest_comparator_id: "C02-T02"
+      strongest_comparator_mean_auroc: 0.9133640486826338
+      strongest_comparator_mean_brier: 0.1062453551031565
+      strongest_comparator_mean_recall_at_0_5: 0.32330513385096765

@@ -1,7 +1,7 @@
 # OpenQFuel-Cislunar Research Protocol
 
 Version: 0.6.18
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign resume accepted; Gate 6 unauthorized
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
 Recommended next action: Run the single source-bound D011 development-only campaign to completion or governed stop; calibration/final-test, hardware/GPU, Gate 5 reinterpretation, and Gate 6 remain unauthorized
@@ -969,6 +969,16 @@ Calibration, final-test, hardware/GPU, Gate 5 reinterpretation, and Gate 6
 remain locked. Any technical failure, governed stop, terminal nonadvancement,
 or scientific negative must be recorded with future-only discussion and the
 required paper figures.
+
+The D011-R1 campaign completed from source commit `083d777` under that frozen
+contract. It read 39,000 development rows and zero calibration/final-test rows;
+hardware/GPU and Gate 6 runs remained zero. Q01b and FQK both completed all
+five folds and 20 selected seeds but did not meet their promising rules. Q01b
+had mean pooled OOF NRMSE 0.6612 versus C06 at 0.0068328, a 95.769x relative
+gap, and zero qualifying dequantization regimes. FQK had mean AUROC 0.7436,
+Brier 0.1561, and recall at 0.5 of 0.1089 versus strongest comparator C02-T02
+at 0.9134, 0.1062, and 0.3233. These are valid development-only exploratory
+negative results; they do not revise Gate 5 and do not authorize Gate 6.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

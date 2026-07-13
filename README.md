@@ -211,6 +211,15 @@ D011 development-only campaign. It opens development rows only under the frozen
 Q01b/FQK protocol. Calibration, final-test, hardware/GPU, Gate 5
 reinterpretation, and Gate 6 remain locked.
 
+The D011-R1 campaign completed from source commit `083d777` with 39,000
+development rows read and zero calibration/final-test reads, hardware/GPU jobs,
+or Gate 6 runs. Both near-term QML tracks are valid exploratory negatives:
+Q01b selected PX-03 but averaged NRMSE 0.6612 versus C06 at 0.0068328 with no
+qualifying dequantization regime, and FQK selected PX-03 but averaged AUROC
+0.7436, Brier 0.1561, and recall 0.1089 versus strongest comparator C02-T02 at
+0.9134, 0.1062, and 0.3233. RFIG-026 through RFIG-028 record the reached
+development evidence; RFIG-029 records the future-only discussion boundary.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:

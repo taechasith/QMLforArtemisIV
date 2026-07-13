@@ -1,11 +1,11 @@
 # D011 Development-Only Exploratory Execution Freeze
 
-Version: 0.1.1
+Version: 0.1.2
 Decision: D011
 Protocol: P001
 Prepared: 2026-07-13
 Accepted: 2026-07-13
-Status: Terminal pre-launch technical STOP; conditional development authority never activated
+Status: D011 terminal pre-launch technical STOP preserved; D011-R1 development-only campaign completed as valid exploratory negatives
 
 ## Decision
 
@@ -179,3 +179,16 @@ The human research lead accepted D011-R1 on 2026-07-14 to resume exactly one
 source-bound D011 development-only campaign. The campaign must use the frozen
 contract in this document. Calibration, final-test, hardware/GPU, Gate 5
 reinterpretation, and Gate 6 remain locked.
+
+The D011-R1 campaign completed from source commit `083d777` without changing
+the frozen protocol. It read 39,000 development rows and zero calibration or
+final-test rows; hardware/GPU and Gate 6 runs remained zero. Q01b selected
+PX-03 and completed all five folds and 20 selected seeds, but it was a valid
+exploratory negative: mean pooled OOF NRMSE was 0.6612 versus C06 at 0.0068328,
+the relative gap was 95.769x, and no preregistered dequantization regime
+qualified. FQK also selected PX-03 and completed all five folds and 20 selected
+seeds, but it was a valid exploratory negative: mean AUROC/Brier/recall were
+0.7436/0.1561/0.1089 versus strongest comparator C02-T02 at
+0.9134/0.1062/0.3233. P001-FR004 and P001-FR005 record future-only
+improvements; those suggestions require a new protocol and cannot alter, retry,
+or extend P001.
