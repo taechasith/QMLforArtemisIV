@@ -203,6 +203,7 @@ outcome:
   completed_date: "2026-07-13"
   source_commit: "30faf170b1a9a76da5f9e60ac3f4239600ee6d54"
   result: "data/processed/reporting/post_gate5_d011_fold_shape_preflight.json"
+  reporting_commit: "78eff644b596630711db2be0fb2d66211f4ed0f5"
   failed_stage: "launcher_import_before_authority_verification"
   authority_verification_reached: false
   synthetic_workload_started: false
