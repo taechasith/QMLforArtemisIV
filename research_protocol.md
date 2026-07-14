@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.31
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; Gate 6 unauthorized
+Version: 0.6.32
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight pending; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: open D022 clean-source synthetic compute preflight for CSAFE-RF or stop experimentation and move to manuscript discussion; no development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application to real data, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized
+Recommended next action: run the single authorized D022 clean-source synthetic compute preflight for CSAFE-RF; no development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application to real data, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized
 
 ## 1. Proposed title
 
@@ -1142,6 +1142,17 @@ development-data fitting, threshold application to real data, calibration,
 final-test, hardware/GPU, mission-loop, QML invention, quantum-advantage,
 Gate 5 reinterpretation, or Gate 6 authority. A later D022 clean-source
 synthetic compute preflight is required before any development-data decision.
+
+D022-C authorizes exactly one clean-source synthetic compute preflight for the
+CSAFE-RF recall-first guards and metrics. The preflight may benchmark only
+synthetic training-threshold selection, synthetic held-out recall-first scoring,
+and selection by recall, false-negative rate, Brier score, and model
+complexity. It must run from a clean `main` source commit, preserve zero
+development, calibration, final-test, hardware/GPU, mission-loop, and Gate 6
+counters, and generate RFIG-041 only if terminal preflight evidence is reached.
+D022-C authorizes no development-data fitting, threshold application to real
+data, calibration, final-test, hardware/GPU, mission-loop, QML invention,
+quantum-advantage, Gate 5 reinterpretation, or Gate 6 authority.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

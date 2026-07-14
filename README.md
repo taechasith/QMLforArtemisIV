@@ -304,6 +304,12 @@ fixture over a lower-Brier tree fixture because recall has priority. It read
 zero development, calibration, or final-test rows and ran no hardware/GPU or
 Gate 6 job. RFIG-040 records the synthetic-validation boundary.
 
+D022-C authorizes one clean-source synthetic compute preflight for CSAFE-RF.
+It may benchmark only synthetic threshold selection and recall-first scoring.
+It does not authorize development fitting, threshold application to real data,
+locked data, hardware/GPU, mission-loop work, QML invention, quantum advantage,
+or Gate 6. RFIG-041 is reserved for terminal preflight evidence.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -368,6 +374,7 @@ through a dated deviation record.
 - docs/post_gate5_d019_safety_redesign.md: future-only safety-objective redesign discussion after D018-C.
 - docs/post_gate5_d020_recall_first_freeze.md: recall-first CSAFE-RF safety freeze proposal before implementation.
 - docs/post_gate5_d021_recall_first_synthetic.md: CSAFE-RF synthetic-only implementation and validation.
+- docs/post_gate5_d022_recall_first_preflight.md: CSAFE-RF clean-source synthetic compute preflight.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
 - docs/post_gate5_compute_preflight.md: D009 synthetic-only clean-source compute-admission contract and pass/stop rules.

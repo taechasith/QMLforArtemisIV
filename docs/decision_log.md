@@ -1711,3 +1711,27 @@ data, calibration/final-test read, hardware/GPU execution, mission-loop work,
 Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, or Gate
 6. D022 clean-source synthetic compute preflight is required before any
 development-data decision.
+
+### D022-C accepted - recall-first clean-source synthetic preflight
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Accepted; one clean-source synthetic preflight authorized**
+Authority: Assistant-selected next step after D021-C
+
+Decision:
+
+- Authorize exactly one clean-source synthetic compute preflight for CSAFE-RF.
+- Benchmark synthetic training-threshold selection, synthetic held-out
+  recall-first scoring, and selection by recall, false-negative rate, Brier
+  score, and model complexity.
+- Require clean `main` source before execution.
+- Generate RFIG-041 only if terminal preflight evidence is reached.
+
+Boundary:
+
+D022-C authorizes no development-data fitting, threshold application to real
+data, calibration/final-test read, refit, rerank, retry, hardware/GPU
+execution, mission-loop work, Gate 5 reinterpretation, QML invention claim,
+quantum-advantage claim, or Gate 6. If the preflight stops, the stop is
+terminal unless a later prospective correction is accepted.

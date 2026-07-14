@@ -53,6 +53,7 @@ data/processed/reporting/post_gate5_d017_classical_first/*
 !data/processed/reporting/post_gate5_d020_recall_first_freeze_matrix.csv
 !data/processed/reporting/post_gate5_d021_recall_first_synthetic.json
 !data/processed/reporting/post_gate5_d021_recall_first_synthetic_scores.csv
+!data/processed/reporting/post_gate5_d022_recall_first_preflight.json
 !data/processed/reporting/post_gate5_p001/
 data/processed/reporting/post_gate5_p001/*
 !data/processed/reporting/post_gate5_p001/campaign_summary.json
