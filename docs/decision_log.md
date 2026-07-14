@@ -2320,6 +2320,40 @@ The contract is in `configs/post_gate5_d039_ecgfrk.yaml` and
 graphed, committed as future-only improvement, and followed only by another
 prospective protocol; no Gate 6 or locked-data access is authorized.
 
+### D039 result - P007 error-conditioned global fidelity residual kernel
+
+Date: 2026-07-15
+Decision: **Valid scientific negative; continue only through a new protocol**
+Evidence: `data/processed/reporting/post_gate5_d039_ecgfrk/campaign_result.json`
+
+EC-GFRK-08-L010 scored mean pooled OOF NRMSE `0.00646644` versus C06
+`0.00683281`, an approximately 5.36% improvement, with paired difference
+`-0.000366372` and 95% interval `[-0.000367832,-0.000365004]`. Regret and
+infeasible-selection conditions were preserved. However, the identical-input
+EC-TAP-RBF-SHR-q8 control scored `0.00675401`, so the candidate did not beat
+its classical control by 5%. D039 is a valid development-only negative and
+does not establish a new QML or quantum-advantage result. All five outer folds,
+four inner folds, 20 seeds, 39,000 development rows, 300 projection audits,
+300 fidelity audits, and figures RFIG-064/RFIG-065 completed with zero
+validation-outcome use, zero group overlap, and zero calibration/final-test,
+hardware/GPU, mission-loop, or Gate 6 activity.
+
+### D040 - P008 centered error-conditioned global fidelity residual kernel authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D039 valid negative
+
+D040 tests CE-GFRK. It retains D039's cross-fitted C06 conditioning and exact
+global fidelity kernel, but centers the training feature map using training
+rows only before the ridge correction. The identical centered feature
+construction is applied to the classical RBF control. This tests whether the
+remaining gap is caused by a dominant common-similarity component rather than
+the fidelity geometry itself. The contract is in
+`configs/post_gate5_d040_cegfrk.yaml` and
+`docs/post_gate5_d040_cegfrk_protocol.md`. No locked data, Gate 6, hardware,
+or post-outcome reranking is authorized.
+
 ### D037 prelaunch technical stop
 
 The first direct D037 launcher attempt stopped before `run()` and before any

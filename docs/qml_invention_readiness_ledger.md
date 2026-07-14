@@ -212,3 +212,31 @@ identify where the C06 baseline is likely to err. The C06 prediction is
 cross-fitted for the training projection and generated without validation
 outcomes for the outer validation projection. All other kernel, shrinkage,
 split, seed, safety, threshold, and resource rules remain frozen.
+
+### D039 result label
+
+**Observed result:** EC-GFRK-08-L010 scored mean pooled OOF NRMSE `0.00646644`
+versus C06 `0.00683281`, an approximately 5.36% improvement, with paired
+difference `-0.000366372` and 95% interval `[-0.000367832,-0.000365004]`.
+The matched EC-TAP-RBF-SHR-q8 control scored `0.00675401`, so the quantum
+candidate did not pass the 5% classical-control rule.
+
+**Useful invention signal:** conditioning the residual representation on the
+honest C06 prediction produced a stronger signal than D038, but most of the
+gain was available to the identical classical kernel. The next test should
+remove dominant common-similarity structure with training-only kernel
+centering, without changing the error-conditioned input or control.
+
+**Prohibited use:** do not call D039 scientifically superior, claim NASA
+performance or quantum advantage, revise Gate 5, or authorize Gate 6.
+
+**Required next control:** D040 applies the same training-only centered feature
+map to CE-GFRK and its matched classical RBF.
+
+## D040 P008: centered error-conditioned global fidelity residual kernel
+
+D040 is authorized as one new development-only protocol. It retains the D039
+error-conditioned feature and global fidelity geometry, then centers the
+whitened landmark feature map using training rows only. The identical centered
+feature construction is applied to the matched classical RBF, preserving fair
+comparison and all frozen split, seed, safety, threshold, and resource rules.

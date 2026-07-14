@@ -144,6 +144,17 @@ data/processed/reporting/post_gate5_p001/*
 !data/processed/reporting/post_gate5_d039_ecgfrk/per_seed_metrics.csv
 !data/processed/reporting/post_gate5_d039_ecgfrk/paired_comparison.csv
 !data/processed/reporting/post_gate5_d039_ecgfrk/summary.csv
+!data/processed/reporting/post_gate5_d040_cegfrk/
+!data/processed/reporting/post_gate5_d040_cegfrk/campaign_result.json
+!data/processed/reporting/post_gate5_d040_cegfrk/campaign_summary.json
+!data/processed/reporting/post_gate5_d040_cegfrk/fold_seed_metrics.csv
+!data/processed/reporting/post_gate5_d040_cegfrk/inner_fold_audit.csv
+!data/processed/reporting/post_gate5_d040_cegfrk/projection_audit.csv
+!data/processed/reporting/post_gate5_d040_cegfrk/fidelity_audit.csv
+!data/processed/reporting/post_gate5_d040_cegfrk/centering_audit.csv
+!data/processed/reporting/post_gate5_d040_cegfrk/per_seed_metrics.csv
+!data/processed/reporting/post_gate5_d040_cegfrk/paired_comparison.csv
+!data/processed/reporting/post_gate5_d040_cegfrk/summary.csv
 data/processed/artemis2/*
 !data/processed/artemis2/oem_inventory.csv
 !data/processed/artemis2/oem_release_revisions.csv
