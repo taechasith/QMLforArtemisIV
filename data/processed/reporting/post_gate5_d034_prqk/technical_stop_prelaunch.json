@@ -1,0 +1,17 @@
+{
+  "schema_version": "0.1.0",
+  "decision_id": "D034",
+  "protocol_id": "P002",
+  "status": "technical_stop_prelaunch_launcher_bug",
+  "source_commit": "dc7c6e3f045d38ea5c7a0147cb270c5ee3accafc",
+  "failed_stage": "locked_counter_lookup_before_development_loader",
+  "error": "The launcher looked for calibration_rows_read and final_test_rows_read under locks, while the accepted D034 config stores them under authority.",
+  "development_rows_read": 0,
+  "calibration_rows_read": 0,
+  "final_test_rows_read": 0,
+  "hardware_jobs_submitted": 0,
+  "gate6_runs": 0,
+  "scientific_workload_started": false,
+  "improvement": "Read the counters from the authority block and retain an explicit pre-payload zero-read record before the single corrected development attempt.",
+  "retry_rule": "One corrected launcher attempt is permitted because the failure occurred before source-bound data loading; no model, threshold, split, seed, or scientific rule changes."
+}
