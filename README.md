@@ -356,9 +356,15 @@ mission-loop work. RFIG-047 records the release-card boundary.
 D029-C ran the clean local clone reproducibility audit and stopped release
 readiness. Pytest failed with 3 failures caused by byte-provenance/hash
 portability issues in clean-clone checkout state; ruff and compileall passed.
-This does not change the scientific result, but release remains blocked until
-a prospective line-ending and byte-provenance correction is completed and the
-clean audit is rerun. RFIG-048 records the STOP.
+This does not change the scientific result. RFIG-048 records the STOP.
+
+D030-C clean reproducibility correction then pinned text checkout bytes for
+source and evidence files through `.gitattributes`. The corrected clean clone
+of commit `90f45d356faa480998573cbc3b25b6e819b95ae8` passed pytest, ruff, and
+compileall. RFIG-049 records the release-infrastructure PASS. Release is now
+eligible for human claim/release review, but release, tagging, archiving,
+Gate 6, QML invention claims, and quantum-advantage claims remain unauthorized
+until separately accepted.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
@@ -434,8 +440,8 @@ through a dated deviation record.
 - docs/release_simulator_card.md: release-support simulator credibility card.
 - docs/release_data_card.md: release-support data provenance and locked-data card.
 - docs/release_limitation_card.md: release-support limitation and prohibited-claim card.
-- docs/release_reproducibility_audit.md: D029-C clean clone reproducibility STOP record.
-- docs/release_checklist.md: release checklist blocked by D029-C.
+- docs/release_reproducibility_audit.md: D029-C STOP and D030-C clean reproducibility correction record.
+- docs/release_checklist.md: release checklist eligible for human claim/release review after D030-C.
 - paper/manuscript.md: draft manuscript scaffold generated from the closed Gate 5/5X evidence.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.

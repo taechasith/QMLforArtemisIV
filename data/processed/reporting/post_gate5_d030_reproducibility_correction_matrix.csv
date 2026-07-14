@@ -1,0 +1,5 @@
+audit_item,status,evidence,interpretation,next_action
+line_ending_policy,corrected,*.py text eol=lf; *.csv text eol=lf; *.json text eol=lf; *.jsonl text eol=lf; *.yaml text eol=lf; *.yml text eol=lf; *.md text eol=lf,hashed text paths now materialize with LF bytes in clean checkouts,retain policy for release
+pytest,pass,"252 passed, 667 subtests passed in 17.93s",clean clone release validation passed,eligible for final human release review
+ruff,pass,All checks passed.,clean clone release validation passed,eligible for final human release review
+compileall,pass,passed with exit code 0,clean clone release validation passed,eligible for final human release review

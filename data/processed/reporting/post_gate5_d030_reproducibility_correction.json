@@ -1,0 +1,21 @@
+{
+  "calibration_rows_read": 0,
+  "claim_boundary": "D030-C is a release-infrastructure reproducibility correction only; it changes checkout byte policy and proves clean-clone validation passes, but it does not change Gate 5/5X scientific results, authorize release, unlock calibration/final-test data, authorize Gate 6, or support QML invention or quantum-advantage claims.",
+  "compileall_result": "passed with exit code 0",
+  "d029_stop_commit": "cd585c7f2ebe361f669aa4584edee9e6c4c04eef",
+  "d030_correction_commit": "90f45d356faa480998573cbc3b25b6e819b95ae8",
+  "decision_id": "D030-C",
+  "final_test_rows_read": 0,
+  "gate6_authorized": false,
+  "gate6_runs": 0,
+  "gpu_hours": 0,
+  "hardware_jobs": 0,
+  "mission_loop_runs": 0,
+  "next_recommended_step": "Perform final claim/release review; do not release, tag, archive, run Gate 6, or claim QML invention without separate human acceptance.",
+  "official_status": "REPRODUCIBILITY_AUDIT_PASS",
+  "protocol_id": "P001",
+  "pytest_result": "252 passed, 667 subtests passed in 17.93s",
+  "release_authorized": false,
+  "release_ready_for_human_decision": true,
+  "ruff_result": "All checks passed."
+}

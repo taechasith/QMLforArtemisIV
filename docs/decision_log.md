@@ -1954,3 +1954,36 @@ Outcome:
 - Gate 5 preflight failed closed when the frozen artifact hash did not match.
 - Next recommended step: D030-C line-ending and byte-provenance correction,
   followed by another clean reproducibility audit.
+
+### D030-C completed - clean reproducibility correction PASS
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Completed; clean reproducibility correction PASS**
+Authority: Assistant-selected next step after D029-C STOP
+
+Decision:
+
+- Correct the byte-provenance and line-ending portability blocker identified
+  by D029-C.
+- Limit the correction to source-control checkout policy through
+  `.gitattributes`.
+- Rerun the clean local clone audit against the corrected source commit.
+- Do not change model families, thresholds, trials, seeds, splits, scenario
+  payloads, scores, locked-data access, Gate 5/5X interpretation, release
+  authority, QML invention claims, quantum-advantage claims, or Gate 6
+  authority.
+
+Outcome:
+
+- Added explicit LF checkout rules for `.py`, `.csv`, `.json`, `.jsonl`,
+  `.yaml`, `.yml`, and `.md` files.
+- The corrected clean clone of
+  `90f45d356faa480998573cbc3b25b6e819b95ae8` passed pytest, ruff, and
+  compileall.
+- Pytest result: 252 passed and 667 subtests passed.
+- RFIG-049 records the D030-C clean reproducibility correction PASS.
+- Release is eligible for human claim/release review, but release, tag,
+  archive, Gate 6, locked-data access, mission-loop execution, QML invention
+  claims, and quantum-advantage claims remain unauthorized until separately
+  accepted.

@@ -1,0 +1,52 @@
+decision_id: "D030-C"
+protocol_id: "P001"
+status: "completed_clean_reproducibility_audit_pass"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+authority: "Assistant-selected next step after D029-C reproducibility audit STOP"
+scope:
+  correction_type: "line-ending and byte-provenance portability"
+  source_control_only: true
+  model_fitting: false
+  threshold_change: false
+  trial_change: false
+  seed_change: false
+  split_change: false
+  calibration_read: false
+  final_test_read: false
+  mission_loop_run: false
+  gate6_run: false
+source_evidence:
+  d029_stop_commit: "cd585c7f2ebe361f669aa4584edee9e6c4c04eef"
+  d030_correction_commit: "90f45d356faa480998573cbc3b25b6e819b95ae8"
+  clean_clone_path: "C:\\Users\\HPOMEN~1\\AppData\\Local\\Temp\\qmlforartemisiv-d030-clean-20260714100835"
+correction:
+  changed_files:
+    - ".gitattributes"
+  line_ending_rules:
+    - "*.py text eol=lf"
+    - "*.csv text eol=lf"
+    - "*.json text eol=lf"
+    - "*.jsonl text eol=lf"
+    - "*.yaml text eol=lf"
+    - "*.yml text eol=lf"
+    - "*.md text eol=lf"
+  rationale: "Freeze checkout bytes for source, evidence, registry, and documentation text files that are hashed or read during release validation."
+audit_commands:
+  pytest:
+    command: "uv run --directory <clean_clone> --frozen pytest -q"
+    result: "pass"
+    summary: "252 passed, 667 subtests passed in 17.93s"
+  ruff:
+    command: "uv run --directory <clean_clone> --frozen ruff check ."
+    result: "pass"
+    summary: "All checks passed."
+  compileall:
+    command: "uv run --directory <clean_clone> --frozen python -m compileall -q src scripts tests"
+    result: "pass"
+    summary: "passed with exit code 0"
+outcome:
+  official_status: "REPRODUCIBILITY_AUDIT_PASS"
+  release_ready_for_human_decision: true
+  next_recommended_step: "Perform final claim/release review; do not release, tag, archive, run Gate 6, or claim QML invention without separate human acceptance."
+claim_boundary: "D030-C is a release-infrastructure reproducibility correction only; it changes checkout byte policy and proves clean-clone validation passes, but it does not change Gate 5/5X scientific results, authorize release, unlock calibration/final-test data, authorize Gate 6, or support QML invention or quantum-advantage claims."

@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.40
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; Gate 6 unauthorized
+Version: 0.6.41
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: open a prospective D030-C line-ending and byte-provenance correction, then rerun the clean reproducibility audit; no release, correction, QML Gate 6 mission experiment, development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application to real data, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 run is authorized by D029
+Recommended next action: perform final human claim/release review using D026-C through D030-C; no release, tag, archive, QML Gate 6 mission experiment, development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application to real data, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 run is authorized without a separate human release decision
 
 ## 1. Proposed title
 
@@ -1225,6 +1225,17 @@ designed when the clean-clone artifact hash did not match. RFIG-048 records
 the STOP. D029-C authorizes no release, correction, Gate 6 run, locked-data
 access, mission-loop execution, model fitting, QML invention claim,
 quantum-advantage claim, or Gate 5 reinterpretation.
+
+D030-C clean reproducibility correction PASS froze repository text checkout
+bytes through `.gitattributes` for source, CSV/JSON/JSONL evidence, YAML, and
+Markdown files. The corrected clean clone of commit
+`90f45d356faa480998573cbc3b25b6e819b95ae8` passed pytest (`252 passed, 667
+subtests passed`), ruff, and compileall. RFIG-049 records the correction and
+audit pass. This is release-infrastructure evidence only: it changes no model
+family, threshold, seed, split, score, scenario payload, Gate 5/5X
+interpretation, or locked-data state. Release is eligible for human
+claim/release review, but release, tag, archive, Gate 6, QML invention claims,
+and quantum-advantage claims remain unauthorized until separately accepted.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:
