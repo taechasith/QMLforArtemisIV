@@ -1,0 +1,5 @@
+card_id,path,purpose,release_status,claim_boundary
+model,docs/release_model_card.md,Explain evaluated model families and non-release status,no trained model released,negative benchmark only
+simulator,docs/release_simulator_card.md,Summarize simulator credibility and validation boundaries,research simulator evidence only,not flight readiness
+data,docs/release_data_card.md,"Summarize public-data provenance, splits, and locked-data limits",public/reproducible evidence only,no final-test or mission-owned data released
+limitations,docs/release_limitation_card.md,State limitations and prohibited interpretations,required before release decision,"no QML advantage, Gate 6, or flight claim"

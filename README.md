@@ -348,6 +348,11 @@ It adds `paper/results_tables/gate5_qml_vs_controls.csv`,
 The next release-preparation task is to create model, simulator, data, and
 limitation cards before any release decision.
 
+D028-C adds release-support cards for the model evidence, simulator evidence,
+data boundary, and limitations. These cards prepare the release package but do
+not authorize a release, model release, Gate 6, locked-data access, or
+mission-loop work. RFIG-047 records the release-card boundary.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -418,6 +423,10 @@ through a dated deviation record.
 - docs/gate5_closure_gate6_recommendation.md: D025-C closure report and Gate 6 recommendation.
 - docs/manuscript_results_synthesis.md: D026-C manuscript-ready claim synthesis and writing boundary.
 - docs/manuscript_results_discussion_draft.md: D027-C source-backed Results and Discussion draft record.
+- docs/release_model_card.md: release-support model card; no trained model is released.
+- docs/release_simulator_card.md: release-support simulator credibility card.
+- docs/release_data_card.md: release-support data provenance and locked-data card.
+- docs/release_limitation_card.md: release-support limitation and prohibited-claim card.
 - paper/manuscript.md: draft manuscript scaffold generated from the closed Gate 5/5X evidence.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.

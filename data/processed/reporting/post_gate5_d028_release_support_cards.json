@@ -1,0 +1,23 @@
+{
+  "calibration_rows_read": 0,
+  "cards": {
+    "data_card": "docs/release_data_card.md",
+    "limitation_card": "docs/release_limitation_card.md",
+    "model_card": "docs/release_model_card.md",
+    "simulator_card": "docs/release_simulator_card.md"
+  },
+  "claim_boundary": "D028-C creates release-support cards only; it authorizes no release, Gate 6 run, locked-data access, mission-loop execution, model fitting, QML invention claim, quantum-advantage claim, or Gate 5 reinterpretation.",
+  "decision_id": "D028-C",
+  "final_test_rows_read": 0,
+  "gate6_authorized": false,
+  "gate6_runs": 0,
+  "gpu_hours": 0,
+  "hardware_jobs": 0,
+  "mission_loop_runs": 0,
+  "next_recommended_step": "Run a clean reproducibility audit and prepare a release checklist before any public release decision.",
+  "official_status": "RELEASE_SUPPORT_CARDS_READY",
+  "protocol_id": "P001",
+  "qml_gate6_candidate": false,
+  "release_authorized": false,
+  "source_d027_commit": "4e9e184aab69504a3fbf6c085c1196abf1aca3b9"
+}

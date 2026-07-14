@@ -1,0 +1,37 @@
+decision_id: "D028-C"
+protocol_id: "P001"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+status: "completed_release_support_cards"
+authority: "assistant-selected next step after D027-C; create release-support cards before any release decision"
+source_evidence:
+  d027_results: "data/processed/reporting/post_gate5_d027_manuscript_results.json"
+  d027_reporting_commit: "4e9e184aab69504a3fbf6c085c1196abf1aca3b9"
+scope:
+  release_documentation_only: true
+  release_authorized: false
+  gate6_authorized: false
+  qml_mission_experiment_authorized: false
+  baseline_mission_experiment_authorized: false
+  development_data_fitting_authorized: false
+  new_model_fit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  threshold_application_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  hardware_authorized: false
+  gpu_authorized: false
+  mission_loop_authorized: false
+  gate5_reinterpretation_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+cards:
+  model_card: "docs/release_model_card.md"
+  simulator_card: "docs/release_simulator_card.md"
+  data_card: "docs/release_data_card.md"
+  limitation_card: "docs/release_limitation_card.md"
+outcome:
+  official_status: "RELEASE_SUPPORT_CARDS_READY"
+  next_recommended_step: "Run a clean reproducibility audit and prepare a release checklist before any public release decision."
+claim_boundary: "D028-C creates release-support cards only; it authorizes no release, Gate 6 run, locked-data access, mission-loop execution, model fitting, QML invention claim, quantum-advantage claim, or Gate 5 reinterpretation."

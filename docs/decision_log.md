@@ -1901,3 +1901,28 @@ Outcome:
 - Added `paper/results_tables/claim_boundary_table.csv`.
 - Next recommended step: create model, simulator, data, and limitation cards
   before any release decision.
+
+### D028-C completed - release-support cards
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Completed; release-support cards ready**
+Authority: Assistant-selected next step after D027-C
+
+Decision:
+
+- Create model, simulator, data, and limitation cards before any release
+  decision.
+- Generate RFIG-047 as the release-card map.
+- Do not authorize release, model release, Gate 6, locked-data access,
+  mission-loop execution, refit, rerank, retry, QML invention, or quantum
+  advantage claims.
+
+Outcome:
+
+- Added `docs/release_model_card.md`.
+- Added `docs/release_simulator_card.md`.
+- Added `docs/release_data_card.md`.
+- Added `docs/release_limitation_card.md`.
+- Next recommended step: clean reproducibility audit and release checklist
+  before any public release decision.
