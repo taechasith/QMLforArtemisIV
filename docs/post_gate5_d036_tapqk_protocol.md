@@ -1,7 +1,7 @@
 # D036: Task-Aligned Projected Quantum Kernel
 
-Protocol: P004  
-Status: accepted for one bounded development-only campaign  
+Protocol: P004
+Status: accepted for one bounded development-only campaign
 Date: 2026-07-15
 
 ## 1. Research problem
