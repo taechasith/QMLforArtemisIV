@@ -1,0 +1,22 @@
+{
+  "calibration_rows_read": 0,
+  "claim_boundary": "D024-C interprets D023-C only; no new experiment, refit, threshold application, locked-data access, mission-loop work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, or Gate 6 authority follows.",
+  "core_result": "D023-C found a future-useful recall signal, but it is post-D017-informed development evidence only.",
+  "decision_id": "D024-C",
+  "final_test_rows_read": 0,
+  "gate6_runs": 0,
+  "gpu_hours": 0,
+  "hardware_jobs": 0,
+  "new_model_fits": 0,
+  "next_recommended_step": "Close the CSAFE-RF branch into manuscript discussion and reserve any real-data continuation for a new future protocol with prospective recall, calibration, and locked-data rules.",
+  "official_status": "INTERPRETATION_COMPLETE_NO_ADVANCE",
+  "primary_scientific_lesson": "A safety objective that prioritizes missed unsafe cases can select a different model than Brier-first scoring, but this must be frozen prospectively before any locked-data use.",
+  "protocol_id": "P001",
+  "qml_lesson": "The available QML-style A02 exact-RBF feasibility candidate did not dominate the selected logistic head under recall-first CSAFE-RF, so QML remains appendix/future-work evidence rather than an advancing result.",
+  "selected_mean_brier": 0.14223067742525214,
+  "selected_mean_false_negative_rate": 0.19574660400927313,
+  "selected_mean_recall": 0.8042533959907271,
+  "selected_model_id": "calibrated_logistic",
+  "source_d023_commit": "e15d7583042b574261afe7afa4904168b3d398dd",
+  "threshold_applications_to_real_data": 0
+}

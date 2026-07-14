@@ -1,0 +1,5 @@
+finding,evidence,interpretation,pipeline_effect
+Recall recovery signal,calibrated_logistic mean recall 0.8043,Useful future safety-objective signal,Can inform a new prospective protocol only
+Calibration tradeoff,calibrated_logistic Brier 0.1422; class_weighted_tree Brier 0.1311,Recall-first improves missed-case behavior but does not solve probability quality,Future protocol must freeze calibration or false-negative-cost constraints
+QML contribution,a02_exact_rbf_feasibility recall 0.6442; Brier 0.2134,QML-style exact-RBF feasibility remains non-advancing,Keep QML evidence in appendix/future-work discussion
+Authority boundary,fits 0; thresholds 0; locked reads 0,D023/D024 are reporting-only after D017,"No calibration, final-test, mission-loop, or Gate 6 authority"

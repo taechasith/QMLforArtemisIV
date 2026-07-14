@@ -1783,3 +1783,38 @@ D023-C is post-D017-informed development-only audit evidence. It does not
 rescue D017, reinterpret Gate 5, authorize calibration/final-test access,
 authorize mission-loop work, claim QML invention or quantum advantage, or open
 Gate 6. D024 interpretation is required before another successor decision.
+
+### D024-C completed - recall-first interpretation
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Completed; interpretation NO_ADVANCE**
+Authority: Assistant-selected next step after D023-C
+
+Decision:
+
+- Interpret the D023-C recall-first development-only audit.
+- Do not start a new experiment, refit models, rerun threshold selection,
+  apply thresholds to real data, open raw payloads, or touch
+  calibration/final-test data.
+- Generate RFIG-043 for the paper-ready interpretation boundary.
+
+Outcome:
+
+- D023-C contains a future-useful recall signal: `calibrated_logistic` reached
+  mean recall 0.8043 and false-negative rate 0.1957.
+- The signal is non-advancing because it is post-D017-informed development
+  evidence and Brier/calibration quality remains worse than the best-Brier
+  tree.
+- The A02 exact-RBF feasibility QML-style candidate did not dominate the
+  logistic head under recall-first scoring.
+- New model fits, new real-data threshold applications, calibration reads,
+  final-test reads, hardware/GPU work, and Gate 6 runs were all zero.
+
+Boundary:
+
+D024-C closes the CSAFE-RF branch into manuscript discussion unless a future
+protocol is opened from scratch with prospectively frozen recall, calibration,
+false-negative-cost, locked-data, and claim rules. It does not rescue D017,
+reinterpret Gate 5, authorize locked-data access, authorize mission-loop work,
+claim QML invention or quantum advantage, or open Gate 6.

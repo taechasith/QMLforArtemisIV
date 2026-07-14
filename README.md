@@ -319,6 +319,14 @@ false-negative rate 0.1957, Brier 0.1422. This is post-D017-informed audit
 evidence only; it cannot rescue D017, reopen Gate 5, unlock calibration/final
 data, or open Gate 6. RFIG-042 records the audit.
 
+D024-C interprets the D023 recall-first signal as future-useful but
+non-advancing. The selected logistic candidate improves missed-case behavior
+but still leaves a calibration/Brier tradeoff, and the QML-style A02 exact-RBF
+feasibility candidate does not dominate it. The CSAFE-RF branch is therefore
+closed into manuscript discussion unless a future protocol is opened from
+scratch with prospectively frozen recall, calibration, false-negative-cost,
+locked-data, and claim rules. RFIG-043 records the boundary.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -385,6 +393,7 @@ through a dated deviation record.
 - docs/post_gate5_d021_recall_first_synthetic.md: CSAFE-RF synthetic-only implementation and validation.
 - docs/post_gate5_d022_recall_first_preflight.md: CSAFE-RF clean-source synthetic compute preflight.
 - docs/post_gate5_d023_recall_first_development.md: CSAFE-RF development-only recall-first audit.
+- docs/post_gate5_d024_recall_first_interpretation.md: interpretation of the recall-first audit as future-only non-advancing evidence.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
 - docs/post_gate5_compute_preflight.md: D009 synthetic-only clean-source compute-admission contract and pass/stop rules.

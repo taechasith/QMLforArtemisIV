@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.34
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; Gate 6 unauthorized
+Version: 0.6.35
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: interpret D023-C under D024 or stop experimentation and move to manuscript discussion; no development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application to real data, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized by D023
+Recommended next action: close the CSAFE-RF branch into manuscript discussion or open a new future protocol from scratch; no development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application to real data, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized by D024
 
 ## 1. Proposed title
 
@@ -1165,6 +1165,19 @@ selected because its mean recall was only 0.0139. D023-C is explicitly
 post-D017-informed and cannot rescue D017, reinterpret Gate 5, request locked
 data, or open Gate 6. RFIG-042 records the audit. D024 interpretation is
 required before any successor decision.
+
+D024-C interprets D023-C as a future-useful but non-advancing signal. The
+recall-first rule recovered a high-recall `calibrated_logistic` candidate, but
+the evidence is post-D017-informed development-only audit evidence and the
+selected model still has a worse Brier score than the best-Brier tree. The
+scientific lesson is to freeze recall or false-negative-cost priority together
+with calibration constraints prospectively in any future protocol. The A02
+exact-RBF feasibility QML-style candidate did not dominate the logistic head,
+so QML remains appendix or future-work evidence rather than an advancing
+result. RFIG-043 records this interpretation boundary. D024-C authorizes no
+new experiment, refit, threshold application, locked-data access, mission-loop
+work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim,
+or Gate 6.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

@@ -30,6 +30,10 @@ Eligible models are `calibrated_logistic`, `class_weighted_tree`, and
 
 ## Boundary
 
+D023-C is post-D017-informed audit evidence only. It does not rescue D017,
+reinterpret Gate 5, authorize locked-data access, authorize mission-loop work,
+claim QML invention or quantum advantage, or open Gate 6.
+
 ## Outcome
 
 D023-C selected `calibrated_logistic` under the recall-first rule. Mean recall
