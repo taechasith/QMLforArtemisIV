@@ -62,6 +62,30 @@ class SafetyMetrics:
 
 
 @dataclass(frozen=True)
+class RecallFirstSafetyScore:
+    """D021-C synthetic CSAFE-RF score with recall-first ranking fields."""
+
+    model_id: str
+    model_complexity: int
+    metrics: SafetyMetrics
+    selected: bool = False
+
+    def as_row(self) -> dict[str, str]:
+        return {
+            "model_id": self.model_id,
+            "model_complexity": str(self.model_complexity),
+            "recall": f"{self.metrics.recall:.12g}",
+            "false_negative_rate": f"{self.metrics.false_negative_rate:.12g}",
+            "brier": f"{self.metrics.brier:.12g}",
+            "precision": f"{self.metrics.precision:.12g}",
+            "false_positive_rate": f"{self.metrics.false_positive_rate:.12g}",
+            "intervention_rate": f"{self.metrics.intervention_rate:.12g}",
+            "threshold": f"{self.metrics.threshold:.12g}",
+            "selected": str(self.selected).lower(),
+        }
+
+
+@dataclass(frozen=True)
 class InventionReadinessLabel:
     """Label a result for future QML invention without authorizing rescue."""
 
@@ -103,6 +127,28 @@ def assert_d015_scope(
     ):
         return
     raise PermissionError(f"D015-C does not authorize {action}")
+
+
+def assert_d021_scope(
+    config: Mapping[str, Any],
+    *,
+    action: str,
+    data_scope: str,
+) -> None:
+    """Enforce D021-C implementation/synthetic-validation-only authority."""
+
+    if data_scope in LOCKED_D015_SCOPES:
+        raise FinalTestAccessError(f"{data_scope} is not authorized by D021-C")
+    if data_scope != "synthetic":
+        raise PermissionError("D021-C allows synthetic arrays only")
+    authority = config.get("authority", config)
+    if action == "implementation" and authority.get("implementation_authorized"):
+        return
+    if action == "synthetic_validation" and authority.get(
+        "synthetic_validation_authorized"
+    ):
+        return
+    raise PermissionError(f"D021-C does not authorize {action}")
 
 
 def _vector(values: Sequence[float], *, name: str) -> np.ndarray:
@@ -255,6 +301,59 @@ def safety_metrics(
         ),
         intervention_rate=float(np.mean(predicted)),
         threshold=float(threshold),
+    )
+
+
+def recall_first_safety_score(
+    *,
+    model_id: str,
+    model_complexity: int,
+    labels: Sequence[int],
+    probabilities: Sequence[float],
+    threshold: float,
+    calibration_bins: int = 10,
+) -> RecallFirstSafetyScore:
+    """Score one synthetic CSAFE-RF candidate without selecting thresholds."""
+
+    if not model_id.strip():
+        raise ValueError("model_id is required")
+    if model_complexity < 0:
+        raise ValueError("model_complexity must be non-negative")
+    metrics = safety_metrics(
+        labels,
+        probabilities,
+        threshold=threshold,
+        calibration_bins=calibration_bins,
+    )
+    return RecallFirstSafetyScore(
+        model_id=model_id,
+        model_complexity=int(model_complexity),
+        metrics=metrics,
+    )
+
+
+def select_recall_first_candidate(
+    scores: Sequence[RecallFirstSafetyScore],
+) -> RecallFirstSafetyScore:
+    """Select by D020-C recall-first order on synthetic candidate scores."""
+
+    if not scores:
+        raise ValueError("At least one recall-first score is required")
+    selected = min(
+        scores,
+        key=lambda score: (
+            -score.metrics.recall,
+            score.metrics.false_negative_rate,
+            score.metrics.brier,
+            score.model_complexity,
+            score.model_id,
+        ),
+    )
+    return RecallFirstSafetyScore(
+        model_id=selected.model_id,
+        model_complexity=selected.model_complexity,
+        metrics=selected.metrics,
+        selected=True,
     )
 
 

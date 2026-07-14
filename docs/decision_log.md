@@ -1676,3 +1676,38 @@ threshold application, refit, rerank, retry, calibration/final-test read,
 hardware/GPU execution, mission-loop work, Gate 5 reinterpretation, QML
 invention claim, quantum-advantage claim, or Gate 6. D021 is required before
 any synthetic implementation or validation.
+
+### D021-C completed - recall-first synthetic validation
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Completed; synthetic validation PASS**
+Authority: Assistant-selected next step after D020-C
+
+Decision:
+
+- Implement D021 scope guards for implementation and synthetic validation only.
+- Add CSAFE-RF recall-first candidate scoring.
+- Select synthetic candidates by recall, false-negative rate, Brier score, and
+  model complexity.
+- Validate the rule on synthetic arrays only.
+- Generate RFIG-040 for the synthetic-validation evidence.
+
+Outcome:
+
+- Selected `synthetic_recall_first_logistic`.
+- Selected recall: 0.75.
+- Selected false-negative rate: 0.25.
+- Selected Brier score: 0.08064.
+- The lower-Brier synthetic tree fixture was not selected because its recall
+  was only 0.25.
+- Development rows, calibration rows, final-test rows, hardware jobs, GPU
+  hours, and Gate 6 runs were all zero.
+
+Boundary:
+
+D021-C authorizes no development-data fitting, threshold application to real
+data, calibration/final-test read, hardware/GPU execution, mission-loop work,
+Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, or Gate
+6. D022 clean-source synthetic compute preflight is required before any
+development-data decision.

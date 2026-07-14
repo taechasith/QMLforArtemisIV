@@ -51,6 +51,8 @@ data/processed/reporting/post_gate5_d017_classical_first/*
 !data/processed/reporting/post_gate5_d019_safety_redesign_matrix.csv
 !data/processed/reporting/post_gate5_d020_recall_first_freeze.json
 !data/processed/reporting/post_gate5_d020_recall_first_freeze_matrix.csv
+!data/processed/reporting/post_gate5_d021_recall_first_synthetic.json
+!data/processed/reporting/post_gate5_d021_recall_first_synthetic_scores.csv
 !data/processed/reporting/post_gate5_p001/
 data/processed/reporting/post_gate5_p001/*
 !data/processed/reporting/post_gate5_p001/campaign_summary.json

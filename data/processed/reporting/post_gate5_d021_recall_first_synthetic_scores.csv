@@ -1,0 +1,3 @@
+model_id,model_complexity,recall,false_negative_rate,brier,precision,false_positive_rate,intervention_rate,threshold,selected
+synthetic_recall_first_logistic,1,0.75,0.25,0.08064,1,0,0.3,0.64,true
+synthetic_brier_first_tree,2,0.25,0.75,0.02192,1,0,0.1,0.82,false

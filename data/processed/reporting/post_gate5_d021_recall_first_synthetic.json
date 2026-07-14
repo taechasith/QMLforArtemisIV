@@ -1,0 +1,18 @@
+{
+  "calibration_rows_read": 0,
+  "candidate_count": 2,
+  "claim_boundary": "Synthetic validation only; no threshold application to real data, development fitting, calibration, final-test, hardware/GPU, mission-loop, Gate 5 reinterpretation, QML invention, quantum advantage, or Gate 6.",
+  "decision_id": "D021-C",
+  "development_rows_read": 0,
+  "final_test_rows_read": 0,
+  "gate6_runs": 0,
+  "gpu_hours": 0,
+  "hardware_jobs": 0,
+  "official_status": "SYNTHETIC_VALIDATION_PASS",
+  "protocol_id": "P001",
+  "selected_brier": 0.08064,
+  "selected_false_negative_rate": 0.25,
+  "selected_model_id": "synthetic_recall_first_logistic",
+  "selected_recall": 0.75,
+  "source_d020_commit": "fc0c31c49279b117f93122c9018df78574e6c035"
+}

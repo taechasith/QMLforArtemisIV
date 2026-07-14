@@ -10,9 +10,11 @@ from openqfuel.gate4 import FinalTestAccessError
 from openqfuel.post_gate5_classical import (
     assert_d015_scope,
     invention_readiness_label,
+    recall_first_safety_score,
     residual_cost_metrics,
     residual_target,
     safety_metrics,
+    select_recall_first_candidate,
     select_safety_threshold,
 )
 
@@ -111,3 +113,23 @@ def test_invention_readiness_label_requires_prohibited_rescue_use() -> None:
             required_future_control="C06",
             claim_boundary="synthetic validation only",
         )
+
+
+def test_recall_first_candidate_tie_breaks_after_recall_and_fnr() -> None:
+    labels = np.asarray([1, 1, 0, 0])
+    simple = recall_first_safety_score(
+        model_id="simple",
+        model_complexity=1,
+        labels=labels,
+        probabilities=[0.9, 0.8, 0.2, 0.1],
+        threshold=0.5,
+    )
+    complex_model = recall_first_safety_score(
+        model_id="complex",
+        model_complexity=3,
+        labels=labels,
+        probabilities=[0.9, 0.8, 0.2, 0.1],
+        threshold=0.5,
+    )
+    selected = select_recall_first_candidate([complex_model, simple])
+    assert selected.model_id == "simple"

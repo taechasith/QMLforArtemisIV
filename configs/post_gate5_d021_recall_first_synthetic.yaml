@@ -1,0 +1,55 @@
+schema_version: "0.1.0"
+decision_id: "D021-C"
+protocol_id: "P001"
+status: "completed_implementation_and_synthetic_validation_only"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+acceptance_basis: "assistant-selected next step after D020-C; implement CSAFE-RF guards and metrics on synthetic arrays only"
+
+authority:
+  implementation_authorized: true
+  synthetic_validation_authorized: true
+  experiment_authorized: false
+  development_data_fitting_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  threshold_application_authorized: false
+  refit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate5_reinterpretation_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+  mission_loop_authorized: false
+  gate6_authorized: false
+
+source_evidence:
+  d020_result: "data/processed/reporting/post_gate5_d020_recall_first_freeze.json"
+  d020_figure: "RFIG-039"
+
+allowed_work:
+  - "add array-only CSAFE-RF recall-first candidate scoring"
+  - "add D021 scope guard rejecting development, calibration, final-test, hardware/GPU, and Gate 6 scopes"
+  - "validate recall-first selection order on synthetic arrays"
+  - "generate RFIG-040 synthetic-validation boundary evidence"
+
+synthetic_validation:
+  training_threshold_policy: "synthetic training arrays only"
+  heldout_evaluation_policy: "synthetic held-out arrays only"
+  selected_by: "recall, false_negative_rate, brier, model_complexity"
+  required_zero_counters:
+    development_rows_read: 0
+    calibration_rows_read: 0
+    final_test_rows_read: 0
+    hardware_jobs: 0
+    gpu_hours: 0
+    gate6_runs: 0
+
+outcome:
+  official_status: "SYNTHETIC_VALIDATION_PASS"
+  next_recommended_step_if_pass: "D022 clean-source synthetic compute preflight or manuscript discussion stop; no development-data fitting is authorized by D021-C"
+  figure: "RFIG-040"
+  result: "data/processed/reporting/post_gate5_d021_recall_first_synthetic.json"
+  claim_boundary: "Implementation and synthetic validation only; no threshold application to real data, development fitting, calibration, final-test, hardware/GPU, mission-loop, Gate 5 reinterpretation, QML invention, quantum advantage, or Gate 6 claim."

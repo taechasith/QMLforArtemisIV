@@ -56,7 +56,7 @@ def test_d020_docs_are_registered() -> None:
         "research_protocol.md": "D020-C freezes a future CSAFE-RF",
         "README.md": "D020-C freezes a future CSAFE-RF",
         "docs/decision_log.md": "D020-C accepted",
-        "docs/research_execution_map.md": "D020-C freeze proposal accepted",
+        "docs/research_execution_map.md": "D021-C synthetic validation PASS",
         "docs/computational_methodology.md": "D020-C recall-first safety freeze",
     }
     for relative, phrase in required.items():

@@ -57,7 +57,7 @@ def test_d019_docs_are_registered() -> None:
         "research_protocol.md": "D019-C opens a future-only safety-objective",
         "README.md": "D019-C opens a future-only safety-objective",
         "docs/decision_log.md": "D019-C opened",
-        "docs/research_execution_map.md": "D020-C freeze proposal accepted",
+        "docs/research_execution_map.md": "D021-C synthetic validation PASS",
         "docs/computational_methodology.md": "D019-C safety-objective redesign",
     }
     for relative, phrase in required.items():
