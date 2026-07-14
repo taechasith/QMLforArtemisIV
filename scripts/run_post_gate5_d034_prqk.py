@@ -219,7 +219,10 @@ def run() -> dict[str, Any]:
         raise RuntimeError("D034 config identity is invalid")
     if not config["authority"]["research_data_fitting_authorized"]:
         raise RuntimeError("D034 development fitting is not authorized")
-    if config["locks"]["calibration_rows_read"] != 0 or config["locks"]["final_test_rows_read"] != 0:
+    if (
+        config["authority"]["calibration_rows_read"] != 0
+        or config["authority"]["final_test_rows_read"] != 0
+    ):
         raise RuntimeError("D034 locked-data counters are invalid")
 
     output_root = ROOT / str(config["reporting"]["result_root"])

@@ -2122,3 +2122,13 @@ Required result decision:
   safety rules.
 - Otherwise classify a complete integrity-valid run as a valid negative and
   preserve the result for the next prospective invention protocol.
+
+### D034 prelaunch technical stop and correction
+
+The first D034 launcher attempt stopped before loading development data because
+the lock-counter lookup used the wrong config section. The source-bound record
+is `data/processed/reporting/post_gate5_d034_prqk/technical_stop_prelaunch.json`.
+Development, calibration, and final-test reads remained zero; no scientific
+workload started. The correction only reads the already accepted counters from
+`authority` and does not alter the model, split, seed, threshold, or resource
+contract. One corrected attempt is allowed; the failure is not model evidence.
