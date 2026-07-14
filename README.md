@@ -470,6 +470,7 @@ through a dated deviation record.
 - docs/release_candidate_manifest.md: D032-C release-candidate manifest and post-acceptance action list.
 - docs/release_acceptance.md: D033-C accepted release package and claim boundary.
 - docs/release_notes_v0.3.0.md: accepted v0.3.0 release notes.
+- docs/manuscript_submission_readiness.md: structural manuscript status and remaining Q1 submission tasks.
 - paper/manuscript.md: draft manuscript scaffold generated from the closed Gate 5/5X evidence.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.

@@ -2075,3 +2075,16 @@ Outcome:
   frozen public-data development benchmark.
 - Publication was administrative only; RFIG-052 remains the required release
   boundary figure and no scientific evidence changed.
+
+### Post-release manuscript readiness update
+
+Date: 2026-07-14
+Status: Reporting-only structural manuscript draft complete
+
+`paper/manuscript.md` now contains the full paper structure and source-backed
+negative-result narrative. The remaining work is literature closeout,
+reference formatting, figure selection, author and journal metadata,
+independent review, and an optional archival DOI decision. This update changed
+no numerical evidence, model, threshold, split, seed, or figure; it authorizes
+no experiment or Gate 6 activity. The remaining publication tasks are tracked
+in `docs/manuscript_submission_readiness.md`.
