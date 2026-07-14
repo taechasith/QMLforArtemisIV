@@ -59,7 +59,7 @@ def test_d031_documentation_updates_release_decision_point() -> None:
         "research_protocol.md": "D031-C final claim/release review READY",
         "README.md": "D031-C final claim/release review",
         "docs/decision_log.md": "D031-C completed",
-        "docs/research_execution_map.md": "D031-C final claim/release review READY",
+        "docs/research_execution_map.md": "D031-C completes final claim/release review preparation",
         "docs/computational_methodology.md": "D031-C final claim/release review",
         "docs/release_checklist.md": "final claim review is complete",
         "docs/final_claim_release_review.md": "D031-C Final Claim/Release Review",

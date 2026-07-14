@@ -2017,3 +2017,30 @@ Outcome:
   QML invention.
 - Next required human decision: accept release package, request revisions, or
   reject release.
+
+### D032-C completed - release-candidate manifest READY
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Completed; release-candidate manifest ready**
+Authority: Assistant-selected next step after D031-C
+
+Decision:
+
+- Prepare a release-candidate manifest for the D031-reviewed decision packet.
+- Hash the README, protocol, claim-reviewed manuscript, release cards, final
+  claim/release review, reproducibility record, figure registry, and D031-C
+  decision evidence.
+- Generate RFIG-051 as the release-candidate manifest figure.
+- Do not create a release, tag, archive, DOI, citation update, locked-data
+  access, mission-loop execution, Gate 6 run, model fit, QML invention claim,
+  or quantum-advantage claim.
+
+Outcome:
+
+- Candidate base commit:
+  `64296def4d6e1b86e13fee8d839e0445378d0ae1`.
+- Version candidate: `0.3.0`; current `CITATION.cff` version remains `0.2.0`
+  until human release acceptance.
+- Next required human decision remains: accept release package, request
+  revisions, or reject release.

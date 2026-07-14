@@ -72,6 +72,8 @@ data/processed/reporting/post_gate5_d017_classical_first/*
 !data/processed/reporting/post_gate5_d030_reproducibility_correction_matrix.csv
 !data/processed/reporting/post_gate5_d031_claim_release_review.json
 !data/processed/reporting/post_gate5_d031_claim_release_review_matrix.csv
+!data/processed/reporting/post_gate5_d032_release_candidate_manifest.json
+!data/processed/reporting/post_gate5_d032_release_candidate_files.csv
 !data/processed/reporting/post_gate5_p001/
 data/processed/reporting/post_gate5_p001/*
 !data/processed/reporting/post_gate5_p001/campaign_summary.json

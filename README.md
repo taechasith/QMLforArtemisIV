@@ -374,6 +374,12 @@ decision point. Release, tag, archive, DOI, Gate 6, locked-data access,
 mission-loop execution, QML invention claims, and quantum-advantage claims
 remain unauthorized until separately accepted.
 
+D032-C release-candidate manifest records the D031-reviewed base commit and
+hashes the release-candidate files for decision. It prepares the release packet
+but does not create a tag, archive, DOI, or citation update. RFIG-051 records
+the manifest state. Human acceptance is still required before any release
+action.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -451,6 +457,7 @@ through a dated deviation record.
 - docs/release_reproducibility_audit.md: D029-C STOP and D030-C clean reproducibility correction record.
 - docs/release_checklist.md: release checklist eligible for human claim/release review after D030-C.
 - docs/final_claim_release_review.md: D031-C final claim/release review and human decision options.
+- docs/release_candidate_manifest.md: D032-C release-candidate manifest and post-acceptance action list.
 - paper/manuscript.md: draft manuscript scaffold generated from the closed Gate 5/5X evidence.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.

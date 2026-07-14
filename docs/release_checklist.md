@@ -3,7 +3,7 @@
 Version: 0.1.0
 Decision: D030-C
 Prepared: 2026-07-14
-Status: Final claim review complete; awaiting human release decision
+Status: Final claim review complete and release-candidate manifest ready; awaiting human release decision
 
 ## Current Release Status
 
@@ -13,7 +13,8 @@ eligible for human claim/release review, but still requires explicit human
 acceptance. Release is eligible for human claim/release review after D030-C.
 D029-C remains recorded as: Blocked by clean reproducibility audit STOP.
 D031-C final claim review is complete; the remaining blocker is the human
-release decision.
+release decision. D032-C release-candidate manifest is ready and hashes the
+candidate decision packet without authorizing release.
 
 ## Required Before Release Decision
 
@@ -23,6 +24,7 @@ release decision.
 - [x] Confirm Gate 4 frozen artifact hashes match in a clean clone.
 - [x] Confirm no calibration, final-test, mission-loop, or Gate 6 data are read.
 - [x] Complete final claim review against D026-C/D027-C boundaries.
+- [x] Prepare release-candidate manifest without tag/archive/DOI.
 - [ ] Human research lead accepts or rejects release.
 
 ## Prohibited Until Complete

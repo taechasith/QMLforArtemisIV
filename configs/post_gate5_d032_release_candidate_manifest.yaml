@@ -1,0 +1,46 @@
+decision_id: "D032-C"
+protocol_id: "P001"
+status: "completed_release_candidate_manifest_ready"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+authority: "Assistant-selected next step after D031-C; prepare release-candidate manifest without publishing"
+candidate:
+  candidate_base_commit: "64296def4d6e1b86e13fee8d839e0445378d0ae1"
+  candidate_label: "P001 negative-QML benchmark release candidate"
+  package_version_candidate: "0.3.0"
+  citation_version_current: "0.2.0"
+  release_tag_authority: "human_acceptance_required"
+scope:
+  release_candidate_manifest_only: true
+  release_authorized: false
+  tag_authorized: false
+  archive_authorized: false
+  doi_authorized: false
+  citation_update_authorized: false
+  model_release_authorized: false
+  gate6_authorized: false
+  locked_data_access_authorized: false
+  mission_loop_authorized: false
+  model_fitting_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+required_after_human_acceptance:
+  - "Create release tag from the accepted release commit."
+  - "Prepare archive/DOI metadata only after tag acceptance."
+  - "Update CITATION.cff release metadata only after release acceptance."
+  - "Preserve D031 claim boundary in release notes."
+manifest_files:
+  - "README.md"
+  - "research_protocol.md"
+  - "paper/manuscript.md"
+  - "paper/results_tables/claim_boundary_table.csv"
+  - "docs/final_claim_release_review.md"
+  - "docs/release_checklist.md"
+  - "docs/release_reproducibility_audit.md"
+  - "docs/release_model_card.md"
+  - "docs/release_simulator_card.md"
+  - "docs/release_data_card.md"
+  - "docs/release_limitation_card.md"
+  - "artifacts/research_figures/figure_registry.csv"
+  - "data/processed/reporting/post_gate5_d031_claim_release_review.json"
+claim_boundary: "D032-C prepares a release-candidate manifest only; it authorizes no release, tag, archive, DOI, CITATION update, locked-data access, mission-loop execution, Gate 6 run, model fitting, QML invention claim, or quantum-advantage claim."

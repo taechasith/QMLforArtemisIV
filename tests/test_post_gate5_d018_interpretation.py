@@ -44,7 +44,7 @@ def test_d018_docs_are_registered() -> None:
         "research_protocol.md": "D018-C interpreted D017-C",
         "README.md": "D018-C interprets D017-C",
         "docs/decision_log.md": "D018-C completed",
-        "docs/research_execution_map.md": "D031-C final claim/release review READY",
+        "docs/research_execution_map.md": "D032-C release-candidate manifest READY",
     }
     for relative, phrase in required.items():
         text = (ROOT / relative).read_text(encoding="utf-8")

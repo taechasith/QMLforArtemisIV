@@ -1,7 +1,7 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.42
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; Gate 6 unauthorized
+Version: 0.6.43
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
 Recommended next action: human research lead should accept release package, request revisions, or reject release; no release, tag, archive, QML Gate 6 mission experiment, development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application to real data, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 run is authorized without a separate human release decision
@@ -1245,6 +1245,15 @@ for a QML Gate 6 mission experiment from P001. RFIG-050 records the human
 decision point. D031-C authorizes no release, tag, archive, DOI, locked-data
 access, mission-loop execution, Gate 6 run, model fitting, QML invention
 claim, or quantum-advantage claim.
+
+D032-C release-candidate manifest READY records the D031-C reviewed package
+base commit `64296def4d6e1b86e13fee8d839e0445378d0ae1`, hashes the README,
+protocol, claim-reviewed manuscript, release cards, final claim/release review,
+reproducibility record, figure registry, and D031-C decision evidence, and
+generates RFIG-051. This prepares an auditable release decision packet only.
+D032-C authorizes no release, tag, archive, DOI, `CITATION.cff` update,
+locked-data access, mission-loop execution, Gate 6 run, model fitting, QML
+invention claim, or quantum-advantage claim.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

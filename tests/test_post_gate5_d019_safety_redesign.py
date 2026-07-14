@@ -57,7 +57,7 @@ def test_d019_docs_are_registered() -> None:
         "research_protocol.md": "D019-C opens a future-only safety-objective",
         "README.md": "D019-C opens a future-only safety-objective",
         "docs/decision_log.md": "D019-C opened",
-        "docs/research_execution_map.md": "D031-C final claim/release review READY",
+        "docs/research_execution_map.md": "D032-C release-candidate manifest READY",
         "docs/computational_methodology.md": "D019-C safety-objective redesign",
     }
     for relative, phrase in required.items():
