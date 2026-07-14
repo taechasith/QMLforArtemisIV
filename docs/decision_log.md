@@ -2088,3 +2088,37 @@ independent review, and an optional archival DOI decision. This update changed
 no numerical evidence, model, threshold, split, seed, or figure; it authorizes
 no experiment or Gate 6 activity. The remaining publication tasks are tracked
 in `docs/manuscript_submission_readiness.md`.
+
+### D034 - P002 PRQK invention campaign accepted
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Explicit research-lead instruction to continue until a scientifically
+superior QML surrogate is found or the direction is rejected
+
+Decision scope:
+
+- Test the physics-anchored residual projected quantum kernel defined in
+  `docs/post_gate5_d034_prqk_protocol.md`.
+- Use the frozen 39,000-row development source, five whole-group folds,
+  1,024 nested training rows per fold, and seeds 1 through 20.
+- Compare against C06, the low-fidelity baseline, and identical-input A02-R;
+  retain P001 Q01b as immutable historical evidence.
+- Record all metrics, uncertainty, compute observations, and paper-ready
+  figures from machine-readable source files.
+
+Locks:
+
+- P001, Gate 5, D006/D007, and all earlier evidence remain immutable.
+- Calibration and final-test rows remain unread; no mission loop, hardware,
+  GPU, Gate 6, NASA-performance, or quantum-advantage claim is authorized.
+- A valid negative closes D034 and requires a future-only improvement protocol;
+  no silent retry or post-outcome configuration change is allowed.
+
+Required result decision:
+
+- **Scientifically superior** only if PRQK-08-N meets the preregistered 5%
+  NRMSE improvement, paired bootstrap, regret, infeasible-selection, and C02
+  safety rules.
+- Otherwise classify a complete integrity-valid run as a valid negative and
+  preserve the result for the next prospective invention protocol.

@@ -901,6 +901,287 @@ class ProjectedQuantumKernelClassifier(ClassifierMixin, BaseEstimator):
         return (self.predict_proba(x)[:, 1] >= 0.5).astype(int)
 
 
+class PhysicsAnchoredProjectedQuantumKernelRegressor(
+    RegressorMixin, BaseEstimator
+):
+    """Projected quantum-kernel ridge model for residuals over a physics baseline.
+
+    The final column is a standardized low-fidelity cost.  It is never encoded
+    by the circuit; it is added back after the kernel predicts the residual.
+    """
+
+    def __init__(
+        self,
+        n_qubits: int = 4,
+        layers: int = 1,
+        alpha: float = 0.01,
+        landmarks: int = 256,
+        gamma_multiplier: float = 1.0,
+        projection_id: str = "synthetic",
+        fold_id: str = "synthetic",
+        seed_index: int = 1,
+        feature_scale: float = 1.0,
+        entangle: bool = True,
+        low_fidelity_column: int = -1,
+    ) -> None:
+        self.n_qubits = n_qubits
+        self.layers = layers
+        self.alpha = alpha
+        self.landmarks = landmarks
+        self.gamma_multiplier = gamma_multiplier
+        self.projection_id = projection_id
+        self.fold_id = fold_id
+        self.seed_index = seed_index
+        self.feature_scale = feature_scale
+        self.entangle = entangle
+        self.low_fidelity_column = low_fidelity_column
+
+    @staticmethod
+    def _default_row_ids(row_count: int) -> list[str]:
+        return [f"synthetic-row-{index:06d}" for index in range(row_count)]
+
+    def _split_input(self, x: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        matrix = _as_matrix(x)
+        column = self.low_fidelity_column
+        if not -matrix.shape[1] <= column < matrix.shape[1]:
+            raise ValueError("low_fidelity_column is outside the input matrix")
+        return np.delete(matrix, column, axis=1), matrix[:, column]
+
+    def _fit_projected(
+        self,
+        projected: np.ndarray,
+        baseline: np.ndarray,
+        targets: np.ndarray,
+        row_ids: Sequence[str] | None,
+    ) -> "PhysicsAnchoredProjectedQuantumKernelRegressor":
+        features = _as_projected_features(projected)
+        baseline_values = np.asarray(baseline, dtype=float)
+        if baseline_values.shape != (features.shape[0],):
+            raise ValueError("Residual baseline must contain one value per row")
+        if not np.all(np.isfinite(baseline_values)):
+            raise ValueError("Residual baseline must be finite")
+        if targets.shape != (features.shape[0],) or not np.all(np.isfinite(targets)):
+            raise ValueError("Targets must contain finite values per row")
+        if self.alpha <= 0.0 or self.landmarks <= 0:
+            raise ValueError("Kernel regularization and landmarks must be positive")
+
+        ids = (
+            self._default_row_ids(features.shape[0])
+            if row_ids is None
+            else list(row_ids)
+        )
+        if len(ids) != features.shape[0] or len(set(ids)) != len(ids):
+            raise ValueError("row_ids must be unique and match training rows")
+        self.gamma_ = median_projected_kernel_gamma(
+            features, float(self.gamma_multiplier)
+        )
+        landmark_count = min(int(self.landmarks), features.shape[0])
+        self.landmark_indices_ = deterministic_landmark_indices(
+            ids,
+            str(self.projection_id),
+            str(self.fold_id),
+            int(self.seed_index),
+            landmark_count,
+        )
+        residual = targets - baseline_values
+        self.baseline_train_ = baseline_values.copy()
+        self.projected_training_features_ = features.copy()
+        if landmark_count == features.shape[0]:
+            kernel = projected_quantum_kernel_from_features(
+                features, features, self.gamma_
+            )
+            clipped, info = symmetrize_and_clip_psd(kernel)
+            self.psd_clip_info_ = info
+            self.training_features_ = features
+            self.landmark_features_ = None
+            self.nystrom_inverse_root_ = None
+            self.dual_coef_ = np.linalg.solve(
+                clipped + float(self.alpha) * np.eye(clipped.shape[0]),
+                residual,
+            )
+            return self
+
+        self.training_features_ = None
+        self.landmark_features_ = features[self.landmark_indices_]
+        landmark_kernel = projected_quantum_kernel_from_features(
+            self.landmark_features_, self.landmark_features_, self.gamma_
+        )
+        clipped, info = symmetrize_and_clip_psd(landmark_kernel)
+        self.psd_clip_info_ = info
+        eigenvalues, eigenvectors = np.linalg.eigh(clipped)
+        inverse_root = (eigenvectors * (1.0 / np.sqrt(eigenvalues))) @ eigenvectors.T
+        cross_kernel = projected_quantum_kernel_from_features(
+            features, self.landmark_features_, self.gamma_
+        )
+        embedding = cross_kernel @ inverse_root
+        self.nystrom_inverse_root_ = inverse_root
+        self.feature_coef_ = np.linalg.solve(
+            embedding.T @ embedding + float(self.alpha) * np.eye(embedding.shape[1]),
+            embedding.T @ residual,
+        )
+        return self
+
+    def fit_projected(
+        self,
+        projected: np.ndarray,
+        baseline: Sequence[float],
+        y: Sequence[float],
+        row_ids: Sequence[str] | None = None,
+    ) -> "PhysicsAnchoredProjectedQuantumKernelRegressor":
+        features = _as_projected_features(projected)
+        return self._fit_projected(
+            features,
+            np.asarray(baseline, dtype=float),
+            np.asarray(y, dtype=float),
+            row_ids,
+        )
+
+    def fit(
+        self,
+        x: np.ndarray,
+        y: Sequence[float],
+        row_ids: Sequence[str] | None = None,
+    ) -> "PhysicsAnchoredProjectedQuantumKernelRegressor":
+        circuit_input, baseline = self._split_input(x)
+        projected = projected_quantum_features(
+            circuit_input,
+            self.n_qubits,
+            self.layers,
+            feature_scale=self.feature_scale,
+            entangle=self.entangle,
+        )
+        return self._fit_projected(
+            projected, baseline, np.asarray(y, dtype=float), row_ids
+        )
+
+    def _predict_residual(self, projected: np.ndarray) -> np.ndarray:
+        if not hasattr(self, "gamma_"):
+            raise RuntimeError(
+                "PhysicsAnchoredProjectedQuantumKernelRegressor is not fitted"
+            )
+        features = _as_projected_features(projected)
+        if self.training_features_ is not None:
+            kernel = projected_quantum_kernel_from_features(
+                features, self.training_features_, self.gamma_
+            )
+            return kernel @ self.dual_coef_
+        kernel = projected_quantum_kernel_from_features(
+            features, self.landmark_features_, self.gamma_
+        )
+        return kernel @ self.nystrom_inverse_root_ @ self.feature_coef_
+
+    def predict_projected(
+        self, projected: np.ndarray, baseline: Sequence[float]
+    ) -> np.ndarray:
+        features = _as_projected_features(projected)
+        baseline_values = np.asarray(baseline, dtype=float)
+        if baseline_values.shape != (features.shape[0],):
+            raise ValueError("Prediction baseline must contain one value per row")
+        return baseline_values + self._predict_residual(features)
+
+    def predict(self, x: np.ndarray) -> np.ndarray:
+        circuit_input, baseline = self._split_input(x)
+        projected = projected_quantum_features(
+            circuit_input,
+            self.n_qubits,
+            self.layers,
+            feature_scale=self.feature_scale,
+            entangle=self.entangle,
+        )
+        return self.predict_projected(projected, baseline)
+
+
+class PhysicsAnchoredProjectedQuantumKernelClassifier(
+    ClassifierMixin, BaseEstimator
+):
+    """Feasibility head using the same projected map without encoding cost."""
+
+    def __init__(
+        self,
+        n_qubits: int = 4,
+        layers: int = 1,
+        alpha: float = 0.01,
+        landmarks: int = 256,
+        gamma_multiplier: float = 1.0,
+        projection_id: str = "synthetic",
+        fold_id: str = "synthetic",
+        seed_index: int = 1,
+        feature_scale: float = 1.0,
+        entangle: bool = True,
+        low_fidelity_column: int = -1,
+    ) -> None:
+        self.n_qubits = n_qubits
+        self.layers = layers
+        self.alpha = alpha
+        self.landmarks = landmarks
+        self.gamma_multiplier = gamma_multiplier
+        self.projection_id = projection_id
+        self.fold_id = fold_id
+        self.seed_index = seed_index
+        self.feature_scale = feature_scale
+        self.entangle = entangle
+        self.low_fidelity_column = low_fidelity_column
+
+    def fit(
+        self,
+        x: np.ndarray,
+        y: Sequence[int],
+        row_ids: Sequence[str] | None = None,
+    ) -> "PhysicsAnchoredProjectedQuantumKernelClassifier":
+        labels = np.asarray(y, dtype=float)
+        if labels.ndim != 1 or not set(np.unique(labels)).issubset({0.0, 1.0}):
+            raise ValueError("Projected-kernel feasibility labels must be binary")
+        model = PhysicsAnchoredProjectedQuantumKernelRegressor(
+            n_qubits=self.n_qubits,
+            layers=self.layers,
+            alpha=self.alpha,
+            landmarks=self.landmarks,
+            gamma_multiplier=self.gamma_multiplier,
+            projection_id=self.projection_id,
+            fold_id=self.fold_id,
+            seed_index=self.seed_index,
+            feature_scale=self.feature_scale,
+            entangle=self.entangle,
+            low_fidelity_column=self.low_fidelity_column,
+        )
+        circuit_input, baseline = model._split_input(x)
+        projected = projected_quantum_features(
+            circuit_input,
+            model.n_qubits,
+            model.layers,
+            feature_scale=model.feature_scale,
+            entangle=model.entangle,
+        )
+        self.regressor_ = model.fit_projected(
+            projected, np.zeros_like(baseline), labels, row_ids=row_ids
+        )
+        self.classes_ = np.array([0, 1])
+        return self
+
+    def predict_proba(self, x: np.ndarray) -> np.ndarray:
+        if not hasattr(self, "regressor_"):
+            raise RuntimeError(
+                "PhysicsAnchoredProjectedQuantumKernelClassifier is not fitted"
+            )
+        circuit_input, baseline = self.regressor_._split_input(x)
+        projected = projected_quantum_features(
+            circuit_input,
+            self.regressor_.n_qubits,
+            self.regressor_.layers,
+            feature_scale=self.regressor_.feature_scale,
+            entangle=self.regressor_.entangle,
+        )
+        probability = np.clip(
+            self.regressor_.predict_projected(projected, np.zeros_like(baseline)),
+            0.0,
+            1.0,
+        )
+        return np.column_stack((1.0 - probability, probability))
+
+    def predict(self, x: np.ndarray) -> np.ndarray:
+        return (self.predict_proba(x)[:, 1] >= 0.5).astype(int)
+
+
 class VariationalQuantumRegressor(RegressorMixin, BaseEstimator):
     """Data-reuploading variational circuit with a trainable linear head."""
 

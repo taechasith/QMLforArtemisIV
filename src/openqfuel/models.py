@@ -23,6 +23,8 @@ from sklearn.preprocessing import StandardScaler
 
 from .qml import (
     HybridQuantumResidualRegressor,
+    PhysicsAnchoredProjectedQuantumKernelClassifier,
+    PhysicsAnchoredProjectedQuantumKernelRegressor,
     QuantumKernelClassifier,
     QuantumKernelRegressor,
     VariationalQuantumClassifier,
@@ -284,6 +286,20 @@ def build_quantum_regressor(
             feature_scale=feature_scale,
             entangle=entangle,
         )
+    if family == "physics_anchored_projected_quantum_residual":
+        return PhysicsAnchoredProjectedQuantumKernelRegressor(
+            low_fidelity_column=low_fidelity_column,
+            n_qubits=qubits,
+            layers=layers,
+            alpha=float(parameters["alpha"]),
+            landmarks=int(parameters["landmarks"]),
+            gamma_multiplier=float(parameters["gamma_multiplier"]),
+            projection_id=str(parameters.get("projection_id", "synthetic")),
+            fold_id=str(parameters.get("fold_id", "synthetic")),
+            seed_index=int(parameters.get("seed_index", seed)),
+            feature_scale=feature_scale,
+            entangle=entangle,
+        )
     raise ValueError(f"Unknown quantum model family: {family}")
 
 
@@ -303,6 +319,20 @@ def build_quantum_classifier(
             seed=seed,
             feature_scale=feature_scale,
             entangle=entangle,
+        )
+    if family == "physics_anchored_projected_quantum_residual":
+        return PhysicsAnchoredProjectedQuantumKernelClassifier(
+            n_qubits=qubits,
+            layers=layers,
+            alpha=float(parameters["alpha"]),
+            landmarks=int(parameters["landmarks"]),
+            gamma_multiplier=float(parameters["gamma_multiplier"]),
+            projection_id=str(parameters.get("projection_id", "synthetic")),
+            fold_id=str(parameters.get("fold_id", "synthetic")),
+            seed_index=int(parameters.get("seed_index", seed)),
+            feature_scale=feature_scale,
+            entangle=entangle,
+            low_fidelity_column=-1,
         )
     return VariationalQuantumClassifier(
         n_qubits=qubits,

@@ -43,3 +43,24 @@ P001. D025-C closes Gate 5/5X with no QML Gate 6 candidate. The next
 scientifically correct use of this ledger is manuscript discussion or a new
 prospective future protocol whose QML target must beat C06 and safety-filter
 controls before any mission-loop claim.
+
+## D034 P002: PRQK campaign
+
+Date: 2026-07-15
+Status: **Authorized as one bounded development-only invention campaign**
+
+D034 opens a new protocol rather than modifying P001. It tests the
+Physics-Anchored Residual Projected Quantum Kernel (PRQK): the low-fidelity
+physics cost is excluded from the quantum encoding, the kernel learns only the
+standardized residual, and the physics baseline is added back analytically.
+Six fixed q=4/6/8, entanglement-off/on configurations are ablations, not
+post-outcome tuning. C06, BASELINE, and identical-input A02-R are required
+controls. Calibration, final-test, hardware/GPU, mission-loop, Gate 5, Gate 6,
+NASA-performance, and quantum-advantage claims remain prohibited.
+
+The complete mathematical contract, claim labels, derivation checks,
+falsification rule, resource limits, and reporting obligations are in
+`docs/post_gate5_d034_prqk_protocol.md` and
+`configs/post_gate5_d034_prqk.yaml`. The result is unresolved until the
+source-bound run completes. If PRQK is negative, the failure must be graphed,
+committed as future-only improvement, and tested only under a new protocol.

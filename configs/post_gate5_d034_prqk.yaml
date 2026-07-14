@@ -1,0 +1,118 @@
+schema_version: "0.1.0"
+decision_id: "D034"
+protocol_id: "P002"
+status: "accepted_new_qml_invention_campaign_authorized"
+prepared_date: "2026-07-15"
+accepted_date: "2026-07-15"
+acceptance_basis: "explicit research-lead instruction to continue until a scientifically superior QML surrogate is found or the direction is rejected"
+
+authority:
+  scope: "one bounded development-only invention campaign for a physics-anchored projected quantum kernel"
+  research_data_fitting_authorized: true
+  campaign_count_limit: 1
+  checkpoint_resume_authorized: true
+  silent_task_retry_authorized: false
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  final_payload_access_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate6_authorized: false
+  nasa_performance_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+
+locks:
+  gate5_result_unchanged: true
+  p001_evidence_immutable: true
+  d006_d007_evidence_immutable: true
+  no_calibration_or_final_test: true
+  no_mission_loop: true
+  no_hardware_or_gpu: true
+  allowed_data_scope: "development"
+  allowed_qubits: [4, 6, 8]
+  allowed_layers: [1]
+  grouped_folds: 5
+  seed_indices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  training_rows_per_fold: 1024
+  validation_rows: "all held-out rows in each whole-group fold"
+
+source_binding:
+  phase1_config: "configs/phase1_benchmark.yaml"
+  d011_result: "data/processed/reporting/post_gate5_p001/campaign_summary.json"
+  p001_control_summary: "data/processed/reporting/post_gate5_p001/control_summary.csv"
+  qml_source: "src/openqfuel/qml.py"
+  model_source: "src/openqfuel/models.py"
+  campaign_source: "scripts/run_post_gate5_d034_prqk.py"
+  protocol_source: "docs/post_gate5_d034_prqk_protocol.md"
+
+mathematical_contract:
+  input_space: "fold-local transformed and PCA-compressed development features u in R^q, plus a scalar baseline b"
+  output_space: "standardized robust correction cost y in R and feasibility c in {0,1}"
+  primary_target: "robust_total_correction_delta_v_m_s"
+  feasibility_target: "independently_propagated_feasible"
+  baseline_input: "low_fidelity_cost_m_s, standardized with the training-fold target scaler"
+  residual_target: "r = y - b"
+  state: "|psi(u)> = U_L(u)|0^q>"
+  encoding: "per layer and qubit, RY(s*u_j) then RZ(s*u_(j+1)); optional nearest-neighbor CNOT ring"
+  projection: "r_Q(u) = (<X_1>,<Y_1>,<Z_1>,...,<X_q>,<Y_q>,<Z_q>)"
+  kernel: "K_Q(u,v) = exp(-gamma * sum_j ||rho_j(u)-rho_j(v)||_F^2) = exp(-gamma/2 * ||r_Q(u)-r_Q(v)||_2^2)"
+  residual_prediction: "f_Q(u,b) = b + K_Q(u,U) alpha"
+  kernel_fit: "alpha = argmin_a ||K_Q(U,U)a - r||_2^2 + lambda ||a||_2^2, implemented with deterministic Nystrom landmarks"
+  feasibility_prediction: "p_Q(u) = clip(K_Q^F(u,U) beta, 0, 1)"
+  feasibility_fit: "beta minimizes the same ridge least-squares objective against c"
+  selection: "within each decision set, choose the lowest predicted cost among p_Q >= 0.5; use the frozen 20 m/s penalty otherwise"
+
+candidate:
+  id: "PRQK"
+  name: "Physics-Anchored Residual Projected Quantum Kernel"
+  primary_configuration: "PRQK-08-N"
+  configurations:
+    - {id: PRQK-04-N, qubits: 4, layers: 1, feature_scale: 1.0, entangle: false, gamma_multiplier: 0.25, alpha: 1.0, landmarks: 256}
+    - {id: PRQK-04-E, qubits: 4, layers: 1, feature_scale: 1.0, entangle: true, gamma_multiplier: 0.25, alpha: 1.0, landmarks: 256}
+    - {id: PRQK-06-N, qubits: 6, layers: 1, feature_scale: 1.0, entangle: false, gamma_multiplier: 0.25, alpha: 1.0, landmarks: 256}
+    - {id: PRQK-06-E, qubits: 6, layers: 1, feature_scale: 1.0, entangle: true, gamma_multiplier: 0.25, alpha: 1.0, landmarks: 256}
+    - {id: PRQK-08-N, qubits: 8, layers: 1, feature_scale: 1.0, entangle: false, gamma_multiplier: 0.25, alpha: 1.0, landmarks: 256}
+    - {id: PRQK-08-E, qubits: 8, layers: 1, feature_scale: 1.0, entangle: true, gamma_multiplier: 0.25, alpha: 1.0, landmarks: 256}
+  configuration_rule: "fixed before opening development payloads; dimensions and entanglement are ablations, not post-outcome tuning"
+  claimed_mechanism: "remove the dominant low-fidelity physics signal from the quantum map and reserve the kernel for learning a structured correction residual"
+
+controls:
+  - id: C06
+    description: "frozen boosted physics residual using all transformed features and the same baseline"
+  - id: A02-R
+    description: "exact classical RBF residual kernel on the identical baseline-excluded compressed inputs and identical landmarks"
+  - id: BASELINE
+    description: "low-fidelity physics cost with no learned residual"
+  - id: P001-Q01b
+    description: "committed historical projected-kernel result; report-only and not rerun"
+
+hypotheses:
+  H1: "PRQK-08-N will reduce pooled OOF NRMSE by at least 5 percent versus C06"
+  H2: "PRQK will not worsen feasibility-constrained regret or infeasible selection relative to C06"
+  H3: "PRQK feasibility will meet the frozen safety comparator rule against C02: Brier <= 1.05*C02, AUROC >= C02-0.01, recall >= C02-0.02"
+  H4: "If PRQK improves, identical-input A02-R must not show the same improvement before any quantum-specific interpretation is considered"
+
+decision_rule:
+  scientifically_superior: "H1, H2, and H3 all pass across all five folds and 20 seeds, and the paired 95 percent bootstrap upper bound for PRQK-08-N minus C06 NRMSE is below zero"
+  valid_negative: "the campaign is complete and integrity checks pass but the primary configuration fails any superiority condition"
+  technical_stop: "source, split, row, lock, numerical, or resource integrity fails before a valid endpoint"
+  after_negative: "record a future-only improvement protocol and do not silently retry this configuration"
+
+resources:
+  hardware: "recorded laptop: Intel Core i9-13900HX, 32 GiB RAM, NVIDIA RTX 4060 Laptop GPU; CPU-only execution"
+  max_qubits: 8
+  simulator: "exact local statevector on CPU"
+  peak_working_set_gib: 24.0
+  cpu_core_hours: 250.0
+  wall_clock_days: 5.0
+  free_disk_floor_gib: 20.0
+  gpu_hours: 0.0
+  artifact_gib: 20.0
+
+reporting:
+  result_root: "data/processed/reporting/post_gate5_d034_prqk"
+  checkpoint_root: "results/post_gate5_d034_prqk"
+  figures: [RFIG-053, RFIG-054, RFIG-055]
+  figure_script: "scripts/make_post_gate5_d034_prqk_figures.py"
+  missing_value_rule: "missing or unauthorized values remain absent and are never plotted as zero"
+  claim_boundary: "development-only surrogate evidence; no NASA performance claim, mission claim, hardware claim, quantum advantage claim, calibration/final-test result, Gate 5 revision, or Gate 6 authorization"

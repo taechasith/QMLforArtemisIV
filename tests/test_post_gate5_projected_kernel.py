@@ -12,6 +12,8 @@ from openqfuel.post_gate5 import (
     validate_future_research_discussion_row,
 )
 from openqfuel.qml import (
+    PhysicsAnchoredProjectedQuantumKernelClassifier,
+    PhysicsAnchoredProjectedQuantumKernelRegressor,
     ProjectedQuantumKernelClassifier,
     ProjectedQuantumKernelRegressor,
     deterministic_landmark_indices,
@@ -162,6 +164,59 @@ def test_projected_estimators_fit_synthetic_data_and_share_landmarks() -> None:
     assert regressor.gamma_ == classifier.regressor_.gamma_
 
 
+def test_physics_anchored_kernel_excludes_baseline_and_adds_it_back() -> None:
+    grid = np.linspace(-1.0, 1.0, 18)
+    circuit_features = np.column_stack((grid, grid**2, np.sin(grid), -grid))
+    baseline = 0.25 * grid + 0.1
+    residual = 0.2 * grid**2 - 0.05 * grid
+    targets = baseline + residual
+    x = np.column_stack((circuit_features, baseline))
+    row_ids = [f"anchored-{index:03d}" for index in range(x.shape[0])]
+    model = PhysicsAnchoredProjectedQuantumKernelRegressor(
+        n_qubits=4,
+        layers=1,
+        alpha=0.01,
+        landmarks=8,
+        gamma_multiplier=1.0,
+        projection_id="PRQK-TEST",
+        fold_id="CV01",
+        seed_index=1,
+        feature_scale=1.0,
+        entangle=False,
+    ).fit(x, targets, row_ids=row_ids)
+
+    no_baseline = np.column_stack((circuit_features, baseline + 1000.0))
+    np.testing.assert_allclose(
+        model.predict(x) - baseline,
+        model.predict(no_baseline) - (baseline + 1000.0),
+        atol=1e-12,
+    )
+    assert model.projected_training_features_.shape[1] == 12
+
+
+def test_physics_anchored_classifier_uses_zero_baseline_for_safety_head() -> None:
+    grid = np.linspace(-1.0, 1.0, 12)
+    features = np.column_stack((grid, grid**2, -grid, 0.5 * grid))
+    baseline = np.linspace(-0.2, 0.2, grid.size)
+    x = np.column_stack((features, baseline))
+    labels = (grid > 0.0).astype(int)
+    model = PhysicsAnchoredProjectedQuantumKernelClassifier(
+        n_qubits=4,
+        layers=1,
+        alpha=0.01,
+        landmarks=6,
+        gamma_multiplier=1.0,
+        projection_id="PRQK-TEST",
+        fold_id="CV01",
+        seed_index=1,
+        feature_scale=1.0,
+        entangle=False,
+    ).fit(x, labels)
+    probability = model.predict_proba(x)[:, 1]
+    assert np.all(np.isfinite(probability))
+    assert np.all((probability >= 0.0) & (probability <= 1.0))
+
+
 def test_d008_scope_guard_allows_only_synthetic_before_execution_decision() -> None:
     config = yaml.safe_load(
         (ROOT / "configs/post_gate5_exploratory.yaml").read_text(encoding="utf-8")
@@ -207,4 +262,3 @@ def test_future_discussion_rows_are_firewalled() -> None:
     row["active_pipeline_change_authorized"] = "true"
     with pytest.raises(ValueError, match="active_pipeline_change_authorized"):
         validate_future_research_discussion_row(row, required)
-
