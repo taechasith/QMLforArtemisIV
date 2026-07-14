@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.29
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; Gate 6 unauthorized
+Version: 0.6.30
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: draft a future D020 recall-first safety freeze proposal or move to manuscript discussion; no experiment, implementation, calibration/final-test access, refit, rerank, retry, threshold change, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized
+Recommended next action: open D021 implementation and synthetic validation only for CSAFE-RF guards/metrics, or stop experimentation and move to manuscript discussion; no development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized
 
 ## 1. Proposed title
 
@@ -1113,6 +1113,21 @@ Gate 6 request. RFIG-038 records this boundary. No experiment,
 implementation, development fitting, refit, rerank, retry, threshold change,
 calibration, final-test, hardware/GPU, mission-loop, QML invention,
 quantum-advantage, Gate 5 reinterpretation, or Gate 6 authority follows.
+
+D020-C freezes a future CSAFE-RF recall-first safety-filter proposal. It locks
+the future scientific objective as unsafe-case recall or false-negative risk
+before Brier score, with Brier, calibration, precision, false-positive burden,
+artifact size, and laptop-fit compute retained as secondary diagnostics. Any
+later executable successor must rank eligible models by mean development
+unsafe-case recall, then lower false-negative rate, then lower Brier score,
+then simpler family. Thresholds must be selected only inside authorized
+training folds; D017/D018 held-out outcomes cannot tune an active threshold.
+The required controls remain C02-T02, calibrated logistic, class-weighted tree,
+A02 exact classical RBF, and any future QML candidate only under a separate
+prospective freeze. RFIG-039 records this boundary. D020-C authorizes no
+implementation, threshold application, development fitting, calibration,
+final-test, hardware/GPU, mission-loop, QML invention, quantum-advantage,
+Gate 5 reinterpretation, or Gate 6 authority.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

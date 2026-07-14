@@ -1,0 +1,31 @@
+{
+  "decision_id": "D020-C",
+  "protocol_id": "P001",
+  "official_status": "FREEZE_PROPOSAL_ONLY",
+  "source_d019_commit": "cbb57389cbccb9ed78a32403d602c59b6de64c9b",
+  "track_id": "CSAFE-RF",
+  "track_name": "Recall-first safety-filter freeze proposal",
+  "primary_objective": "maximize unsafe-case recall or minimize false-negative risk under prospectively frozen threshold selection",
+  "selection_order": [
+    "mean development unsafe-case recall",
+    "lower false-negative rate",
+    "lower Brier score",
+    "simpler model family"
+  ],
+  "threshold_policy": "future thresholds must be selected inside authorized training folds only; D017/D018 held-out outcomes cannot tune an active threshold",
+  "required_controls": [
+    "C02-T02",
+    "calibrated_logistic",
+    "class_weighted_tree",
+    "A02_exact_classical_RBF",
+    "future_QML_candidate_only_by_separate_freeze"
+  ],
+  "development_rows_read": 0,
+  "calibration_rows_read": 0,
+  "final_test_rows_read": 0,
+  "hardware_jobs": 0,
+  "gpu_hours": 0,
+  "gate6_runs": 0,
+  "next_required_decision": "D021 implementation and synthetic validation only, or manuscript discussion stop",
+  "claim_boundary": "Future recall-first safety freeze proposal only; no implementation, threshold application, fitting, locked-data access, mission-loop work, Gate 5 reinterpretation, QML invention, quantum advantage, or Gate 6."
+}

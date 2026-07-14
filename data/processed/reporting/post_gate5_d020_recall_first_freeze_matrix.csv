@@ -1,0 +1,6 @@
+record_id,requirement_type,requirement,reason,authorized_now,next_gate
+D020-R01,primary_objective,Unsafe-case recall or false-negative risk comes before Brier score,D017 best-Brier selection had mean recall 0.0139,false,D021
+D020-R02,threshold_policy,Choose any future threshold inside authorized training folds only,Prevents D017/D018 held-out rescue,false,D021
+D020-R03,selection_order,Rank by recall then false-negative rate then Brier then simplicity,Aligns safety selection with missed-unsafe-case risk,false,D021
+D020-R04,controls,Keep C02-T02 calibrated logistic class-weighted tree and A02 exact RBF as controls,Prevents weak-control claims,false,D021
+D020-R05,scope_lock,No locked data hardware mission-loop Gate 5 reinterpretation QML invention quantum advantage or Gate 6,D020 is proposal-only,false,Separate prospective decision

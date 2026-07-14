@@ -1,0 +1,71 @@
+schema_version: "0.1.0"
+decision_id: "D020-C"
+protocol_id: "P001"
+status: "accepted_freeze_proposal_only"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+acceptance_basis: "assistant-selected next step after D019-C; freeze future recall-first safety objective before any executable successor"
+
+authority:
+  freeze_proposal_authorized: true
+  discussion_authorized: true
+  implementation_authorized: false
+  experiment_authorized: false
+  development_data_fitting_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  threshold_application_authorized: false
+  refit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate5_reinterpretation_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+  mission_loop_authorized: false
+  gate6_authorized: false
+
+source_evidence:
+  d019_result: "data/processed/reporting/post_gate5_d019_safety_redesign.json"
+  d019_figure: "RFIG-038"
+  d018_result: "data/processed/reporting/post_gate5_d018_interpretation.json"
+
+freeze:
+  track_id: "CSAFE-RF"
+  track_name: "Recall-first safety-filter freeze proposal"
+  scientific_question: "Can a future safety filter reduce missed unsafe cases under the original grouped development discipline without using post-outcome rescue?"
+  primary_objective: "maximize unsafe-case recall or minimize false-negative risk under prospectively frozen threshold selection"
+  secondary_diagnostics:
+    - "Brier score"
+    - "calibration curve or expected calibration error"
+    - "precision"
+    - "false-positive burden"
+    - "artifact size and laptop-fit compute cost"
+  frozen_selection_order:
+    - "eligible models must satisfy the predeclared split, source, and scope guards"
+    - "rank eligible models by mean development unsafe-case recall"
+    - "break recall ties by lower false-negative rate, then lower Brier score, then simpler model family"
+    - "never select a model by Brier alone for a safety-filter claim"
+  threshold_policy:
+    status: "proposal_only_not_applied"
+    rule: "future executable work must choose thresholds inside authorized training folds only; held-out development folds may evaluate but not tune the threshold"
+    prohibited: "no D017/D018 observed held-out outcome may be used to set an active threshold"
+  required_controls:
+    - "C02-T02 feasibility/safety comparator"
+    - "calibrated logistic safety head"
+    - "class-weighted tree safety head"
+    - "A02 exact classical RBF feasibility head"
+    - "any future QML candidate only under a separate prospective freeze"
+  advance_boundary:
+    - "D020-C alone cannot request calibration, final-test, hardware/GPU, mission-loop, or Gate 6 authority"
+    - "D021 is required before any implementation or synthetic validation"
+    - "a later clean-source compute preflight is required before any development-data fitting"
+    - "any negative or failed step must record future-useful signal and prohibited rescue use"
+
+outcome:
+  official_status: "FREEZE_PROPOSAL_ONLY"
+  next_recommended_step: "D021 implementation and synthetic validation only for CSAFE-RF guards and metrics, or stop experiments and move to manuscript discussion"
+  figure: "RFIG-039"
+  result: "data/processed/reporting/post_gate5_d020_recall_first_freeze.json"
+  claim_boundary: "Future recall-first safety freeze proposal only; no implementation, threshold application, development fitting, calibration, final-test, hardware/GPU, mission-loop, Gate 5 reinterpretation, QML invention, quantum advantage, or Gate 6 claim."

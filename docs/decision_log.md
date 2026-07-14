@@ -1645,3 +1645,34 @@ D019-C authorizes no implementation, experiment, development fitting, refit,
 rerank, retry, threshold change, calibration/final-test read, hardware/GPU
 execution, mission-loop work, Gate 5 reinterpretation, QML invention claim,
 quantum-advantage claim, or Gate 6. It does not rescue or reinterpret D017.
+
+### D020-C accepted - recall-first safety freeze proposal
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Accepted; freeze proposal only; no implementation authorized**
+Authority: Assistant-selected next step after D019-C
+
+Decision:
+
+- Freeze the future CSAFE-RF safety-filter direction as recall-first or
+  false-negative-risk-first.
+- Retain Brier score, calibration, precision, false-positive burden, artifact
+  size, and laptop-fit compute as secondary diagnostics.
+- Freeze future model selection order as mean unsafe-case recall, lower
+  false-negative rate, lower Brier score, then simpler model family.
+- Freeze threshold discipline: any future threshold must be selected inside
+  authorized training folds only, and D017/D018 held-out outcomes cannot tune an
+  active threshold.
+- Require C02-T02, calibrated logistic, class-weighted tree, A02 exact
+  classical RBF, and any later QML candidate only under a separate prospective
+  freeze.
+- Generate RFIG-039 for the freeze boundary.
+
+Boundary:
+
+D020-C authorizes no implementation, experiment, development fitting,
+threshold application, refit, rerank, retry, calibration/final-test read,
+hardware/GPU execution, mission-loop work, Gate 5 reinterpretation, QML
+invention claim, quantum-advantage claim, or Gate 6. D021 is required before
+any synthetic implementation or validation.

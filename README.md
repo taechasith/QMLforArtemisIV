@@ -291,6 +291,13 @@ does not authorize implementation, threshold changes, refits, locked data,
 mission-loop work, QML invention claims, quantum-advantage claims, or Gate 6.
 RFIG-038 records the boundary.
 
+D020-C freezes a future CSAFE-RF recall-first safety proposal. The future
+objective is unsafe-case recall or false-negative risk before Brier score, with
+thresholds selected only inside authorized training folds. It is still
+proposal-only: no implementation, threshold application, development fitting,
+locked data, mission-loop work, QML invention claim, quantum-advantage claim,
+or Gate 6 is authorized. RFIG-039 records the boundary.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -353,6 +360,7 @@ through a dated deviation record.
 - docs/post_gate5_d014_classical_first_freeze.md: freeze proposal for CRES/CSAFE tracks before any implementation.
 - docs/post_gate5_d015_implementation_synthetic_validation.md: implementation and synthetic-validation authorization without data fitting.
 - docs/post_gate5_d019_safety_redesign.md: future-only safety-objective redesign discussion after D018-C.
+- docs/post_gate5_d020_recall_first_freeze.md: recall-first CSAFE-RF safety freeze proposal before implementation.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
 - docs/post_gate5_compute_preflight.md: D009 synthetic-only clean-source compute-admission contract and pass/stop rules.
