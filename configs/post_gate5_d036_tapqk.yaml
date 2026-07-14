@@ -1,0 +1,97 @@
+schema_version: "0.1.0"
+decision_id: "D036"
+protocol_id: "P004"
+status: "accepted_next_invention_campaign_authorized"
+prepared_date: "2026-07-15"
+accepted_date: "2026-07-15"
+acceptance_basis: "assistant-selected continuation after the D035 valid negative, with no change to frozen evidence"
+
+authority:
+  scope: "one bounded development-only campaign for a task-aligned projected quantum kernel"
+  research_data_fitting_authorized: true
+  campaign_count_limit: 1
+  checkpoint_resume_authorized: true
+  silent_task_retry_authorized: false
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  final_payload_access_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate6_authorized: false
+  nasa_performance_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+
+locks:
+  gate5_result_unchanged: true
+  p001_evidence_immutable: true
+  d034_evidence_immutable: true
+  d035_evidence_immutable: true
+  no_calibration_or_final_test: true
+  no_mission_loop: true
+  no_hardware_or_gpu: true
+  allowed_data_scope: "development"
+  allowed_qubits: [4, 6, 8]
+  allowed_layers: [1]
+  inner_grouped_folds: 4
+  seed_indices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  training_rows_per_outer_fold: 1024
+
+source_binding:
+  phase1_config: "configs/phase1_benchmark.yaml"
+  d035_result: "data/processed/reporting/post_gate5_d035_cfqsr/campaign_result.json"
+  qml_source: "src/openqfuel/qml.py"
+  campaign_source: "scripts/run_post_gate5_d036_tapqk.py"
+  protocol_source: "docs/post_gate5_d036_tapqk_protocol.md"
+
+mathematical_contract:
+  outer_input: "fold-local PCA-compressed correction context x in R^q"
+  target: "cross-fitted C06 residual e_i = y_i - b_C06^{-inner}(x_i)"
+  supervised_projection: "z_i = S(PLS_q(x_i, e_i)) in R^q, with S fit on outer training rows only"
+  quantum_prediction: "f_Q(x) = b_C06^outer(x) + k_Q(z, Z) alpha"
+  quantum_kernel: "K_Q(z,v) = exp(-gamma/2 * ||r_Q(z)-r_Q(v)||_2^2)"
+  classical_control: "TAP-RBF uses the identical PLS scores, landmarks, gamma rule, and ridge solver"
+  safety_guard: "the frozen outer-fold C06 feasibility head is retained unchanged"
+
+candidate:
+  id: "TAPQK"
+  name: "Task-Aligned Projected Quantum Kernel"
+  primary_configuration: "TAPQK-08"
+  configurations:
+    - {id: TAPQK-04, qubits: 4, layers: 1, feature_scale: 1.0, entangle: false, gamma_multiplier: 0.25, alpha: 1.0, landmarks: 256}
+    - {id: TAPQK-06, qubits: 6, layers: 1, feature_scale: 1.0, entangle: false, gamma_multiplier: 0.25, alpha: 1.0, landmarks: 256}
+    - {id: TAPQK-08, qubits: 8, layers: 1, feature_scale: 1.0, entangle: false, gamma_multiplier: 0.25, alpha: 1.0, landmarks: 256}
+  configuration_rule: "fixed before development payload access; q scaling is descriptive, not post-outcome tuning"
+  claimed_mechanism: "residual-supervised projection preserves task-aligned directions that unsupervised PCA may discard before the quantum feature map"
+
+controls:
+  - id: C06
+    description: "frozen outer-fold C06 prediction with the same safety guard"
+  - id: TAP-RBF
+    description: "identical-input classical RBF on the same fold-local PLS scores"
+  - id: D035-CFQSR
+    description: "immutable D035 result, not rerun"
+
+hypotheses:
+  H1: "TAPQK-08 will improve pooled OOF NRMSE by at least 5 percent versus C06"
+  H2: "TAPQK-08 will improve or preserve C06 feasibility-constrained regret and infeasible selection"
+  H3: "TAPQK-08 will beat TAP-RBF by at least 5 percent; otherwise any gain is a classical supervised-projection effect"
+
+decision_rule:
+  scientifically_superior: "H1, H2, and H3 pass across five outer folds and 20 seeds, with the paired 95 percent bootstrap upper bound for TAPQK-08 minus C06 below zero"
+  valid_negative: "complete source-bound endpoint with all integrity checks pass but any superiority condition fails"
+  technical_stop: "source, split, projection leakage, numerical, or resource integrity failure"
+  after_negative: "record the evidence and open a new protocol; do not silently alter the projection, controls, thresholds, or seeds"
+
+resources:
+  hardware: "recorded laptop: Intel Core i9-13900HX, 32 GiB RAM, NVIDIA RTX 4060 Laptop GPU; CPU-only execution"
+  peak_working_set_gib: 24.0
+  cpu_core_hours: 250.0
+  wall_clock_days: 5.0
+  free_disk_floor_gib: 20.0
+  gpu_hours: 0.0
+
+reporting:
+  result_root: "data/processed/reporting/post_gate5_d036_tapqk"
+  figures: [RFIG-058, RFIG-059]
+  figure_script: "scripts/make_post_gate5_d036_tapqk_figures.py"
+  claim_boundary: "development-only surrogate evidence; no NASA performance claim, mission claim, hardware claim, quantum advantage claim, calibration/final-test result, Gate 5 revision, or Gate 6 authorization"

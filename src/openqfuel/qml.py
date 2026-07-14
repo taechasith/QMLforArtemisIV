@@ -11,6 +11,7 @@ import numpy as np
 from scipy.optimize import minimize
 from scipy.special import expit
 from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
+from sklearn.cross_decomposition import PLSRegression
 
 
 @dataclass(frozen=True)
@@ -387,6 +388,54 @@ def _as_projected_features(values: Sequence[Sequence[float]] | np.ndarray) -> np
     if not np.all(np.isfinite(matrix)):
         raise ValueError("Projected features must be finite")
     return matrix
+
+
+class TaskAlignedProjection:
+    """Fold-local supervised projection for the D036 TAP-QK protocol."""
+
+    def __init__(self, n_components: int, max_iter: int = 500, tol: float = 1e-10) -> None:
+        self.n_components = n_components
+        self.max_iter = max_iter
+        self.tol = tol
+
+    def fit(
+        self, x: Sequence[Sequence[float]] | np.ndarray, y: Sequence[float]
+    ) -> "TaskAlignedProjection":
+        matrix = _as_matrix(x)
+        targets = np.asarray(y, dtype=float)
+        if targets.shape != (matrix.shape[0],):
+            raise ValueError("Task-aligned targets must contain one value per row")
+        if not np.all(np.isfinite(targets)):
+            raise ValueError("Task-aligned targets must be finite")
+        if self.n_components <= 0 or self.n_components > min(matrix.shape):
+            raise ValueError("Task-aligned component count exceeds the input rank")
+        if self.max_iter <= 0 or self.tol <= 0.0:
+            raise ValueError("Task-aligned PLS solver settings must be positive")
+        if np.linalg.matrix_rank(matrix) < self.n_components:
+            raise ValueError("Task-aligned PLS produced a degenerate score")
+        try:
+            self.pls_ = PLSRegression(
+                n_components=int(self.n_components),
+                scale=True,
+                max_iter=int(self.max_iter),
+                tol=float(self.tol),
+            ).fit(matrix, targets.reshape(-1, 1))
+        except ValueError as error:
+            raise ValueError("Task-aligned PLS produced a degenerate score") from error
+        scores = np.asarray(self.pls_.transform(matrix), dtype=float)
+        self.score_mean_ = np.mean(scores, axis=0)
+        self.score_scale_ = np.std(scores, axis=0)
+        if np.any(~np.isfinite(self.score_scale_)) or np.any(self.score_scale_ <= 1e-12):
+            raise ValueError("Task-aligned PLS produced a degenerate score")
+        return self
+
+    def transform(
+        self, x: Sequence[Sequence[float]] | np.ndarray
+    ) -> np.ndarray:
+        if not hasattr(self, "pls_"):
+            raise RuntimeError("TaskAlignedProjection is not fitted")
+        scores = np.asarray(self.pls_.transform(_as_matrix(x)), dtype=float)
+        return (scores - self.score_mean_) / self.score_scale_
 
 
 def one_rdm_distance_matrix(

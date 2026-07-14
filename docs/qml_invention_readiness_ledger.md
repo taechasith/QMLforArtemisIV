@@ -97,3 +97,34 @@ the C06 safety guard is held fixed. The protocol, controls, inner-fold audit,
 and negative-result firewall are in
 `docs/post_gate5_d035_cfqsr_protocol.md`. No D035 result exists until the
 source-bound endpoint completes.
+
+### D035 result label
+
+**Observed result:** CFQSR-08-N mean pooled OOF NRMSE `0.0134629` versus C06
+`0.00683281`, with paired difference `+0.00663006` and 95% interval
+`[+0.00662749,+0.00663245]`. A02-STACK-q8 scored `0.00984926`; no endpoint
+condition passed.
+
+**Useful invention signal:** cross-fitting prevents in-sample C06 baseline
+leakage but did not reveal a residual correction that could compete with C06.
+The next candidate should change the coordinate map, not the frozen baseline,
+and must use a matched classical control.
+
+**Prohibited use:** do not call D035 a failure of every QML method, rerank its
+q values, or claim NASA performance, mission benefit, quantum advantage, or
+Gate 6 eligibility.
+
+**Required next control:** D036 TAP-QK uses residual-supervised PLS scores and
+TAP-RBF on the same scores to separate a task-alignment effect from a quantum
+kernel effect.
+
+## D036 P004: task-aligned projected quantum kernel
+
+D036 is authorized as one new development-only protocol. It fits a fold-local
+PLS projection to cross-fitted C06 residuals, standardizes the resulting
+scores using training rows only, and applies the existing projected quantum
+kernel. The matched TAP-RBF control uses identical scores and solver settings.
+The full mathematical contract, claim labels, leakage checks, and falsification
+rules are in `docs/post_gate5_d036_tapqk_protocol.md`. No D036 result exists
+until its source-bound endpoint completes; no locked data, Gate 6, hardware, or
+quantum-advantage claim is authorized.

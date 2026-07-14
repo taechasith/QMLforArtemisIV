@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.46
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 physics-anchored residual projected-kernel campaign authorized; manuscript structural draft complete; Gate 6 unauthorized
+Version: 0.6.47
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK campaign authorized; manuscript structural draft complete; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-15
-Recommended next action: execute the separately authorized P002 D034 development-only PRQK campaign, classify it against C06 and A02-R, and continue only through a newly recorded future protocol if the candidate is a valid negative. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
+Recommended next action: execute the separately authorized P004 D036 development-only TAP-QK campaign, classify it against C06 and the identical-input TAP-RBF control, and continue only through a newly recorded future protocol if the candidate is a valid negative. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
 
 ## 1. Proposed title
 
@@ -1293,6 +1293,25 @@ held as the unchanged safety guard. D035 uses q=4/6/8, four inner grouped
 folds, all five outer folds, 20 seeds, development rows only, and zero locked
 data. `docs/post_gate5_d035_cfqsr_protocol.md` is the full contract; D035 does
 not authorize Gate 6 or alter D034.
+
+D035 is a valid scientific negative. CFQSR-08-N achieved mean pooled OOF NRMSE
+`0.0134629` versus C06 `0.00683281`; the paired CFQSR-minus-C06 difference was
+`+0.00663006` with 95% interval `[+0.00662749, +0.00663245]`. A02-STACK-q8
+scored `0.00984926`, so cross-fitting did not beat the matched classical
+control. The endpoint completed all five outer folds, four inner folds, and 20
+seeds from source commit `a16938d`, with 39,000 development rows and zero
+calibration/final-test reads. RFIG-056 and RFIG-057 record the result,
+cross-fitting audit, uncertainty, and resource boundary. D035 does not revise
+Gate 5 or authorize Gate 6.
+
+D036/P004 is the next prospective invention protocol opened from the D035
+lesson. It tests Task-Aligned Projected Quantum Kernel (TAP-QK): a fold-local
+PLS projection fit to cross-fitted C06 residuals, followed by the existing
+projected quantum kernel. TAP-RBF uses the identical supervised coordinates,
+landmarks, bandwidth, and ridge solve. D036 uses q=4/6/8, four inner grouped
+folds, five outer folds, 20 seeds, development rows only, and zero locked data.
+The full contract is in `docs/post_gate5_d036_tapqk_protocol.md`; D036 does not
+authorize Gate 6, change D034/D035, or support a quantum-advantage claim.
 
 D033-C release package ACCEPTED records the human research lead's acceptance of
 the release package with the strict D031-C negative-claim boundary. It

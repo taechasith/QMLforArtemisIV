@@ -2175,3 +2175,39 @@ the identical-input A02-STACK control, and the unchanged C06 safety guard.
 The five outer folds, four inner folds, 20 seeds, development-only scope,
 zero calibration/final-test reads, zero hardware/GPU, and Gate 6 prohibition
 are locked. D035 cannot rerank or rescue D034.
+
+### D035 result - valid scientific negative
+
+Date: 2026-07-15
+Decision: **Complete, integrity-valid negative**
+Source commit: `a16938dc36e2517f1ad0dead80dc60344f4b30b2`
+
+D035 completed 39,000 development rows, five outer grouped folds, four inner
+grouped folds, three fixed q configurations, and 20 seeds. CFQSR-08-N scored
+mean pooled OOF NRMSE `0.0134629` versus C06 `0.00683281`; the paired
+difference was `+0.00663006` with 95% interval `[+0.00662749,+0.00663245]`.
+A02-STACK-q8 scored `0.00984926`, so the quantum candidate did not beat its
+matched classical control. Regret and safety selection were not improved.
+Calibration/final-test reads, hardware/GPU jobs, mission loops, and Gate 6
+runs were zero. RFIG-056 and RFIG-057 are the required paper figures.
+
+Interpretation: cross-fitting removed the in-sample baseline concern but did
+not uncover a useful correction to C06. This is development-only evidence, not
+a failure of every QML method and not a Gate 5 revision. The required future
+improvement is a newly frozen residual-supervised coordinate test; no D035
+rerank or silent parameter change is authorized.
+
+### D036 - P004 task-aligned projected quantum kernel authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D035 valid negative
+
+D036 tests TAP-QK, which fits a fold-local PLS projection to cross-fitted C06
+residuals before applying the existing projected quantum kernel. TAP-RBF is the
+identical-input classical control. The q=4/6/8 configurations, grouped split,
+20 seeds, resource ceilings, zero locked-data rule, and unchanged C06 safety
+guard are frozen in `configs/post_gate5_d036_tapqk.yaml` and
+`docs/post_gate5_d036_tapqk_protocol.md`. A complete negative must be graphed,
+committed as future-only improvement, and followed only by a new protocol;
+no Gate 6 or public superiority claim is authorized.
