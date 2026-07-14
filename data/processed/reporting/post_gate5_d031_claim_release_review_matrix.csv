@@ -1,0 +1,14 @@
+review_item,status,evidence,release_effect
+allowed_claim,ready_for_human_decision,"A public-data, development-only benchmark found no tested QML candidate that outperformed strong classical controls or qualified for a QML Gate 6 mission experiment.",claim may be used only with development-only labels
+required_label,required,development-only benchmark,must remain visible in release/manuscript context
+required_label,required,negative QML result,must remain visible in release/manuscript context
+required_label,required,no QML Gate 6 candidate,must remain visible in release/manuscript context
+required_label,required,calibration and final-test remain locked,must remain visible in release/manuscript context
+required_label,required,release requires explicit human acceptance,must remain visible in release/manuscript context
+prohibited_claim,prohibited,QML improves cislunar propellant efficiency,must not be stated as a conclusion
+prohibited_claim,prohibited,quantum advantage was observed,must not be stated as a conclusion
+prohibited_claim,prohibited,mission-loop validation was completed,must not be stated as a conclusion
+prohibited_claim,prohibited,flight readiness or NASA approval,must not be stated as a conclusion
+prohibited_claim,prohibited,Gate 6 is authorized,must not be stated as a conclusion
+prohibited_claim,prohibited,a new QML invention has been proven,must not be stated as a conclusion
+human_decision,pending,"Accept release package, request revisions, or reject release.",release remains unauthorized until accepted

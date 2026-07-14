@@ -1,5 +1,8 @@
 # Can Quantum Machine Learning Improve Propellant-Efficient Human-Rated Cislunar Guidance?
 
+Status: D031-C claim-reviewed draft; release not authorized
+
+Historical scaffold status retained for audit:
 Status: D027-C manuscript Results/Discussion draft; not release-ready
 
 ## Abstract Draft Boundary

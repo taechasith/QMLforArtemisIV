@@ -1,0 +1,22 @@
+{
+  "allowed_release_candidate_claim": "A public-data, development-only benchmark found no tested QML candidate that outperformed strong classical controls or qualified for a QML Gate 6 mission experiment.",
+  "archive_authorized": false,
+  "calibration_rows_read": 0,
+  "claim_boundary": "D031-C completes claim/release review preparation only; it authorizes no release, tag, archive, DOI, Gate 6 run, locked-data access, mission-loop execution, model fitting, QML invention claim, or quantum-advantage claim.",
+  "decision_id": "D031-C",
+  "doi_authorized": false,
+  "final_test_rows_read": 0,
+  "gate6_authorized": false,
+  "gate6_runs": 0,
+  "gpu_hours": 0,
+  "hardware_jobs": 0,
+  "mission_loop_runs": 0,
+  "next_human_decision": "Accept release package, request revisions, or reject release.",
+  "official_status": "CLAIM_RELEASE_REVIEW_READY",
+  "prohibited_claim_count": 6,
+  "protocol_id": "P001",
+  "release_authorized": false,
+  "release_ready_for_human_decision": true,
+  "required_label_count": 5,
+  "tag_authorized": false
+}

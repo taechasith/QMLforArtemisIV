@@ -1987,3 +1987,33 @@ Outcome:
   archive, Gate 6, locked-data access, mission-loop execution, QML invention
   claims, and quantum-advantage claims remain unauthorized until separately
   accepted.
+
+### D031-C completed - final claim/release review READY
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Completed; ready for human release decision**
+Authority: Assistant-selected next step after D030-C
+
+Decision:
+
+- Review the release-candidate claims against D026-C, D027-C, D028-C, and
+  D030-C evidence.
+- Mark final claim review complete without authorizing release.
+- Generate RFIG-050 as the human release-decision point.
+- Do not tag, archive, mint DOI, release models, open locked data, run Gate 6,
+  run mission loops, fit models, or claim QML invention or quantum advantage.
+
+Outcome:
+
+- Allowed release-candidate claim: a public-data, development-only benchmark
+  found no tested QML candidate that outperformed strong classical controls or
+  qualified for a QML Gate 6 mission experiment from P001.
+- Required labels: development-only benchmark, negative QML result, no QML
+  Gate 6 candidate, calibration/final-test locked, and release requires human
+  acceptance.
+- Prohibited claims include QML fuel improvement, quantum advantage, mission
+  validation, flight readiness, NASA approval, Gate 6 authorization, and proven
+  QML invention.
+- Next required human decision: accept release package, request revisions, or
+  reject release.

@@ -1,0 +1,43 @@
+decision_id: "D031-C"
+protocol_id: "P001"
+status: "completed_claim_release_review_ready_for_human_decision"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+authority: "Assistant-selected next step after D030-C; perform final claim/release review without releasing"
+scope:
+  claim_review_only: true
+  release_authorized: false
+  tag_authorized: false
+  archive_authorized: false
+  doi_authorized: false
+  model_release_authorized: false
+  gate6_authorized: false
+  locked_data_access_authorized: false
+  mission_loop_authorized: false
+  model_fitting_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+source_evidence:
+  d026_claim_synthesis: "data/processed/reporting/post_gate5_d026_manuscript_synthesis.json"
+  d026_claim_matrix: "data/processed/reporting/post_gate5_d026_manuscript_claim_matrix.csv"
+  d027_manuscript: "paper/manuscript.md"
+  d028_release_cards: "data/processed/reporting/post_gate5_d028_release_support_cards.json"
+  d030_reproducibility: "data/processed/reporting/post_gate5_d030_reproducibility_correction.json"
+review:
+  official_status: "CLAIM_RELEASE_REVIEW_READY"
+  allowed_release_candidate_claim: "A public-data, development-only benchmark found no tested QML candidate that outperformed strong classical controls or qualified for a QML Gate 6 mission experiment."
+  required_release_labels:
+    - "development-only benchmark"
+    - "negative QML result"
+    - "no QML Gate 6 candidate"
+    - "calibration and final-test remain locked"
+    - "release requires explicit human acceptance"
+  prohibited_claims:
+    - "QML improves cislunar propellant efficiency"
+    - "quantum advantage was observed"
+    - "mission-loop validation was completed"
+    - "flight readiness or NASA approval"
+    - "Gate 6 is authorized"
+    - "a new QML invention has been proven"
+  next_human_decision: "Accept release package, request revisions, or reject release."
+claim_boundary: "D031-C completes claim/release review preparation only; it authorizes no release, tag, archive, DOI, Gate 6 run, locked-data access, mission-loop execution, model fitting, QML invention claim, or quantum-advantage claim."

@@ -66,7 +66,7 @@ def test_d030_documentation_updates_current_release_position() -> None:
         "research_protocol.md": "D030-C clean reproducibility correction PASS",
         "README.md": "D030-C clean reproducibility correction",
         "docs/decision_log.md": "D030-C completed",
-        "docs/research_execution_map.md": "D030-C clean reproducibility correction PASS",
+        "docs/research_execution_map.md": "D030-C fixes checkout byte policy",
         "docs/computational_methodology.md": "D030-C clean reproducibility correction",
         "docs/release_checklist.md": "Release is eligible for human claim/release review",
         "docs/release_reproducibility_audit.md": "D030-C corrected the byte-provenance blocker",
