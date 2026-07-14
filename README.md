@@ -353,6 +353,13 @@ data boundary, and limitations. These cards prepare the release package but do
 not authorize a release, model release, Gate 6, locked-data access, or
 mission-loop work. RFIG-047 records the release-card boundary.
 
+D029-C ran the clean local clone reproducibility audit and stopped release
+readiness. Pytest failed with 3 failures caused by byte-provenance/hash
+portability issues in clean-clone checkout state; ruff and compileall passed.
+This does not change the scientific result, but release remains blocked until
+a prospective line-ending and byte-provenance correction is completed and the
+clean audit is rerun. RFIG-048 records the STOP.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -427,6 +434,8 @@ through a dated deviation record.
 - docs/release_simulator_card.md: release-support simulator credibility card.
 - docs/release_data_card.md: release-support data provenance and locked-data card.
 - docs/release_limitation_card.md: release-support limitation and prohibited-claim card.
+- docs/release_reproducibility_audit.md: D029-C clean clone reproducibility STOP record.
+- docs/release_checklist.md: release checklist blocked by D029-C.
 - paper/manuscript.md: draft manuscript scaffold generated from the closed Gate 5/5X evidence.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.

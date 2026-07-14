@@ -1,0 +1,61 @@
+decision_id: "D029-C"
+protocol_id: "P001"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+status: "completed_clean_clone_audit_stop"
+disambiguation: "D029-C is a governance decision and is unrelated to public-source D029 JPL DE440s."
+authority: "assistant-selected next step after D028-C; run clean reproducibility audit before any release decision"
+source_evidence:
+  d028_commit: "0521fee3343b7484a5b70cf3a8dea250b88d0e51"
+  audit_clone_mode: "git clone --local followed by detached checkout of d028_commit"
+scope:
+  reproducibility_audit_only: true
+  release_authorized: false
+  correction_authorized: false
+  gate6_authorized: false
+  qml_mission_experiment_authorized: false
+  baseline_mission_experiment_authorized: false
+  development_data_fitting_authorized: false
+  new_model_fit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  threshold_application_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  hardware_authorized: false
+  gpu_authorized: false
+  mission_loop_authorized: false
+  gate5_reinterpretation_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+audit_commands:
+  pytest:
+    command: "uv run --directory <clean_clone> --frozen pytest -q"
+    exit_code: 1
+    result: "failed"
+    summary: "3 failed, 246 passed, 667 subtests passed"
+  ruff:
+    command: "uv run --directory <clean_clone> --frozen ruff check ."
+    exit_code: 0
+    result: "passed"
+    summary: "All checks passed"
+  compileall:
+    command: "uv run --directory <clean_clone> --frozen python -m compileall -q src scripts tests"
+    exit_code: 0
+    result: "passed"
+    summary: "passed"
+failures:
+  - test_id: "tests/test_gate4_records.py::test_gate4_artifact_checksums_match_files"
+    observed: "scenario_manifest.csv size was 25231 bytes in clean clone versus frozen 25170 bytes"
+    interpretation: "frozen checksum record is not portable under the clean clone line-ending state"
+  - test_id: "tests/test_gate5.py::test_real_preflight_reads_development_only_and_keeps_final_blind"
+    observed: "Gate 4 freeze checksum mismatch for data/processed/simulator/scenario_manifest.csv"
+    interpretation: "Gate 5 preflight correctly failed closed when the frozen artifact hash did not match"
+  - test_id: "tests/test_research_figures.py::test_figure_registry_has_unique_ids_and_matching_artifacts"
+    observed: "RFIG-030 figure_generator_sha256 mismatch for scripts/make_post_gate5_preflight_result_figure.py"
+    interpretation: "figure generator hashes are also sensitive to repository checkout byte normalization"
+outcome:
+  official_status: "REPRODUCIBILITY_AUDIT_STOP"
+  release_ready: false
+  next_recommended_step: "Open a prospective D030-C line-ending and byte-provenance correction before rerunning the clean audit."
+claim_boundary: "D029-C is a failed release reproducibility audit only; it authorizes no release, correction, Gate 6 run, locked-data access, mission-loop execution, model fitting, QML invention claim, quantum-advantage claim, or Gate 5 reinterpretation."

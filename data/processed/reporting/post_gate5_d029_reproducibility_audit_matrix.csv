@@ -1,0 +1,7 @@
+audit_item,status,evidence,interpretation,next_action
+pytest,failed,"3 failed, 246 passed, 667 subtests passed",clean clone is not release-ready,Open a prospective D030-C line-ending and byte-provenance correction before rerunning the clean audit.
+ruff,passed,All checks passed,lint is portable,retain as passing check
+compileall,passed,passed,Python files compile in clean clone,retain as passing check
+tests/test_gate4_records.py::test_gate4_artifact_checksums_match_files,failed,scenario_manifest.csv size was 25231 bytes in clean clone versus frozen 25170 bytes,frozen checksum record is not portable under the clean clone line-ending state,future D030-C byte-provenance correction
+tests/test_gate5.py::test_real_preflight_reads_development_only_and_keeps_final_blind,failed,Gate 4 freeze checksum mismatch for data/processed/simulator/scenario_manifest.csv,Gate 5 preflight correctly failed closed when the frozen artifact hash did not match,future D030-C byte-provenance correction
+tests/test_research_figures.py::test_figure_registry_has_unique_ids_and_matching_artifacts,failed,RFIG-030 figure_generator_sha256 mismatch for scripts/make_post_gate5_preflight_result_figure.py,figure generator hashes are also sensitive to repository checkout byte normalization,future D030-C byte-provenance correction

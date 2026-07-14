@@ -1926,3 +1926,31 @@ Outcome:
 - Added `docs/release_limitation_card.md`.
 - Next recommended step: clean reproducibility audit and release checklist
   before any public release decision.
+
+### D029-C completed - clean reproducibility audit STOP
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Completed; release audit STOP**
+Authority: Assistant-selected next step after D028-C
+
+Decision:
+
+- Run a clean local clone reproducibility audit against D028-C commit
+  `0521fee3343b7484a5b70cf3a8dea250b88d0e51`.
+- Record any failure before attempting a correction.
+- Do not authorize release, correction, Gate 6, locked-data access,
+  mission-loop execution, refit, rerank, retry, QML invention, or quantum
+  advantage claims.
+
+Outcome:
+
+- `pytest` failed: 3 failed, 246 passed, 667 subtests passed.
+- `ruff` passed.
+- `compileall` passed.
+- The failures identify byte-provenance/hash portability issues in clean-clone
+  checkout state, including `scenario_manifest.csv` checksum drift and an
+  RFIG-030 generator hash mismatch.
+- Gate 5 preflight failed closed when the frozen artifact hash did not match.
+- Next recommended step: D030-C line-ending and byte-provenance correction,
+  followed by another clean reproducibility audit.

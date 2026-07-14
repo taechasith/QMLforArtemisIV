@@ -51,7 +51,7 @@ def test_d023_docs_are_registered() -> None:
         "research_protocol.md": "D023-C",
         "README.md": "D023-C",
         "docs/decision_log.md": "D023-C",
-        "docs/research_execution_map.md": "D028-C release-support cards ready",
+        "docs/research_execution_map.md": "D029-C clean reproducibility audit STOP",
         "docs/computational_methodology.md": "D023-C",
     }
     for relative, phrase in required.items():

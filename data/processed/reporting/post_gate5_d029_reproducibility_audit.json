@@ -1,0 +1,22 @@
+{
+  "calibration_rows_read": 0,
+  "claim_boundary": "D029-C is a failed release reproducibility audit only; it authorizes no release, correction, Gate 6 run, locked-data access, mission-loop execution, model fitting, QML invention claim, quantum-advantage claim, or Gate 5 reinterpretation.",
+  "compileall_result": "passed",
+  "correction_authorized": false,
+  "decision_id": "D029-C",
+  "failure_count": 3,
+  "final_test_rows_read": 0,
+  "gate6_authorized": false,
+  "gate6_runs": 0,
+  "gpu_hours": 0,
+  "hardware_jobs": 0,
+  "mission_loop_runs": 0,
+  "next_recommended_step": "Open a prospective D030-C line-ending and byte-provenance correction before rerunning the clean audit.",
+  "official_status": "REPRODUCIBILITY_AUDIT_STOP",
+  "protocol_id": "P001",
+  "pytest_result": "3 failed, 246 passed, 667 subtests passed",
+  "release_authorized": false,
+  "release_ready": false,
+  "ruff_result": "All checks passed",
+  "source_d028_commit": "0521fee3343b7484a5b70cf3a8dea250b88d0e51"
+}

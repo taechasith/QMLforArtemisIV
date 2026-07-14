@@ -72,7 +72,7 @@ def test_d021_docs_are_registered() -> None:
         "research_protocol.md": "D021-C implements and validates CSAFE-RF",
         "README.md": "D021-C implements and validates CSAFE-RF",
         "docs/decision_log.md": "D021-C completed",
-        "docs/research_execution_map.md": "D028-C release-support cards ready",
+        "docs/research_execution_map.md": "D029-C clean reproducibility audit STOP",
         "docs/computational_methodology.md": "D021-C recall-first synthetic validation",
     }
     for relative, phrase in required.items():
