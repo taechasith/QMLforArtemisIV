@@ -334,6 +334,13 @@ authority. If Gate 6 is opened later, it should be a separately accepted
 baseline/safety mission protocol, not a Gate 5 rescue or quantum-advantage
 claim. RFIG-044 records the recommendation boundary.
 
+D026-C converts the closed evidence into manuscript-ready claims and a draft
+`paper/manuscript.md` scaffold. The allowed main claim is a valid negative QML
+benchmark under public-data development limits. The prohibited claims are
+quantum advantage, fuel savings, flight readiness, NASA approval, Gate 6
+authorization, and any rescue of Gate 5. RFIG-045 records the manuscript claim
+boundary.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -402,6 +409,8 @@ through a dated deviation record.
 - docs/post_gate5_d023_recall_first_development.md: CSAFE-RF development-only recall-first audit.
 - docs/post_gate5_d024_recall_first_interpretation.md: interpretation of the recall-first audit as future-only non-advancing evidence.
 - docs/gate5_closure_gate6_recommendation.md: D025-C closure report and Gate 6 recommendation.
+- docs/manuscript_results_synthesis.md: D026-C manuscript-ready claim synthesis and writing boundary.
+- paper/manuscript.md: draft manuscript scaffold generated from the closed Gate 5/5X evidence.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
 - docs/post_gate5_compute_preflight.md: D009 synthetic-only clean-source compute-admission contract and pass/stop rules.

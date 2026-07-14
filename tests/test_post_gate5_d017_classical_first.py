@@ -61,7 +61,7 @@ def test_d017_docs_are_registered() -> None:
         "research_protocol.md": "D017-C",
         "docs/decision_log.md": "D017-C",
         "README.md": "D017-C",
-        "docs/research_execution_map.md": "D025-C Gate 5 closure complete",
+        "docs/research_execution_map.md": "D026-C manuscript synthesis ready",
     }
     for relative, phrase in required.items():
         text = (ROOT / relative).read_text(encoding="utf-8")

@@ -1,0 +1,6 @@
+claim_area,allowed_wording,evidence_basis,prohibited_wording,paper_location
+Main result,Frozen public-data development benchmark found no QML improvement over strong classical controls.,Q01 NRMSE 0.6466 vs C06 0.0087; zero qualifying regimes,QML improves cislunar propellant efficiency,"Abstract, Results, Discussion"
+Exploratory QML,Q01b and FQK are development-only exploratory negatives.,Q01b gap 95.8x; FQK recall 0.1089,Projected kernels or FQK are promising mission candidates,Supplementary negative-results appendix
+Safety-filter lesson,Recall-first CSAFE-RF is a future protocol design lesson.,calibrated_logistic recall 0.8043; Brier 0.1422,Recall-first audit rescues D017 or opens locked data,Discussion and future work
+Gate 6,No QML Gate 6 candidate is eligible from P001.,Do not proceed to a QML Gate 6 mission experiment from P001.,Gate 6 mission experiment is authorized,Conclusion and limitations
+Operational relevance,Results are computational research evidence under public-data limits.,"Calibration, final-test, mission-loop, hardware, and Gate 6 counters remain zero","Flight readiness, NASA approval, or astronaut-use readiness",Limitations

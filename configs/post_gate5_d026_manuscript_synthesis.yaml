@@ -1,0 +1,39 @@
+decision_id: "D026-C"
+protocol_id: "P001"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+status: "completed_manuscript_results_synthesis"
+authority: "assistant-selected next step after D025-C; convert closed Gate 5/5X evidence into manuscript-ready claims"
+source_evidence:
+  d025_recommendation: "data/processed/reporting/post_gate5_d025_gate6_recommendation.json"
+  d025_matrix: "data/processed/reporting/post_gate5_d025_gate6_recommendation_matrix.csv"
+  d025_reporting_commit: "0d1576e7ed5088a7d99547be2f5f5b69d8700619"
+scope:
+  manuscript_reporting_only: true
+  gate6_authorized: false
+  qml_mission_experiment_authorized: false
+  baseline_mission_experiment_authorized: false
+  development_data_fitting_authorized: false
+  new_model_fit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  threshold_application_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  hardware_authorized: false
+  gpu_authorized: false
+  mission_loop_authorized: false
+  gate5_reinterpretation_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+synthesis:
+  official_status: "MANUSCRIPT_SYNTHESIS_READY"
+  allowed_main_claim: "Under the frozen public-data development benchmark, tested QML candidates did not outperform strong classical controls and no QML candidate is eligible for Gate 6."
+  allowed_secondary_claim: "The recall-first CSAFE-RF analysis produced a future-useful safety-objective lesson, not an advancing result."
+  prohibited_claims:
+    - "QML improves cislunar propellant efficiency"
+    - "Quantum advantage was observed"
+    - "A QML model is ready for mission-loop or flight use"
+    - "Gate 6 is authorized"
+  next_recommended_step: "Draft the results and discussion sections around negative evidence, limitations, and the D025 Gate 6 recommendation."
+claim_boundary: "D026-C is manuscript synthesis only; it authorizes no Gate 6 run, locked-data access, mission-loop execution, model fitting, QML invention claim, quantum-advantage claim, or Gate 5 reinterpretation."

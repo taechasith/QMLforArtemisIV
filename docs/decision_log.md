@@ -1851,3 +1851,29 @@ opened later, it should be a separately accepted baseline/safety mission
 protocol with prospectively frozen C06 or numerical-reference controls, paired
 Monte Carlo scenarios, safety gates, stopping rules, locked-data rules, and
 claim boundaries. It must not be a rescue of Gate 5 or a QML advantage claim.
+
+### D026-C completed - manuscript results synthesis
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Completed; manuscript synthesis ready**
+Authority: Assistant-selected next step after D025-C
+
+Decision:
+
+- Convert closed Gate 5 and 5X evidence into manuscript-ready allowed and
+  prohibited claim language.
+- Create a draft manuscript scaffold.
+- Generate RFIG-045 for the paper-ready claim boundary.
+- Do not start any experiment, open locked data, run Gate 6, refit, rerank,
+  retry, or claim QML invention or quantum advantage.
+
+Outcome:
+
+- Allowed main claim: tested QML candidates did not outperform strong
+  classical controls under the frozen public-data development benchmark.
+- Allowed secondary claim: recall-first CSAFE-RF is a future safety-objective
+  design lesson only.
+- Prohibited claims: quantum advantage, flight readiness, NASA approval, QML
+  mission benefit, Gate 6 authorization, and Gate 5 rescue.
+- Added `paper/manuscript.md` as the draft writing scaffold.
