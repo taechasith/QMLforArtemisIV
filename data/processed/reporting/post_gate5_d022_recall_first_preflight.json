@@ -1,0 +1,164 @@
+{
+  "admission": {
+    "checks": {
+      "cpu_core_hours": {
+        "comparison": "less_than_or_equal",
+        "limit": 250.0,
+        "observed": 0.0037977430555555555,
+        "passed": true,
+        "utilization_fraction": 1.5190972222222222e-05
+      },
+      "free_disk_after_artifacts_gib": {
+        "comparison": "greater_than_or_equal",
+        "limit": 20.0,
+        "observed": 46.911521911621094,
+        "passed": true,
+        "utilization_fraction": 0.42633449491745284
+      },
+      "gpu_hours": {
+        "comparison": "less_than_or_equal",
+        "limit": 0.0,
+        "observed": 0.0,
+        "passed": true,
+        "utilization_fraction": 0.0
+      },
+      "new_artifacts_gib": {
+        "comparison": "less_than_or_equal",
+        "limit": 20.0,
+        "observed": 0.244140625,
+        "passed": true,
+        "utilization_fraction": 0.01220703125
+      },
+      "peak_working_set_gib": {
+        "comparison": "less_than_or_equal",
+        "limit": 24.0,
+        "observed": 0.0363006591796875,
+        "passed": true,
+        "utilization_fraction": 0.0015125274658203125
+      },
+      "wall_clock_days": {
+        "comparison": "less_than_or_equal",
+        "limit": 5.0,
+        "observed": 0.00017434172453552796,
+        "passed": true,
+        "utilization_fraction": 3.4868344907105594e-05
+      }
+    },
+    "status": "PASS"
+  },
+  "benchmark": {
+    "calibration_bins": 10,
+    "candidate_count": 2,
+    "cpu_seconds": 0.109375,
+    "gpu_hours": 0.0,
+    "safety_maximum_intervention_rate": 0.7,
+    "safety_minimum_recall": 1.0,
+    "seed": 20260714,
+    "steps": [
+      {
+        "cpu_seconds": 0.0625,
+        "peak_working_set_gib": 0.0362091064453125,
+        "step": "CSAFE_RF_synthetic_recall_first_logistic",
+        "wall_seconds": 0.05756789998849854
+      },
+      {
+        "cpu_seconds": 0.046875,
+        "peak_working_set_gib": 0.036296844482421875,
+        "step": "CSAFE_RF_synthetic_brier_first_tree",
+        "wall_seconds": 0.04728489997796714
+      }
+    ],
+    "training_rows": 1024,
+    "validation_rows": 9750,
+    "wall_seconds": 0.12050499999895692
+  },
+  "branch": "main",
+  "campaign_projection": {
+    "largest_fold_seed_units": 100.0,
+    "observed_free_disk_gib": 47.155662536621094,
+    "observed_peak_rss_gib": 0.0363006591796875,
+    "projected_cpu_core_hours": 0.0037977430555555555,
+    "projected_free_disk_after_artifacts_gib": 46.911521911621094,
+    "projected_new_artifacts_gib": 0.244140625,
+    "projected_wall_clock_days": 0.00017434172453552796,
+    "projection_margin": 1.25
+  },
+  "claim_boundary": "Synthetic compute-admission evidence only; not development-data fitting, threshold application to real data, Gate 5 reinterpretation, QML invention, quantum advantage, hardware/GPU, mission-loop, or Gate 6 evidence.",
+  "decision_id": "D022-C",
+  "evidence_scope": "clean-source synthetic CSAFE-RF compute admission only",
+  "integrity": {
+    "calibration_rows_read": 0,
+    "clean_source_verified_before_execution": true,
+    "development_rows_read": 0,
+    "final_test_rows_read": 0,
+    "gate6_runs": 0,
+    "gpu_hours": 0.0,
+    "hardware_jobs_submitted": 0,
+    "synthetic_rows_used": 10774
+  },
+  "machine": {
+    "declared_reference_cpu": "Intel Core i9-13900HX",
+    "declared_reference_gpu": "NVIDIA GeForce RTX 4060 Laptop GPU; unused",
+    "logical_processors": 32,
+    "numpy": "2.5.1",
+    "physical_memory_gib": 31.70067596435547,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.6"
+  },
+  "next_step": "Prepare D023 development-data decision",
+  "protocol_id": "P001",
+  "schema_version": "0.1.0",
+  "source_commit": "b5263ba3876c4e66f3243b58a679e2c29419120f",
+  "source_hashes": {
+    "classical_source": "d3087d499fbad1d753dd2327524c5530e3d78d017148a5e19683ac9120d7f1af",
+    "d020_config": "dae918e4cfe1c691719499985e1ea3f461113379a0af4a4e09b47eb2929d44b4",
+    "d021_config": "10bcfa799631c0ba1d8098fd1b193b16051d0342e79b868022827939930f537c",
+    "figure_generator": "59b4387f6de6e9be95bff18963084f6369e825c25e75c9d88102dbd16494ce4b",
+    "implementation_config": "d607b6c6492734467624914d5745e03cc2008ab0c710771d31cb74c512761d24",
+    "lockfile": "6b3fc5c79950d5fdfc70d7b0dfda62bae207a441a4610d9504b67bab20edbb99",
+    "preflight_script": "bdf68e4bfa01e7a804375e64a971d2a552f3b0e24a2cfdb956cf9584110f14a1"
+  },
+  "source_paths": {
+    "classical_source": "src/openqfuel/post_gate5_classical.py",
+    "d020_config": "configs/post_gate5_d020_recall_first_freeze.yaml",
+    "d021_config": "configs/post_gate5_d021_recall_first_synthetic.yaml",
+    "figure_generator": "scripts/make_post_gate5_d022_preflight_figure.py",
+    "implementation_config": "configs/post_gate5_d022_recall_first_preflight.yaml",
+    "lockfile": "uv.lock",
+    "output": "data/processed/reporting/post_gate5_d022_recall_first_preflight.json",
+    "preflight_script": "scripts/run_post_gate5_d022_preflight.py"
+  },
+  "status": "PASS",
+  "synthetic_metrics": {
+    "candidate_scores": [
+      {
+        "brier": "0.113533018583",
+        "false_negative_rate": "0.00450569838325",
+        "false_positive_rate": "0.179688807094",
+        "intervention_rate": "0.495384615385",
+        "model_complexity": "1",
+        "model_id": "synthetic_recall_first_logistic",
+        "precision": "0.777639751553",
+        "recall": "0.995494301617",
+        "selected": "true",
+        "threshold": "0.499610452434"
+      },
+      {
+        "brier": "0.0691885128205",
+        "false_negative_rate": "0.919162470183",
+        "false_positive_rate": "0.0848251631253",
+        "intervention_rate": "0.0832820512821",
+        "model_complexity": "2",
+        "model_id": "synthetic_brier_first_tree",
+        "precision": "0.375615763547",
+        "recall": "0.0808375298171",
+        "selected": "false",
+        "threshold": "0.82"
+      }
+    ],
+    "selected_brier": 0.11353301858314652,
+    "selected_false_negative_rate": 0.004505698383249403,
+    "selected_model_id": "synthetic_recall_first_logistic",
+    "selected_recall": 0.9954943016167506
+  }
+}

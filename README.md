@@ -304,11 +304,13 @@ fixture over a lower-Brier tree fixture because recall has priority. It read
 zero development, calibration, or final-test rows and ran no hardware/GPU or
 Gate 6 job. RFIG-040 records the synthetic-validation boundary.
 
-D022-C authorizes one clean-source synthetic compute preflight for CSAFE-RF.
-It may benchmark only synthetic threshold selection and recall-first scoring.
-It does not authorize development fitting, threshold application to real data,
-locked data, hardware/GPU, mission-loop work, QML invention, quantum advantage,
-or Gate 6. RFIG-041 is reserved for terminal preflight evidence.
+D022-C completed the clean-source synthetic compute preflight for CSAFE-RF and
+passed every admission check. It projected 0.003798 CPU-core-hours, 0.000174
+wall-days, 0.2441 GiB artifacts, 0.0363 GiB peak working set, 46.9115 GiB free
+disk after artifacts, and zero GPU-hours. It still does not authorize
+development fitting, threshold application to real data, locked data,
+hardware/GPU, mission-loop work, QML invention, quantum advantage, or Gate 6.
+RFIG-041 records the boundary.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 

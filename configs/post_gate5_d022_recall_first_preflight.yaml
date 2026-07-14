@@ -1,14 +1,14 @@
 schema_version: "0.1.0"
 decision_id: "D022-C"
 protocol_id: "P001"
-status: "accepted_clean_source_synthetic_compute_preflight_pending"
+status: "completed_clean_source_synthetic_compute_preflight_pass"
 prepared_date: "2026-07-14"
 accepted_date: "2026-07-14"
 acceptance_basis: "assistant-selected next step after D021-C synthetic validation PASS; run clean-source synthetic compute preflight before any CSAFE-RF development-data decision"
 
 authority:
   scope: "one clean-source synthetic compute-admission preflight for CSAFE-RF recall-first guards and metrics"
-  preflight_execution_authorized: true
+  preflight_execution_authorized: false
   authorized_preflight_attempts: 1
   implementation_authorized: false
   synthetic_validation_authorized: false
@@ -89,6 +89,15 @@ reporting:
   claim_boundary: "Synthetic compute-admission evidence only; not development-data fitting, threshold application to real data, Gate 5 reinterpretation, QML invention, quantum advantage, hardware/GPU, mission-loop, or Gate 6 evidence."
 
 outcome:
-  current_status: "PENDING"
+  current_status: "PASS"
+  completed_date: "2026-07-14"
+  source_commit: "b5263ba3876c4e66f3243b58a679e2c29419120f"
   result: "data/processed/reporting/post_gate5_d022_recall_first_preflight.json"
   figure: "RFIG-041"
+  projected_cpu_core_hours: 0.0037977430555555555
+  projected_wall_clock_days: 0.00017434172453552796
+  projected_new_artifacts_gib: 0.244140625
+  observed_peak_rss_gib: 0.0363006591796875
+  projected_free_disk_after_artifacts_gib: 46.911521911621094
+  all_admission_checks_passed: true
+  pass_effect: "A PASS permits preparation of D023 only; development-data fitting remains unauthorized by D022."

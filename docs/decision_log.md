@@ -1716,7 +1716,7 @@ development-data decision.
 
 Date prepared: 2026-07-14
 Date accepted: 2026-07-14
-Status: **Accepted; one clean-source synthetic preflight authorized**
+Status: **Completed; synthetic compute-admission PASS**
 Authority: Assistant-selected next step after D021-C
 
 Decision:
@@ -1735,3 +1735,15 @@ data, calibration/final-test read, refit, rerank, retry, hardware/GPU
 execution, mission-loop work, Gate 5 reinterpretation, QML invention claim,
 quantum-advantage claim, or Gate 6. If the preflight stops, the stop is
 terminal unless a later prospective correction is accepted.
+
+Outcome:
+
+- Ran once from clean source commit
+  `b5263ba3876c4e66f3243b58a679e2c29419120f`.
+- PASS on all compute-admission checks.
+- Projected 0.003798 CPU-core-hours, 0.000174 wall-days, 0.2441 GiB artifacts,
+  0.0363 GiB peak working set, 46.9115 GiB free disk after artifacts, and zero
+  GPU-hours.
+- Used 10,774 synthetic rows and zero development, calibration, final-test,
+  hardware, GPU, or Gate 6 reads/runs.
+- RFIG-041 records the compute-admission boundary.

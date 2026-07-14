@@ -94,23 +94,32 @@ def _draw(payload: dict[str, Any]) -> tuple[Path, Path]:
     pressure = np.asarray([100.0 * float(checks[name]["utilization_fraction"]) for name in order])
     colors = [BLUE if bool(checks[name]["passed"]) else GOLD for name in order]
     fig, ax = plt.subplots(figsize=(11.5, 6.2))
+    fig.subplots_adjust(top=0.80, bottom=0.18)
+    fig.text(
+        0.14,
+        0.96,
+        "D022-C CSAFE-RF synthetic compute admission",
+        ha="left",
+        va="top",
+        fontsize=15,
+        fontweight="bold",
+        color=INK,
+    )
+    fig.text(
+        0.14,
+        0.91,
+        "Clean-source synthetic evidence only: projects recall-first safety scoring across 5 folds and 20 seeds.",
+        ha="left",
+        va="top",
+        fontsize=9,
+        color=GRAY,
+    )
     y = np.arange(len(order))
     ax.barh(y, pressure, color=colors, edgecolor=INK, linewidth=0.6)
     ax.axvline(100.0, color=GOLD, linewidth=1.3, linestyle="--", label="admission boundary")
     ax.set_yticks(y, [labels[name] for name in order])
     ax.invert_yaxis()
     ax.set_xlabel("Boundary pressure after 25% margin (%)")
-    ax.set_title("D022-C CSAFE-RF synthetic compute admission", loc="left", fontsize=15, fontweight="bold", color=INK)
-    ax.text(
-        0.0,
-        1.03,
-        "Clean-source synthetic evidence only: projects recall-first safety scoring across 5 folds and 20 seeds.",
-        transform=ax.transAxes,
-        ha="left",
-        va="bottom",
-        fontsize=9,
-        color=GRAY,
-    )
     ax.grid(axis="x", color=LIGHT, linewidth=0.7)
     ax.spines[["top", "right"]].set_visible(False)
     ax.legend(loc="lower right", frameon=False)
