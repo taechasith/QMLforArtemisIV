@@ -2139,3 +2139,24 @@ record is `data/processed/reporting/post_gate5_d034_prqk/technical_stop_registry
 It read the 39,000 development rows, but no model fit, endpoint, calibration,
 final-test, hardware, or Gate 6 operation started. Removing that dead block and
 loading the immutable model registry directly is the only correction.
+
+### D034 result - valid scientific negative
+
+The corrected D034 campaign completed from source commit
+`4313ad46adb4884fadc6d7c7d5a38ab183aaf1ab`. It audited 39,000 development
+rows, completed all five grouped folds, all six fixed PRQK configurations, and
+20 seeds, while reading zero calibration or final-test rows and running no
+hardware/GPU, mission-loop, or Gate 6 operation.
+
+The primary PRQK-08-N result was mean pooled OOF NRMSE `0.0293259` versus C06
+`0.00683281`. The paired difference was `+0.0224931` with 95% interval
+`[+0.0224857, +0.0225005]`. Regret and infeasible selection were also worse
+than C06, and the safety head failed the C02 comparator rule. A02-R-q8 had
+lower NRMSE (`0.0265477`) than PRQK, so no quantum-specific advantage is
+supported. D034 is therefore classified **complete_valid_negative**, not a
+technical failure and not a Gate 5 revision.
+
+Required future improvement: a new protocol may test a cross-fitted quantum
+correction stacked on frozen C06 predictions, with an identical-input
+classical stacked RBF control. This is future research only; it cannot rerank,
+refit, or rescue D034.

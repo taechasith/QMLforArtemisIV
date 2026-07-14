@@ -1255,6 +1255,35 @@ D032-C authorizes no release, tag, archive, DOI, `CITATION.cff` update,
 locked-data access, mission-loop execution, Gate 6 run, model fitting, QML
 invention claim, or quantum-advantage claim.
 
+D034/P002 was then opened as one separately authorized development-only
+invention campaign. It tested PRQK, which encoded only the PCA-compressed
+correction context, learned the residual over the low-fidelity physics cost,
+and added that baseline back analytically. The campaign completed from source
+commit `4313ad4` using 39,000 development rows, five whole-group folds,
+1,024 training rows per fold, six fixed q=4/6/8 entanglement ablations, and
+20 seeds. Calibration and final-test reads remained zero; no hardware/GPU,
+mission-loop, or Gate 6 work occurred. The reference laptop recorded 0.875
+GiB peak working set, 1.699 CPU-hours, 0.0319 wall-days, and 42.673 GiB free
+disk after execution.
+
+D034 is a valid scientific negative. PRQK-08-N achieved mean pooled OOF NRMSE
+`0.0293259` versus C06 `0.00683281`; the paired PRQK-minus-C06 difference was
+`+0.0224931` with 95% interval `[+0.0224857, +0.0225005]`. Mean regret was
+`19.6216` m/s versus C06 `16.8066` m/s, infeasible selection was `0.1285`
+versus `0.0676`, and the safety head had AUROC/Brier/recall
+`0.7436/0.1561/0.1089` versus C02 `0.9141/0.1057/0.3250`. A02-R-q8 also
+outperformed PRQK on cost NRMSE (`0.0265477`), so the observed signal is not
+evidence for a quantum-specific mechanism. RFIG-053 through RFIG-055 record
+the comparison, ablations, paired uncertainty, resources, and two corrected
+prelaunch launcher stops. D034 does not revise Gate 5 or authorize Gate 6.
+
+The D034 lesson is useful for invention but cannot rescue D034: adding the
+low-fidelity baseline analytically is insufficient, and the local projected
+kernel is not retaining enough predictive structure. A future P003 protocol
+may test a cross-fitted quantum correction stacked on the frozen C06 predictor,
+with an identical-input classical stacked RBF control. It must be newly frozen
+before fitting and must not alter the D034 result.
+
 D033-C release package ACCEPTED records the human research lead's acceptance of
 the release package with the strict D031-C negative-claim boundary. It
 authorizes the `v0.3.0` source tag, source archive, and `CITATION.cff` update to

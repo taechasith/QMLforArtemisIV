@@ -87,6 +87,15 @@ data/processed/reporting/post_gate5_p001/*
 !data/processed/reporting/post_gate5_p001/selected_summary.csv
 !data/processed/reporting/post_gate5_p001/sensitivity_summary.csv
 !data/processed/reporting/post_gate5_p001/tuning_summary.csv
+!data/processed/reporting/post_gate5_d034_prqk/
+!data/processed/reporting/post_gate5_d034_prqk/campaign_result.json
+!data/processed/reporting/post_gate5_d034_prqk/campaign_summary.json
+!data/processed/reporting/post_gate5_d034_prqk/fold_seed_metrics.csv
+!data/processed/reporting/post_gate5_d034_prqk/per_seed_metrics.csv
+!data/processed/reporting/post_gate5_d034_prqk/paired_comparison.csv
+!data/processed/reporting/post_gate5_d034_prqk/summary.csv
+!data/processed/reporting/post_gate5_d034_prqk/technical_stop_prelaunch.json
+!data/processed/reporting/post_gate5_d034_prqk/technical_stop_registry_loader.json
 data/processed/artemis2/*
 !data/processed/artemis2/oem_inventory.csv
 !data/processed/artemis2/oem_release_revisions.csv

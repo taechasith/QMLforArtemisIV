@@ -1,0 +1,2 @@
+comparison,seed_count,mean_difference,lower_95,upper_95,superiority_threshold
+PRQK-08-N_minus_C06_nrmse,20,0.022493078102229745,0.02248573639136908,0.022500454386411385,upper_95 < 0 and mean <= -0.05*C06

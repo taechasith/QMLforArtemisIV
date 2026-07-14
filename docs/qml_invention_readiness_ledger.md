@@ -64,3 +64,26 @@ falsification rule, resource limits, and reporting obligations are in
 `configs/post_gate5_d034_prqk.yaml`. The result is unresolved until the
 source-bound run completes. If PRQK is negative, the failure must be graphed,
 committed as future-only improvement, and tested only under a new protocol.
+
+### D034 result label
+
+**Observed result:** PRQK-08-N mean pooled OOF NRMSE `0.0293259` versus C06
+`0.00683281`, with paired difference `+0.0224931` and 95% interval
+`[+0.0224857, +0.0225005]`; regret, infeasible selection, and safety rules
+also failed. A02-R-q8 scored `0.0265477`, better than PRQK.
+
+**Useful invention signal:** adding the low-fidelity physics baseline back
+after a local projected kernel is mathematically valid but not sufficient;
+the local projection or residual target does not retain the structure needed to
+compete with the boosted physics residual. The next candidate should learn a
+quantum correction to cross-fitted C06 errors rather than to the raw
+low-fidelity error.
+
+**Prohibited use:** do not call D034 a failure of every QML method, do not
+rerank its six configurations, and do not claim NASA performance, mission
+benefit, quantum advantage, or Gate 6 eligibility.
+
+**Required next control:** a new P003 protocol must compare the proposed
+cross-fitted C06-stacked quantum correction against C06 and an identical-input
+classical stacked RBF, with the same grouped split, seed discipline, and
+development-only claim boundary.
