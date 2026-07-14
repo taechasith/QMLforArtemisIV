@@ -2132,3 +2132,10 @@ Development, calibration, and final-test reads remained zero; no scientific
 workload started. The correction only reads the already accepted counters from
 `authority` and does not alter the model, split, seed, threshold, or resource
 contract. One corrected attempt is allowed; the failure is not model evidence.
+
+The corrected launcher then passed the lock check and development audit but
+stopped in an unused phase-config registry initialization block. The separate
+record is `data/processed/reporting/post_gate5_d034_prqk/technical_stop_registry_loader.json`.
+It read the 39,000 development rows, but no model fit, endpoint, calibration,
+final-test, hardware, or Gate 6 operation started. Removing that dead block and
+loading the immutable model registry directly is the only correction.

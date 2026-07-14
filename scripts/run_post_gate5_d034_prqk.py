@@ -250,10 +250,6 @@ def run() -> dict[str, Any]:
     fold_metrics: list[dict[str, Any]] = []
     prediction_store: dict[tuple[str, int], dict[str, list[np.ndarray]]] = {}
     machine_rows: list[dict[str, Any]] = []
-    registry = {
-        str(row["trial_id"]): row
-        for row in phase_config.get("models", [])
-    }
     registry_payload = read_yaml(ROOT / "experiments/phase1_model_registry.yaml")
     registry = {str(row["trial_id"]): row for row in registry_payload["models"]}
     c06_params = registry["C06-T17"]["parameters"]

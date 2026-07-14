@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.1.0",
+  "decision_id": "D034",
+  "protocol_id": "P002",
+  "status": "technical_stop_after_development_audit",
+  "source_commit": "c0a5041",
+  "failed_stage": "unused_phase_config_registry_initialization",
+  "error": "The launcher attempted to iterate phase_config.models even though the phase benchmark config has no model-list contract; this was an unused initialization block.",
+  "development_rows_read": 39000,
+  "calibration_rows_read": 0,
+  "final_test_rows_read": 0,
+  "hardware_jobs_submitted": 0,
+  "gate6_runs": 0,
+  "model_fits_started": false,
+  "scientific_endpoint_reached": false,
+  "improvement": "Remove the unused phase-config registry initialization and load the immutable model registry directly from experiments/phase1_model_registry.yaml.",
+  "retry_rule": "One corrected attempt remains within D034 because no model fit or locked-data read occurred; no scientific rule changes."
+}
