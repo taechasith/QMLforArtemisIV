@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.49
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK campaign authorized; manuscript structural draft complete; Gate 6 unauthorized
+Version: 0.6.50
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK valid negative; D039 P007 EC-GFRK campaign authorized; manuscript structural draft complete; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-15
-Recommended next action: execute the separately authorized P006 D038 development-only GFRK campaign, classify it against C06 and the identical-input TAP-RBF-SHR control, and continue only through a newly recorded future protocol if the candidate is a valid negative. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
+Recommended next action: execute the separately authorized P007 D039 development-only error-conditioned GFRK campaign, classify it against C06 and the identical-input classical control, and continue only through a newly recorded future protocol if the candidate is a valid negative. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
 
 ## 1. Proposed title
 
@@ -1345,6 +1345,25 @@ Residual Kernel (GFRK): exact full-state fidelity with one entangling layer,
 retaining D036 task-aligned coordinates and fixed lambda=0.10. TAP-RBF-SHR-q
 is the identical-input classical control. D038 is development-only and does
 not revise Gate 5, D034-D037, or authorize Gate 6.
+
+D038 is a valid scientific negative. GFRK-08-L010 scored mean pooled OOF NRMSE
+`0.00664716` versus C06 `0.00683281`; the paired difference was
+`-0.000185652` with 95% interval `[-0.000187118,-0.000184266]`. This is an
+approximately 2.7% improvement against C06, below the frozen 5% rule, and it
+did not beat TAP-RBF-SHR-q8-L010 by 5%. All five outer folds, four inner folds,
+20 seeds, PSD/fidelity audits, and 39,000 development rows completed; no
+validation outcomes were used, and calibration/final-test, hardware/GPU,
+mission-loop, and Gate 6 counters remained zero. RFIG-062 and RFIG-063 are
+the required paper figures. The improvement is a useful invention signal, not
+a superiority claim.
+
+D039/P007 is the next prospective invention protocol. It tests an
+Error-Conditioned Global Fidelity Residual Kernel (EC-GFRK): the honest outer
+C06 prediction is included as an input feature to the fold-local,
+cross-fitted-residual PLS map before the same exact global fidelity kernel.
+The matched classical control receives the identical error-conditioned scores,
+landmarks, ridge, and lambda. D039 is development-only and does not revise
+Gate 5 or D034-D038, and does not authorize Gate 6.
 
 D033-C release package ACCEPTED records the human research lead's acceptance of
 the release package with the strict D031-C negative-claim boundary. It

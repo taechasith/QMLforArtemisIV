@@ -183,3 +183,32 @@ and 0.50 across q=4/6/8. The primary is q=8, lambda=0.25. The matched
 TAP-RBF control receives the same multiplier. The result remains unresolved
 until the source-bound endpoint completes; no locked data, Gate 6, hardware, or
 quantum-advantage claim is authorized.
+
+### D038 result label
+
+**Observed result:** GFRK-08-L010 scored mean pooled OOF NRMSE `0.00664716`
+versus C06 `0.00683281`; paired difference `-0.000185652`, with 95% interval
+`[-0.000187118,-0.000184266]`. The result improved C06 by about 2.7% but did
+not meet the frozen 5% rule or beat the matched TAP-RBF-SHR-q8-L010 control by
+5%.
+
+**Useful invention signal:** global state fidelity preserved predictive
+structure not retained by the local one-RDM projection. The next test should
+make the residual representation explicitly conditional on the honest C06
+prediction rather than changing the kernel again.
+
+**Prohibited use:** do not call D038 scientifically superior, claim NASA
+performance or quantum advantage, revise Gate 5, or authorize Gate 6.
+
+**Required next control:** D039 adds the outer-fold C06 prediction as a
+fold-local PLS input feature and applies the same error-conditioned coordinates
+to the matched classical RBF.
+
+## D039 P007: error-conditioned global fidelity residual kernel
+
+D039 is authorized as one new development-only protocol. It tests whether the
+first clean GFRK signal is strengthened when the learned coordinates explicitly
+identify where the C06 baseline is likely to err. The C06 prediction is
+cross-fitted for the training projection and generated without validation
+outcomes for the outer validation projection. All other kernel, shrinkage,
+split, seed, safety, threshold, and resource rules remain frozen.

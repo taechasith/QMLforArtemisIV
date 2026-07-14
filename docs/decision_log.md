@@ -2285,6 +2285,41 @@ locked-data rule are in `configs/post_gate5_d038_gfrk.yaml` and
 `docs/post_gate5_d038_gfrk_protocol.md`. A complete negative must be graphed,
 committed as future-only improvement, and followed only by a new protocol.
 
+### D038 result - P006 global fidelity residual kernel
+
+Date: 2026-07-15
+Decision: **Valid scientific negative; continue only through a new protocol**
+Evidence: `data/processed/reporting/post_gate5_d038_gfrk/campaign_result.json`
+
+GFRK-08-L010 scored mean pooled OOF NRMSE `0.00664716` versus C06
+`0.00683281`, with paired difference `-0.000185652` and 95% interval
+`[-0.000187118,-0.000184266]`. The paired interval is below zero, but the
+improvement is about 2.7%, below the frozen 5% rule, and the matched
+TAP-RBF-SHR-q8-L010 control at `0.00675361` prevents a quantum-specific
+superiority conclusion. This is useful evidence that global fidelity retains
+predictive structure discarded by local projections, but it is not an
+invention success or a quantum-advantage claim. All five outer folds, four
+inner folds, 20 seeds, 39,000 development rows, fidelity/PSD audits, and
+paper figures RFIG-062/RFIG-063 completed with zero validation-outcome use and
+zero calibration/final-test, hardware/GPU, mission-loop, or Gate 6 activity.
+
+### D039 - P007 error-conditioned global fidelity residual kernel authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D038 valid negative
+
+D039 tests EC-GFRK. It adds the outer-fold C06 prediction as an error-conditioned
+feature to the fold-local task-aligned PLS input, then applies the unchanged
+one-layer exact global state-fidelity kernel and fixed lambda `0.10`. The
+identical-input error-conditioned TAP-RBF is the classical control. D039 keeps
+the grouped split, 20 seeds, q=4/6/8, 39,000-row development scope, safety
+head, 5% thresholds, resource limits, and zero locked-data rule unchanged.
+The contract is in `configs/post_gate5_d039_ecgfrk.yaml` and
+`docs/post_gate5_d039_ecgfrk_protocol.md`. A complete negative must be
+graphed, committed as future-only improvement, and followed only by another
+prospective protocol; no Gate 6 or locked-data access is authorized.
+
 ### D037 prelaunch technical stop
 
 The first direct D037 launcher attempt stopped before `run()` and before any

@@ -1,0 +1,104 @@
+schema_version: "0.1.0"
+decision_id: "D039"
+protocol_id: "P007"
+status: "accepted_next_invention_campaign_authorized"
+prepared_date: "2026-07-15"
+accepted_date: "2026-07-15"
+acceptance_basis: "assistant-selected continuation after D038 showed a clean but sub-threshold global-fidelity signal"
+
+authority:
+  scope: "one bounded development-only campaign for an error-conditioned global-fidelity residual quantum kernel"
+  research_data_fitting_authorized: true
+  campaign_count_limit: 1
+  checkpoint_resume_authorized: true
+  silent_task_retry_authorized: false
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  final_payload_access_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate6_authorized: false
+  nasa_performance_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+
+locks:
+  gate5_result_unchanged: true
+  p001_evidence_immutable: true
+  d034_evidence_immutable: true
+  d035_evidence_immutable: true
+  d036_evidence_immutable: true
+  d037_evidence_immutable: true
+  d038_evidence_immutable: true
+  no_calibration_or_final_test: true
+  no_mission_loop: true
+  no_hardware_or_gpu: true
+  allowed_data_scope: "development"
+  allowed_qubits: [4, 6, 8]
+  allowed_layers: [1]
+  inner_grouped_folds: 4
+  seed_indices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  training_rows_per_outer_fold: 1024
+
+source_binding:
+  phase1_config: "configs/phase1_benchmark.yaml"
+  d038_result: "data/processed/reporting/post_gate5_d038_gfrk/campaign_result.json"
+  qml_source: "src/openqfuel/qml.py"
+  campaign_source: "scripts/run_post_gate5_d039_ecgfrk.py"
+  protocol_source: "docs/post_gate5_d039_ecgfrk_protocol.md"
+
+mathematical_contract:
+  raw_input: "c_i in R^q concatenated with a fold-local C06 prediction feature"
+  training_input: "u_i = [c_i, b_C06^{-inner}(x_i)] for cross-fitted outer-training rows"
+  validation_input: "u_i = [c_i, b_C06^outer(x_i)] for outer-validation rows"
+  target: "cross-fitted C06 residual e_i = y_i - b_C06^{-inner}(x_i)"
+  projection: "z_i = standardize(PLS_q(u_i, e_i)) in R^q"
+  quantum_state: "psi(z) = U_RY/RZ,CNOT(z)|0^q> with one entangling layer"
+  quantum_kernel: "K_F(z,v) = |<psi(z)|psi(v)>|^2"
+  prediction: "f_Q(x) = b_C06^outer(x) + 0.10 * K_F(z,Z) alpha"
+  classical_control: "EC-TAP-RBF-SHR-q uses identical z, landmarks, ridge, and lambda=0.10"
+  safety_guard: "the frozen outer-fold C06 feasibility head is retained unchanged"
+
+candidate:
+  id: "EC-GFRK"
+  name: "Error-Conditioned Global Fidelity Residual Kernel"
+  primary_configuration: "EC-GFRK-08-L010"
+  shrinkage: 0.10
+  configurations:
+    - {id: EC-GFRK-04-L010, qubits: 4, layers: 1, feature_scale: 1.0, entangle: true, alpha: 1.0, landmarks: 256}
+    - {id: EC-GFRK-06-L010, qubits: 6, layers: 1, feature_scale: 1.0, entangle: true, alpha: 1.0, landmarks: 256}
+    - {id: EC-GFRK-08-L010, qubits: 8, layers: 1, feature_scale: 1.0, entangle: true, alpha: 1.0, landmarks: 256}
+  configuration_rule: "q scaling is fixed before development payload access; q=8 lambda=0.10 is primary"
+  claimed_mechanism: "conditioning the task-aligned representation on the honest baseline prediction may isolate residual structure while global fidelity retains multi-qubit correlations"
+
+controls:
+  - id: C06
+    description: "frozen outer-fold C06 prediction with the same safety guard"
+  - id: EC-TAP-RBF-SHR
+    description: "identical error-conditioned scores and lambda=0.10 with an exact classical RBF"
+  - id: D038-GFRK
+    description: "immutable D038 result, not rerun or reranked"
+
+hypotheses:
+  H1: "EC-GFRK-08-L010 will improve pooled OOF NRMSE by at least 5 percent versus C06"
+  H2: "EC-GFRK-08-L010 will improve or preserve C06 feasibility-constrained regret and infeasible selection"
+  H3: "EC-GFRK-08-L010 will beat EC-TAP-RBF-SHR-q8-L010 by at least 5 percent"
+
+decision_rule:
+  scientifically_superior: "H1, H2, and H3 pass across five outer folds and 20 seeds, with the paired 95 percent bootstrap upper bound for EC-GFRK-08-L010 minus C06 below zero"
+  valid_negative: "complete source-bound endpoint with all integrity checks pass but any superiority condition fails"
+  technical_stop: "source, split, projection, data-access, statevector, numerical, or resource integrity failure"
+  after_negative: "record the evidence and open a new protocol; do not silently alter the kernel, error-conditioned feature, shrinkage, controls, thresholds, or seeds"
+
+resources:
+  hardware: "recorded laptop: Intel Core i9-13900HX, 32 GiB RAM, NVIDIA RTX 4060 Laptop GPU; CPU-only execution"
+  peak_working_set_gib: 24.0
+  cpu_core_hours: 250.0
+  wall_clock_days: 5.0
+  free_disk_floor_gib: 20.0
+  gpu_hours: 0.0
+
+reporting:
+  result_root: "data/processed/reporting/post_gate5_d039_ecgfrk"
+  figures: [RFIG-064, RFIG-065]
+  figure_script: "scripts/make_post_gate5_d039_ecgfrk_figures.py"
+  claim_boundary: "development-only surrogate evidence; no NASA performance claim, mission claim, hardware claim, quantum advantage claim, calibration/final-test result, Gate 5 revision, or Gate 6 authorization"
