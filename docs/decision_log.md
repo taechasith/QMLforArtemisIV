@@ -2044,3 +2044,30 @@ Outcome:
   until human release acceptance.
 - Next required human decision remains: accept release package, request
   revisions, or reject release.
+
+### D033-C completed - release package ACCEPTED
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Completed; release package accepted**
+Authority: Human research lead accepted the release package with the strict
+D031-C negative-claim boundary
+
+Decision:
+
+- Accept the release package under the D031-C claim boundary.
+- Authorize the `v0.3.0` source tag, source archive, and `CITATION.cff` update.
+- Generate RFIG-052 as the accepted release-boundary figure.
+- Preserve the development-only negative QML benchmark claim.
+- Do not mint a DOI, release a trained model, open locked data, run mission
+  loops, run Gate 6, fit models, claim QML invention, or claim quantum
+  advantage.
+
+Outcome:
+
+- Release version accepted: `0.3.0`.
+- Release tag authorized: `v0.3.0`.
+- `CITATION.cff` updated from `0.2.0` to `0.3.0`.
+- Allowed claim remains: no tested QML candidate outperformed strong classical
+  controls or qualified for a P001 QML Gate 6 mission experiment under the
+  frozen public-data development benchmark.

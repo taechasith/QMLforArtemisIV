@@ -1,0 +1,44 @@
+decision_id: "D033-C"
+protocol_id: "P001"
+status: "completed_release_package_accepted"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+authority: "Human research lead accepted the release package with the strict D031-C negative-claim boundary"
+release:
+  accepted_prerelease_commit: "21e1ff414d0ac7f5a0e0746009c92f92df24d364"
+  release_version: "0.3.0"
+  release_tag: "v0.3.0"
+  citation_previous_version: "0.2.0"
+  citation_release_date: "2026-07-14"
+scope:
+  release_package_accepted: true
+  release_authorized: true
+  tag_authorized: true
+  citation_update_authorized: true
+  source_archive_authorized: true
+  doi_minting_authorized: false
+  model_release_authorized: false
+  gate6_authorized: false
+  locked_data_access_authorized: false
+  mission_loop_authorized: false
+  model_fitting_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+accepted_claim: "A public-data, development-only benchmark found no tested QML candidate that outperformed strong classical controls or qualified for a QML Gate 6 mission experiment from P001."
+required_release_boundary:
+  - "Development-only negative QML benchmark evidence."
+  - "No QML Gate 6 candidate from P001."
+  - "Calibration and final-test data remain locked."
+  - "No mission-loop validation or flight-readiness claim."
+  - "No quantum-advantage or proven QML-invention claim."
+release_files:
+  - "CITATION.cff"
+  - "README.md"
+  - "research_protocol.md"
+  - "paper/manuscript.md"
+  - "docs/release_notes_v0.3.0.md"
+  - "docs/release_acceptance.md"
+  - "docs/release_candidate_manifest.md"
+  - "docs/final_claim_release_review.md"
+  - "docs/release_checklist.md"
+claim_boundary: "D033-C accepts the release package and authorizes the v0.3.0 tag, source archive, and CITATION update only under the strict D031-C negative-claim boundary; it authorizes no DOI minting, model release, locked-data access, mission-loop execution, Gate 6 run, model fitting, QML invention claim, or quantum-advantage claim."

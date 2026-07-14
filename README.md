@@ -380,6 +380,13 @@ but does not create a tag, archive, DOI, or citation update. RFIG-051 records
 the manifest state. Human acceptance is still required before any release
 action.
 
+D033-C release package acceptance records the human research lead's acceptance
+of the release package under the strict D031-C negative-claim boundary. The
+accepted release version is `0.3.0`, with tag `v0.3.0` and updated
+`CITATION.cff`. RFIG-052 records the accepted release boundary. DOI minting,
+Gate 6, locked-data access, mission-loop execution, model release, QML
+invention claims, and quantum-advantage claims remain unauthorized.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -458,6 +465,8 @@ through a dated deviation record.
 - docs/release_checklist.md: release checklist eligible for human claim/release review after D030-C.
 - docs/final_claim_release_review.md: D031-C final claim/release review and human decision options.
 - docs/release_candidate_manifest.md: D032-C release-candidate manifest and post-acceptance action list.
+- docs/release_acceptance.md: D033-C accepted release package and claim boundary.
+- docs/release_notes_v0.3.0.md: accepted v0.3.0 release notes.
 - paper/manuscript.md: draft manuscript scaffold generated from the closed Gate 5/5X evidence.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.

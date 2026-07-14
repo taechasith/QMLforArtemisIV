@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use this benchmark, cite the archived release and associated paper."
 title: "OpenQFuel-Cislunar"
 type: software
-version: 0.2.0
-date-released: 2026-07-11
+version: 0.3.0
+date-released: 2026-07-14
 authors:
   - name: "OpenQFuel-Cislunar Contributors"
 license: Apache-2.0
