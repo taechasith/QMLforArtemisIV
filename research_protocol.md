@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.35
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; Gate 6 unauthorized
+Version: 0.6.36
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: close the CSAFE-RF branch into manuscript discussion or open a new future protocol from scratch; no development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application to real data, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized by D024
+Recommended next action: move to manuscript/results synthesis, or separately ask the human lead to open a baseline/safety-only Gate 6 protocol; no QML Gate 6 mission experiment, development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application to real data, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 run is authorized by D025
 
 ## 1. Proposed title
 
@@ -1178,6 +1178,17 @@ result. RFIG-043 records this interpretation boundary. D024-C authorizes no
 new experiment, refit, threshold application, locked-data access, mission-loop
 work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim,
 or Gate 6.
+
+D025-C closes the Gate 5 and post-Gate-5 5X evidence chain into a Gate 6
+recommendation report. The recommendation is not to proceed to a QML Gate 6
+mission experiment from P001: Gate 5 Q01 failed against C06, Q01b and FQK were
+valid exploratory negatives, and CSAFE-RF recall-first evidence remains
+future-useful but non-advancing. If Gate 6 is opened later, it must be a
+separate baseline/safety mission protocol with prospectively frozen controls,
+safety gates, locked-data rules, and claim boundaries. RFIG-044 records the
+closure. D025-C authorizes no Gate 6 run, calibration/final-test access,
+mission-loop execution, model fitting, QML invention claim, quantum-advantage
+claim, or Gate 5 reinterpretation.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

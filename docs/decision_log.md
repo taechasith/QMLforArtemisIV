@@ -1818,3 +1818,36 @@ protocol is opened from scratch with prospectively frozen recall, calibration,
 false-negative-cost, locked-data, and claim rules. It does not rescue D017,
 reinterpret Gate 5, authorize locked-data access, authorize mission-loop work,
 claim QML invention or quantum advantage, or open Gate 6.
+
+### D025-C completed - Gate 5 closure and Gate 6 recommendation
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Completed; no QML Gate 6 candidate**
+Authority: Assistant-selected next step after D024-C
+
+Decision:
+
+- Close Gate 5 and all authorized post-Gate-5 5X evidence into one Gate 6
+  recommendation report.
+- Do not start Gate 6, open calibration/final-test data, run mission-loop
+  scenarios, fit models, rerank, retry, apply thresholds to real data, or use
+  hardware/GPU execution.
+- Generate RFIG-044 for the paper-ready closure and recommendation boundary.
+
+Outcome:
+
+- Gate 5 remains a valid technical FAIL: Q01 mean NRMSE 0.6466 versus C06 at
+  0.008739, with zero qualifying residual regimes.
+- Q01b and FQK remain valid exploratory negatives.
+- CSAFE-RF recall-first evidence remains future-useful but non-advancing.
+- No QML candidate earned locked-data, mission-loop, QML invention, or
+  quantum-advantage authority.
+
+Gate 6 recommendation:
+
+Do not proceed to a QML Gate 6 mission experiment from P001. If Gate 6 is
+opened later, it should be a separately accepted baseline/safety mission
+protocol with prospectively frozen C06 or numerical-reference controls, paired
+Monte Carlo scenarios, safety gates, stopping rules, locked-data rules, and
+claim boundaries. It must not be a rescue of Gate 5 or a QML advantage claim.

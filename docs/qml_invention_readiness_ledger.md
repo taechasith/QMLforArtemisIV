@@ -33,10 +33,13 @@ They cannot alter, rescue, rerank, or reinterpret the completed P001 results.
 | D009 telemetry STOP | Technical stop from invalid Windows working-set telemetry | Future long runs need typed resource telemetry before admission | Do not treat as QML failure or laptop-capacity evidence | Independent OS telemetry validation | Technical infrastructure evidence only |
 | D011 / D011-C1 STOPs | Import and raw-hash authority stops before synthetic workload or research rows | Future source-bound protocols need package-safe launchers and raw Git-blob hash prevalidation | Do not treat as model-performance evidence | Import smoke test and hash-consistency smoke test | Technical provenance evidence only |
 | D010 / D011-C2 compute PASS | Synthetic compute admissions passed within laptop limits | The reference laptop can run bounded source-bound synthetic checks when shape and telemetry are correct | Do not treat as model-performance or Gate 6 evidence | Full campaign-shape admission before data fitting | Synthetic compute evidence only |
+| D024-C CSAFE-RF interpretation | Recall-first `calibrated_logistic` reached recall 0.8043 but remained post-D017-informed and calibration-limited; A02 exact-RBF did not dominate | Future QML or hybrid safety filters must freeze missed-unsafe-case priority and calibration constraints prospectively | Do not use recall-first audit to rescue D017, open locked data, or claim QML progress | Prospective recall/calibration/false-negative-cost protocol with classical and dequantized controls | Future design signal only |
+| D025-C Gate 5 closure | Gate 5 and 5X closed with no QML candidate eligible for Gate 6 | The invention target is now clear: beat C06 and safety-filter controls before mission-loop claims | Do not proceed to QML Gate 6 from P001 | New prospective protocol before any QML invention or Gate 6 mission work | Closure recommendation only |
 
 ## Current Invention Readiness Assessment
 
-The project is not ready to invent and test a new QML architecture yet. The
-next scientifically correct step is D013-C: harden residual and safety-filter
-classical baselines, then decide whether a future QML invention has a fair and
-non-rescue target.
+The project is not ready to invent and test a new QML architecture inside
+P001. D025-C closes Gate 5/5X with no QML Gate 6 candidate. The next
+scientifically correct use of this ledger is manuscript discussion or a new
+prospective future protocol whose QML target must beat C06 and safety-filter
+controls before any mission-loop claim.

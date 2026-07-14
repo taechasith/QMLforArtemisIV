@@ -51,7 +51,7 @@ def test_d023_docs_are_registered() -> None:
         "research_protocol.md": "D023-C",
         "README.md": "D023-C",
         "docs/decision_log.md": "D023-C",
-        "docs/research_execution_map.md": "D024-C interpretation complete",
+        "docs/research_execution_map.md": "D025-C Gate 5 closure complete",
         "docs/computational_methodology.md": "D023-C",
     }
     for relative, phrase in required.items():

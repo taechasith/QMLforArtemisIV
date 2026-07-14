@@ -1,0 +1,36 @@
+decision_id: "D025-C"
+protocol_id: "P001"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+status: "completed_gate5_closure_gate6_recommendation"
+authority: "assistant-selected next step after D024-C; close Gate 5/5X evidence into a Gate 6 recommendation report"
+source_evidence:
+  gate5_model_summary: "data/processed/reporting/gate5_model_summary.csv"
+  gate5_regime_trigger: "data/processed/reporting/gate5_regime_trigger.csv"
+  exploratory_decision: "data/processed/reporting/post_gate5_p001/exploratory_decision.json"
+  d024_interpretation: "data/processed/reporting/post_gate5_d024_recall_first_interpretation.json"
+  d024_reporting_commit: "66515b459dacebbecf78f900a4b4020021f484ce"
+scope:
+  closure_report_only: true
+  gate6_authorized: false
+  qml_mission_experiment_authorized: false
+  baseline_mission_experiment_authorized: false
+  development_data_fitting_authorized: false
+  new_model_fit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  threshold_application_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  hardware_authorized: false
+  gpu_authorized: false
+  mission_loop_authorized: false
+  gate5_reinterpretation_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+recommendation:
+  official_status: "GATE5_CLOSED_NO_QML_GATE6_CANDIDATE"
+  gate6_recommendation: "Do not proceed to a QML Gate 6 mission experiment from P001."
+  if_human_opens_gate6: "Open a separate baseline/safety mission protocol only, with C06 or numerical-reference controls and no QML advantage claim."
+  manuscript_action: "Report Gate 5 as a valid technical FAIL, report post-Gate-5 QML tests as exploratory negatives, and discuss recall-first CSAFE-RF only as future protocol design."
+claim_boundary: "D025-C is a closure and recommendation report only; it authorizes no Gate 6 run, calibration/final-test access, mission-loop execution, model fitting, QML invention claim, quantum-advantage claim, or Gate 5 reinterpretation."

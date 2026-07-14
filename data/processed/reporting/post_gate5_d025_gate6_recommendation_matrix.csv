@@ -1,0 +1,6 @@
+evidence_block,observed_result,gate6_effect,recommended_action
+Preregistered Gate 5,Q01 NRMSE 0.6466 vs C06 0.0087,No QML mission candidate,Report technical FAIL; do not rescue Q01/Q02/Q03
+Post-Gate-5 Q01b,Q01b NRMSE 0.6612 vs C06 0.0068,Exploratory negative,Keep projected-kernel result in appendix/future work
+Post-Gate-5 FQK,"FQK AUROC 0.7436, recall 0.1089",Exploratory negative,Do not promote feasibility kernel to mission safety filter
+CSAFE-RF recall-first,"calibrated_logistic recall 0.8043, Brier 0.1422",Future-useful but non-advancing,Use only to design a future prospective safety protocol
+Gate 6 recommendation,No advancing QML candidate and no locked-data authority,Do not open QML Gate 6 from P001,"If opened later, use a separately accepted baseline/safety mission protocol"

@@ -327,6 +327,13 @@ closed into manuscript discussion unless a future protocol is opened from
 scratch with prospectively frozen recall, calibration, false-negative-cost,
 locked-data, and claim rules. RFIG-043 records the boundary.
 
+D025-C closes Gate 5 and the post-Gate-5 5X branch into a Gate 6
+recommendation. The recommendation is: do not proceed to a QML Gate 6 mission
+experiment from P001. No QML candidate earned locked-data or mission-loop
+authority. If Gate 6 is opened later, it should be a separately accepted
+baseline/safety mission protocol, not a Gate 5 rescue or quantum-advantage
+claim. RFIG-044 records the recommendation boundary.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -394,6 +401,7 @@ through a dated deviation record.
 - docs/post_gate5_d022_recall_first_preflight.md: CSAFE-RF clean-source synthetic compute preflight.
 - docs/post_gate5_d023_recall_first_development.md: CSAFE-RF development-only recall-first audit.
 - docs/post_gate5_d024_recall_first_interpretation.md: interpretation of the recall-first audit as future-only non-advancing evidence.
+- docs/gate5_closure_gate6_recommendation.md: D025-C closure report and Gate 6 recommendation.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
 - docs/post_gate5_compute_preflight.md: D009 synthetic-only clean-source compute-admission contract and pass/stop rules.
