@@ -128,3 +128,30 @@ The full mathematical contract, claim labels, leakage checks, and falsification
 rules are in `docs/post_gate5_d036_tapqk_protocol.md`. No D036 result exists
 until its source-bound endpoint completes; no locked data, Gate 6, hardware, or
 quantum-advantage claim is authorized.
+
+### D036 result label
+
+**Observed result:** TAPQK-08 mean pooled OOF NRMSE `0.0103815` versus C06
+`0.00683281`, with paired difference `+0.00354871` and 95% interval
+`[+0.00354672,+0.00355058]`. TAP-RBF-q8 scored `0.00987042`; the candidate
+failed every superiority condition.
+
+**Useful invention signal:** residual-supervised PLS coordinates did not expose
+a correction that competes with C06. The remaining candidate should test
+stability of the correction magnitude rather than add unverified circuit
+complexity.
+
+**Prohibited use:** do not rerank D036 q values, claim NASA performance or
+quantum advantage, or reinterpret the negative as a Gate 6 qualification.
+
+**Required next control:** D037 applies fixed shrinkage to both the quantum and
+matched classical residual corrections, preserving the C06 safety guard.
+
+## D037 P005: trust-region shrunk quantum residual
+
+D037 is authorized as one new development-only protocol. It uses the D036
+task-aligned coordinates and tests fixed correction multipliers 0.10, 0.25,
+and 0.50 across q=4/6/8. The primary is q=8, lambda=0.25. The matched
+TAP-RBF control receives the same multiplier. The result remains unresolved
+until the source-bound endpoint completes; no locked data, Gate 6, hardware, or
+quantum-advantage claim is authorized.

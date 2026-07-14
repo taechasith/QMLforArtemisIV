@@ -2191,11 +2191,11 @@ matched classical control. Regret and safety selection were not improved.
 Calibration/final-test reads, hardware/GPU jobs, mission loops, and Gate 6
 runs were zero. RFIG-056 and RFIG-057 are the required paper figures.
 
-Interpretation: cross-fitting removed the in-sample baseline concern but did
-not uncover a useful correction to C06. This is development-only evidence, not
-a failure of every QML method and not a Gate 5 revision. The required future
-improvement is a newly frozen residual-supervised coordinate test; no D035
-rerank or silent parameter change is authorized.
+Interpretation: cross-fitting removed the in-sample C06 baseline concern but
+did not uncover a useful correction to C06. This is development-only evidence,
+not a failure of every QML method and not a Gate 5 revision. The required
+future improvement is a newly frozen residual-supervised coordinate test; no
+D035 rerank or silent parameter change is authorized.
 
 ### D036 - P004 task-aligned projected quantum kernel authorized
 
@@ -2211,3 +2211,39 @@ guard are frozen in `configs/post_gate5_d036_tapqk.yaml` and
 `docs/post_gate5_d036_tapqk_protocol.md`. A complete negative must be graphed,
 committed as future-only improvement, and followed only by a new protocol;
 no Gate 6 or public superiority claim is authorized.
+
+### D036 result - valid scientific negative
+
+Date: 2026-07-15
+Decision: **Complete, integrity-valid negative**
+Source commit: `82312b0bb6e2cdb2a48bedea60fbe5374ae518df`
+
+D036 completed 39,000 development rows, five outer grouped folds, four inner
+grouped folds, q=4/6/8, and 20 seeds. TAPQK-08 scored mean pooled OOF NRMSE
+`0.0103815` versus C06 `0.00683281`; the paired difference was `+0.00354871`
+with 95% interval `[+0.00354672,+0.00355058]`. TAP-RBF-q8 scored `0.00987042`,
+so the quantum kernel did not beat its matched supervised classical control.
+Projection audits recorded zero validation outcomes used and all inner-fold
+group intersections were zero. Calibration/final-test reads, hardware/GPU
+jobs, mission loops, and Gate 6 runs were zero. RFIG-058 and RFIG-059 are the
+required paper figures.
+
+Interpretation: residual-supervised coordinate alignment did not recover a
+useful correction to C06. This is development-only evidence, not a failure of
+every QML method and not a Gate 5 revision. The required future improvement is
+a newly frozen shrinkage/trust-region test; no D036 rerank or silent parameter
+change is authorized.
+
+### D037 - P005 trust-region shrunk quantum residual authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D036 valid negative
+
+D037 tests a fixed shrinkage of the D036 quantum residual correction with
+lambda values 0.10, 0.25, and 0.50, q=4/6/8, and q=8/lambda=0.25 as primary.
+The identical-input TAP-RBF correction receives the same shrinkage. The
+mathematical contract, thresholds, leakage checks, resource ceilings, and
+zero-locked-data rule are in `configs/post_gate5_d037_tsqr.yaml` and
+`docs/post_gate5_d037_tsqr_protocol.md`. A complete negative must be graphed,
+committed as future-only improvement, and followed only by a new protocol.
