@@ -129,6 +129,34 @@ rules are in `docs/post_gate5_d036_tapqk_protocol.md`. No D036 result exists
 until its source-bound endpoint completes; no locked data, Gate 6, hardware, or
 quantum-advantage claim is authorized.
 
+### D037 result label
+
+**Observed result:** primary TSQR-08-L025 scored NRMSE `0.00684778` versus C06
+`0.00683281`, with paired difference `+0.0000149672` and 95% interval
+`[+0.0000146573,+0.0000152701]`. TSQR-08-L010 scored `0.00675013`, while the
+matched TAP-RBF-SHR-08-L010 scored `0.00675359`; no quantum-specific rule
+passed.
+
+**Useful invention signal:** correction shrinkage can reduce harm from an
+overactive residual model, but the small gain is reproduced by the classical
+control. The next candidate should test a different quantum kernel geometry.
+
+**Prohibited use:** do not rerank D037 or present the lambda=0.10 ablation as
+a primary success, and do not claim NASA performance, quantum advantage, or
+Gate 6 eligibility.
+
+**Required next control:** D038 tests global state fidelity against the same
+task-aligned TAP-RBF control at fixed lambda=0.10.
+
+## D038 P006: global fidelity residual kernel
+
+D038 is authorized as one new development-only protocol. It replaces local
+one-RDM projection distance with exact global state fidelity in an entangling
+one-layer circuit, while preserving the D036 task-aligned scores and D037
+lambda=0.10 stabilization. The result remains unresolved until the
+source-bound endpoint completes; no locked data, Gate 6, hardware, or
+quantum-advantage claim is authorized.
+
 ### D036 result label
 
 **Observed result:** TAPQK-08 mean pooled OOF NRMSE `0.0103815` versus C06

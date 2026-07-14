@@ -2248,6 +2248,43 @@ zero-locked-data rule are in `configs/post_gate5_d037_tsqr.yaml` and
 `docs/post_gate5_d037_tsqr_protocol.md`. A complete negative must be graphed,
 committed as future-only improvement, and followed only by a new protocol.
 
+### D037 result - valid scientific negative
+
+Date: 2026-07-15
+Decision: **Complete, integrity-valid negative**
+Source commit: `1d7ddfa6b1758c4c800082d9cab7f46fa9b0e2bd`
+
+D037 completed 39,000 development rows, five outer grouped folds, four inner
+grouped folds, q=4/6/8, three fixed lambda values, and 20 seeds. The primary
+TSQR-08-L025 scored mean pooled OOF NRMSE `0.00684778` versus C06
+`0.00683281`; the paired difference was `+0.0000149672` with 95% interval
+`[+0.0000146573,+0.0000152701]`. The best declared ablation, TSQR-08-L010,
+scored `0.00675013`, but TAP-RBF-SHR-08-L010 scored `0.00675359`; therefore
+the modest improvement was not a quantum-specific gain and did not meet the
+5% primary rule. All 900 shrinkage audits were complete, with zero validation
+outcomes used and zero inner-group overlaps. Calibration/final-test reads,
+hardware/GPU jobs, mission loops, and Gate 6 runs were zero. RFIG-060 and
+RFIG-061 are the required paper figures.
+
+Interpretation: fixed shrinkage reduced the correction harm but did not create
+a scientifically superior QML method. This is development-only evidence, not
+a Gate 5 revision. The next improvement must change the kernel representation,
+not silently tune lambda.
+
+### D038 - P006 global fidelity residual kernel authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D037 valid negative
+
+D038 tests GFRK, replacing the local one-RDM projected kernel with the exact
+global state-fidelity kernel while retaining D036 task-aligned coordinates and
+fixed lambda=0.10. TAP-RBF-SHR-q is the identical-input classical control.
+The contract, PSD proof, statevector checks, resource limits, and zero
+locked-data rule are in `configs/post_gate5_d038_gfrk.yaml` and
+`docs/post_gate5_d038_gfrk_protocol.md`. A complete negative must be graphed,
+committed as future-only improvement, and followed only by a new protocol.
+
 ### D037 prelaunch technical stop
 
 The first direct D037 launcher attempt stopped before `run()` and before any

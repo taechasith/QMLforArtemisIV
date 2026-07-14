@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.48
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR campaign authorized; manuscript structural draft complete; Gate 6 unauthorized
+Version: 0.6.49
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK campaign authorized; manuscript structural draft complete; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-15
-Recommended next action: execute the separately authorized P005 D037 development-only TSQR campaign, classify it against C06 and the identical-input shrunk TAP-RBF control, and continue only through a newly recorded future protocol if the candidate is a valid negative. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
+Recommended next action: execute the separately authorized P006 D038 development-only GFRK campaign, classify it against C06 and the identical-input TAP-RBF-SHR control, and continue only through a newly recorded future protocol if the candidate is a valid negative. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
 
 ## 1. Proposed title
 
@@ -1329,6 +1329,22 @@ applied to the identical-input TAP-RBF control. This tests whether D034-D036
 failed because full residual corrections were too aggressive, without changing
 the C06 safety guard, grouped split, seeds, or data scope. D037 does not revise
 Gate 5, D034, D035, or D036 and does not authorize Gate 6.
+
+D037 is a valid scientific negative. The primary TSQR-08-L025 scored mean
+pooled OOF NRMSE `0.00684778` versus C06 `0.00683281`; the paired difference
+was `+0.0000149672` with 95% interval `[+0.0000146573,+0.0000152701]`. The
+best declared ablation TSQR-08-L010 scored `0.00675013`, but the matched
+TAP-RBF-SHR-08-L010 scored `0.00675359`, so the modest gain was not
+quantum-specific and did not meet the 5% primary rule. D037 completed 900
+shrinkage audits with zero validation-outcome use, zero inner-group overlap,
+39,000 development rows, and zero calibration/final-test reads. RFIG-060 and
+RFIG-061 record the full lambda grid, uncertainty, audit, and resources.
+
+D038/P006 is the next prospective invention protocol. It tests Global Fidelity
+Residual Kernel (GFRK): exact full-state fidelity with one entangling layer,
+retaining D036 task-aligned coordinates and fixed lambda=0.10. TAP-RBF-SHR-q
+is the identical-input classical control. D038 is development-only and does
+not revise Gate 5, D034-D037, or authorize Gate 6.
 
 D033-C release package ACCEPTED records the human research lead's acceptance of
 the release package with the strict D031-C negative-claim boundary. It
