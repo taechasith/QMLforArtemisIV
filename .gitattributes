@@ -1,4 +1,12 @@
 # D007 publication compares these working-tree bytes with the accepted Git blobs.
+*.py text eol=lf
+*.csv text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+
 src/openqfuel/gate5_reporting.py text eol=lf
 scripts/report_gate5_results.py text eol=lf
 scripts/make_gate5_result_figures.py text eol=lf
