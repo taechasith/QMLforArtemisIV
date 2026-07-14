@@ -2247,3 +2247,14 @@ mathematical contract, thresholds, leakage checks, resource ceilings, and
 zero-locked-data rule are in `configs/post_gate5_d037_tsqr.yaml` and
 `docs/post_gate5_d037_tsqr_protocol.md`. A complete negative must be graphed,
 committed as future-only improvement, and followed only by a new protocol.
+
+### D037 prelaunch technical stop
+
+The first direct D037 launcher attempt stopped before `run()` and before any
+research-row access because the sibling D036 helper module was not resolvable
+when the file was invoked directly. The source-bound record is
+`data/processed/reporting/post_gate5_d037_tsqr/technical_stop_import.json`.
+Development, calibration, and final-test reads remained zero. The correction is
+a package-safe sibling import fallback only; candidate equations, lambda
+values, folds, seeds, thresholds, controls, and resource limits are unchanged.
+This is a launcher failure, not scientific model evidence.

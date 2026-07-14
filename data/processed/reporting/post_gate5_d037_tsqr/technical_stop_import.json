@@ -1,0 +1,17 @@
+{
+  "decision_id": "D037",
+  "protocol_id": "P005",
+  "status": "technical_stop_before_data_access",
+  "stop_type": "launcher_import_resolution",
+  "recorded_at": "2026-07-15T04:30:11+07:00",
+  "source_commit": "68b1cae",
+  "error": "Direct execution of scripts/run_post_gate5_d037_tsqr.py could not resolve the scripts namespace while importing D036 helper functions.",
+  "development_rows_read": 0,
+  "calibration_rows_read": 0,
+  "final_test_rows_read": 0,
+  "model_fits_started": 0,
+  "hardware_jobs_submitted": 0,
+  "gate6_runs": 0,
+  "correction": "Add a package-safe fallback import from the sibling D036 launcher; do not change the candidate, data scope, folds, seeds, thresholds, or controls.",
+  "scientific_interpretation": "Technical launcher failure only; no model-performance evidence."
+}

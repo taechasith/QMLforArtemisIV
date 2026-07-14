@@ -35,15 +35,28 @@ from openqfuel.qml import (  # noqa: E402
     ProjectedQuantumKernelRegressor,
     TaskAlignedProjection,
 )
-from scripts.run_post_gate5_d036_tapqk import (  # noqa: E402
-    _atomic_json,
-    _fit_rbf,
-    _predict_rbf,
-    _projection_hash,
-    _score,
-    _source_commit,
-    _write_csv,
-)
+try:
+    from scripts.run_post_gate5_d036_tapqk import (  # noqa: E402
+        _atomic_json,
+        _fit_rbf,
+        _predict_rbf,
+        _projection_hash,
+        _score,
+        _source_commit,
+        _write_csv,
+    )
+except ModuleNotFoundError as error:
+    if error.name != "scripts":
+        raise
+    from run_post_gate5_d036_tapqk import (  # type: ignore[no-redef] # noqa: E402
+        _atomic_json,
+        _fit_rbf,
+        _predict_rbf,
+        _projection_hash,
+        _score,
+        _source_commit,
+        _write_csv,
+    )
 
 
 ROOT = Path(__file__).resolve().parents[1]
