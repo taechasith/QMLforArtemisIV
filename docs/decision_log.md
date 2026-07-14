@@ -2067,7 +2067,11 @@ Outcome:
 
 - Release version accepted: `0.3.0`.
 - Release tag authorized: `v0.3.0`.
+- Non-draft GitHub Release published:
+  https://github.com/taechasith/QMLforArtemisIV/releases/tag/v0.3.0.
 - `CITATION.cff` updated from `0.2.0` to `0.3.0`.
 - Allowed claim remains: no tested QML candidate outperformed strong classical
   controls or qualified for a P001 QML Gate 6 mission experiment under the
   frozen public-data development benchmark.
+- Publication was administrative only; RFIG-052 remains the required release
+  boundary figure and no scientific evidence changed.

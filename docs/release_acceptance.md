@@ -4,7 +4,7 @@ Version: 0.1.0
 Decision: D033-C
 Protocol: P001
 Prepared: 2026-07-14
-Status: Release package accepted under strict D031-C negative-claim boundary
+Status: Release package accepted and published under strict D031-C negative-claim boundary
 
 ## Scope
 
@@ -12,6 +12,9 @@ D033-C records the human research lead's acceptance of the release package
 after D031-C final claim/release review and D032-C release-candidate manifest.
 It authorizes the `v0.3.0` release tag, source archive, and `CITATION.cff`
 metadata update only under the strict D031-C negative-claim boundary.
+The non-draft GitHub Release was published at
+https://github.com/taechasith/QMLforArtemisIV/releases/tag/v0.3.0. Publication
+is administrative and does not add scientific evidence or expand any claim.
 
 ## Accepted Release Claim
 
@@ -40,4 +43,4 @@ QML-invention evidence.
 - Release tag: `v0.3.0`.
 - Citation metadata: updated from `0.2.0` to `0.3.0`.
 - Figure: RFIG-052 records the accepted release boundary.
-
+- GitHub Release: published as a non-draft release at the `v0.3.0` tag.

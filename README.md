@@ -383,9 +383,12 @@ action.
 D033-C release package acceptance records the human research lead's acceptance
 of the release package under the strict D031-C negative-claim boundary. The
 accepted release version is `0.3.0`, with tag `v0.3.0` and updated
-`CITATION.cff`. RFIG-052 records the accepted release boundary. DOI minting,
-Gate 6, locked-data access, mission-loop execution, model release, QML
-invention claims, and quantum-advantage claims remain unauthorized.
+`CITATION.cff`. The non-draft GitHub Release is published at
+https://github.com/taechasith/QMLforArtemisIV/releases/tag/v0.3.0. RFIG-052
+records the accepted release boundary; publication changed no scientific
+evidence, and no additional figure is required. DOI minting, Gate 6,
+locked-data access, mission-loop execution, model release, QML invention
+claims, and quantum-advantage claims remain unauthorized.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 

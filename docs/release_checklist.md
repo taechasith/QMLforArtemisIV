@@ -3,7 +3,7 @@
 Version: 0.2.0
 Decision: D033-C
 Prepared: 2026-07-14
-Status: Release package accepted under strict D031-C negative-claim boundary
+Status: Release package accepted and published under strict D031-C negative-claim boundary
 
 ## Current Release Status
 
@@ -11,8 +11,11 @@ Human research lead accepted the release package with the strict D031-C
 negative-claim boundary. D030-C corrected the D029-C byte-provenance blocker
 and the corrected clean clone passed pytest, ruff, and compileall. D031-C final
 claim review is complete, D032-C hashes the candidate decision packet, and
-D033-C authorizes the `v0.3.0` source tag, source archive, and citation update
-only for the development-only negative benchmark claim.
+D033-C authorizes the `v0.3.0` source tag, source archive, citation update,
+and publication of the non-draft GitHub Release at
+https://github.com/taechasith/QMLforArtemisIV/releases/tag/v0.3.0, only for
+the development-only negative benchmark claim. Publication changed no
+scientific evidence.
 
 Historical release state remains preserved for audit continuity: D029-C was
 Blocked by clean reproducibility audit STOP; Release is eligible for human

@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.44
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED; Gate 6 unauthorized
+Version: 0.6.45
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: publish the accepted `v0.3.0` source tag and keep DOI minting, QML Gate 6 mission experiment, development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application to real data, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, and Gate 6 run unauthorized without a separate human decision
+Recommended next action: use the published `v0.3.0` release for manuscript and archival handoff. No further computational experiment is authorized; DOI minting, QML Gate 6 mission experiment, development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application to real data, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, and Gate 6 run remain unauthorized without a separate human decision
 
 ## 1. Proposed title
 
@@ -1258,12 +1258,13 @@ invention claim, or quantum-advantage claim.
 D033-C release package ACCEPTED records the human research lead's acceptance of
 the release package with the strict D031-C negative-claim boundary. It
 authorizes the `v0.3.0` source tag, source archive, and `CITATION.cff` update to
-version `0.3.0`, and generates RFIG-052. The accepted public claim remains a
-development-only negative QML benchmark: no tested QML candidate outperformed
-strong classical controls or qualified for a P001 QML Gate 6 mission
-experiment. D033-C authorizes no DOI minting, locked-data access, mission-loop
-execution, Gate 6 run, model fitting, QML invention claim, or
-quantum-advantage claim.
+version `0.3.0`, and generates RFIG-052. The non-draft GitHub Release was
+published at https://github.com/taechasith/QMLforArtemisIV/releases/tag/v0.3.0.
+The accepted public claim remains a development-only negative QML benchmark:
+no tested QML candidate outperformed strong classical controls or qualified
+for a P001 QML Gate 6 mission experiment. D033-C authorizes no DOI minting,
+locked-data access, mission-loop execution, Gate 6 run, model fitting, QML
+invention claim, or quantum-advantage claim.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:
