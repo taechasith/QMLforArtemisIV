@@ -1284,6 +1284,16 @@ may test a cross-fitted quantum correction stacked on the frozen C06 predictor,
 with an identical-input classical stacked RBF control. It must be newly frozen
 before fitting and must not alter the D034 result.
 
+D035/P003 is the next prospective invention protocol opened from that lesson.
+It tests a cross-fitted C06-stacked quantum correction (CFQSR): each outer
+training row receives a C06 prediction from an inner grouped fit that excludes
+its group, and the quantum kernel learns only that honest C06 error. An
+identical-input classical stacked RBF is required. The C06 feasibility head is
+held as the unchanged safety guard. D035 uses q=4/6/8, four inner grouped
+folds, all five outer folds, 20 seeds, development rows only, and zero locked
+data. `docs/post_gate5_d035_cfqsr_protocol.md` is the full contract; D035 does
+not authorize Gate 6 or alter D034.
+
 D033-C release package ACCEPTED records the human research lead's acceptance of
 the release package with the strict D031-C negative-claim boundary. It
 authorizes the `v0.3.0` source tag, source archive, and `CITATION.cff` update to

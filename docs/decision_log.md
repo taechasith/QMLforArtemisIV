@@ -2160,3 +2160,18 @@ Required future improvement: a new protocol may test a cross-fitted quantum
 correction stacked on frozen C06 predictions, with an identical-input
 classical stacked RBF control. This is future research only; it cannot rerank,
 refit, or rescue D034.
+
+### D035 - P003 CFQSR invention protocol accepted
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Explicit research-lead instruction to continue after the D034 valid
+negative
+
+D035 tests the cross-fitted C06-stacked quantum residual defined in
+`docs/post_gate5_d035_cfqsr_protocol.md`. It uses inner whole-group fits to
+construct honest C06 residual targets, q=4/6/8 fixed scaling configurations,
+the identical-input A02-STACK control, and the unchanged C06 safety guard.
+The five outer folds, four inner folds, 20 seeds, development-only scope,
+zero calibration/final-test reads, zero hardware/GPU, and Gate 6 prohibition
+are locked. D035 cannot rerank or rescue D034.

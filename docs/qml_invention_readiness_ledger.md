@@ -87,3 +87,13 @@ benefit, quantum advantage, or Gate 6 eligibility.
 cross-fitted C06-stacked quantum correction against C06 and an identical-input
 classical stacked RBF, with the same grouped split, seed discipline, and
 development-only claim boundary.
+
+## D035 P003: cross-fitted C06-stacked quantum residual
+
+D035 is the next prospective protocol after the D034 negative. It tests whether
+the quantum model can learn honest, cross-fitted errors of C06 rather than the
+raw low-fidelity error. A02-STACK uses the same residual targets and inputs;
+the C06 safety guard is held fixed. The protocol, controls, inner-fold audit,
+and negative-result firewall are in
+`docs/post_gate5_d035_cfqsr_protocol.md`. No D035 result exists until the
+source-bound endpoint completes.

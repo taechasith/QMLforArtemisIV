@@ -1,0 +1,96 @@
+schema_version: "0.1.0"
+decision_id: "D035"
+protocol_id: "P003"
+status: "accepted_next_invention_campaign_authorized"
+prepared_date: "2026-07-15"
+accepted_date: "2026-07-15"
+acceptance_basis: "explicit instruction to continue after the D034 valid negative using its recorded lesson"
+
+authority:
+  scope: "one bounded development-only campaign for a cross-fitted C06-stacked quantum correction"
+  research_data_fitting_authorized: true
+  campaign_count_limit: 1
+  checkpoint_resume_authorized: true
+  silent_task_retry_authorized: false
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  final_payload_access_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate6_authorized: false
+  nasa_performance_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+
+locks:
+  gate5_result_unchanged: true
+  p001_evidence_immutable: true
+  d034_evidence_immutable: true
+  no_calibration_or_final_test: true
+  no_mission_loop: true
+  no_hardware_or_gpu: true
+  allowed_data_scope: "development"
+  allowed_qubits: [4, 6, 8]
+  allowed_layers: [1]
+  inner_grouped_folds: 4
+  seed_indices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  training_rows_per_outer_fold: 1024
+
+source_binding:
+  phase1_config: "configs/phase1_benchmark.yaml"
+  d034_result: "data/processed/reporting/post_gate5_d034_prqk/campaign_result.json"
+  qml_source: "src/openqfuel/qml.py"
+  campaign_source: "scripts/run_post_gate5_d035_cfqsr.py"
+  protocol_source: "docs/post_gate5_d035_cfqsr_protocol.md"
+
+mathematical_contract:
+  outer_input: "fold-local compressed features u in R^q"
+  physics_model: "b_C06(x) = frozen C06 boosted residual predictor"
+  inner_oof_error: "e_i = y_i - b_C06^{-inner}(x_i), where b_C06^{-inner} is fit without the inner-held-out group"
+  quantum_prediction: "f_Q(x) = b_C06^{outer}(x) + k_Q(u,U) alpha"
+  quantum_kernel: "K_Q(u,v) = exp(-gamma/2 * ||r_Q(u)-r_Q(v)||_2^2)"
+  safety_guard: "the frozen outer-fold C06 feasibility head is retained unchanged for plan selection"
+  classical_control: "A02-STACK uses the identical cross-fitted C06 residual targets, inputs, landmarks, and RBF construction"
+
+candidate:
+  id: "CFQSR"
+  name: "Cross-Fitted C06-Stacked Quantum Residual"
+  primary_configuration: "CFQSR-08-N"
+  configurations:
+    - {id: CFQSR-04-N, qubits: 4, layers: 1, feature_scale: 1.0, entangle: false, gamma_multiplier: 0.25, alpha: 1.0, landmarks: 256}
+    - {id: CFQSR-06-N, qubits: 6, layers: 1, feature_scale: 1.0, entangle: false, gamma_multiplier: 0.25, alpha: 1.0, landmarks: 256}
+    - {id: CFQSR-08-N, qubits: 8, layers: 1, feature_scale: 1.0, entangle: false, gamma_multiplier: 0.25, alpha: 1.0, landmarks: 256}
+  configuration_rule: "fixed before development payload access; q scaling is descriptive, not post-outcome tuning"
+  claimed_mechanism: "cross-fitting exposes systematic C06 residual structure without training-target leakage, allowing the quantum kernel to learn only a correction to the strong physics model"
+
+controls:
+  - id: C06
+    description: "frozen outer-fold C06 prediction with the same safety guard"
+  - id: A02-STACK
+    description: "identical-input classical RBF correction on the same cross-fitted C06 residuals"
+  - id: P002-PRQK
+    description: "immutable D034 result, not rerun"
+
+hypotheses:
+  H1: "CFQSR-08-N will improve pooled OOF NRMSE by at least 5 percent versus C06"
+  H2: "CFQSR-08-N will improve or preserve C06 feasibility-constrained regret and infeasible selection because the safety guard is unchanged"
+  H3: "CFQSR-08-N will beat A02-STACK by at least 5 percent, otherwise any improvement is classified as a generic stacked residual effect rather than a quantum-specific mechanism"
+
+decision_rule:
+  scientifically_superior: "H1, H2, and H3 pass across all five outer folds and 20 seeds, with the paired 95 percent bootstrap upper bound for CFQSR-08-N minus C06 NRMSE below zero"
+  valid_negative: "complete source-bound endpoint with all integrity checks pass but any superiority condition fails"
+  technical_stop: "source, split, nested cross-fit, numerical, or resource integrity failure"
+  after_negative: "record the evidence and open a new protocol; do not silently alter inner folds, controls, or seeds"
+
+resources:
+  hardware: "recorded laptop: Intel Core i9-13900HX, 32 GiB RAM, NVIDIA RTX 4060 Laptop GPU; CPU-only execution"
+  peak_working_set_gib: 24.0
+  cpu_core_hours: 250.0
+  wall_clock_days: 5.0
+  free_disk_floor_gib: 20.0
+  gpu_hours: 0.0
+
+reporting:
+  result_root: "data/processed/reporting/post_gate5_d035_cfqsr"
+  figures: [RFIG-056, RFIG-057]
+  figure_script: "scripts/make_post_gate5_d035_cfqsr_figures.py"
+  claim_boundary: "development-only surrogate evidence; no NASA performance claim, mission claim, hardware claim, quantum advantage claim, calibration/final-test result, Gate 5 revision, or Gate 6 authorization"
