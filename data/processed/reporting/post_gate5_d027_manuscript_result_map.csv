@@ -1,0 +1,5 @@
+manuscript_section,evidence,reader_takeaway,figure_or_table
+Results,Gate 5 Q01 vs C06,The preregistered QML trigger failed.,RFIG-021-RFIG-023; gate5_qml_vs_controls.csv
+Results appendix,Q01b and FQK,Near-term QML follow-ups were exploratory negatives.,RFIG-026-RFIG-031; gate5_qml_vs_controls.csv
+Discussion,CSAFE-RF recall-first,Safety-objective design should prioritize missed unsafe cases prospectively.,RFIG-037-RFIG-043
+Conclusion,D025/D026 closure,No QML Gate 6 candidate is eligible from P001.,RFIG-044-RFIG-045; claim_boundary_table.csv

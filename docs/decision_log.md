@@ -1877,3 +1877,27 @@ Outcome:
 - Prohibited claims: quantum advantage, flight readiness, NASA approval, QML
   mission benefit, Gate 6 authorization, and Gate 5 rescue.
 - Added `paper/manuscript.md` as the draft writing scaffold.
+
+### D027-C completed - manuscript Results and Discussion draft
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Completed; Results/Discussion draft ready**
+Authority: Assistant-selected next step after D026-C
+
+Decision:
+
+- Draft manuscript Results and Discussion from closed Gate 5 and 5X evidence.
+- Generate source-backed result and claim-boundary tables.
+- Generate RFIG-046 as the manuscript result map.
+- Do not start any experiment, open locked data, run Gate 6, refit, rerank,
+  retry, or claim QML invention or quantum advantage.
+
+Outcome:
+
+- Updated `paper/manuscript.md` with Results, Discussion, Conclusion, claim
+  boundary, and source-table references.
+- Added `paper/results_tables/gate5_qml_vs_controls.csv`.
+- Added `paper/results_tables/claim_boundary_table.csv`.
+- Next recommended step: create model, simulator, data, and limitation cards
+  before any release decision.

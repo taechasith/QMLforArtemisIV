@@ -1,0 +1,5 @@
+claim_type,manuscript_wording,evidence_status,boundary
+Allowed main claim,"Under the frozen public-data development benchmark, tested QML candidates did not outperform strong classical controls and no QML candidate is eligible for Gate 6.",development-only benchmark,"not final-test, mission, or flight evidence"
+Allowed secondary claim,"The recall-first CSAFE-RF analysis produced a future-useful safety-objective lesson, not an advancing result.",future-design lesson,not an advancing model result
+Prohibited claim,QML improves cislunar propellant efficiency; Quantum advantage was observed; A QML model is ready for mission-loop or flight use; Gate 6 is authorized,not supported,must not appear as a conclusion
+Gate 6 wording,No QML Gate 6 candidate is eligible from P001.,closure recommendation,later Gate 6 requires a separate human-approved protocol

@@ -1,0 +1,20 @@
+{
+  "calibration_rows_read": 0,
+  "claim_boundary": "D027-C drafts manuscript Results and Discussion only; it authorizes no Gate 6 run, locked-data access, mission-loop execution, model fitting, QML invention claim, quantum-advantage claim, or Gate 5 reinterpretation.",
+  "claim_table": "paper/results_tables/claim_boundary_table.csv",
+  "decision_id": "D027-C",
+  "final_test_rows_read": 0,
+  "gate5_table": "paper/results_tables/gate5_qml_vs_controls.csv",
+  "gate6_authorized": false,
+  "gate6_runs": 0,
+  "gpu_hours": 0,
+  "hardware_jobs": 0,
+  "manuscript_path": "paper/manuscript.md",
+  "mission_loop_runs": 0,
+  "next_recommended_step": "Create model, simulator, data, and limitation cards before any release decision.",
+  "official_status": "MANUSCRIPT_RESULTS_DISCUSSION_DRAFT_READY",
+  "protocol_id": "P001",
+  "qml_gate6_candidate": false,
+  "source_d026_commit": "dd4b8650947deb193ebf27699139a051991ae5c3",
+  "synthesis_doc": "docs/manuscript_results_discussion_draft.md"
+}

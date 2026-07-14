@@ -50,7 +50,7 @@ def test_d026_result_preserves_gate6_lock_and_claim_boundary() -> None:
 def test_d026_docs_and_manuscript_scaffold_are_registered() -> None:
     expected = {
         "docs/manuscript_results_synthesis.md": "D026-C converts",
-        "paper/manuscript.md": "D026-C manuscript scaffold",
+        "paper/manuscript.md": "Status: D027-C",
         "research_protocol.md": "D026-C",
         "README.md": "D026-C",
         "docs/decision_log.md": "D026-C",

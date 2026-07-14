@@ -341,6 +341,13 @@ quantum advantage, fuel savings, flight readiness, NASA approval, Gate 6
 authorization, and any rescue of Gate 5. RFIG-045 records the manuscript claim
 boundary.
 
+D027-C expands the scaffold into a source-backed Results and Discussion draft.
+It adds `paper/results_tables/gate5_qml_vs_controls.csv`,
+`paper/results_tables/claim_boundary_table.csv`, updates
+`paper/manuscript.md`, and records RFIG-046 as the manuscript result map.
+The next release-preparation task is to create model, simulator, data, and
+limitation cards before any release decision.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -410,6 +417,7 @@ through a dated deviation record.
 - docs/post_gate5_d024_recall_first_interpretation.md: interpretation of the recall-first audit as future-only non-advancing evidence.
 - docs/gate5_closure_gate6_recommendation.md: D025-C closure report and Gate 6 recommendation.
 - docs/manuscript_results_synthesis.md: D026-C manuscript-ready claim synthesis and writing boundary.
+- docs/manuscript_results_discussion_draft.md: D027-C source-backed Results and Discussion draft record.
 - paper/manuscript.md: draft manuscript scaffold generated from the closed Gate 5/5X evidence.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.

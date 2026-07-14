@@ -51,7 +51,7 @@ def test_d023_docs_are_registered() -> None:
         "research_protocol.md": "D023-C",
         "README.md": "D023-C",
         "docs/decision_log.md": "D023-C",
-        "docs/research_execution_map.md": "D026-C manuscript synthesis ready",
+        "docs/research_execution_map.md": "D027-C manuscript Results/Discussion draft ready",
         "docs/computational_methodology.md": "D023-C",
     }
     for relative, phrase in required.items():
