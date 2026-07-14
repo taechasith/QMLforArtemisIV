@@ -1747,3 +1747,39 @@ Outcome:
 - Used 10,774 synthetic rows and zero development, calibration, final-test,
   hardware, GPU, or Gate 6 reads/runs.
 - RFIG-041 records the compute-admission boundary.
+
+### D023-C completed - recall-first development-only audit
+
+Date prepared: 2026-07-14
+Date accepted: 2026-07-14
+Status: **Completed; development-only audit**
+Authority: Assistant-selected next step after D022-C PASS
+
+Decision:
+
+- Apply the frozen CSAFE-RF recall-first selection rule to committed D017 CSAFE
+  development metrics.
+- Do not refit models, rerun threshold selection, apply new real-data
+  thresholds, open raw development payloads, or touch calibration/final-test
+  data.
+- Select by mean recall, false-negative rate, Brier score, then model
+  complexity.
+- Generate RFIG-042.
+
+Outcome:
+
+- Selected `calibrated_logistic`.
+- Mean recall: 0.8043.
+- Mean false-negative rate: 0.1957.
+- Mean Brier score: 0.1422.
+- `class_weighted_tree` retained lower mean Brier 0.1311 but mean recall only
+  0.0139, so it was not selected by CSAFE-RF.
+- New model fits, new real-data threshold applications, calibration reads,
+  final-test reads, hardware/GPU work, and Gate 6 runs were all zero.
+
+Boundary:
+
+D023-C is post-D017-informed development-only audit evidence. It does not
+rescue D017, reinterpret Gate 5, authorize calibration/final-test access,
+authorize mission-loop work, claim QML invention or quantum advantage, or open
+Gate 6. D024 interpretation is required before another successor decision.

@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.33
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; Gate 6 unauthorized
+Version: 0.6.34
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-14
-Recommended next action: prepare D023 development-data decision package or stop experimentation and move to manuscript discussion; no development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application to real data, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized by D022
+Recommended next action: interpret D023-C under D024 or stop experimentation and move to manuscript discussion; no development-data fitting, calibration/final-test access, refit, rerank, retry, threshold application to real data, hardware/GPU work, Gate 5 reinterpretation, QML invention claim, quantum-advantage claim, mission-loop work, or Gate 6 is authorized by D023
 
 ## 1. Proposed title
 
@@ -1155,6 +1155,16 @@ D022-C authorizes no development-data fitting, threshold application to real
 data, calibration, final-test, hardware/GPU, mission-loop, QML invention,
 quantum-advantage, Gate 5 reinterpretation, or Gate 6 authority. D023 is
 required before any development-data decision.
+
+D023-C applied the frozen CSAFE-RF recall-first selection rule to already
+committed D017 development-only CSAFE metrics without refitting, rerunning
+threshold selection, or opening raw development payloads. The audit selected
+`calibrated_logistic` with mean recall 0.8043, mean false-negative rate 0.1957,
+and mean Brier score 0.1422. The lower-Brier `class_weighted_tree` was not
+selected because its mean recall was only 0.0139. D023-C is explicitly
+post-D017-informed and cannot rescue D017, reinterpret Gate 5, request locked
+data, or open Gate 6. RFIG-042 records the audit. D024 interpretation is
+required before any successor decision.
 
 After Gate 2, every change affecting data, outcomes, models, comparison budget,
 thresholds, or exclusions requires a dated deviation entry containing:

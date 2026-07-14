@@ -312,6 +312,13 @@ development fitting, threshold application to real data, locked data,
 hardware/GPU, mission-loop work, QML invention, quantum advantage, or Gate 6.
 RFIG-041 records the boundary.
 
+D023-C applied the frozen recall-first rule to committed D017 development-only
+CSAFE metrics without refitting or applying new real-data thresholds. It
+selected `calibrated_logistic` by recall-first order: mean recall 0.8043,
+false-negative rate 0.1957, Brier 0.1422. This is post-D017-informed audit
+evidence only; it cannot rescue D017, reopen Gate 5, unlock calibration/final
+data, or open Gate 6. RFIG-042 records the audit.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -377,6 +384,7 @@ through a dated deviation record.
 - docs/post_gate5_d020_recall_first_freeze.md: recall-first CSAFE-RF safety freeze proposal before implementation.
 - docs/post_gate5_d021_recall_first_synthetic.md: CSAFE-RF synthetic-only implementation and validation.
 - docs/post_gate5_d022_recall_first_preflight.md: CSAFE-RF clean-source synthetic compute preflight.
+- docs/post_gate5_d023_recall_first_development.md: CSAFE-RF development-only recall-first audit.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.
 - docs/post_gate5_compute_preflight.md: D009 synthetic-only clean-source compute-admission contract and pass/stop rules.

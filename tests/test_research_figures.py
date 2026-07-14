@@ -68,6 +68,7 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     expected_ids.add("RFIG-039")
     expected_ids.add("RFIG-040")
     expected_ids.add("RFIG-041")
+    expected_ids.add("RFIG-042")
     expected_ids.update({"RFIG-026", "RFIG-027", "RFIG-028"})
     assert expected_ids <= figure_ids
     assert {"RFIG-010", "RFIG-013"}.isdisjoint(figure_ids)
@@ -96,6 +97,7 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
             "recall_first_safety_freeze_proposal",
             "recall_first_synthetic_validation_pass",
             "recall_first_synthetic_compute_admission",
+            "development_only_recall_first_selection_audit",
         }
     for row in rows:
         assert "final_test" not in row["source_data"]
@@ -235,6 +237,17 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
     )
     assert rfig041["figure_generator_sha256"] == sha256_file(
         ROOT / rfig041["generator"]
+    )
+    rfig042 = next(row for row in rows if row["figure_id"] == "RFIG-042")
+    assert rfig042["evidence_status"] == (
+        "development_only_recall_first_selection_audit"
+    )
+    assert "post_gate5_d023_recall_first_development.json" in rfig042["source_data"]
+    assert rfig042["reporting_source_commit"] == (
+        "419844a690d625502718e00b3e4dcafc6d99286c"
+    )
+    assert rfig042["figure_generator_sha256"] == sha256_file(
+        ROOT / rfig042["generator"]
     )
 
 

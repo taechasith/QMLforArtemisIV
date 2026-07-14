@@ -1,0 +1,60 @@
+schema_version: "0.1.0"
+decision_id: "D023-C"
+protocol_id: "P001"
+status: "completed_development_only_recall_first_audit"
+prepared_date: "2026-07-14"
+accepted_date: "2026-07-14"
+acceptance_basis: "assistant-selected next step after D022-C PASS; apply the frozen CSAFE-RF recall-first rule to already committed D017 development-only CSAFE metrics without refitting"
+
+authority:
+  scope: "one development-only CSAFE-RF selection audit from committed D017 CSAFE fold metrics"
+  reporting_audit_authorized: true
+  development_data_fitting_authorized: false
+  new_model_fit_authorized: false
+  threshold_application_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  refit_authorized: false
+  rerank_authorized: false
+  retry_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate5_reinterpretation_authorized: false
+  qml_invention_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+  mission_loop_authorized: false
+  gate6_authorized: false
+
+source_evidence:
+  d017_csafe_summary: "data/processed/reporting/post_gate5_d017_classical_first/csafe_summary.csv"
+  d017_campaign_summary: "data/processed/reporting/post_gate5_d017_classical_first/campaign_summary.json"
+  d020_freeze: "configs/post_gate5_d020_recall_first_freeze.yaml"
+  d022_preflight: "data/processed/reporting/post_gate5_d022_recall_first_preflight.json"
+
+audit_rule:
+  eligible_models:
+    - "calibrated_logistic"
+    - "class_weighted_tree"
+    - "a02_exact_rbf_feasibility"
+  selection_order:
+    - "higher mean_recall"
+    - "lower mean_false_negative_rate"
+    - "lower mean_brier"
+    - "simpler model family"
+  model_complexity:
+    calibrated_logistic: 1
+    class_weighted_tree: 2
+    a02_exact_rbf_feasibility: 3
+  post_outcome_boundary: "D023-C is informed by the D017/D018 failure and is not independent confirmation. It cannot request calibration, final-test, mission, hardware, or Gate 6 authority."
+
+outcome:
+  official_status: "DEVELOPMENT_AUDIT_COMPLETE"
+  completed_date: "2026-07-14"
+  selected_model_id: "calibrated_logistic"
+  selected_mean_recall: 0.8042533959907271
+  selected_mean_false_negative_rate: 0.19574660400927313
+  selected_mean_brier: 0.14223067742525214
+  next_recommended_step_if_useful: "D024 interpretation of D023 development-only audit, or stop into manuscript discussion"
+  figure: "RFIG-042"
+  result: "data/processed/reporting/post_gate5_d023_recall_first_development.json"
+  claim_boundary: "Development-only post-D017-informed selection audit; no refit, no rerank of active D017, no threshold application to real data, no calibration, no final-test, no hardware/GPU, no mission-loop, no Gate 5 reinterpretation, no QML invention, no quantum advantage, and no Gate 6."

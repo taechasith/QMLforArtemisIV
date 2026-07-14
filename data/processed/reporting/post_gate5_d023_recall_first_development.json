@@ -1,0 +1,20 @@
+{
+  "calibration_rows_read": 0,
+  "candidate_count": 3,
+  "claim_boundary": "Development-only post-D017-informed selection audit; no refit, no rerank of active D017, no threshold application to real data, no calibration, no final-test, no hardware/GPU, no mission-loop, no Gate 5 reinterpretation, no QML invention, no quantum advantage, and no Gate 6.",
+  "decision_id": "D023-C",
+  "development_metric_rows_read": 3,
+  "final_test_rows_read": 0,
+  "gate6_runs": 0,
+  "gpu_hours": 0,
+  "hardware_jobs": 0,
+  "new_model_fits": 0,
+  "official_status": "DEVELOPMENT_AUDIT_COMPLETE",
+  "protocol_id": "P001",
+  "selected_mean_brier": 0.14223067742525214,
+  "selected_mean_false_negative_rate": 0.19574660400927313,
+  "selected_mean_recall": 0.8042533959907271,
+  "selected_model_id": "calibrated_logistic",
+  "source_d017_commit": "419844a690d625502718e00b3e4dcafc6d99286c",
+  "threshold_applications_to_real_data": 0
+}

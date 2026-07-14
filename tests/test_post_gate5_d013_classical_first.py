@@ -76,7 +76,7 @@ def test_d013c_docs_are_registered_in_project_governance() -> None:
         "README.md": "D013-C is accepted as that planning-only recommended path",
         "docs/decision_log.md": "D013-C accepted - classical-first planning",
         "docs/computational_methodology.md": "D013-C classical-first planning accepted",
-        "docs/research_execution_map.md": "D022-C synthetic compute preflight PASS",
+        "docs/research_execution_map.md": "D023-C development audit complete",
         "docs/post_gate5_d013_classical_first_protocol.md": (
             "Planning-only accepted; no experiment authorized"
         ),
