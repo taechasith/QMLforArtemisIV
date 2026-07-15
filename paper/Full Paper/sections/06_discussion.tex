@@ -1,0 +1,81 @@
+\section{Discussion}
+\label{sec:discussion}
+
+The principal finding is a controlled negative benchmark. The Q01
+fidelity-style quantum kernel was far behind the physics-residual control, and
+the Q01b projected feature map did not close the gap. The feasibility-only
+kernel did not meet the recall-sensitive safety interpretation. The successor
+branch demonstrates an additional failure mode that is important beyond this
+specific task: a candidate can improve a weak or incomplete comparator yet
+fail against a matched classical construction. That distinction is exactly why
+dequantization controls and branch-specific thresholds belong in the protocol.
+
+The result is scientifically useful because the negative conclusion is
+specific. It rules out a family of tested feature maps and successor
+constructions under a particular public-data scenario generator, grouped
+development procedure, resource envelope, and comparator set. It does not
+rule out all QML, all cislunar machine learning, or all future quantum
+hardware. Such broad claims would require evidence absent here, including
+separate tasks, new preregistration, scalability studies, noise analysis,
+hardware measurements, and appropriate classical resource comparisons.
+
+The physics-residual control is a key methodological result. A generic
+classical baseline is not sufficient when the prediction target contains
+structure that a low-fidelity model can represent directly. C06's performance
+shows that, for this benchmark, the available physical residual structure is
+more informative than the tested quantum fidelity features. That observation
+does not establish a theorem about quantum circuits; it establishes a
+task-specific inductive-bias comparison that future proposals must beat fairly.
+
+The retained Q02/Q03 status also matters. Many reports collapse all
+non-advancing paths into a single ``failure'' category. Here, a task can run
+correctly but be ineligible for later computation under a rule frozen before
+results. Keeping \texttt{not\_reached\_under\_frozen\_eligibility} separate
+from a task failure makes the evidence ledger more truthful and prevents a
+later analyst from inventing a selection path that never existed.
+
+The paper's effect is therefore not a claim of operational benefit. It is a
+reusable scientific pattern for high-consequence QML evaluation: include an
+eligible simulator-validation scope, freeze data transformations and groups,
+use a physics-aware control, compare against matched classical alternatives,
+retain null outcomes, separate future protocol lessons from results, and use
+claim boundaries that are mechanically checkable from source artifacts. This
+pattern is valuable precisely because it makes an exciting but unsupported
+result harder to publish.
+
+\subsection{Implications for QML benchmarking}
+
+The QML literature has repeatedly shown that benchmark conclusions depend on
+which classical methods are made available to the comparison
+\cite{bowles2024,schnabel2024}. The D046 result gives a concrete trajectory
+application example. Comparing only with C06 would make the candidate's raw
+5.80\% difference look promising. The matched TWO-RBF alternative explains
+enough of that difference that the candidate fails the frozen 5\% rule. The
+interpretation changes because the question changes from ``is the candidate
+better than one baseline?'' to ``is its incremental mechanism still supported
+when a classical model is given the same residual construction?''
+
+This contrast does not show that the matched control is the universally best
+classical model. It shows why a QML result needs multiple controls chosen to
+test the claimed mechanism. A fair comparison is not one that intentionally
+makes every model identical; it is one that removes alternative explanations
+for the purported QML contribution. In this benchmark, the alternative
+explanation was a classical residual representation, and it remained
+competitive.
+
+\subsection{Safety objective as a distinct scientific question}
+
+The FQK and CSAFE-RF records demonstrate that predictive metrics must be tied
+to the intended decision. AUROC and Brier score summarize useful aspects of a
+classifier, but neither alone ensures that the model detects enough unsafe
+cases at a fixed threshold. The FQK result therefore remains negative under
+the study's safety-filter interpretation even though its discrimination score
+is above random. This guards against a common reporting error: promoting a
+model by the metric that is most favorable after the outcome is known.
+
+The higher-recall classical result is not a rescue or a replacement result. It
+identifies a future hypothesis: a safety screen should define a recall floor,
+false-negative constraint, calibration requirement, and action policy before
+the model is fitted. That hypothesis belongs to a separately authorized
+experiment, because using it to alter the Gate 5 rule after inspection would
+invalidate the original test.

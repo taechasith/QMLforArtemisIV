@@ -1,0 +1,38 @@
+\section{Scientific Scope and Claim Boundary}
+\label{sec:scope}
+
+The study is an offline, public-data, development-only benchmark. It is not a
+mission design authority, a flight certification exercise, or a performance
+assessment of a quantum processor. A simulation result may be useful for
+evaluating a model family, but it cannot by itself establish the performance
+of a mission-owned trajectory system or a hardware quantum implementation.
+The distinction is essential for a human-rated application, where human-system
+requirements are separate from a surrogate's regression score
+\cite{nasa3001}.
+
+The evidence boundary was defined before reporting. Gate 3 supports simulator
+credibility only for the eligible comparisons. Gate 5 supports a technical
+decision for a frozen development benchmark. The subsequent P001 and
+D034--D049 branches are development-only follow-ups; they cannot retroactively
+change the Gate 5 decision. Calibration and final-test rows, mission-loop
+scenarios, hardware and GPU quantum execution, threshold application to real
+operations, trained-model release, and Gate 6 remain outside the study. Table
+\ref{tab:claim-boundary} summarizes the resulting language constraints.
+
+\input{tables/claim_boundary}
+
+Figure \ref{fig:timeline} records the governance state rather than a model
+metric. It is included because a benchmark conclusion depends on which evidence
+was authorized when. A later candidate may be scientifically informative, but
+it does not become preregistered evidence merely because it is reported after a
+negative primary result.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/gate_decision_timeline.png}
+\caption{Research governance through Gate 5 (RFIG-001). Gates 0--5 were
+closed by human decisions; the technical Gate 5 result is a benchmark-specific
+FAIL. Gate 6 remains unopened. This is decision-state evidence, not a model
+performance plot.}
+\label{fig:timeline}
+\end{figure}

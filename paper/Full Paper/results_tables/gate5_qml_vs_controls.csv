@@ -1,0 +1,5 @@
+result_block,candidate,primary_metric,candidate_value,control,control_value,interpretation
+Preregistered Gate 5,Q01 quantum kernel,mean NRMSE,0.646614,C06 physics residual,0.008739,technical FAIL; zero qualifying regimes
+Exploratory Q01b,Q01b projected quantum kernel,mean NRMSE,0.661207,C06 physics residual,0.006833,exploratory negative; 95.77x relative gap
+Exploratory FQK,FQK feasibility kernel,recall at 0.5,0.108860,classical feasibility controls,stronger than FQK in D011 evidence,exploratory negative; not a safety filter
+CSAFE-RF lesson,calibrated_logistic,recall / Brier,0.804253 / 0.142231,best-Brier tree and A02 exact-RBF,calibration/QML dominance unresolved,future protocol design only

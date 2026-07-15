@@ -1,0 +1,70 @@
+\section{Introduction}
+
+Trajectory correction for a human-rated cislunar mission is a coupled decision
+problem. A correction-burn placement changes the trajectory while interacting
+with navigation uncertainty, maneuver execution, crew timelines,
+entry-interface constraints, and propellant objectives. Public Artemis
+trajectory-design research therefore treats robust correction cost and mission
+constraints together rather than as an unconstrained curve-fitting task
+\cite{woffinden2023}. A learning surrogate could be useful if it reduces the
+cost of screening scenarios while preserving the structure that makes a
+candidate decision safe and interpretable. That conditional statement is not
+evidence that any particular machine-learning model is useful.
+
+QML offers feature maps and hypothesis spaces that are different from common
+classical models \cite{schuld2019,havlicek2019}. This motivates testing QML,
+but it does not resolve the application question. Encoding a classical feature
+vector into a quantum state introduces data-loading choices, kernel geometry,
+and resource costs. A circuit may be difficult to simulate while still being
+well approximated by a classical learner on the relevant data distribution
+\cite{huang2021,sweke2025}. Conversely, a favorable numerical result can be
+an artifact of an under-tuned comparator, a split that leaks mission-family
+information, post-outcome threshold selection, or omitted failures. These are
+benchmarking problems before they are quantum-computing problems.
+
+This paper documents a complete public-data experimental program for
+trajectory-correction prediction and feasibility screening. The purpose was
+not to assert a priori that QML would win. Its purpose was to establish a
+scientifically usable decision process: define a bounded task, verify the
+simulator against eligible public endpoints, freeze the development protocol,
+compare QML with strong controls, record negative outcomes, and prohibit
+claims that the evidence cannot support. This stance is consistent with model
+and simulation credibility practice \cite{nasa7009} and with recent calls for
+fair QML comparisons \cite{bowles2024,schnabel2024}.
+
+The central research questions were deliberately narrow:
+\begin{enumerate}
+\item Can Q01 improve correction-cost prediction over physics-derived and
+classical controls under the frozen development protocol?
+\item If Q01 fails, does a prospectively specified projected quantum kernel
+improve the same task without changing the data-access or split discipline?
+\item Can a feasibility-only quantum kernel meet a fixed, recall-sensitive
+safety-filter interpretation?
+\item Which conclusions remain valid when calibration, final-test,
+mission-loop, and hardware evidence stay locked?
+\end{enumerate}
+
+The answer to the first three questions is negative for the tested models and
+settings. The fourth question is the paper's main methodological contribution.
+The work establishes a transparent evidence hierarchy that distinguishes
+simulator credibility, development-only model evidence, future-design lessons,
+and prohibited operational claims. Negative results are not treated as failed
+record keeping; they are the result when a hypothesis does not meet its
+predeclared standard.
+
+The paper makes five contributions:
+\begin{enumerate}
+\item A source-bound cislunar benchmark protocol with public inputs, grouped
+development folds, fold-local transformations, and retained numerical
+feasibility outcomes.
+\item A simulator credibility chain that reports its eligible scope and its
+source-ineligible exception rather than converting missing evidence into a
+pass or failure.
+\item A preregistered QML comparison against physics-residual, random-feature,
+compressed-input, and classical kernel controls.
+\item A closed successor ledger containing exploratory and prospectively
+bounded negative candidates, including matched classical dequantization
+controls.
+\item A self-contained evidence and figure package that supports review of the
+negative conclusion without widening the study's scientific claim.
+\end{enumerate}

@@ -1,0 +1,35 @@
+\section{Limitations and Threats to Validity}
+\label{sec:limitations}
+
+First, the study is public-data and development-only. Calibration and
+final-test data were not read. The paper cannot estimate final-test error,
+operational calibration, mission-loop behavior, propellant savings, or flight
+readiness. The use of Artemis-related public work establishes relevance of the
+problem framing, not access to mission-owned truth data or authority to draw
+mission conclusions.
+
+Second, simulator agreement is bounded. The Gate 3 results support the
+eligible public endpoint comparisons, but they do not validate every force
+model, contingency, navigation product, or human-rating consideration. RTC3
+is source-ineligible, and some generated scenario decisions do not have an
+independently feasible numerical reference. Those limitations remain in the
+dataset rather than being removed after model results are observed.
+
+Third, the quantum experiments are small-qubit classical statevector
+simulations within a laptop-bounded resource envelope. They do not report shot
+noise, gate noise, device connectivity, state-preparation latency,
+transpilation cost, hardware calibration, or end-to-end quantum runtime. They
+cannot demonstrate quantum speedup, hardware efficiency, or a practical
+quantum advantage. An alleged advantage would require all of those questions
+to be addressed against a fair classical resource baseline.
+
+Fourth, the methods are limited by their frozen design. The chosen
+preprocessing, feature maps, sample rungs, controls, and thresholds make the
+comparison interpretable but restrict the scope of inference. A different
+method can be scientifically tested only through a new protocol, not by
+modifying the completed campaign until a favorable result appears.
+
+Finally, the literature synthesis is bounded, not systematic. The inclusion
+set provides methodological context and control requirements but does not
+prove that no related method exists. This is why the paper makes a benchmark
+claim rather than a novelty or universal-performance claim.

@@ -1,0 +1,16 @@
+\begin{table}[t]
+\caption{Primary and exploratory QML endpoints from the frozen evidence package. All values are development-only. The feasibility endpoint uses the frozen 0.5 decision threshold.}
+\label{tab:gate5-results}
+\centering
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}p{0.11\textwidth}p{0.31\textwidth}p{0.22\textwidth}X@{}}
+\toprule
+Block & Candidate and endpoint & Value and comparator & Interpretation \\
+\midrule
+Gate 5 & Q01 quantum kernel; mean NRMSE & 0.646614 vs C06: 0.008739 & Technical FAIL; no qualifying regime \\
+P001 & Q01b projected quantum kernel; mean NRMSE & 0.661207 vs C06: 0.006833 & Exploratory negative; 95.77x relative gap \\
+P001 & FQK feasibility kernel; recall at 0.5 & 0.108860; classical controls stronger & Exploratory negative; not a safety filter \\
+Future lesson & Calibrated logistic; recall / Brier & 0.804253 / 0.142231 & Protocol-design signal only \\
+\bottomrule
+\end{tabularx}
+\end{table}

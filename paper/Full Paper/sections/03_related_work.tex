@@ -1,0 +1,38 @@
+\section{Related Work and Positioning}
+
+The target problem is positioned relative to public work on Artemis
+trajectory-correction design, rather than being presented as a replacement for
+mission-owned analysis. Woffinden et al. describe a correction-burn placement
+formulation that incorporates uncertainty, crew-related timing, and entry
+constraints \cite{woffinden2023}. Classical learning research has explored
+low-thrust guidance and cislunar transfer design, but those settings differ in
+dynamics, propulsion, objectives, and validation structure
+\cite{sullivan2021,izzo2021,xie2022}. They are valuable precedents for
+surrogate modeling and for retaining infeasible cases, not interchangeable
+baselines for a human-rated correction benchmark.
+
+Quantum feature-space methods express a classical input through an encoding
+and compare encoded states by a quantum-derived similarity
+\cite{schuld2019,havlicek2019}. The method can be used in a kernel learner,
+but its predictive value depends on an alignment between the data geometry,
+the feature map, the measurement, and the task. Theoretical and numerical work
+has made this caveat increasingly explicit: hard-to-simulate circuits do not
+automatically give a learning advantage, and the data distribution can make a
+classical approximation competitive \cite{huang2021,sweke2025}.
+
+The present work is particularly informed by three benchmarking lessons. First,
+kernel bandwidth and encoding scale are part of the effective inductive bias,
+not negligible implementation details \cite{shaydulin2022}. Second, a
+quantum-kernel study should include appropriately strong classical
+counterparts, including random features where relevant
+\cite{otten2020,sweke2025}. Third, a comparison should report more than its
+best run: model choice, split structure, seed variation, capacity, and
+post-outcome choices all affect what a claimed gain means
+\cite{bowles2024,schnabel2024,pernot2020}.
+
+This paper does not make an exhaustive literature-review claim. The repository
+preserves a bounded extraction set of 23 accepted records used to establish the
+initial protocol and a separate archival discovery refresh. The refresh did
+not change the experiment, thresholds, figures, or outcomes. Literature is
+therefore used here to position the benchmark and justify controls, not to
+construct a retrospective theory of success.
