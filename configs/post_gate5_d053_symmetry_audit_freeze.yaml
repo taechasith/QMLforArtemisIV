@@ -1,0 +1,119 @@
+schema_version: "0.1.0"
+decision_id: "D053-C"
+protocol_id: "P018"
+status: "accepted_numerical_audit_freeze_no_execution"
+prepared_date: "2026-07-16"
+accepted_date: "2026-07-16"
+authority: "human research lead locked the numerical-audit architecture after D052-C"
+
+authority_boundary:
+  numerical_architecture_freeze_authorized: true
+  source_code_inspection_authorized: true
+  numerical_audit_execution_authorized: false
+  development_data_read_authorized: false
+  dataset_generation_authorized: false
+  model_fit_authorized: false
+  calibration_access_authorized: false
+  final_test_access_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  figure_rendering_authorized: false
+  gate6_authorized: false
+  next_required_decision: "Freeze the concrete representation, generator set, context inventory, rotations, target scale, strata, output paths, and figure registry; then separately authorize one bounded Stage 1 audit."
+
+unbound_inputs:
+  status: "intentionally_unbound_before_execution"
+  rationale: "D052-C did not yet identify a concrete nontrivial residual stabilizer, circuit Hamiltonians, exact Pauli/DLA basis, transformed development rows, or a target scale. Selecting them after numerical outcomes would be post-outcome design."
+  required_before_execution:
+    - "q-qubit representation V(R) and its raw and normalized connected generators"
+    - "frozen real skew-Hermitian DLA basis and provenance hash"
+    - "complete fixed-context inventory and residual stabilizer case"
+    - "rotation matrices, trajectory cases, common evaluation epochs, and development-only strata"
+    - "positive acceleration scale eps_a and any target-label scale"
+    - "future raw-output paths and paper-figure registry entries"
+
+dla_centralizer:
+  coefficient_space:
+    representation: "orthonormal Pauli/DLA coefficient space over the real skew-Hermitian DLA"
+    inner_product: "<A,B> = Re Tr(A^dagger B) / 2^q"
+    coefficient_dtype: "float64"
+    construction_rule: "Use Pauli-string or DLA coefficient arithmetic directly. Do not construct a dense 4^q by 4^q operator-space supermatrix."
+  resource_boundary:
+    permitted_qubits: [4, 6, 8]
+    max_dla_basis_dimension: 1024
+    max_generator_count_for_a_single_centralizer: 3
+    max_commutator_matrix_shape: [3072, 1024]
+    simultaneous_dla_audits: 1
+    over_ceiling_action: "stop_as_dla_basis_over_ceiling; do not truncate, sample, change solver, or continue without a new decision"
+  basis_admission:
+    basis_rule: "B_a must be orthonormal under the frozen real Hilbert-Schmidt inner product and every raw basis element must have archived Pauli/DLA coefficients."
+    closure_leakage: "L_(k,a) = ||[J_k,B_a] - sum_b C_((k,b),a) B_b||_HS"
+    closure_tolerance: "100 * eps_float64 * max(1.0, sigma_max)"
+    closure_failure_action: "stop_as_dla_basis_not_closed; projected coefficients cannot be treated as an exact centralizer calculation"
+  generator_cases:
+    base_group: "SO(3) connected Lie algebra with three audited generators"
+    residual_stabilizer_identity_rule: "If the audited connected fixed-context stabilizer has Lie dimension zero, define c_H = L directly and do not pass an empty commutator matrix to a solver."
+    normalization: "Archive raw generators and normalize each nonzero numerical generator to unit Hilbert-Schmidt norm before constructing C."
+  commutator_matrix:
+    definition: "C_((k,b),a) = <B_b, [J_k, B_a]>"
+    shape: "(number_of_generators * basis_dimension, basis_dimension)"
+    orientation: "columns index candidate centralizer coefficients; stacked rows index generator and basis-coordinate pairs"
+    minimum_shape_rule: "For a nonempty generator set, rows must be greater than or equal to columns so economy SVD returns every right-singular vector."
+  nullspace_solver:
+    function: "numpy.linalg.svd(C, full_matrices=False)"
+    prohibited:
+      - "numpy.linalg.eigh(C.conj().T @ C)"
+      - "any normal-equation eigensolve used for rank or nullspace extraction"
+      - "automatic replacement by sparse eigensolvers, QR rank heuristics, or an iterative solver"
+    threshold: "tau = max(C.shape) * eps_float64 * sigma_max"
+    rank_rule: "rank(tau) = count(singular_value > tau); nullspace vectors are the rows of Vh after rank(tau)"
+    sigma_max_zero_rule: "Record zero_commutator_map and set the centralizer to the full frozen basis; do not divide by sigma_max."
+    sensitivity_multipliers: [0.1, 1.0, 10.0]
+    sensitivity_rule: "The nullity must be identical at 0.1*tau, tau, and 10*tau. Any shift is a hard DLA numerical-stability failure."
+    mandatory_records:
+      - "all singular values in descending order"
+      - "matrix shape, dtype, basis dimension, generator count, and sigma_max"
+      - "tau and rank/nullity at every preregistered multiplier"
+      - "basis-closure leakage for every generator/basis pair"
+      - "raw and normalized generator provenance and basis hash"
+
+trajectory_covariance:
+  separation_rule: "The DOP853 trajectory replay is independent of the DLA SVD. No trajectory output is used to alter the DLA basis, rank threshold, or centralizer dimension."
+  integrator:
+    function: "scipy.integrate.solve_ivp"
+    method: "DOP853"
+    baseline_settings: "src.openqfuel.dynamics.ForceModelSettings.for_fidelity(fidelity)"
+    tightened_settings: "ForceModelSettings.tightened()"
+    tightening: "rtol and atol divided by 100; maximum step divided by 2"
+  replay_controls:
+    identical_between_baseline_and_tightened:
+      - "initial state and start epoch"
+      - "fidelity and force flags"
+      - "ephemeris source and time conversion"
+      - "maneuvers, constraints, frames, rotation matrix, duration, and common evaluation times"
+    prohibited_changes:
+      - "different physical force model"
+      - "different rotation or fixed context"
+      - "adaptive comparison epochs"
+      - "label copying or rotating an existing label instead of regenerating it when a label audit is authorized"
+  numerical_stability_rule:
+    defect_source: "D052-C force-level D_cov and D_break evaluated at the common replay epochs"
+    aggregation_rule: "Apply the numerical-floor and replay-stability checks to every frozen case and evaluation epoch before reporting any aggregate; a summary cannot hide an unstable case."
+    nonzero_breaking_floor: "D_break_tightened must exceed 10 * max(D_cov_default, D_cov_tightened) before it can be called physical breaking."
+    replay_difference: "abs(D_break_tightened - D_break_default) / max(D_break_tightened, 1e-15)"
+    maximum_relative_replay_difference: 0.01
+    failure_action: "stop_as_integrator_sensitive_or_numerical_artifact; do not use the affected effect for model design"
+    target_label_rule: "If a later authorized audit computes D_y, regenerate labels under both settings and apply the same 1 percent relative replay rule with a separately frozen positive label scale."
+
+future_reporting_contract:
+  current_figures: "none; this freeze creates no figure or raw scientific evidence"
+  future_raw_records:
+    - "input and provenance manifest"
+    - "DLA basis and generator records"
+    - "full singular-spectrum table and centralizer summary"
+    - "basis-closure table"
+    - "default-versus-tightened trajectory covariance table"
+    - "term-wise fixed-context breaking and target-sensitivity records if separately authorized"
+  future_figure_requirement: "A later authorized audit must register paper-ready figures only from immutable raw evidence; D053-C reserves no figure ID and permits no placeholder graphic."
+
+claim_boundary: "D053-C freezes numerical methods and failure rules only. It establishes no centralizer, symmetry, trajectory, target-sensitivity, model-performance, sample-complexity, QML-invention, quantum-advantage, or Gate 6 result."

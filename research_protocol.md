@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.64
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK valid negative; D039 P007 EC-GFRK valid negative; D040 P008 CE-GFRK valid negative; D041 P009 complete valid negative after D041-C1; D042 P010 complete valid negative; D043 P011 complete valid negative; D044 P012 complete valid negative; D045 P013 complete valid negative; D046 P014 complete valid negative; D047 P015 complete valid negative; D048 P016 complete valid negative; D049 P017 complete valid negative; D050-C current QML invention branch closed without a qualifying candidate; D051-C/P018 Geometric QML feasibility discussion-only; D052-C Stage 1 symmetry-breaking mathematical contract complete; manuscript structural draft complete; Gate 6 unauthorized
+Version: 0.6.65
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK valid negative; D039 P007 EC-GFRK valid negative; D040 P008 CE-GFRK valid negative; D041 P009 complete valid negative after D041-C1; D042 P010 complete valid negative; D043 P011 complete valid negative; D044 P012 complete valid negative; D045 P013 complete valid negative; D046 P014 complete valid negative; D047 P015 complete valid negative; D048 P016 complete valid negative; D049 P017 complete valid negative; D050-C current QML invention branch closed without a qualifying candidate; D051-C/P018 Geometric QML feasibility discussion-only; D052-C Stage 1 symmetry-breaking mathematical contract complete; D053-C Stage 1 numerical-audit freeze complete with no execution; manuscript structural draft complete; Gate 6 unauthorized
 Prepared: 2026-07-10  
-Updated: 2026-07-15
-Recommended next action: keep P018 discussion-only and prepare a separate Stage 1 audit freeze from the D052-C mathematical contract. Before any numerical audit, freeze the base group, fixed-context stabilizer, force/constraint decomposition, target-sensitivity stop rule, approximately equivariant classical controls, data schema, resource ceiling, and figures. No model fitting is authorized. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
+Updated: 2026-07-16
+Recommended next action: keep P018 discussion-only. D053-C freezes direct-SVD centralizer extraction, basis-closure/rank-stability stops, and default-versus-tightened DOP853 replay, but it deliberately does not choose the representation, generators, rotations, strata, target scale, or figures. Freeze those remaining inputs in a separate prospective manifest, then request explicit authority for one bounded Stage 1 audit. No model fitting is authorized. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
 
 ## 1. Proposed title
 
@@ -1588,6 +1588,23 @@ remain unsupported hypotheses or prohibited claims. The contract is in
 `docs/post_gate5_d052_symmetry_breaking_math_contract.md`. D052-C authorizes no
 numerical audit, data generation, model fit, figure, calibration/final-test
 access, hardware/GPU job, Gate 5 reinterpretation, or Gate 6 activity.
+
+D053-C accepts the Stage 1 numerical-audit freeze. It requires a direct economy
+SVD of the orthonormal Pauli/DLA coefficient commutator matrix, with the
+relative rank threshold `max(C.shape) * eps_float64 * sigma_max`, full
+singular-spectrum records, and a hard nullity-stability check at `0.1*tau`,
+`tau`, and `10*tau`. Normal-equation eigensolves are prohibited. The audit also
+stops rather than silently projecting through an unclosed DLA basis or
+exceeding the 1,024-basis local resource ceiling.
+
+The decoupled trajectory replay is fixed to the existing DOP853 implementation
+under default and 100x-tighter/half-step settings. A fixed-context effect may
+be called physical only when it is above the joint-covariance numerical floor
+and stable within the preregistered 1 percent replay tolerance. D053-C creates
+no centralizer, trajectory result, dataset, model fit, raw evidence, or figure.
+The concrete representation, generators, rotations, target scale, strata, and
+figure registry still require a separate prospective decision before one
+bounded audit can be authorized. Gate 6 remains unauthorized.
 
 D041 had a technical stop before its endpoint. The unchanged launcher was
 terminated by the local one-hour execution allowance before it wrote an atomic

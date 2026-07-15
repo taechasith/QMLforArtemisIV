@@ -1,7 +1,7 @@
 # QML Invention Readiness Ledger
 
-Version: 0.1.0
-Updated: 2026-07-14
+Version: 0.1.1
+Updated: 2026-07-16
 Status: Evidence-label ledger for future QML invention; not an experiment
 
 ## Purpose
@@ -600,3 +600,30 @@ decomposition and connection.
 **Integrity boundary:** D052-C authorizes no numerical audit, generator, schema,
 model fit, figure, calibration/final-test access, hardware/GPU work, Gate 5
 reinterpretation, mission loop, or Gate 6.
+
+## D053-C/P018 Stage 1 numerical-audit freeze
+
+**Status:** Accepted numerical-method freeze only. No audit evidence exists.
+
+**Useful invention signal:** A future symmetry-breaking candidate cannot rely
+on an informal DLA calculation or an integrator-sensitive physical effect.
+Direct SVD on the closed Pauli/DLA coefficient map, complete singular spectra,
+rank-stability checks, and a default-versus-tightened DOP853 replay are now
+mandatory. This makes a later negative result interpretable: it can distinguish
+an absent admissible complement direction or a numerical artifact from a weak
+model fit.
+
+**Required future control:** Do not form `C^H C`, do not silently truncate an
+oversized/unclosed basis, and do not call a breaking defect physical unless it
+exceeds the covariance numerical floor and survives the frozen replay check.
+The future audit must also bind the currently unresolved representation,
+generators, rotations, context, target scale, strata, raw outputs, and figures
+before reading development data.
+
+**Prohibited post-outcome use:** Do not choose a favorable rank tolerance,
+solver, basis truncation, rotation, target scale, or classical/PQC design after
+viewing the audit. Do not treat a resource stop as a complexity advantage.
+
+**Claim boundary:** D053-C is infrastructure for a future test, not evidence
+of a nontrivial centralizer, physical symmetry breaking, predictive value,
+QML invention, or quantum advantage. Gate 6 remains unauthorized.

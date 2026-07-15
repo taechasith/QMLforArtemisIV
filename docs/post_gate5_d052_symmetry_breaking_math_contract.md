@@ -1,11 +1,11 @@
 # D052-C Stage 1 Mathematical Contract: Learnable Symmetry Breaking
 
-Version: 0.1.0
+Version: 0.2.0
 Decision: D052-C
 Parent discussion: D051-C
 Prospective protocol: P018
 Prepared: 2026-07-15
-Status: **Theory-only contract; no data generation, model fit, or Gate 6 authority**
+Status: **Theory-only contract; D053-C numerical architecture frozen; no audit execution, data generation, model fit, or Gate 6 authority**
 
 ## 1. Research question
 
@@ -414,3 +414,12 @@ Stage 1 is complete only when all of the following are available:
 8. a separate prospective decision authorizing the bounded audit.
 
 Until then, P018 remains discussion-only and Gate 6 remains unauthorized.
+
+## 14. D053-C numerical-method amendment
+
+D053-C freezes the numerical method for any future Stage 1 execution in
+`docs/post_gate5_d053_symmetry_audit_freeze.md`. It requires direct SVD of the
+closed Pauli/DLA coefficient commutator matrix, complete singular-spectrum and
+rank-stability records, and a DOP853 default-versus-tightened replay. It does
+not bind the still-unknown representation, DLA basis, rotations, trajectory
+cases, target scale, or figure registry, and it authorizes no audit execution.

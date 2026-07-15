@@ -2654,6 +2654,37 @@ calibration/final-test access, hardware/GPU job, Gate 5 reinterpretation,
 mission-loop work, or Gate 6 activity. The next eligible action is a separate
 Stage 1 audit freeze, not an experiment.
 
+### D053-C - Stage 1 numerical-audit freeze
+
+Date: 2026-07-16
+Decision: **Accepted numerical-method freeze; no audit execution authority**
+Parent: D052-C/P018
+Evidence: `configs/post_gate5_d053_symmetry_audit_freeze.yaml` and
+`docs/post_gate5_d053_symmetry_audit_freeze.md`
+
+D053-C locks the numerical architecture for a future, separately authorized
+Stage 1 audit. The DLA centralizer must be constructed in an orthonormal
+Pauli/DLA coefficient space as `C_((k,b),a) = <B_b,[J_k,B_a]>` and extracted
+only with `numpy.linalg.svd(C, full_matrices=False)`. The rank threshold is
+`tau = max(C.shape) * eps_float64 * sigma_max`. The complete singular spectrum
+is mandatory, and centralizer nullity must agree at `0.1*tau`, `tau`, and
+`10*tau`; disagreement is a hard numerical-stability failure. `eigh(C^H C)`
+and all normal-equation rank methods are prohibited.
+
+The freeze also requires a basis-closure leakage test before treating projected
+coefficients as a centralizer, bounds a local audit to q=4/6/8 and 1,024 DLA
+basis elements, and stops rather than truncating an oversized or unclosed DLA.
+The DOP853 trajectory check is separate: default repository settings are
+replayed with the existing 100x-tighter tolerance and half-step configuration.
+Fixed-context breaking must exceed the covariance numerical floor and remain
+within the preregistered 1 percent replay difference.
+
+No representation, concrete generator set, context inventory, rotation set,
+development row, target scale, centralizer, trajectory, model, raw evidence,
+or figure was created. Those inputs, output paths, and figure registry require
+a new prospective decision before any bounded Stage 1 audit. Gate 6 remains
+unauthorized.
+
 ### D047 result - P015 orthogonalized multi-scale fidelity stack
 
 Date: 2026-07-15

@@ -1,19 +1,21 @@
 # D051-C Future Protocol Discussion: Geometric QML Feasibility
 
-Version: 0.2.0
+Version: 0.3.0
 Decision: D051-C  
 Prospective protocol: P018  
 Prepared: 2026-07-15  
-Status: **Discussion-only; D052-C Stage 1 contract recorded; no execution authority; Gate 6 unauthorized**
+Status: **Discussion-only; D052-C contract and D053-C numerical-audit freeze recorded; no execution authority; Gate 6 unauthorized**
 
 ## 1. Purpose and claim boundary
 
 This document records a future test of a task-specific base symmetry and its
 explicit physical breaking in a variational quantum model. D052-C supplies the
 Stage 1 mathematical amendment in
-`docs/post_gate5_d052_symmetry_breaking_math_contract.md`. Neither decision
-reopens Gate 5, refits D006-D049 evidence, authorizes calibration or final-test
-access, authorizes hardware/GPU execution, or authorizes Gate 6.
+`docs/post_gate5_d052_symmetry_breaking_math_contract.md`, and D053-C freezes
+the direct-SVD/DOP853 numerical method in
+`docs/post_gate5_d053_symmetry_audit_freeze.md`. None of these decisions reopens
+Gate 5, refits D006-D049 evidence, authorizes calibration or final-test access,
+authorizes hardware/GPU execution, or authorizes Gate 6.
 
 The strongest current claim is:
 
