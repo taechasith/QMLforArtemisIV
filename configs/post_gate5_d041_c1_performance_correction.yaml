@@ -1,0 +1,35 @@
+schema_version: "0.1.0"
+decision_id: "D041-C1"
+protocol_id: "P009"
+status: "accepted_unchanged_campaign_performance_correction"
+prepared_date: "2026-07-15"
+accepted_date: "2026-07-15"
+corrected_decision: "D041"
+authority:
+  corrected_decision: "D041"
+  authorized_attempts: 1
+  research_data_fitting_authorized: true
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate6_authorized: false
+locks:
+  d041_scientific_design_unchanged: true
+  d041_timeout_immutable: true
+  no_model_family_change: true
+  no_kernel_change: true
+  no_eta_change: true
+  no_gamma_change: true
+  no_threshold_change: true
+  no_seed_or_split_change: true
+  no_data_scope_change: true
+correction:
+  root_cause: "repeated RBF squared-distance and landmark computations for the two declared classical channels"
+  change: "cache shared squared distances and landmark selection while preserving each gamma-specific kernel, PSD projection, ridge solve, and prediction"
+  scientific_workload_change_authorized: false
+  partial_timeout_evidence_usable: false
+source_binding:
+  d041_timeout: "data/processed/reporting/post_gate5_d041_hefrk/technical_stop_timeout.json"
+  campaign_source: "scripts/run_post_gate5_d041_hefrk.py"
+claim_boundary: "development-only evidence; no NASA performance claim, mission claim, hardware claim, quantum advantage claim, calibration/final-test result, Gate 5 revision, or Gate 6 authorization"

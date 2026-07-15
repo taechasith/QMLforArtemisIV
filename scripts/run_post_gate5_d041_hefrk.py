@@ -22,13 +22,15 @@ from openqfuel.models import build_classical_classifier, build_classical_regress
 from openqfuel.phase1_analysis import development_target_scale, paired_bootstrap_mean_interval  # noqa: E402
 from openqfuel.post_gate5 import process_memory_observation  # noqa: E402
 from openqfuel.post_gate5_campaign import build_fold_context  # noqa: E402
-from openqfuel.qml import TaskAlignedProjection  # noqa: E402
+from openqfuel.qml import (  # noqa: E402
+    TaskAlignedProjection,
+    deterministic_landmark_indices,
+    symmetrize_and_clip_psd,
+)
 
 try:
     from scripts.run_post_gate5_d036_tapqk import (  # noqa: E402
         _atomic_json,
-        _fit_rbf,
-        _predict_rbf,
         _projection_hash,
         _score,
         _source_commit,
@@ -41,8 +43,6 @@ except ModuleNotFoundError as error:
         raise
     from run_post_gate5_d036_tapqk import (  # type: ignore[no-redef] # noqa: E402
         _atomic_json,
-        _fit_rbf,
-        _predict_rbf,
         _projection_hash,
         _score,
         _source_commit,
@@ -80,6 +80,84 @@ def _append_prediction(
     store[key]["decision_ids"].extend(decision_ids)
 
 
+def _fit_rbf_pair(
+    training: np.ndarray,
+    target: np.ndarray,
+    row_ids: list[str],
+    config_id: str,
+    fold_id: str,
+    seed: int,
+    alpha: float,
+    landmarks: int,
+) -> dict[float, dict[str, Any]]:
+    """Fit both declared RBF channels while reusing shared distances and landmarks."""
+
+    distances = np.maximum(
+        np.sum(training * training, axis=1)[:, None]
+        + np.sum(training * training, axis=1)[None, :]
+        - 2.0 * (training @ training.T),
+        0.0,
+    )
+    positive = distances[distances > 0.0]
+    if positive.size == 0:
+        raise RuntimeError("D041 RBF median distance is zero")
+    indices = deterministic_landmark_indices(
+        row_ids, config_id, fold_id, seed, min(landmarks, training.shape[0])
+    )
+    landmark_values = training[indices]
+    landmark_distances = np.maximum(
+        np.sum(landmark_values * landmark_values, axis=1)[:, None]
+        + np.sum(landmark_values * landmark_values, axis=1)[None, :]
+        - 2.0 * (landmark_values @ landmark_values.T),
+        0.0,
+    )
+    train_landmark_distances = np.maximum(
+        np.sum(training * training, axis=1)[:, None]
+        + np.sum(landmark_values * landmark_values, axis=1)[None, :]
+        - 2.0 * (training @ landmark_values.T),
+        0.0,
+    )
+    models: dict[float, dict[str, Any]] = {}
+    for multiplier in (0.25, 0.50):
+        gamma = float(multiplier) / float(np.median(positive))
+        landmark_kernel = np.exp(-gamma * landmark_distances)
+        clipped, _ = symmetrize_and_clip_psd(landmark_kernel)
+        eigenvalues, eigenvectors = np.linalg.eigh(clipped)
+        inverse_root = (eigenvectors * (1.0 / np.sqrt(eigenvalues))) @ eigenvectors.T
+        embedded = np.exp(-gamma * train_landmark_distances) @ inverse_root
+        coefficients = np.linalg.solve(
+            embedded.T @ embedded + float(alpha) * np.eye(embedded.shape[1]),
+            embedded.T @ target,
+        )
+        models[float(multiplier)] = {
+            "landmarks": landmark_values,
+            "inverse_root": inverse_root,
+            "coefficients": coefficients,
+            "gamma": gamma,
+        }
+    return models
+
+
+def _predict_rbf_pair(
+    models: dict[float, dict[str, Any]], values: np.ndarray
+) -> dict[float, np.ndarray]:
+    """Predict both RBF channels while reusing validation-to-landmark distances."""
+
+    landmark_values = np.asarray(next(iter(models.values()))["landmarks"], dtype=float)
+    distances = np.maximum(
+        np.sum(values * values, axis=1)[:, None]
+        + np.sum(landmark_values * landmark_values, axis=1)[None, :]
+        - 2.0 * (values @ landmark_values.T),
+        0.0,
+    )
+    return {
+        multiplier: np.exp(-float(model["gamma"]) * distances)
+        @ np.asarray(model["inverse_root"])
+        @ np.asarray(model["coefficients"])
+        for multiplier, model in models.items()
+    }
+
+
 def run() -> dict[str, Any]:
     source_commit = _source_commit()
     config = read_yaml(CONFIG_PATH)
@@ -88,6 +166,15 @@ def run() -> dict[str, Any]:
         raise RuntimeError("D041 config identity is invalid")
     if not bool(config["authority"]["research_data_fitting_authorized"]):
         raise RuntimeError("D041 fitting is not authorized")
+    correction = read_yaml(ROOT / "configs/post_gate5_d041_c1_performance_correction.yaml")
+    if (
+        correction.get("decision_id") != "D041-C1"
+        or correction.get("status") != "accepted_unchanged_campaign_performance_correction"
+        or correction.get("corrected_decision") != "D041"
+        or int(correction["authority"]["authorized_attempts"]) != 1
+        or correction["correction"].get("scientific_workload_change_authorized") is not False
+    ):
+        raise RuntimeError("D041-C1 performance correction is not valid")
     for dependency in ("d039_ecgfrk", "d040_cegfrk"):
         result_path = ROOT / f"data/processed/reporting/post_gate5_{dependency}/campaign_result.json"
         result = json.loads(result_path.read_text(encoding="utf-8"))
@@ -179,10 +266,12 @@ def run() -> dict[str, Any]:
                     q, 1, 1.0, True, 1.0, 256,
                 )
                 fidelity_delta = _predict_fidelity(fidelity, aligned_validation)
-                rbf25 = _fit_rbf(aligned_train, residual, context.row_ids, channel_id, outer_fold, seed, 0.25, 1.0, 256)
-                rbf50 = _fit_rbf(aligned_train, residual, context.row_ids, channel_id, outer_fold, seed, 0.50, 1.0, 256)
-                rbf25_delta = _predict_rbf(rbf25, aligned_validation)
-                rbf50_delta = _predict_rbf(rbf50, aligned_validation)
+                rbf_pair = _fit_rbf_pair(
+                    aligned_train, residual, context.row_ids, channel_id, outer_fold, seed, 1.0, 256
+                )
+                rbf_predictions = _predict_rbf_pair(rbf_pair, aligned_validation)
+                rbf25_delta = rbf_predictions[0.25]
+                rbf50_delta = rbf_predictions[0.50]
                 for eta in eta_values:
                     suffix = _eta_suffix(eta)
                     candidate_id = f"HEFRK-{q:02d}-E{suffix}"

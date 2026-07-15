@@ -165,6 +165,7 @@ data/processed/reporting/post_gate5_p001/*
 !data/processed/reporting/post_gate5_d041_hefrk/per_seed_metrics.csv
 !data/processed/reporting/post_gate5_d041_hefrk/paired_comparison.csv
 !data/processed/reporting/post_gate5_d041_hefrk/summary.csv
+!data/processed/reporting/post_gate5_d041_hefrk/technical_stop_timeout.json
 data/processed/artemis2/*
 !data/processed/artemis2/oem_inventory.csv
 !data/processed/artemis2/oem_release_revisions.csv

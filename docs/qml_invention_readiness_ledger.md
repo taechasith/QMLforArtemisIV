@@ -266,3 +266,14 @@ an RBF correction. The primary is q=8, eta=0.50. The matched classical control
 uses the same weights between RBF corrections at gamma multipliers 0.25 and
 0.50. All splits, seeds, residual targets, safety metrics, thresholds, and
 data boundaries remain frozen.
+
+## D041 P009 technical stop
+
+The first D041 launcher attempt timed out at the local one-hour execution
+limit before an atomic endpoint was written. It is a technical failure, not a
+scientific negative or positive, and its partial computation must not be
+reported. The useful implementation lesson is to cache shared RBF distance and
+landmark calculations without changing the declared hybrid workload.
+
+**Required next control:** D041-C1 permits one unchanged D041 attempt with that
+execution-only cache correction. The timeout record remains immutable.

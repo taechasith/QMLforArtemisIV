@@ -2388,6 +2388,32 @@ The contract is in `configs/post_gate5_d041_hefrk.yaml` and
 `docs/post_gate5_d041_hefrk_protocol.md`. No locked data, Gate 6, hardware, or
 post-outcome mixture selection is authorized.
 
+### D041 prelaunch technical stop
+
+Date: 2026-07-15
+Decision: **Technical stop; no scientific result**
+Evidence: `data/processed/reporting/post_gate5_d041_hefrk/technical_stop_timeout.json`
+
+The unchanged D041 campaign was terminated by the local one-hour execution
+allowance before its atomic result package was written. Partial computation is
+not accepted as evidence. The process had loaded the 39,000 development-row
+source, but no calibration/final-test data, hardware/GPU jobs, mission loops,
+or Gate 6 runs occurred. D041's scientific workload remains authorized only
+through the following execution correction.
+
+### D041-C1 - unchanged-campaign performance correction accepted
+
+Date: 2026-07-15
+Decision: **Accepted for one unchanged D041 attempt**
+Authority: Assistant-selected technical correction after the D041 timeout
+
+D041-C1 caches the shared squared-distance and landmark calculations for the two
+declared RBF channels. It does not change the q grid, eta grid, fidelity or RBF
+kernels, residual target, controls, thresholds, folds, seeds, data scope, or
+claim boundary. The correction is recorded in
+`configs/post_gate5_d041_c1_performance_correction.yaml`; the timed-out D041
+attempt remains immutable and unusable as scientific evidence.
+
 ### D037 prelaunch technical stop
 
 The first direct D037 launcher attempt stopped before `run()` and before any

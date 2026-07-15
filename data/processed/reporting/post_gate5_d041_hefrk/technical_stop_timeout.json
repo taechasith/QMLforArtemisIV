@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.1.0",
+  "decision_id": "D041",
+  "protocol_id": "P009",
+  "status": "technical_stop_before_endpoint",
+  "source_commit": "3cc9c9b",
+  "stop_reason": "The single local execution allowance terminated the unchanged campaign after 3600 seconds before the atomic campaign result was written.",
+  "scientific_result_available": false,
+  "partial_output_accepted": false,
+  "development_rows_read": 39000,
+  "calibration_rows_read": 0,
+  "final_test_rows_read": 0,
+  "hardware_jobs_submitted": 0,
+  "gate6_runs": 0,
+  "future_correction": "Cache the shared squared-distance and landmark computations for the two RBF channels. Reuse changes execution only; q values, eta values, kernels, residual targets, controls, folds, seeds, thresholds, and data scope remain unchanged."
+}
