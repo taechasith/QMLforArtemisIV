@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.53
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK valid negative; D039 P007 EC-GFRK valid negative; D040 P008 CE-GFRK valid negative; D041 P009 technical stop before endpoint; D041-C1 unchanged-campaign performance correction accepted; manuscript structural draft complete; Gate 6 unauthorized
+Version: 0.6.54
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK valid negative; D039 P007 EC-GFRK valid negative; D040 P008 CE-GFRK valid negative; D041 P009 complete valid negative after D041-C1; D042 P010 adaptive-gated hybrid authorized; manuscript structural draft complete; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-15
-Recommended next action: execute one unchanged D041 P009 campaign attempt under the accepted D041-C1 execution-only correction, classify it against C06 and the identical two-channel classical control, and continue only through a newly recorded future protocol if the candidate is a valid negative. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
+Recommended next action: execute one bounded D042 P010 campaign using the predeclared outcome-blind C06-probability gate, classify it against C06 and the identically gated two-RBF control, and continue only through a newly recorded future protocol if the candidate is a valid negative. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
 
 ## 1. Proposed title
 
@@ -1413,6 +1413,30 @@ final-test rows were read, and no hardware/GPU, mission-loop, or Gate 6 work
 occurred. D041-C1 accepts one execution-only correction that caches shared RBF
 distance and landmark computations; the scientific q/eta grid, channels,
 residuals, controls, thresholds, folds, seeds, and data scope are unchanged.
+
+D041 is a valid scientific negative. HEFRK-08-E050 scored mean pooled OOF
+NRMSE `0.00659197` versus C06 `0.00683281`, with paired difference
+`-0.000240838` and 95% interval `[-0.000241783,-0.000239875]`. The paired
+interval is below zero, but the improvement was about 3.52%, below the frozen
+5% rule; the best declared ablation, HEFRK-08-E075 at `0.00652507`, was still
+about 4.50% below C06. The matched TWO-RBF-08-E050 control scored `0.00672438`,
+so no 5%-over-classical-control condition passed. D041 therefore remains a
+valid development-only negative, not an invented-QML success. All 39,000
+development rows, five outer folds, four inner folds, 20 seeds, 900 channel
+audits, and 900 projection audits completed with zero validation-outcome use,
+zero group overlap, zero calibration/final-test reads, and zero hardware/GPU,
+mission-loop, and Gate 6 activity. RFIG-068 and RFIG-069 are the paper-ready
+figures. The useful signal is that fixed hybrid fusion reduced error relative
+to C06, but not enough to establish a thresholded or quantum-specific gain.
+
+D042/P010 is the next prospective invention protocol. It tests an Adaptive
+Gated Error-Conditioned Fidelity-RBF Kernel (AGEFRK). The gate is fixed before
+campaign fitting and uses only the unchanged outer-fold C06 feasibility
+probability: `eta(x) = 0.25 + 0.50 * (1-p_C06(x))`. The AGEFRK correction mixes
+the D041 fidelity and RBF-0.25 channels with this row-wise eta. The matched
+control mixes the same two classical RBF channels with exactly the same eta.
+The gate is not fitted to validation outcomes, and D042 is development-only;
+it does not revise Gate 5 or D034-D041 and does not authorize Gate 6.
 
 D033-C release package ACCEPTED records the human research lead's acceptance of
 the release package with the strict D031-C negative-claim boundary. It

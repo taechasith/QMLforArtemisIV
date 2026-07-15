@@ -277,3 +277,36 @@ landmark calculations without changing the declared hybrid workload.
 
 **Required next control:** D041-C1 permits one unchanged D041 attempt with that
 execution-only cache correction. The timeout record remains immutable.
+
+## D041 P009 result label
+
+**Observed result:** HEFRK-08-E050 scored mean pooled OOF NRMSE `0.00659197`
+versus C06 `0.00683281`, with paired difference `-0.000240838` and 95%
+interval `[-0.000241783,-0.000239875]`. The improvement was about 3.52%, below
+the frozen 5% rule. HEFRK-08-E075 scored `0.00652507`, while the matched
+TWO-RBF-08-E050 control scored `0.00672438`.
+
+**Useful invention signal:** fixed fidelity/RBF fusion reduced error relative
+to C06, but the gain did not meet the preregistered threshold and was not a
+5%-specific gain over the matched classical fusion. This supports testing a
+predeclared, outcome-blind regime gate rather than post-outcome eta selection.
+
+**Integrity label:** 39,000 development rows, 900 channel audits, 900
+projection audits, and 400 inner-fold audits completed. Validation outcomes
+were not used by the feature or gate construction; group overlap, locked-data
+reads, hardware/GPU, mission-loop, and Gate 6 counters were zero. RFIG-068 and
+RFIG-069 are the reporting figures.
+
+**Prohibited use:** do not call D041 scientifically superior, claim NASA
+performance or quantum advantage, revise Gate 5, or authorize Gate 6.
+
+## D042 P010: adaptive-gated error-conditioned fidelity-RBF kernel
+
+D042 is authorized as one new development-only protocol. AGEFRK uses the
+predeclared gate `eta(x) = 0.25 + 0.50 * (1-p_C06(x))`, where the probability
+comes from the unchanged outer-fold C06 feasibility head. The candidate mixes
+the D041 fidelity and RBF-0.25 residual channels; its matched control mixes
+RBF-0.25 and RBF-0.50 with the identical per-row eta. The gate is outcome-blind
+and is not tuned after validation outcomes. All frozen thresholds, safety
+metrics, grouped splits, seeds, development-only data scope, and CPU-only
+resource limits remain unchanged.

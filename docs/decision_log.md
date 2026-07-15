@@ -2414,6 +2414,44 @@ claim boundary. The correction is recorded in
 `configs/post_gate5_d041_c1_performance_correction.yaml`; the timed-out D041
 attempt remains immutable and unusable as scientific evidence.
 
+### D041 result - P009 hybrid error-conditioned fidelity-RBF residual kernel
+
+Date: 2026-07-15
+Decision: **Valid scientific negative; continue only through a new protocol**
+Evidence: `data/processed/reporting/post_gate5_d041_hefrk/campaign_result.json`
+
+HEFRK-08-E050 scored mean pooled OOF NRMSE `0.00659197` versus C06
+`0.00683281`, with paired difference `-0.000240838` and 95% interval
+`[-0.000241783,-0.000239875]`. The paired interval is below zero, but the
+improvement was about 3.52%, below the frozen 5% rule. The best declared
+ablation, HEFRK-08-E075, scored `0.00652507`, and the matched TWO-RBF-08-E050
+control scored `0.00672438`; therefore no classical-specific 5% superiority
+condition passed. D041 is a development-only negative, not evidence that the
+QML candidate is scientifically better than the classical benchmark. All
+39,000 development rows, five outer folds, four inner folds, 20 seeds, 900
+channel audits, 900 projection audits, and RFIG-068/RFIG-069 completed with
+zero validation-outcome use, zero group overlap, zero locked-data reads, and
+zero hardware/GPU, mission-loop, or Gate 6 activity. The useful future signal
+is that fixed fusion reduced error relative to C06 but did not establish a
+thresholded or quantum-specific gain.
+
+### D042 - P010 adaptive-gated error-conditioned fidelity-RBF kernel authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D041 valid negative
+
+D042 tests AGEFRK. Its row-wise mixture gate is fixed before fitting as
+`eta(x) = 0.25 + 0.50 * (1-p_C06(x))`, where `p_C06(x)` is the unchanged
+outer-fold C06 feasibility prediction. The candidate mixes the D041 fidelity
+correction and RBF-0.25 correction. The matched control mixes RBF-0.25 and
+RBF-0.50 with the same per-row eta. No validation outcome is used to compute
+the gate, and no eta is selected after outcomes. The full contract is in
+`configs/post_gate5_d042_agefrk.yaml` and
+`docs/post_gate5_d042_agefrk_protocol.md`. D042 preserves the frozen C06
+baseline, 5% thresholds, safety metrics, grouped folds, seeds, development
+scope, CPU-only resource boundary, and Gate 6 prohibition.
+
 ### D037 prelaunch technical stop
 
 The first direct D037 launcher attempt stopped before `run()` and before any

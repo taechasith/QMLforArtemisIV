@@ -1,0 +1,112 @@
+schema_version: "0.1.0"
+decision_id: "D042"
+protocol_id: "P010"
+status: "accepted_next_invention_campaign_authorized"
+prepared_date: "2026-07-15"
+accepted_date: "2026-07-15"
+acceptance_basis: "assistant-selected continuation after D041 fixed fusion reduced error but missed the frozen threshold and classical-control rule"
+
+authority:
+  scope: "one bounded development-only campaign for an adaptive-gated error-conditioned fidelity-RBF residual kernel"
+  research_data_fitting_authorized: true
+  campaign_count_limit: 1
+  checkpoint_resume_authorized: true
+  silent_task_retry_authorized: false
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  final_payload_access_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate6_authorized: false
+  nasa_performance_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+
+locks:
+  gate5_result_unchanged: true
+  p001_evidence_immutable: true
+  d034_evidence_immutable: true
+  d035_evidence_immutable: true
+  d036_evidence_immutable: true
+  d037_evidence_immutable: true
+  d038_evidence_immutable: true
+  d039_evidence_immutable: true
+  d040_evidence_immutable: true
+  d041_evidence_immutable: true
+  no_calibration_or_final_test: true
+  no_mission_loop: true
+  no_hardware_or_gpu: true
+  allowed_data_scope: "development"
+  allowed_qubits: [4, 6, 8]
+  allowed_layers: [1]
+  inner_grouped_folds: 4
+  seed_indices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  training_rows_per_outer_fold: 1024
+
+source_binding:
+  phase1_config: "configs/phase1_benchmark.yaml"
+  d041_result: "data/processed/reporting/post_gate5_d041_hefrk/campaign_result.json"
+  qml_source: "src/openqfuel/qml.py"
+  campaign_source: "scripts/run_post_gate5_d042_agefrk.py"
+  protocol_source: "docs/post_gate5_d042_agefrk_protocol.md"
+
+mathematical_contract:
+  input: "D039 error-conditioned fold-local task-aligned score z in R^q and outer C06 probability p"
+  gate: "eta(x) = 0.25 + 0.50 * (1 - p_C06(x)); p is prediction-only"
+  fidelity_correction: "delta_F = E_F alpha_F using exact global fidelity features"
+  rbf_correction: "delta_R25 = E_R25 alpha_R25 using exact RBF features with gamma multiplier 0.25"
+  classical_control: "delta_CC = eta(x) delta_R25 + (1-eta(x)) delta_R50"
+  adaptive_prediction: "f_A(x) = b_C06(x) + 0.10 [eta(x) delta_F(x) + (1-eta(x)) delta_R25(x)]"
+  target: "cross-fitted C06 residual e_i = y_i - b_C06^{-inner}(x_i)"
+  safety_guard: "the frozen outer-fold C06 feasibility head is retained unchanged"
+
+candidate:
+  id: "AGEFRK"
+  name: "Adaptive-Gated Error-Conditioned Fidelity-RBF Kernel"
+  primary_configuration: "AGEFRK-08-ADAPT"
+  shrinkage: 0.10
+  q_values: [4, 6, 8]
+  rbf_gamma_multipliers: [0.25, 0.50]
+  gate:
+    eta_min: 0.25
+    eta_max: 0.75
+    formula: "eta_min + (eta_max - eta_min) * (1 - p_C06)"
+    source: "outer-fold C06 feasibility probability; validation outcomes forbidden"
+  configurations:
+    - {id: AGEFRK-04-ADAPT, qubits: 4, layers: 1, feature_scale: 1.0, entangle: true, alpha: 1.0, landmarks: 256}
+    - {id: AGEFRK-06-ADAPT, qubits: 6, layers: 1, feature_scale: 1.0, entangle: true, alpha: 1.0, landmarks: 256}
+    - {id: AGEFRK-08-ADAPT, qubits: 8, layers: 1, feature_scale: 1.0, entangle: true, alpha: 1.0, landmarks: 256}
+  configuration_rule: "q grid is fixed before development payload access; q=8 is primary"
+  claimed_mechanism: "an outcome-blind C06 feasibility regime proxy may allocate fidelity correction where fixed fusion is underweighted"
+
+controls:
+  - id: C06
+    description: "frozen outer-fold C06 prediction with the same safety guard"
+  - id: TWO-RBF-ADAPT
+    description: "identically gated mixture of RBF gamma 0.25 and gamma 0.50 corrections"
+  - id: D041-HEFRK
+    description: "immutable fixed-mixture result, not rerun or reranked"
+
+hypotheses:
+  H1: "AGEFRK-08-ADAPT will improve pooled OOF NRMSE by at least 5 percent versus C06"
+  H2: "AGEFRK-08-ADAPT will improve or preserve C06 feasibility-constrained regret and infeasible selection"
+  H3: "AGEFRK-08-ADAPT will beat TWO-RBF-08-ADAPT by at least 5 percent"
+
+decision_rule:
+  scientifically_superior: "H1, H2, and H3 pass across five outer folds and 20 seeds, with the paired 95 percent bootstrap upper bound for AGEFRK-08-ADAPT minus C06 below zero"
+  valid_negative: "complete source-bound endpoint with all integrity checks pass but any superiority condition fails"
+  technical_stop: "source, split, feature, gate, data-access, numerical, or resource integrity failure"
+  after_negative: "record the evidence and open a new protocol; do not silently alter the gate, kernel channels, controls, thresholds, or seeds"
+
+resources:
+  hardware: "recorded laptop: Intel Core i9-13900HX, 32 GiB RAM, NVIDIA RTX 4060 Laptop GPU; CPU-only execution"
+  peak_working_set_gib: 24.0
+  cpu_core_hours: 250.0
+  wall_clock_days: 5.0
+  free_disk_floor_gib: 17.0
+  gpu_hours: 0.0
+
+reporting:
+  result_root: "data/processed/reporting/post_gate5_d042_agefrk"
+  figures: [RFIG-070, RFIG-071]
+  figure_script: "scripts/make_post_gate5_d042_agefrk_figures.py"
+  claim_boundary: "development-only surrogate evidence; no NASA performance claim, mission claim, hardware claim, quantum advantage claim, calibration/final-test result, Gate 5 revision, or Gate 6 authorization"
