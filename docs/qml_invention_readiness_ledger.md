@@ -459,3 +459,27 @@ RBF-0.25 first stage defines one common residual target. The candidate stacks
 q=4/6/8 second-stage fidelity predictions; the matched control stacks q=4/6/8
 RBF-0.50 predictions with identical fitting, cross-fitting, ridge, and data
 access. This tests cross-q complementarity without post-outcome q selection.
+## D047 P015 result label
+
+**Observed result:** OMFRK-ALL scored mean pooled OOF NRMSE `0.006951944`
+versus C06 `0.006832811`, with paired difference `+0.000119133` and 95%
+interval `[0.000113372,0.000125009]`. OM-TWO-RBF scored `0.006804935`.
+
+**Useful invention signal:** the fixed q=4/6/8 stack overfit the common
+orthogonalized residual and became worse than C06. Multi-scale stacking is not
+supported and will not be expanded further without a separate mechanism.
+
+**Integrity label:** 39,000 development rows, 400 shared-stage audits, 1,200
+second-stage audits, 100 stack audits, and zero validation-outcome use were
+recorded. Group overlap, locked-data reads, hardware/GPU, mission-loop, and
+Gate 6 counters were zero. RFIG-080 and RFIG-081 are the reporting figures.
+
+**Prohibited use:** do not call D047 scientifically superior, claim NASA
+performance or quantum advantage, revise Gate 5, or authorize Gate 6.
+
+## D048 P016: q8 orthogonalized shrinkage selection
+
+D048 is authorized as one new development-only protocol. It returns to the
+D046 q=8 orthogonalized endpoint and selects a correction shrinkage from the
+predeclared grid `{0.05, 0.10, 0.15}` using inner-training OOF residuals. The
+candidate and matched RBF control receive identical selection budgets.

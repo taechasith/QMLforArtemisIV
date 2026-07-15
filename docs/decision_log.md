@@ -2553,6 +2553,37 @@ contract is in `configs/post_gate5_d045_msfrk.yaml` and
 grouped splits, seeds, data scope, CPU-only resource boundary, and Gate 6
 prohibition remain unchanged.
 
+### D047 result - P015 orthogonalized multi-scale fidelity stack
+
+Date: 2026-07-15
+Decision: **Valid scientific negative; continue only through a new protocol**
+Evidence: `data/processed/reporting/post_gate5_d047_omfrk/campaign_result.json`
+
+OMFRK-ALL scored mean pooled OOF NRMSE `0.006951944` versus C06
+`0.006832811`, with paired difference `+0.000119133` and 95% interval
+`[0.000113372,0.000125009]`. The candidate failed the C06 threshold and was
+worse than C06. OM-TWO-RBF scored `0.006804935`. The fixed q=4/6/8 stack is
+not supported by this evidence. All 39,000 development rows, 400 shared-stage
+audits, 1,200 second-stage audits, 100 stack audits, and RFIG-080/RFIG-081
+completed with zero validation-outcome use, zero group overlap, zero
+locked-data reads, and zero hardware/GPU, mission-loop, or Gate 6 activity.
+D047 is a development-only negative; multi-scale stacking is not expanded.
+
+### D048 - P016 q8 orthogonalized shrinkage selection authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D047 valid negative
+
+D048 returns to the D046 q=8 orthogonalized endpoint and tests only a small
+predeclared shrinkage grid `{0.05, 0.10, 0.15}`. The candidate and matched
+RBF control select their shrinkage from inner-training OOF residuals using the
+same grid and tuning budget. The common q=8 RBF-0.25 first stage, grouped
+folds, seeds, thresholds, safety head, CPU-only boundary, and Gate 6
+prohibition remain unchanged. The contract is in
+`configs/post_gate5_d048_nsorfrk.yaml` and
+`docs/post_gate5_d048_nsorfrk_protocol.md`.
+
 ### D045 result - P013 multi-scale fidelity stack
 
 Date: 2026-07-15
