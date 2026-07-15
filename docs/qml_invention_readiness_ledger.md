@@ -344,3 +344,33 @@ fidelity with RBF-0.25; the matched control stacks RBF-0.25 with RBF-0.50 using
 the same procedure. Outer validation outcomes cannot influence the weight.
 This is a test of train-only expert specialization, not a quantum advantage
 claim.
+
+## D043 P011 result label
+
+**Observed result:** SFRK-08-CV scored mean pooled OOF NRMSE `0.006445379`
+versus C06 `0.006832811`, with paired difference `-0.000387432` and 95%
+interval `[-0.000388651,-0.000386026]`. The C06 improvement was about 5.67%,
+but TWO-RBF-08-CV scored `0.006710554`, so the candidate-over-classical gain
+was only about 3.95%.
+
+**Useful invention signal:** training-only cross-fitted stacking is the first
+post-Gate-5 candidate to clear the C06 threshold, but the matched classical
+stack explains enough of the gain that the strict invention criterion fails.
+The next test should examine nonlinear interaction between experts under the
+same control and leakage boundary.
+
+**Integrity label:** 39,000 development rows, 300 channel audits, 1,500 stack
+audits, and zero validation-outcome use in weight construction were recorded.
+Group overlap, locked-data reads, hardware/GPU, mission-loop, and Gate 6
+counters were zero. RFIG-072 and RFIG-073 are the reporting figures.
+
+**Prohibited use:** do not call D043 scientifically superior, claim NASA
+performance or quantum advantage, revise Gate 5, or authorize Gate 6.
+
+## D044 P012: nonlinear interaction residual stack
+
+D044 is authorized as one new development-only protocol. It fits the fixed
+quadratic map `[1,u,v,u*v,u^2,v^2]` on inner grouped out-of-fold residual
+experts. The candidate uses fidelity/RBF-0.25 and the matched control uses
+RBF-0.25/RBF-0.50 with the identical map, ridge penalty, and cross-fitting.
+Outer validation outcomes cannot influence the stack.

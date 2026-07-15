@@ -2487,6 +2487,40 @@ contract is in `configs/post_gate5_d043_sfrk.yaml` and
 safety metrics, grouped splits, seeds, development scope, CPU-only resource
 boundary, and Gate 6 prohibition.
 
+### D043 result - P011 cross-fitted residual fidelity-RBF stack
+
+Date: 2026-07-15
+Decision: **Valid scientific negative; continue only through a new protocol**
+Evidence: `data/processed/reporting/post_gate5_d043_sfrk/campaign_result.json`
+
+SFRK-08-CV scored mean pooled OOF NRMSE `0.006445379` versus C06
+`0.006832811`, with paired difference `-0.000387432` and 95% interval
+`[-0.000388651,-0.000386026]`. This is about a 5.67% C06 improvement, but
+TWO-RBF-08-CV scored `0.006710554`, so the candidate-over-classical improvement
+was only about 3.95% and the frozen classical-specific condition failed.
+Regret and infeasible-selection conditions were preserved. All 39,000
+development rows, 300 channel audits, 1,500 stack audits, and RFIG-072/RFIG-073
+completed with zero validation-outcome use in weight construction, zero group
+overlap, zero locked-data reads, and zero hardware/GPU, mission-loop, or Gate 6
+activity. D043 is a development-only negative; its useful signal is that
+cross-fitted stacking clears C06 but not the matched classical threshold.
+
+### D044 - P012 nonlinear interaction residual stack authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D043 valid negative
+
+D044 tests a fixed quadratic feature map of two cross-fitted residual experts:
+`[1,u,v,u*v,u^2,v^2]`, with a predeclared ridge penalty. The candidate uses
+fidelity/RBF-0.25 and the matched control uses RBF-0.25/RBF-0.50. Both use
+inner grouped out-of-fold training predictions and the same polynomial stack
+rule; outer validation outcomes are evaluation-only. The contract is in
+`configs/post_gate5_d044_nifrk.yaml` and
+`docs/post_gate5_d044_nifrk_protocol.md`. All frozen thresholds, safety
+metrics, grouped splits, seeds, development scope, CPU-only resource boundary,
+and Gate 6 prohibition remain unchanged.
+
 ### D037 prelaunch technical stop
 
 The first direct D037 launcher attempt stopped before `run()` and before any

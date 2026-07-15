@@ -187,6 +187,16 @@ data/processed/reporting/post_gate5_p001/*
 !data/processed/reporting/post_gate5_d043_sfrk/per_seed_metrics.csv
 !data/processed/reporting/post_gate5_d043_sfrk/paired_comparison.csv
 !data/processed/reporting/post_gate5_d043_sfrk/summary.csv
+!data/processed/reporting/post_gate5_d044_nifrk/
+!data/processed/reporting/post_gate5_d044_nifrk/campaign_result.json
+!data/processed/reporting/post_gate5_d044_nifrk/campaign_summary.json
+!data/processed/reporting/post_gate5_d044_nifrk/fold_seed_metrics.csv
+!data/processed/reporting/post_gate5_d044_nifrk/inner_fold_audit.csv
+!data/processed/reporting/post_gate5_d044_nifrk/interaction_audit.csv
+!data/processed/reporting/post_gate5_d044_nifrk/channel_audit.csv
+!data/processed/reporting/post_gate5_d044_nifrk/per_seed_metrics.csv
+!data/processed/reporting/post_gate5_d044_nifrk/paired_comparison.csv
+!data/processed/reporting/post_gate5_d044_nifrk/summary.csv
 data/processed/artemis2/*
 !data/processed/artemis2/oem_inventory.csv
 !data/processed/artemis2/oem_release_revisions.csv
