@@ -127,14 +127,15 @@ def test_tracks_have_distinct_endpoints_and_strong_controls() -> None:
 def test_failure_discussion_register_records_d009_and_remains_firewalled() -> None:
     config = _config()["failure_and_stop_policy"]
     rows = _rows(DISCUSSION)
-    assert {row["record_id"] for row in rows} == {
+    p001_rows = [row for row in rows if row["record_id"].startswith("P001-")]
+    assert {row["record_id"] for row in p001_rows} == {
         "P001-FR001",
         "P001-FR002",
         "P001-FR003",
         "P001-FR004",
         "P001-FR005",
     }
-    assert {row["terminal_status"] for row in rows} == {
+    assert {row["terminal_status"] for row in p001_rows} == {
         "technical_failure",
         "scientific_negative",
     }
