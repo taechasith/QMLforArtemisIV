@@ -1,0 +1,112 @@
+schema_version: "0.1.0"
+decision_id: "D049"
+protocol_id: "P017"
+status: "accepted_next_invention_campaign_authorized"
+prepared_date: "2026-07-15"
+accepted_date: "2026-07-15"
+acceptance_basis: "assistant-selected continuation after D048 whole-correction shrinkage selection failed"
+
+authority:
+  scope: "one bounded development-only campaign for stage-separated q8 orthogonalized gain calibration"
+  research_data_fitting_authorized: true
+  campaign_count_limit: 1
+  checkpoint_resume_authorized: true
+  silent_task_retry_authorized: false
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  final_payload_access_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate6_authorized: false
+  nasa_performance_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+
+locks:
+  gate5_result_unchanged: true
+  d034_evidence_immutable: true
+  d035_evidence_immutable: true
+  d036_evidence_immutable: true
+  d037_evidence_immutable: true
+  d038_evidence_immutable: true
+  d039_evidence_immutable: true
+  d040_evidence_immutable: true
+  d041_evidence_immutable: true
+  d042_evidence_immutable: true
+  d043_evidence_immutable: true
+  d044_evidence_immutable: true
+  d045_evidence_immutable: true
+  d046_evidence_immutable: true
+  d047_evidence_immutable: true
+  d048_evidence_immutable: true
+  no_calibration_or_final_test: true
+  no_mission_loop: true
+  no_hardware_or_gpu: true
+  allowed_data_scope: "development"
+  allowed_qubits: [8]
+  allowed_layers: [1]
+  inner_grouped_folds: 4
+  seed_indices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  training_rows_per_outer_fold: 1024
+
+source_binding:
+  phase1_config: "configs/phase1_benchmark.yaml"
+  d048_result: "data/processed/reporting/post_gate5_d048_nsorfrk/campaign_result.json"
+  qml_source: "src/openqfuel/qml.py"
+  campaign_source: "scripts/run_post_gate5_d049_ssorfrk.py"
+  protocol_source: "docs/post_gate5_d049_ssorfrk_protocol.md"
+
+mathematical_contract:
+  shared_first_stage_gain: 0.10
+  shared_first_stage: "r25_8 = RBF_0.25_q8(x; e)"
+  common_orthogonalized_target: "e2 = e - r25_8_OOF on inner grouped out-of-fold rows"
+  candidate_second_stage: "F_8(e2)"
+  control_second_stage: "RBF_0.50_q8(e2)"
+  second_stage_gain_grid: [0.05, 0.10, 0.15, 0.20]
+  gain_selection: "argmin ||e - 0.10*r25_8 - g*s_m||^2 on inner-training OOF rows"
+  candidate_prediction: "b_C06(x) + 0.10*r25_8(x) + g_A*F_8(x; e2)"
+  classical_control: "b_C06(x) + 0.10*r25_8(x) + g_C*RBF_0.50_q8(x; e2)"
+  safety_guard: "the frozen outer-fold C06 feasibility head is retained unchanged"
+
+candidate:
+  id: "SSORFRK"
+  name: "Stage-Separated Orthogonalized Fidelity-RBF Kernel"
+  primary_configuration: "SSORFRK-08"
+  q: 8
+  rbf_gamma_multipliers: [0.25, 0.50]
+  landmarks: 256
+  projection_layers: 1
+  configuration_rule: "shared gain 0.10, q8, stage order, gain grid, tie rule, folds, seeds, channels, and control are fixed before development payload access"
+  claimed_mechanism: "calibrate unique fidelity gain without allowing shared classical correction amplitude to move"
+
+controls:
+  - id: C06
+    description: "frozen outer-fold C06 prediction with the same safety guard"
+  - id: SSO-TWO-RBF-08
+    description: "same q8 orthogonalized stages with fixed shared gain and independently selected RBF second-stage gain"
+  - id: D046-ORFRK
+    description: "immutable D046 q8 result, not rerun or reranked"
+
+hypotheses:
+  H1: "SSORFRK-08 will improve pooled OOF NRMSE by at least 5 percent versus C06"
+  H2: "SSORFRK-08 will improve or preserve C06 feasibility-constrained regret and infeasible selection"
+  H3: "SSORFRK-08 will beat SSO-TWO-RBF-08 by at least 5 percent"
+
+decision_rule:
+  scientifically_superior: "H1, H2, and H3 pass across five outer folds and 20 seeds, with paired 95 percent bootstrap upper bound for SSORFRK-08 minus C06 below zero"
+  valid_negative: "complete source-bound endpoint with all integrity checks pass but any superiority condition fails"
+  technical_stop: "source, split, fixed-shared-gain, nested-selection, data-access, numerical, or resource integrity failure"
+  after_negative: "record the evidence and do not reopen multi-scale stacking or whole-correction shrinkage selection"
+
+resources:
+  hardware: "recorded laptop: Intel Core i9-13900HX, 32 GiB RAM, NVIDIA RTX 4060 Laptop GPU; CPU-only execution"
+  peak_working_set_gib: 24.0
+  cpu_core_hours: 300.0
+  wall_clock_days: 6.0
+  free_disk_floor_gib: 17.0
+  gpu_hours: 0.0
+
+reporting:
+  result_root: "data/processed/reporting/post_gate5_d049_ssorfrk"
+  figures: [RFIG-084, RFIG-085]
+  figure_script: "scripts/make_post_gate5_d049_ssorfrk_figures.py"
+  claim_boundary: "development-only surrogate evidence; no NASA performance claim, mission claim, hardware claim, quantum advantage claim, calibration/final-test result, Gate 5 revision, or Gate 6 authorization"
