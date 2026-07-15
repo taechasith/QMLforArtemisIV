@@ -483,3 +483,31 @@ D048 is authorized as one new development-only protocol. It returns to the
 D046 q=8 orthogonalized endpoint and selects a correction shrinkage from the
 predeclared grid `{0.05, 0.10, 0.15}` using inner-training OOF residuals. The
 candidate and matched RBF control receive identical selection budgets.
+
+## D048 P016 result label
+
+**Observed result:** NSORFRK-08 scored mean pooled OOF NRMSE `0.006590130`
+versus C06 `0.006832811`, with paired difference `-0.000242681` and 95%
+interval `[-0.000243817,-0.000241517]`. The improvement was about 3.55%, and
+NSO-TWO-RBF-08 scored `0.006764969`. Both methods selected `0.05`.
+
+**Useful invention signal:** selecting the amplitude of the complete
+two-stage correction from inner OOF rows did not preserve D046's fixed-0.10
+endpoint. The next test keeps the shared gain fixed and calibrates only the
+unique second-stage gain.
+
+**Integrity label:** 39,000 development rows, 100 channel audits, 400
+shared-stage audits, 400 second-stage audits, 100 selection audits, and zero
+validation-outcome use were recorded. Group overlap, locked-data reads,
+hardware/GPU, mission-loop, and Gate 6 counters were zero. RFIG-082 and
+RFIG-083 are the reporting figures.
+
+**Prohibited use:** do not call D048 scientifically superior, claim NASA
+performance or quantum advantage, revise Gate 5, or authorize Gate 6.
+
+## D049 P017: stage-separated q8 gain calibration
+
+D049 is authorized as one new development-only protocol. The shared q=8
+RBF-0.25 gain remains fixed at `0.10`; only the unique second-stage gain is
+selected from `{0.05, 0.10, 0.15, 0.20}` using inner-training OOF residuals for
+both candidate and matched RBF control.

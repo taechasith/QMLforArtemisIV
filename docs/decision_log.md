@@ -2584,6 +2584,39 @@ prohibition remain unchanged. The contract is in
 `configs/post_gate5_d048_nsorfrk.yaml` and
 `docs/post_gate5_d048_nsorfrk_protocol.md`.
 
+### D048 result - P016 q8 orthogonalized shrinkage selection
+
+Date: 2026-07-15
+Decision: **Valid scientific negative; continue only through a new protocol**
+Evidence: `data/processed/reporting/post_gate5_d048_nsorfrk/campaign_result.json`
+
+NSORFRK-08 scored mean pooled OOF NRMSE `0.006590130` versus C06
+`0.006832811`, with paired difference `-0.000242681` and 95% interval
+`[-0.000243817,-0.000241517]`. The improvement was about 3.55%, below the
+frozen 5% rule. Candidate and control both selected `0.05`; NSO-TWO-RBF-08
+scored `0.006764969`, so the classical-specific condition also failed. All
+39,000 development rows, 100 channel audits, 400 shared-stage audits, 400
+second-stage audits, 100 selection audits, and RFIG-082/RFIG-083 completed
+with zero validation-outcome use, zero group overlap, zero locked-data reads,
+and zero hardware/GPU, mission-loop, or Gate 6 activity. D048 is a
+development-only negative; whole-correction shrinkage selection did not
+preserve D046's endpoint.
+
+### D049 - P017 stage-separated q8 gain calibration authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D048 valid negative
+
+D049 fixes the shared q=8 RBF-0.25 gain at `0.10` and selects only the unique
+second-stage gain from the predeclared grid `{0.05, 0.10, 0.15, 0.20}` using
+inner-training OOF residuals. Candidate and matched RBF control receive the
+same gain-selection budget. The contract is in
+`configs/post_gate5_d049_ssorfrk.yaml` and
+`docs/post_gate5_d049_ssorfrk_protocol.md`. Frozen thresholds, safety metrics,
+grouped splits, seeds, data scope, CPU-only resource boundary, and Gate 6
+prohibition remain unchanged.
+
 ### D045 result - P013 multi-scale fidelity stack
 
 Date: 2026-07-15
