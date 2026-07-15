@@ -240,3 +240,29 @@ error-conditioned feature and global fidelity geometry, then centers the
 whitened landmark feature map using training rows only. The identical centered
 feature construction is applied to the matched classical RBF, preserving fair
 comparison and all frozen split, seed, safety, threshold, and resource rules.
+
+### D040 result label
+
+**Observed result:** CE-GFRK-08-L010 scored mean pooled OOF NRMSE `0.00650367`
+versus C06 `0.00683281`, with paired difference `-0.000329145` and 95%
+interval `[-0.000330332,-0.000327932]`. The improvement was about 4.82%, below
+the 5% rule, and the centered classical control scored `0.00677146`.
+
+**Useful invention signal:** centering the error-conditioned feature map was
+numerically valid but slightly weakened the D039 endpoint. The next candidate
+should test complementary residual channels rather than further centering.
+
+**Prohibited use:** do not call D040 scientifically superior, claim NASA
+performance or quantum advantage, revise Gate 5, or authorize Gate 6.
+
+**Required next control:** D041 mixes the D039 fidelity correction with an RBF
+correction and compares it against an identically weighted two-bandwidth RBF.
+
+## D041 P009: hybrid error-conditioned fidelity-RBF residual kernel
+
+D041 is authorized as one new development-only protocol. It uses fixed mixture
+weights `eta=0.25, 0.50, 0.75` between the D039 global-fidelity correction and
+an RBF correction. The primary is q=8, eta=0.50. The matched classical control
+uses the same weights between RBF corrections at gamma multipliers 0.25 and
+0.50. All splits, seeds, residual targets, safety metrics, thresholds, and
+data boundaries remain frozen.

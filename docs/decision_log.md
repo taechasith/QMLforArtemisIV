@@ -2354,6 +2354,40 @@ the fidelity geometry itself. The contract is in
 `docs/post_gate5_d040_cegfrk_protocol.md`. No locked data, Gate 6, hardware,
 or post-outcome reranking is authorized.
 
+### D040 result - P008 centered error-conditioned global fidelity residual kernel
+
+Date: 2026-07-15
+Decision: **Valid scientific negative; continue only through a new protocol**
+Evidence: `data/processed/reporting/post_gate5_d040_cegfrk/campaign_result.json`
+
+CE-GFRK-08-L010 scored mean pooled OOF NRMSE `0.00650367` versus C06
+`0.00683281`, with paired difference `-0.000329145` and 95% interval
+`[-0.000330332,-0.000327932]`. The paired interval is below zero, but the
+improvement is approximately 4.82%, below the frozen 5% rule, and the centered
+EC-TAP-RBF-C-SHR-q8 control at `0.00677146` prevents a classical-specific
+superiority conclusion. D040 shows that training-only centering did not
+improve the D039 representation. All five outer folds, four inner folds, 20
+seeds, 39,000 development rows, 300 centering audits, and figures
+RFIG-066/RFIG-067 completed with zero validation-outcome use, zero group
+overlap, and zero calibration/final-test, hardware/GPU, mission-loop, or Gate
+6 activity.
+
+### D041 - P009 hybrid error-conditioned fidelity-RBF residual kernel authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D040 valid negative
+
+D041 tests HEFRK, a fixed convex mixture of the D039 error-conditioned global
+fidelity correction and an RBF correction. The primary mixture weight is
+`eta=0.50`; eta `0.25` and `0.75` are fixed ablations. The matched classical
+control uses the same weights to mix RBF corrections at gamma multipliers
+`0.25` and `0.50`. This directly tests whether the D039 quantum geometry adds
+complementary residual information beyond two classical RBF bandwidths.
+The contract is in `configs/post_gate5_d041_hefrk.yaml` and
+`docs/post_gate5_d041_hefrk_protocol.md`. No locked data, Gate 6, hardware, or
+post-outcome mixture selection is authorized.
+
 ### D037 prelaunch technical stop
 
 The first direct D037 launcher attempt stopped before `run()` and before any
