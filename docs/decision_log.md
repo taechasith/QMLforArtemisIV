@@ -2587,6 +2587,40 @@ head, and CPU-only boundary remain fixed. The contract is in
 `docs/post_gate5_d046_orfrk_protocol.md`. This is development-only and does
 not revise Gate 5, D034-D045, or authorize Gate 6.
 
+### D046 result - P014 orthogonalized residual fidelity-RBF kernel
+
+Date: 2026-07-15
+Decision: **Valid scientific negative; continue only through a new protocol**
+Evidence: `data/processed/reporting/post_gate5_d046_orfrk/campaign_result.json`
+
+ORFRK-08-R2 scored mean pooled OOF NRMSE `0.006436255` versus C06
+`0.006832811`, with paired difference `-0.000396556` and 95% interval
+`[-0.000398722,-0.000394287]`. The improvement was about 5.80%, so the C06
+threshold passed. TWO-RBF-08-R2 scored `0.006750081`, leaving about 4.65%
+candidate-over-control improvement; the frozen classical-specific 5% rule
+failed. All 39,000 development rows, 300 channel audits, 1,200
+orthogonalized inner audits, and RFIG-078/RFIG-079 completed with zero
+validation-outcome use, zero group overlap, zero locked-data reads, and zero
+hardware/GPU, mission-loop, or Gate 6 activity. D046 is a development-only
+negative. Its useful signal is that orthogonalization exposes a stronger
+fidelity residual, but not enough unique gain for the strict rule.
+
+### D047 - P015 orthogonalized multi-scale fidelity stack authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D046 valid negative
+
+D047 keeps a shared q=8 RBF-0.25 first-stage correction and fits a fixed
+three-channel second-stage stack from q=4/6/8 fidelity predictions on the
+common orthogonalized residual. The matched control uses the same stack with
+q=4/6/8 RBF-0.50 predictions. This tests cross-q complementarity after shared
+signal removal without post-outcome q selection or a larger model family. The
+contract is in `configs/post_gate5_d047_omfrk.yaml` and
+`docs/post_gate5_d047_omfrk_protocol.md`. Frozen thresholds, safety metrics,
+grouped splits, seeds, data scope, CPU-only resource boundary, and Gate 6
+prohibition remain unchanged.
+
 ### D037 prelaunch technical stop
 
 The first direct D037 launcher attempt stopped before `run()` and before any

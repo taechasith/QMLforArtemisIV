@@ -430,3 +430,32 @@ first-stage correction is fitted to the C06 residual. Inner grouped OOF
 RBF-0.25 predictions define a second-stage residual target. The candidate uses
 a fidelity second stage; the matched control uses RBF-0.50. This isolates
 fidelity information not already explained by the common RBF correction.
+
+## D046 P014 result label
+
+**Observed result:** ORFRK-08-R2 scored mean pooled OOF NRMSE `0.006436255`
+versus C06 `0.006832811`, with paired difference `-0.000396556` and 95%
+interval `[-0.000398722,-0.000394287]`. The C06 improvement was about 5.80%.
+The matched TWO-RBF-08-R2 control scored `0.006750081`, leaving about 4.65%
+candidate-over-control improvement.
+
+**Useful invention signal:** orthogonalizing against the shared RBF-0.25
+correction strengthened the fidelity residual, but the strict classical-
+specific 5% threshold still failed. The next test therefore keeps one shared
+q=8 first stage and tests fixed q=4/6/8 second-stage complementarity.
+
+**Integrity label:** 39,000 development rows, 300 channel audits, 1,200
+orthogonalized inner audits, and zero validation-outcome use were recorded.
+Group overlap, locked-data reads, hardware/GPU, mission-loop, and Gate 6
+counters were zero. RFIG-078 and RFIG-079 are the reporting figures.
+
+**Prohibited use:** do not call D046 scientifically superior, claim NASA
+performance or quantum advantage, revise Gate 5, or authorize Gate 6.
+
+## D047 P015: orthogonalized multi-scale fidelity stack
+
+D047 is authorized as one new development-only protocol. A shared q=8
+RBF-0.25 first stage defines one common residual target. The candidate stacks
+q=4/6/8 second-stage fidelity predictions; the matched control stacks q=4/6/8
+RBF-0.50 predictions with identical fitting, cross-fitting, ridge, and data
+access. This tests cross-q complementarity without post-outcome q selection.
