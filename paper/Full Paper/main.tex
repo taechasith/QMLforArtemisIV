@@ -17,37 +17,36 @@
 \title{A Governed Public-Data Benchmark of Quantum Machine Learning for Human-Rated Cislunar Trajectory-Correction Planning}
 \titlerunning{A Governed QML Benchmark for Cislunar Trajectory Correction}
 
-\author{Anonymous Author(s)}
-\authorrunning{Anonymous Author(s)}
-\institute{Author details withheld for blinded review}
+\author{Taechasith Kangkhuntod}
+\authorrunning{T. Kangkhuntod}
+\institute{University of the Thai Chamber of Commerce, Bangkok, Thailand}
 
 \maketitle
 
 \begin{abstract}
-Quantum machine learning (QML) is frequently proposed for expensive physical
-simulation and trajectory-design problems, but a feature map or a statevector
-result alone does not demonstrate practical value. This paper reports a closed,
-governed public-data benchmark of quantum-kernel methods for human-rated
-cislunar trajectory-correction planning. The study couples a source-bound
-simulator, grouped development splits, fold-local preprocessing, physics-derived
-and classical controls, preregistered retention rules, and explicit evidence
-boundaries. The simulator credibility chain accepted 67 eligible public-data
-checks with zero failures. In the preregistered Gate 5 benchmark, the Q01
-fidelity-style quantum kernel attained mean normalized root-mean-square error
-(NRMSE) 0.646614, compared with 0.008739 for the C06 physics-residual control;
-no regime qualified for advance. A projected quantum-kernel successor (Q01b)
-attained 0.661207 versus 0.006833 for C06, and a feasibility-only quantum kernel
-had recall 0.108860 at the frozen threshold, so neither exploratory track
-advanced. Sixteen subsequent, prospectively bounded development-only candidates
-also completed as valid negatives. The strongest apparent residual gain,
-ORFRK-08-R2, did not clear its matched classical-control requirement. The
-contribution is therefore a reproducible negative benchmark and a claim
-discipline: apparent QML gains in high-consequence trajectory applications must
-survive physics-based controls, matched dequantizations, grouped leakage
-protection, and frozen eligibility rules. The study does not claim quantum
-advantage, propellant savings, mission-loop validity, flight readiness, hardware
-performance, or a new QML invention.
-\keywords{Quantum machine learning \and quantum kernels \and cislunar trajectory design \and reproducible benchmarking \and negative results}
+This research asks whether quantum-kernel models add predictive value to a
+public-data, human-rated cislunar trajectory-correction decision-support
+benchmark when compared fairly with physics-based controls. The
+study froze its source-bound simulator, grouped development splits, fold-local
+preprocessing, retention rules, and claim boundary before model outcomes were
+reported. The simulator credibility chain accepted 67 eligible public-data
+checks with zero failures. The preregistered Q01 fidelity-style quantum kernel
+had mean normalized root-mean-square error (NRMSE) 0.646614, compared with
+0.008739 for the C06 physics-residual control; no regime qualified for advance.
+The projected Q01b successor had NRMSE 0.661207 versus 0.006833 for C06. A
+feasibility-only quantum kernel reached recall 0.108860 at the frozen threshold,
+which was inadequate for its safety-filter interpretation. Sixteen further,
+prospectively bounded development-only candidates completed as valid negatives;
+the strongest apparent residual gain did not survive its matched classical
+control. The finding is not that QML is universally ineffective. It is that the
+tested QML representations did not justify additional complexity for this
+frozen task and control set. The societal contribution is a transparent method
+for preventing unsupported AI claims from being promoted into high-consequence
+human decision contexts: preserve source provenance, show negative outcomes,
+and keep crew-related requirements and human review separate from a model score.
+This study does not claim quantum advantage, propellant savings, mission-loop
+validity, flight readiness, hardware performance, or a new QML invention.
+\keywords{Quantum machine learning \and human-centered AI \and decision support \and cislunar trajectory design \and reproducible benchmarking \and negative results}
 \end{abstract}
 
 \input{sections/01_introduction}
@@ -60,7 +59,14 @@ performance, or a new QML invention.
 \input{sections/08_future_boundary}
 \input{sections/09_availability}
 \input{sections/10_conclusion}
+
+\begin{credits}
+\subsubsection{\ackname}
+Reserved for an advisor contribution statement, pending advisor review.
+\end{credits}
+
 \input{sections/A_reproducibility}
+\input{sections/B_literature_audit}
 
 \bibliographystyle{splncs04}
 \bibliography{references}

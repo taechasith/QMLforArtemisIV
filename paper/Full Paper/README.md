@@ -38,6 +38,6 @@ does not claim quantum advantage, mission-loop validity, flight readiness,
 propellant savings, NASA approval, hardware performance, a final-test result,
 or a new QML invention. Gate 6 remains unauthorized.
 
-Author names, affiliations, funding, contributions, and conflict disclosures
-are intentionally withheld for blinded review and must be supplied by the
-author before a non-anonymous submission.
+The author metadata identifies Taechasith Kangkhuntod of the University of the
+Thai Chamber of Commerce. The acknowledgement remains a deliberate placeholder
+for advisor review and contribution wording before submission.

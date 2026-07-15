@@ -10,6 +10,23 @@ The distinction is essential for a human-rated application, where human-system
 requirements are separate from a surrogate's regression score
 \cite{nasa3001}.
 
+\subsection{Human-centered decision-support stance}
+
+The proposed role of a model in this benchmark is limited to offline screening
+information for qualified human review. It is not an autonomous controller,
+an operational recommendation engine, or a replacement for mission analysis.
+For an HCI-oriented reading, the central design requirements are traceability,
+understandable scope, visible uncertainty, retained failures, and a clear
+fallback to physical analysis. The evidence package supports those requirements
+by showing the data boundary, simulator checks, controls, stopping decisions,
+and excluded evidence pathways together with the metrics.
+
+No human participants, operator interfaces, observational studies, or measures
+of trust, workload, situation awareness, or decision quality were collected.
+The paper therefore makes no empirical HCI performance claim. It instead
+describes how a high-consequence AI research artifact can be structured so that
+later human evaluation is not pre-empted by an unsupported model claim.
+
 The evidence boundary was defined before reporting. Gate 3 supports simulator
 credibility only for the eligible comparisons. Gate 5 supports a technical
 decision for a frozen development benchmark. The subsequent P001 and

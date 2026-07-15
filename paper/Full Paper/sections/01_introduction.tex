@@ -11,6 +11,17 @@ cost of screening scenarios while preserving the structure that makes a
 candidate decision safe and interpretable. That conditional statement is not
 evidence that any particular machine-learning model is useful.
 
+The paper adopts a human-centered decision-support framing. A model score is
+not the decision: a responsible reviewer needs to know which source data,
+physical assumptions, uncertainty boundary, and failure cases produced the
+score before deciding whether a model warrants further study. Crew-related
+requirements therefore remain separate from predictive performance, consistent
+with the intended-use and human-system boundaries in the applicable NASA
+standards \cite{nasa7009,nasa3001}. This work does not conduct a user study or
+measure usability, trust, workload, or operator performance. Its HCI-relevant
+contribution is the evidence design around a prospective decision-support
+artifact.
+
 QML offers feature maps and hypothesis spaces that are different from common
 classical models \cite{schuld2019,havlicek2019}. This motivates testing QML,
 but it does not resolve the application question. Encoding a classical feature
@@ -67,4 +78,6 @@ bounded negative candidates, including matched classical dequantization
 controls.
 \item A self-contained evidence and figure package that supports review of the
 negative conclusion without widening the study's scientific claim.
+\item A human-centered claim boundary that keeps model evidence, crew-related
+requirements, and future human authorization distinct.
 \end{enumerate}

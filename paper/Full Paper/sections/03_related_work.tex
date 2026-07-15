@@ -7,9 +7,10 @@ formulation that incorporates uncertainty, crew-related timing, and entry
 constraints \cite{woffinden2023}. Classical learning research has explored
 low-thrust guidance and cislunar transfer design, but those settings differ in
 dynamics, propulsion, objectives, and validation structure
-\cite{sullivan2021,izzo2021,xie2022}. They are valuable precedents for
-surrogate modeling and for retaining infeasible cases, not interchangeable
-baselines for a human-rated correction benchmark.
+\cite{zavoli2020,sullivan2021,izzo2021,steffen2025,xie2022,zhang2025}. They
+are valuable precedents for surrogate modeling, low-fidelity references,
+cost--reachability endpoints, and retaining infeasible cases, not
+interchangeable baselines for a human-rated correction benchmark.
 
 Quantum feature-space methods express a classical input through an encoding
 and compare encoded states by a quantum-derived similarity
@@ -25,10 +26,30 @@ kernel bandwidth and encoding scale are part of the effective inductive bias,
 not negligible implementation details \cite{shaydulin2022}. Second, a
 quantum-kernel study should include appropriately strong classical
 counterparts, including random features where relevant
-\cite{otten2020,sweke2025}. Third, a comparison should report more than its
+\cite{otten2020,rahimi2007,sweke2025}. Third, a comparison should report more than its
 best run: model choice, split structure, seed variation, capacity, and
 post-outcome choices all affect what a claimed gain means
 \cite{bowles2024,schnabel2024,pernot2020}.
+
+\subsection{Literature provenance of the frozen protocol}
+
+The literature set was used to shape the protocol, not to claim that every
+reviewed model was executed. Data re-uploading, encoding-dependent
+generalization, and initialization studies informed the need to freeze
+encoding, observables, initialization, and seed handling
+\cite{perez2020,caro2021,grant2019}. Quantum-agent work informed the need for
+matched classical capacity and explicit readout choices, but it did not turn
+this supervised benchmark into a reinforcement-learning study
+\cite{skolik2022}. Quantum annealing for trajectory transcription was retained
+as adjacent quantum-optimization context and deliberately excluded from the
+QML candidate set \cite{degrossi2025}.
+
+The accompanying literature-source audit accounts for all 23 accepted records
+used in the experiment's review package and additionally identifies the
+random-Fourier source behind the A01 control. It distinguishes direct
+methodological influence from an empirical comparison in this paper. This
+prevents a citation from being mistaken for evidence that a reviewed external
+method was reproduced, validated, or outperformed here.
 
 This paper does not make an exhaustive literature-review claim. The repository
 preserves a bounded extraction set of 23 accepted records used to establish the
