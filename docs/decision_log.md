@@ -2521,6 +2521,38 @@ rule; outer validation outcomes are evaluation-only. The contract is in
 metrics, grouped splits, seeds, development scope, CPU-only resource boundary,
 and Gate 6 prohibition remain unchanged.
 
+### D044 result - P012 nonlinear interaction residual stack
+
+Date: 2026-07-15
+Decision: **Valid scientific negative; continue only through a new protocol**
+Evidence: `data/processed/reporting/post_gate5_d044_nifrk/campaign_result.json`
+
+NIFRK-08-NL scored mean pooled OOF NRMSE `0.006751395` versus C06
+`0.006832811`, with paired difference `-0.000081416` and 95% interval
+`[-0.0000840,-0.0000787]`. The improvement was about 1.19%, below the frozen
+5% rule. TWO-RBF-08-NL scored `0.006765864`, so the classical-specific 5%
+condition also failed. All 39,000 development rows, 300 channel audits, 1,500
+interaction audits, and RFIG-074/RFIG-075 completed with zero
+construction-time validation-outcome use, zero group overlap, zero locked-data
+reads, and zero hardware/GPU, mission-loop, or Gate 6 activity. D044 is a
+development-only negative; the quadratic interaction map reduced the D043
+signal and does not justify further nonlinear expansion.
+
+### D045 - P013 multi-scale fidelity stack authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D044 valid negative
+
+D045 tests a fixed six-channel linear stack of q=4/6/8 fidelity and RBF-0.25
+residual experts. The matched control has six classical RBF channels: q=4/6/8
+at RBF-0.25 and RBF-0.50. Both fit on inner grouped out-of-fold training
+predictions with the same ridge penalty and parameter budget. The full
+contract is in `configs/post_gate5_d045_msfrk.yaml` and
+`docs/post_gate5_d045_msfrk_protocol.md`. Frozen thresholds, safety metrics,
+grouped splits, seeds, data scope, CPU-only resource boundary, and Gate 6
+prohibition remain unchanged.
+
 ### D037 prelaunch technical stop
 
 The first direct D037 launcher attempt stopped before `run()` and before any

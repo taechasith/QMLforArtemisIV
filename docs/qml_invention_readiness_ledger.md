@@ -374,3 +374,31 @@ quadratic map `[1,u,v,u*v,u^2,v^2]` on inner grouped out-of-fold residual
 experts. The candidate uses fidelity/RBF-0.25 and the matched control uses
 RBF-0.25/RBF-0.50 with the identical map, ridge penalty, and cross-fitting.
 Outer validation outcomes cannot influence the stack.
+
+## D044 P012 result label
+
+**Observed result:** NIFRK-08-NL scored mean pooled OOF NRMSE `0.006751395`
+versus C06 `0.006832811`, with paired difference `-0.000081416` and 95%
+interval `[-0.0000840,-0.0000787]`. The improvement was only about 1.19%,
+and TWO-RBF-08-NL scored `0.006765864`.
+
+**Useful invention signal:** the fixed quadratic interaction stack weakened the
+D043 linear stack and did not establish a classical-specific gain. Further
+nonlinear expansion is not justified. The next test returns to a linear model
+and tests whether fidelity information is complementary across q=4/6/8.
+
+**Integrity label:** 39,000 development rows, 300 channel audits, 1,500
+interaction audits, and zero construction-time validation-outcome use were
+recorded. Group overlap, locked-data reads, hardware/GPU, mission-loop, and
+Gate 6 counters were zero. RFIG-074 and RFIG-075 are the reporting figures.
+
+**Prohibited use:** do not call D044 scientifically superior, claim NASA
+performance or quantum advantage, revise Gate 5, or authorize Gate 6.
+
+## D045 P013: multi-scale fidelity residual stack
+
+D045 is authorized as one new development-only protocol. It fits a fixed
+six-channel linear ridge stack from q=4/6/8 fidelity and RBF-0.25 experts. The
+matched control uses q=4/6/8 RBF-0.25 and RBF-0.50 experts with the same six
+channels, inner cross-fitting, ridge penalty, and data boundary. This tests
+cross-q complementarity without expanding the nonlinear branch.

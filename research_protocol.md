@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.56
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK valid negative; D039 P007 EC-GFRK valid negative; D040 P008 CE-GFRK valid negative; D041 P009 complete valid negative after D041-C1; D042 P010 complete valid negative; D043 P011 complete valid negative; D044 P012 nonlinear interaction stack authorized; manuscript structural draft complete; Gate 6 unauthorized
+Version: 0.6.57
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK valid negative; D039 P007 EC-GFRK valid negative; D040 P008 CE-GFRK valid negative; D041 P009 complete valid negative after D041-C1; D042 P010 complete valid negative; D043 P011 complete valid negative; D044 P012 complete valid negative; D045 P013 multi-scale fidelity stack authorized; manuscript structural draft complete; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-15
-Recommended next action: execute one bounded D044 P012 campaign using a predeclared nonlinear interaction stack, classify it against C06 and a matched nonlinear two-RBF control, and continue only through a newly recorded future protocol if the candidate is a valid negative. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
+Recommended next action: execute one bounded D045 P013 campaign using a predeclared multi-scale fidelity stack, classify it against C06 and a matched multi-scale two-RBF control, and continue only through a newly recorded future protocol if the candidate is a valid negative. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
 
 ## 1. Proposed title
 
@@ -1426,6 +1426,26 @@ uses fidelity and RBF-0.25; the matched control uses RBF-0.25 and RBF-0.50 with
 the identical polynomial map, ridge penalty, and cross-fitting. D044 is
 development-only and does not revise Gate 5 or D034-D043, and does not
 authorize Gate 6.
+
+D044 is a valid scientific negative. NIFRK-08-NL scored mean pooled OOF NRMSE
+`0.006751395` versus C06 `0.006832811`, with paired difference
+`-0.000081416` and 95% interval `[-0.0000840,-0.0000787]`. This was only about
+1.19% below C06, so the frozen 5% threshold failed. The matched nonlinear
+TWO-RBF-08-NL control scored `0.006765864`; the candidate also failed the
+classical-specific 5% condition. Regret and infeasible-selection conditions
+were preserved. All 39,000 development rows, five outer folds, four inner
+folds, 20 seeds, 300 channel audits, 1,500 interaction audits, and figures
+RFIG-074/RFIG-075 completed with zero construction-time validation-outcome use,
+zero group overlap, zero locked-data reads, and zero hardware/GPU, mission-loop,
+and Gate 6 activity. The useful signal is that quadratic interaction terms
+reduced the D043 gain and do not justify continuing the nonlinear branch.
+
+D045/P013 is the next prospective invention protocol. It tests a fixed
+multi-scale linear stack using fidelity channels at q=4, 6, and 8 together
+with the RBF-0.25 channels. The matched control has the same six-channel
+budget, replacing fidelity with RBF-0.50. Both stacks fit on inner grouped
+out-of-fold training predictions. D045 is development-only and does not revise
+Gate 5 or D034-D044, and does not authorize Gate 6.
 
 D041 had a technical stop before its endpoint. The unchanged launcher was
 terminated by the local one-hour execution allowance before it wrote an atomic
