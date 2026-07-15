@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.63
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK valid negative; D039 P007 EC-GFRK valid negative; D040 P008 CE-GFRK valid negative; D041 P009 complete valid negative after D041-C1; D042 P010 complete valid negative; D043 P011 complete valid negative; D044 P012 complete valid negative; D045 P013 complete valid negative; D046 P014 complete valid negative; D047 P015 complete valid negative; D048 P016 complete valid negative; D049 P017 complete valid negative; D050-C current QML invention branch closed without a qualifying candidate; D051-C/P018 Geometric QML feasibility discussion-only; manuscript structural draft complete; Gate 6 unauthorized
+Version: 0.6.64
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK valid negative; D039 P007 EC-GFRK valid negative; D040 P008 CE-GFRK valid negative; D041 P009 complete valid negative after D041-C1; D042 P010 complete valid negative; D043 P011 complete valid negative; D044 P012 complete valid negative; D045 P013 complete valid negative; D046 P014 complete valid negative; D047 P015 complete valid negative; D048 P016 complete valid negative; D049 P017 complete valid negative; D050-C current QML invention branch closed without a qualifying candidate; D051-C/P018 Geometric QML feasibility discussion-only; D052-C Stage 1 symmetry-breaking mathematical contract complete; manuscript structural draft complete; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-15
-Recommended next action: keep D051-C as a discussion-only future protocol; complete its mathematical contract and symmetry-audit design without fitting models. Any executable QML protocol must first pass the exact symmetry audit, reproduce C06 and a classical equivariant baseline, and freeze matched resource/claim rules in a separate decision. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
+Recommended next action: keep P018 discussion-only and prepare a separate Stage 1 audit freeze from the D052-C mathematical contract. Before any numerical audit, freeze the base group, fixed-context stabilizer, force/constraint decomposition, target-sensitivity stop rule, approximately equivariant classical controls, data schema, resource ceiling, and figures. No model fitting is authorized. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
 
 ## 1. Proposed title
 
@@ -1553,20 +1553,41 @@ noise/data-loading setting; each must be preregistered with an identical
 classical control before any run. Gate 6 remains unauthorized.
 
 D051-C/P018 opens a discussion-only Geometric QML Feasibility protocol. Its
-claim is limited to testing whether an exact task-specific symmetry can provide
-useful inductive bias; equivariance is not treated as quantum advantage. The
-protocol first derives the symmetry of the actual cislunar equations,
-ephemerides, frames, constraints, and labels. It then requires a small
-symmetry-transformed development dataset, reproduction of C06 and a classical
-equivariant baseline, and only then a minimal equivariant PQC ablation with
-standard-initialization and Adam/SPSA controls for the Lie-theoretic
-initialization and NPID hypotheses. Sample efficiency, gradients, shots,
-circuit cost, simulation cost, and data-loading cost must be measured together.
+claim is limited to testing whether a verified base symmetry and explicit
+physical departures from it can provide useful inductive bias; equivariance is
+not treated as quantum advantage. The protocol first derives joint coordinate
+covariance, fixed-environment symmetry breaking, and target sensitivity from
+the actual cislunar equations, ephemerides, frames, constraints, and labels. It
+then requires a small controlled development dataset, reproduction of C06, and
+strict, context-conditioned, approximately equivariant, and non-equivariant
+classical baselines before any bounded symmetry-breaking PQC ablation. Sample
+efficiency, gradients, shots, circuit cost, simulation cost, and data-loading
+cost must be measured together.
 The complete discussion is in
 `docs/post_gate5_d051_geometric_qml_feasibility_discussion.md`. D051-C creates
 no runner, dataset, figure, development fit, calibration/final-test access,
 hardware job, Gate 5 reinterpretation, quantum-advantage claim, or Gate 6
 authority.
+
+D052-C records the Stage 1 mathematical contract for learnable symmetry
+breaking. The repository audit establishes F0 central Earth gravity, F1
+Moon/Sun third-body gravity, and F2 Earth J2 as the active force hierarchy;
+deterministic SRP is disabled and cannot be claimed as an active operator. The
+current 39-feature payload also omits explicit Moon/Sun, J2-axis, and target
+frame vectors, so D006-D049 rows cannot support the proposed context-conditioned
+comparison without a separately authorized schema.
+
+The contract defines joint `SO(3)` coordinate covariance, the fixed-context
+stabilizer, term-wise breaking defects, target-sensitivity admission, and a
+bounded DLA decomposition into symmetry-preserving and complement generators.
+The term horizontal generator is allowed only after a reductive decomposition
+and connection are proved. Classical approximately equivariant models are
+mandatory controls. The proposed `O(sqrt(N))`, classical tensor explosion,
+quantum-specific inductive bias, world-first, and quantum-advantage statements
+remain unsupported hypotheses or prohibited claims. The contract is in
+`docs/post_gate5_d052_symmetry_breaking_math_contract.md`. D052-C authorizes no
+numerical audit, data generation, model fit, figure, calibration/final-test
+access, hardware/GPU job, Gate 5 reinterpretation, or Gate 6 activity.
 
 D041 had a technical stop before its endpoint. The unchanged launcher was
 terminated by the local one-hour execution allowance before it wrote an atomic

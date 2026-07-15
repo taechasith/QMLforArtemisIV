@@ -544,22 +544,59 @@ performance or quantum advantage, revise Gate 5, or authorize Gate 6.
 
 **Status:** Discussion-only. No execution authority.
 
-**Hypothesis:** an exact symmetry of the cislunar data-generating problem may
-provide a useful inductive bias for a variational quantum model. Equivariance is
-not evidence of quantum advantage, and full `SO(3)` symmetry is not assumed.
+**Hypothesis:** a verified base symmetry plus explicit, measured physical
+breaking may provide a useful inductive bias for a variational quantum model.
+Equivariance is not evidence of quantum advantage, and full physical `SO(3)`
+symmetry is not assumed.
 
-**Required sequence:** derive and numerically verify the actual symmetry;
-construct a small transformed development dataset; reproduce C06 and a
-classical equivariant baseline; then test a minimal equivariant PQC against
-matched symmetry, initialization, and optimizer ablations. Measure predictive
-error, sample efficiency, gradient variance, shots, gate depth, simulation,
+**Required sequence:** derive joint base covariance and fixed-context breaking;
+construct a small controlled development dataset; reproduce C06 and strict,
+context-conditioned, approximately equivariant, and non-equivariant classical
+baselines; then test a bounded symmetry-breaking PQC against matched context,
+symmetry, initialization, and optimizer ablations. Measure predictive error,
+sample efficiency, gradient variance, shots, gate depth, simulation,
 data-loading, memory, and wall-time costs.
 
-**Rejection rules:** reject the direction if the symmetry is not exact, if the
-classical equivariant model matches efficiently, if the result depends on
-post-outcome tuning, or if any gain disappears under matched compute. The
-Lie-theoretic initialization and NPID remain empirical hypotheses.
+**Rejection rules:** reject the direction if base covariance or the breaking
+decomposition fails, if the frozen target lacks mechanism sensitivity, if the
+strongest approximately equivariant classical model matches efficiently, if
+the result depends on post-outcome tuning, or if any gain disappears under
+matched compute. The Lie-theoretic initialization and NPID remain empirical
+hypotheses.
 
 **Integrity boundary:** D051-C does not authorize a runner, dataset, figure,
 development fit, calibration/final-test access, hardware/GPU work, Gate 5
 reinterpretation, quantum-advantage claim, or Gate 6.
+
+## D052-C/P018 Stage 1 contract: learnable symmetry breaking
+
+**Status:** Theory-only mathematical contract complete. No execution authority.
+
+**Project-grounded finding:** F0 provides the central-force base; F1 adds fixed
+Moon/Sun ephemeris context; F2 adds the Earth J2 axis. Deterministic SRP is
+disabled. The existing 39-feature payload does not expose Moon/Sun, J2-axis, or
+target-frame vectors, so D006-D049 rows cannot support the proposed model
+comparison without a separately authorized schema.
+
+**Mathematical mechanism:** jointly rotating state and all context vectors is
+coordinate covariance. Holding the environment fixed reduces the symmetry to
+the context stabilizer and yields term-wise breaking defects. A future PQC may
+use a symmetry-preserving DLA centralizer plus a bounded complement-generator
+family whose coefficients vanish in the perfect-base limit.
+
+**Mandatory controls:** C06, strict equivariance with context/spurions,
+approximately equivariant classical models, a matched non-equivariant geometric
+model, and PQC base/context/removal ablations. Classical failure is not assumed.
+
+**Admission rule:** stop before model fitting if joint covariance fails, the
+context inventory is incomplete, the defect is numerical, or the frozen robust
+cost has negligible sensitivity to breaking severity.
+
+**Claim boundary:** `O(sqrt(N))`, classical tensor explosion, horizontal gates,
+quantum-specific inductive bias, world-first discovery, and quantum advantage
+are not established. Horizontal terminology requires a proved reductive
+decomposition and connection.
+
+**Integrity boundary:** D052-C authorizes no numerical audit, generator, schema,
+model fit, figure, calibration/final-test access, hardware/GPU work, Gate 5
+reinterpretation, mission loop, or Gate 6.

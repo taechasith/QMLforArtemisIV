@@ -2613,11 +2613,46 @@ optimizer ablations. Resource accounting must include shots, state preparation,
 data loading, simulation, memory, wall time, and optimization queries.
 
 The Lie-theoretic variance rule and NPID are empirical hypotheses only. The
-direction is rejected if the symmetry is not exact, the classical equivariant
-control matches efficiently, or any apparent gain disappears under matched
-compute. D051-C creates no runner, dataset, figure, development fit,
-calibration/final-test access, hardware job, Gate 5 reinterpretation, quantum
-advantage claim, or Gate 6 authority.
+direction is rejected if the base-symmetry/breaking decomposition fails, the
+strongest approximately equivariant classical control matches efficiently, or
+any apparent gain disappears under matched compute. D051-C creates no runner,
+dataset, figure, development fit, calibration/final-test access, hardware job,
+Gate 5 reinterpretation, quantum advantage claim, or Gate 6 authority.
+
+### D052-C - Stage 1 learnable symmetry-breaking mathematical contract
+
+Date: 2026-07-15
+Decision: **Theory contract complete; no numerical or model execution authority**
+Parent: D051-C/P018
+Evidence: `docs/post_gate5_d052_symmetry_breaking_math_contract.md`
+
+D052-C replaces the unsupported assumption of perfect physical symmetry with a
+base-covariance and fixed-context formulation. The central Earth force is
+jointly `SO(3)` covariant. Moon/Sun ephemerides, the Earth J2 axis, the fixed
+target frame, candidate burn direction, and constraint context are represented
+as transforming vectors or scalars. Holding those context vectors fixed reduces
+the physical symmetry to their common stabilizer and creates a measurable
+breaking defect.
+
+The repository audit also sets two hard boundaries. Deterministic SRP is
+disabled, so SRP cannot be an active breaking operator. The existing 39-feature
+payload omits Moon/Sun, J2-axis, and target-frame vectors, so existing D006-D049
+rows cannot be reused for a fair context-conditioned model comparison. A new
+development schema and generator would require separate authority.
+
+The contract defines term-wise force equations, joint-covariance and
+fixed-context defects, target-sensitivity admission, a DLA centralizer and
+bounded complement-generator ansatz, required classical approximately
+equivariant controls, falsifiable hypotheses, counterexamples, and resource and
+figure requirements. The term horizontal is prohibited unless a reductive
+decomposition and connection are proved. `O(sqrt(N))` sample complexity,
+classical tensor explosion, quantum-specific bias, world-first discovery, and
+quantum advantage remain unsupported or prohibited claims.
+
+D052-C authorizes no numerical audit, data generation, model fit, figure,
+calibration/final-test access, hardware/GPU job, Gate 5 reinterpretation,
+mission-loop work, or Gate 6 activity. The next eligible action is a separate
+Stage 1 audit freeze, not an experiment.
 
 ### D047 result - P015 orthogonalized multi-scale fidelity stack
 
