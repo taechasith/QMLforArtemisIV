@@ -1,0 +1,110 @@
+schema_version: "0.1.0"
+decision_id: "D046"
+protocol_id: "P014"
+status: "accepted_next_invention_campaign_authorized"
+prepared_date: "2026-07-15"
+accepted_date: "2026-07-15"
+acceptance_basis: "assistant-selected continuation after D045 failed the classical-specific rule"
+
+authority:
+  scope: "one bounded development-only campaign for an orthogonalized residual fidelity-RBF kernel"
+  research_data_fitting_authorized: true
+  campaign_count_limit: 1
+  checkpoint_resume_authorized: true
+  silent_task_retry_authorized: false
+  calibration_rows_read: 0
+  final_test_rows_read: 0
+  final_payload_access_authorized: false
+  hardware_execution_authorized: false
+  gpu_execution_authorized: false
+  gate6_authorized: false
+  nasa_performance_claim_authorized: false
+  quantum_advantage_claim_authorized: false
+
+locks:
+  gate5_result_unchanged: true
+  p001_evidence_immutable: true
+  d034_evidence_immutable: true
+  d035_evidence_immutable: true
+  d036_evidence_immutable: true
+  d037_evidence_immutable: true
+  d038_evidence_immutable: true
+  d039_evidence_immutable: true
+  d040_evidence_immutable: true
+  d041_evidence_immutable: true
+  d042_evidence_immutable: true
+  d043_evidence_immutable: true
+  d044_evidence_immutable: true
+  d045_evidence_immutable: true
+  no_calibration_or_final_test: true
+  no_mission_loop: true
+  no_hardware_or_gpu: true
+  allowed_data_scope: "development"
+  allowed_qubits: [4, 6, 8]
+  allowed_layers: [1]
+  inner_grouped_folds: 4
+  seed_indices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  training_rows_per_outer_fold: 1024
+
+source_binding:
+  phase1_config: "configs/phase1_benchmark.yaml"
+  d045_result: "data/processed/reporting/post_gate5_d045_msfrk/campaign_result.json"
+  qml_source: "src/openqfuel/qml.py"
+  campaign_source: "scripts/run_post_gate5_d046_orfrk.py"
+  protocol_source: "docs/post_gate5_d046_orfrk_protocol.md"
+
+mathematical_contract:
+  c06_residual: "e = y - b_C06^{-inner}(x) on outer-training rows"
+  shared_first_stage: "r25 = RBF_0.25(x; e)"
+  orthogonalized_target: "e2 = e - r25_OOF on inner grouped out-of-fold rows"
+  candidate_prediction: "b_C06(x) + 0.10 * (r25(x) + F_q(x; e2))"
+  classical_control: "b_C06(x) + 0.10 * (r25(x) + RBF_0.50_q(x; e2))"
+  second_stage_ridge: 1.0
+  final_shrinkage: 0.10
+  safety_guard: "the frozen outer-fold C06 feasibility head is retained unchanged"
+
+candidate:
+  id: "ORFRK"
+  name: "Orthogonalized Residual Fidelity-RBF Kernel"
+  primary_configuration: "ORFRK-08-R2"
+  q_values: [4, 6, 8]
+  rbf_gamma_multipliers: [0.25, 0.50]
+  landmarks: 256
+  projection_layers: 1
+  first_stage: "RBF-0.25 fitted to the C06 residual"
+  second_stage: "fidelity kernel fitted to e2 = e - inner OOF RBF-0.25 prediction"
+  configuration_rule: "stage order, q values, channels, folds, seeds, shrinkage, and control are fixed before development payload access"
+  claimed_mechanism: "remove shared RBF residual signal before testing fidelity-specific residual information"
+
+controls:
+  - id: C06
+    description: "frozen outer-fold C06 prediction with the same safety guard"
+  - id: TWO-RBF-q-R2
+    description: "shared RBF-0.25 first stage plus matched RBF-0.50 second stage at each q"
+  - id: D045-MSFRK
+    description: "immutable D045 result, not rerun or reranked"
+
+hypotheses:
+  H1: "ORFRK-08-R2 will improve pooled OOF NRMSE by at least 5 percent versus C06"
+  H2: "ORFRK-08-R2 will improve or preserve C06 feasibility-constrained regret and infeasible selection"
+  H3: "ORFRK-08-R2 will beat TWO-RBF-08-R2 by at least 5 percent"
+
+decision_rule:
+  scientifically_superior: "H1, H2, and H3 pass across five outer folds and 20 seeds, with paired 95 percent bootstrap upper bound for ORFRK-08-R2 minus C06 below zero"
+  valid_negative: "complete source-bound endpoint with all integrity checks pass but any superiority condition fails"
+  technical_stop: "source, split, stage-order, data-access, numerical, or resource integrity failure"
+  after_negative: "record the evidence and open a new protocol; do not silently alter the orthogonalized target, q values, control, thresholds, folds, or seeds"
+
+resources:
+  hardware: "recorded laptop: Intel Core i9-13900HX, 32 GiB RAM, NVIDIA RTX 4060 Laptop GPU; CPU-only execution"
+  peak_working_set_gib: 24.0
+  cpu_core_hours: 250.0
+  wall_clock_days: 5.0
+  free_disk_floor_gib: 17.0
+  gpu_hours: 0.0
+
+reporting:
+  result_root: "data/processed/reporting/post_gate5_d046_orfrk"
+  figures: [RFIG-078, RFIG-079]
+  figure_script: "scripts/make_post_gate5_d046_orfrk_figures.py"
+  claim_boundary: "development-only surrogate evidence; no NASA performance claim, mission claim, hardware claim, quantum advantage claim, calibration/final-test result, Gate 5 revision, or Gate 6 authorization"

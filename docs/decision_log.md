@@ -2553,6 +2553,40 @@ contract is in `configs/post_gate5_d045_msfrk.yaml` and
 grouped splits, seeds, data scope, CPU-only resource boundary, and Gate 6
 prohibition remain unchanged.
 
+### D045 result - P013 multi-scale fidelity stack
+
+Date: 2026-07-15
+Decision: **Valid scientific negative; continue only through a new protocol**
+Evidence: `data/processed/reporting/post_gate5_d045_msfrk/campaign_result.json`
+
+MSFRK-ALL scored mean pooled OOF NRMSE `0.006731045` versus C06
+`0.006832811`, with paired difference `-0.000101766` and 95% interval
+`[-0.000103313,-0.000100332]`. The improvement was about 1.49%, below the
+frozen 5% rule. MS-TWO-RBF scored `0.006869509`, so the classical-specific
+5% condition also failed. The endpoint used 39,000 development rows, 300
+channel audits, 1,300 multi-scale audits, and figures RFIG-076/RFIG-077; all
+validation-outcome, group-overlap, locked-data, hardware/GPU, mission-loop,
+and Gate 6 counters were zero. D045 is a development-only negative. Its
+useful signal is that adding q=4 and q=6 fidelity channels did not recover the
+classical-specific gap.
+
+### D046 - P014 orthogonalized residual fidelity-RBF kernel authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D045 valid negative
+
+D046 tests whether fidelity contains unique residual information after a
+shared RBF-0.25 correction. The first stage is fitted to the outer-training
+C06 residual. Inner grouped out-of-fold RBF-0.25 predictions define the
+second-stage residual target. The candidate adds a second-stage fidelity
+correction; the matched control adds a second-stage RBF-0.50 correction. The
+same folds, seeds, q values, landmarks, ridge settings, shrinkage, safety
+head, and CPU-only boundary remain fixed. The contract is in
+`configs/post_gate5_d046_orfrk.yaml` and
+`docs/post_gate5_d046_orfrk_protocol.md`. This is development-only and does
+not revise Gate 5, D034-D045, or authorize Gate 6.
+
 ### D037 prelaunch technical stop
 
 The first direct D037 launcher attempt stopped before `run()` and before any

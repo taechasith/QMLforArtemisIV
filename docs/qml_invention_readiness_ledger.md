@@ -402,3 +402,31 @@ six-channel linear ridge stack from q=4/6/8 fidelity and RBF-0.25 experts. The
 matched control uses q=4/6/8 RBF-0.25 and RBF-0.50 experts with the same six
 channels, inner cross-fitting, ridge penalty, and data boundary. This tests
 cross-q complementarity without expanding the nonlinear branch.
+
+## D045 P013 result label
+
+**Observed result:** MSFRK-ALL scored mean pooled OOF NRMSE `0.006731045`
+versus C06 `0.006832811`, with paired difference `-0.000101766` and 95%
+interval `[-0.000103313,-0.000100332]`. The improvement was about 1.49%, and
+MS-TWO-RBF scored `0.006869509`.
+
+**Useful invention signal:** adding q=4 and q=6 fidelity channels did not
+establish the frozen C06 or classical-specific 5% thresholds. The next test
+must remove the shared RBF contribution before measuring any fidelity-specific
+residual information.
+
+**Integrity label:** 39,000 development rows, 300 channel audits, 1,300
+multi-scale audits, and zero construction-time validation-outcome use were
+recorded. Group overlap, locked-data reads, hardware/GPU, mission-loop, and
+Gate 6 counters were zero. RFIG-076 and RFIG-077 are the reporting figures.
+
+**Prohibited use:** do not call D045 scientifically superior, claim NASA
+performance or quantum advantage, revise Gate 5, or authorize Gate 6.
+
+## D046 P014: orthogonalized residual fidelity-RBF kernel
+
+D046 is authorized as one new development-only protocol. A shared RBF-0.25
+first-stage correction is fitted to the C06 residual. Inner grouped OOF
+RBF-0.25 predictions define a second-stage residual target. The candidate uses
+a fidelity second stage; the matched control uses RBF-0.50. This isolates
+fidelity information not already explained by the common RBF correction.
