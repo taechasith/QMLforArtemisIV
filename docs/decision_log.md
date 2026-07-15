@@ -2593,6 +2593,32 @@ an explicitly modeled hardware noise/data-loading study. Gate 6, calibration,
 final-test access, mission-loop work, and quantum-advantage claims remain
 unauthorized.
 
+### D051-C - Geometric QML feasibility discussion opened
+
+Date: 2026-07-15
+Decision: **Discussion-only; no execution authority**
+Prospective protocol: P018
+Evidence: `docs/post_gate5_d051_geometric_qml_feasibility_discussion.md`
+
+D051-C records a materially new hypothesis: a task-specific symmetry may give a
+variational quantum model a useful inductive bias on the cislunar surrogate
+task. It does not assume full `SO(3)` symmetry, quantum advantage, lower sample
+complexity, a classical simulation gap, or hardware-transferable performance.
+
+The required order is: derive and audit the exact symmetry of the equations,
+ephemerides, frames, constraints, and labels; construct a small transformed
+development dataset; reproduce C06 and a classical equivariant baseline; then
+test a minimal equivariant PQC with matched architecture, initialization, and
+optimizer ablations. Resource accounting must include shots, state preparation,
+data loading, simulation, memory, wall time, and optimization queries.
+
+The Lie-theoretic variance rule and NPID are empirical hypotheses only. The
+direction is rejected if the symmetry is not exact, the classical equivariant
+control matches efficiently, or any apparent gain disappears under matched
+compute. D051-C creates no runner, dataset, figure, development fit,
+calibration/final-test access, hardware job, Gate 5 reinterpretation, quantum
+advantage claim, or Gate 6 authority.
+
 ### D047 result - P015 orthogonalized multi-scale fidelity stack
 
 Date: 2026-07-15

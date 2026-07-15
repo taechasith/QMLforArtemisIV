@@ -390,6 +390,18 @@ evidence, and no additional figure is required. DOI minting, Gate 6,
 locked-data access, mission-loop execution, model release, QML invention
 claims, and quantum-advantage claims remain unauthorized.
 
+D051-C/P018 records a discussion-only Geometric QML feasibility direction after
+the D034-D049 invention branch closed without a qualifying candidate. It tests
+only the hypothesis that an exact symmetry of the cislunar data-generating
+problem could provide useful inductive bias. It does not assume full SO(3)
+symmetry, quantum advantage, improved sample-complexity scaling, or a classical
+simulation gap. Before any execution, the actual symmetry must be derived and
+verified, C06 and a classical equivariant baseline must be reproduced, and all
+PQC, initialization, optimizer, data-loading, shot, simulation, and resource
+comparisons must be frozen. D051-C creates no experiment authority; Gate 6,
+calibration/final-test access, hardware/GPU work, and quantum-advantage claims
+remain unauthorized.
+
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
 The recommended mission design is:
@@ -448,6 +460,7 @@ through a dated deviation record.
 - docs/research_execution_map.md: work ownership and future decision gates.
 - docs/post_gate5_exploratory_protocol.md: prospective exploratory Q01b/FQK protocol opened after the accepted Gate 5 negative result.
 - docs/post_gate5_d012_future_protocol_discussion.md: discussion-only interpretation of the D011-R1 negative results.
+- docs/post_gate5_d051_geometric_qml_feasibility_discussion.md: discussion-only symmetry-aware QML feasibility protocol.
 - docs/post_gate5_d013_classical_first_protocol.md: planning-only classical-first residual and safety-filter path before QML invention.
 - docs/post_gate5_d014_classical_first_freeze.md: freeze proposal for CRES/CSAFE tracks before any implementation.
 - docs/post_gate5_d015_implementation_synthetic_validation.md: implementation and synthetic-validation authorization without data fitting.

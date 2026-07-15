@@ -539,3 +539,27 @@ mechanism, independent reproduction, and an identical classical control.
 
 **Prohibited use:** do not call D049 scientifically superior, claim NASA
 performance or quantum advantage, revise Gate 5, or authorize Gate 6.
+
+## D051-C/P018 future protocol discussion: Geometric QML feasibility
+
+**Status:** Discussion-only. No execution authority.
+
+**Hypothesis:** an exact symmetry of the cislunar data-generating problem may
+provide a useful inductive bias for a variational quantum model. Equivariance is
+not evidence of quantum advantage, and full `SO(3)` symmetry is not assumed.
+
+**Required sequence:** derive and numerically verify the actual symmetry;
+construct a small transformed development dataset; reproduce C06 and a
+classical equivariant baseline; then test a minimal equivariant PQC against
+matched symmetry, initialization, and optimizer ablations. Measure predictive
+error, sample efficiency, gradient variance, shots, gate depth, simulation,
+data-loading, memory, and wall-time costs.
+
+**Rejection rules:** reject the direction if the symmetry is not exact, if the
+classical equivariant model matches efficiently, if the result depends on
+post-outcome tuning, or if any gain disappears under matched compute. The
+Lie-theoretic initialization and NPID remain empirical hypotheses.
+
+**Integrity boundary:** D051-C does not authorize a runner, dataset, figure,
+development fit, calibration/final-test access, hardware/GPU work, Gate 5
+reinterpretation, quantum-advantage claim, or Gate 6.
