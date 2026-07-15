@@ -1,6 +1,6 @@
 # D053-C Stage 1 Numerical-Audit Freeze
 
-Version: 0.1.0
+Version: 0.2.0
 Decision: D053-C
 Parent contract: D052-C
 Prospective protocol: P018
@@ -166,3 +166,14 @@ The next eligible action is not an experiment: it is a separate prospective
 decision that binds the remaining mathematical inputs and explicitly authorizes
 one bounded Stage 1 audit. Model fitting remains prohibited until the Stage 1
 completion criteria in D052-C pass.
+
+## 8. D054-A input-binding amendment
+
+D054-A subsequently supplies the concrete inputs that D053-C intentionally
+left open: the SRP exclusion, q=4 collective-spin representation, 255-element
+Pauli basis, generator set, stabilizer schema, rotation suite,
+development-only identity rule, `eps_a`, target scale, future output paths, and
+figure registry. Its RFIG-086 configuration diagram is a methods-boundary
+record, not a numerical-audit figure. RFIG-087 through RFIG-089 remain empty
+reservations. D054-A does not relax any D053-C hard stop or authorize execution;
+D055 remains required before one bounded audit.

@@ -392,8 +392,9 @@ claims, and quantum-advantage claims remain unauthorized.
 
 D051-C/P018 records a discussion-only Geometric QML feasibility direction after
 the D034-D049 invention branch closed without a qualifying candidate. D052-C
-adds its Stage 1 learnable-symmetry-breaking mathematical contract, and D053-C
-locks its future numerical-audit architecture. The contract separates joint
+adds its Stage 1 learnable-symmetry-breaking mathematical contract, D053-C
+locks the numerical-audit architecture, and D054-A binds the concrete audit
+inputs without authorizing its execution. The contract separates joint
 coordinate covariance from physical symmetry in a fixed environment, represents
 Moon/Sun ephemerides, the Earth J2 axis, target frame, burn direction, and
 constraints as explicit context, and requires classical strict- and
@@ -404,13 +405,17 @@ tensor explosion, or a simulation gap.
 The code audit found that deterministic SRP is disabled and the existing
 39-feature payload omits explicit Moon/Sun, J2-axis, and target-frame vectors.
 Existing D006-D049 rows therefore cannot support this new comparison without a
-separately authorized schema. D053-C requires direct SVD of a closed DLA
-coefficient matrix, full-spectrum/rank-stability records, and default-versus-
-tightened DOP853 replay before a fixed-context effect can be used for model
-design. The concrete representation, rotations, target scale, strata, and
-figures remain unbound. D051-C/D052-C/D053-C create no experiment authority;
-Gate 6, calibration/final-test access, hardware/GPU work, and quantum-advantage
-claims remain unauthorized.
+separately authorized schema. D054-A fixes a q=4 collective-spin `SO(3)` audit
+representation, a 255-element Pauli basis, seven rotations, 36 development-only
+identities, `eps_a`, a 20 m/s target scale, future output paths, and
+RFIG-086 through RFIG-089; it explicitly excludes deterministic SRP. D053-C
+still requires direct SVD of the closed DLA coefficient matrix,
+full-spectrum/rank-stability records, and default-versus-tightened DOP853 replay
+before a fixed-context effect can be used for model design. RFIG-086 is a
+configuration-bound methods figure only; RFIG-087 through RFIG-089 have no data
+yet. D055 remains required before any bounded audit. Gate 6,
+calibration/final-test access, hardware/GPU work, and quantum-advantage claims
+remain unauthorized.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
@@ -473,6 +478,7 @@ through a dated deviation record.
 - docs/post_gate5_d051_geometric_qml_feasibility_discussion.md: discussion-only symmetry-aware QML feasibility protocol.
 - docs/post_gate5_d052_symmetry_breaking_math_contract.md: theory-only Stage 1 contract for base covariance and learnable symmetry breaking.
 - docs/post_gate5_d053_symmetry_audit_freeze.md: accepted direct-SVD and DOP853 numerical-audit freeze with no execution authority.
+- docs/post_gate5_d054a_p018_binding_freeze.md: accepted P018 input-binding freeze with deterministic SRP excluded and no audit execution authority.
 - docs/post_gate5_d013_classical_first_protocol.md: planning-only classical-first residual and safety-filter path before QML invention.
 - docs/post_gate5_d014_classical_first_freeze.md: freeze proposal for CRES/CSAFE tracks before any implementation.
 - docs/post_gate5_d015_implementation_synthetic_validation.md: implementation and synthetic-validation authorization without data fitting.

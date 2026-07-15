@@ -253,6 +253,10 @@ data/processed/reporting/post_gate5_p001/*
 !data/processed/reporting/post_gate5_d049_ssorfrk/per_seed_metrics.csv
 !data/processed/reporting/post_gate5_d049_ssorfrk/paired_comparison.csv
 !data/processed/reporting/post_gate5_d049_ssorfrk/summary.csv
+
+# D054-A binds this future P018 audit evidence root. No audit evidence exists yet.
+!data/processed/reporting/post_gate5_p018_stage1_audit/
+!data/processed/reporting/post_gate5_p018_stage1_audit/**
 data/processed/artemis2/*
 !data/processed/artemis2/oem_inventory.csv
 !data/processed/artemis2/oem_release_revisions.csv

@@ -1,10 +1,10 @@
 # D051-C Future Protocol Discussion: Geometric QML Feasibility
 
-Version: 0.3.0
+Version: 0.4.0
 Decision: D051-C  
 Prospective protocol: P018  
 Prepared: 2026-07-15  
-Status: **Discussion-only; D052-C contract and D053-C numerical-audit freeze recorded; no execution authority; Gate 6 unauthorized**
+Status: **Discussion-only; D052-C contract, D053-C numerical-method freeze, and D054-A input-binding freeze recorded; no audit execution authority; Gate 6 unauthorized**
 
 ## 1. Purpose and claim boundary
 
@@ -13,7 +13,10 @@ explicit physical breaking in a variational quantum model. D052-C supplies the
 Stage 1 mathematical amendment in
 `docs/post_gate5_d052_symmetry_breaking_math_contract.md`, and D053-C freezes
 the direct-SVD/DOP853 numerical method in
-`docs/post_gate5_d053_symmetry_audit_freeze.md`. None of these decisions reopens
+`docs/post_gate5_d053_symmetry_audit_freeze.md`. D054-A binds the concrete
+representation, context schema, rotations, development-only identities, scales,
+output paths, and figure registry in
+`docs/post_gate5_d054a_p018_binding_freeze.md`. None of these decisions reopens
 Gate 5, refits D006-D049 evidence, authorizes calibration or final-test access,
 authorizes hardware/GPU execution, or authorizes Gate 6.
 
@@ -232,8 +235,10 @@ valid finding and must record a future improvement outside the active pipeline.
 
 ## 5. Required paper-ready figures
 
-No placeholder figure or invented result is created by this discussion. If a
-future execution is separately authorized, it must record at least:
+D054-A creates RFIG-086 as an accepted configuration-bound methods figure only;
+it contains no numerical audit evidence. RFIG-087 through RFIG-089 are reserved
+for immutable future evidence. If a future execution is separately authorized,
+it must record at least:
 
 - joint-covariance residuals, fixed-context defects, and counterexample counts;
 - term-wise symmetry-breaking severity and target sensitivity;
@@ -251,10 +256,8 @@ source commit.
 
 ## 6. Authorization status
 
-D051-C and its D052-C amendment are discussion-only. They authorize no code
-execution, new development fit, calibration/final-test access, hardware/GPU
-run, Gate 5 reinterpretation, quantum-advantage claim, or Gate 6 run. An
-executable P018 protocol would
-require a separate decision after the mathematical contract, symmetry audit
-plan, classical baseline, thresholds, resource ceiling, stop rules, and figure
-registry are frozen.
+D051-C and its D052-C/D053-C/D054-A amendments remain non-executing. They
+authorize no numerical audit, new development fit, calibration/final-test
+access, hardware/GPU run, Gate 5 reinterpretation, quantum-advantage claim, or
+Gate 6 run. D055 must separately authorize one bounded audit against the frozen
+D054-A inputs; it cannot change those inputs based on outcomes.

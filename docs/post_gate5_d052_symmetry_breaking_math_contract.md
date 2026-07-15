@@ -1,11 +1,11 @@
 # D052-C Stage 1 Mathematical Contract: Learnable Symmetry Breaking
 
-Version: 0.2.0
+Version: 0.3.0
 Decision: D052-C
 Parent discussion: D051-C
 Prospective protocol: P018
 Prepared: 2026-07-15
-Status: **Theory-only contract; D053-C numerical architecture frozen; no audit execution, data generation, model fit, or Gate 6 authority**
+Status: **Theory-only contract; D053-C numerical architecture and D054-A inputs frozen; no audit execution, data generation, model fit, or Gate 6 authority**
 
 ## 1. Research question
 
@@ -420,6 +420,24 @@ Until then, P018 remains discussion-only and Gate 6 remains unauthorized.
 D053-C freezes the numerical method for any future Stage 1 execution in
 `docs/post_gate5_d053_symmetry_audit_freeze.md`. It requires direct SVD of the
 closed Pauli/DLA coefficient commutator matrix, complete singular-spectrum and
-rank-stability records, and a DOP853 default-versus-tightened replay. It does
-not bind the still-unknown representation, DLA basis, rotations, trajectory
-cases, target scale, or figure registry, and it authorizes no audit execution.
+rank-stability records, and a DOP853 default-versus-tightened replay. D054-A
+subsequently binds the representation, DLA basis/generators, rotations,
+development-only cases, target scale, output paths, and figure registry in
+`docs/post_gate5_d054a_p018_binding_freeze.md`; it still authorizes no audit
+execution.
+
+## 15. D054-A input-binding amendment
+
+D054-A fixes the pending Stage 1 inputs prospectively: deterministic SRP is
+excluded; the audit uses the q=4 collective-spin `SO(3)` representation and a
+255-element skew-Hermitian Pauli basis; the prescribed local `X/Z` and
+nearest-neighbor `ZZ` generators must close exactly to that basis; and the
+rotation suite, development-only identity rule, `eps_a`, target normalization,
+future output paths, and figure registry are fixed. It also binds separate
+dynamical and task-context stabilizer records so a later model mechanism cannot
+ignore label or target-frame constraints.
+
+This amendment creates no numerical result. RFIG-086 is a methods-boundary
+figure made only from the accepted freeze. RFIG-087 through RFIG-089 are empty
+reservations for a later authorized audit. D055 must authorize one bounded audit
+before the source manifest or any development identity is read.

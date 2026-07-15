@@ -1,6 +1,6 @@
 # QML Invention Readiness Ledger
 
-Version: 0.1.1
+Version: 0.1.2
 Updated: 2026-07-16
 Status: Evidence-label ledger for future QML invention; not an experiment
 
@@ -627,3 +627,29 @@ viewing the audit. Do not treat a resource stop as a complexity advantage.
 **Claim boundary:** D053-C is infrastructure for a future test, not evidence
 of a nontrivial centralizer, physical symmetry breaking, predictive value,
 QML invention, or quantum advantage. Gate 6 remains unauthorized.
+
+## D054-A/P018 Stage 1 input-binding freeze
+
+**Status:** Accepted binding freeze only. No numerical-audit evidence exists.
+
+**Useful invention signal:** Future QML design now has a reproducible negative
+interpretation boundary. The candidate must be assessed using the frozen q=4
+collective-spin representation, exact Pauli-basis closure, physical-context
+schema, stabilizer audit, rotations, and target-mechanism admission rule rather
+than a favorable representation or target selected after looking at results.
+
+**Required future control:** Deterministic SRP is excluded. Use only the 36
+specified label-blind development identities and write only to the frozen future
+output root after D055 authorizes a clean-source audit. Stop before model fitting
+if closure, rank stability, covariance stability, or target-mechanism admission
+fails.
+
+**Prohibited post-outcome use:** Do not alter the DLA basis/generators,
+rotations, `eps_a`, 20 m/s normalization, strata, target admission threshold,
+or output/figure selection in response to audit outcomes. RFIG-086 is a methods
+figure only; RFIG-087 through RFIG-089 are not evidence until backed by immutable
+audit outputs.
+
+**Claim boundary:** D054-A supplies a fair, bounded test design. It does not
+show a nontrivial centralizer, physical breaking, target relevance, prediction,
+QML invention, quantum advantage, or a Gate 6 candidate.

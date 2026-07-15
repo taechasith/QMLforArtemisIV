@@ -118,9 +118,15 @@ def test_figure_registry_has_unique_ids_and_matching_artifacts() -> None:
             "claim_release_review_ready",
             "release_candidate_manifest_ready",
             "release_package_accepted",
-        }
+    }
     for row in rows:
         assert "final_test" not in row["source_data"]
+        if row["evidence_status"] == "reserved_future_authorized_audit":
+            for kind in ("png", "svg"):
+                assert row[f"{kind}_path"] == ""
+                assert row[f"{kind}_sha256"] == ""
+                assert row[f"{kind}_bytes"] == ""
+            continue
         for kind in ("png", "svg"):
             path = ROOT / row[f"{kind}_path"]
             assert path.is_file()

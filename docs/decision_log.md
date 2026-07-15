@@ -2685,6 +2685,32 @@ or figure was created. Those inputs, output paths, and figure registry require
 a new prospective decision before any bounded Stage 1 audit. Gate 6 remains
 unauthorized.
 
+### D054-A - P018 Stage 1 binding freeze
+
+Date: 2026-07-16
+Decision: **Accepted binding freeze only; no audit execution authority**
+Parent: D053-C/P018
+Evidence: `configs/post_gate5_d054a_p018_binding_freeze.yaml` and
+`docs/post_gate5_d054a_p018_binding_freeze.md`
+
+D054-A binds the previously open Stage 1 objects without running them. It fixes
+Earth-centered J2000/ICRF-compatible axes, F0/F1/F2 force scope, exclusion of
+deterministic SRP, the q=4 collective-spin `SO(3)` representation, the 255-
+element trace-free Pauli basis, collective `Jx/Jy/Jz`, and the local X/Z plus
+nearest-neighbor ZZ DLA generator set. The later audit must stop if that
+generator set does not close exactly to the frozen basis.
+
+The freeze binds seven proper rotations, dynamic/task stabilizer rules, all 36
+label-blind G01-G12 development identities across F0/F1/F2, `eps_a=1e-12
+km/s^2`, and a 20 m/s target normalization. It also binds immutable output
+paths, RFIG-086 as a configuration-bound methods figure, and RFIG-087 through
+RFIG-089 as future evidence reservations. No scenario, label, DLA, SVD,
+trajectory, dataset, model, hardware/GPU job, or Gate 6 action occurred.
+
+D055 is required before one clean-source bounded audit. It must retain the
+D053-C solver stops, remain development-only, and cannot activate SRP or begin
+model fitting.
+
 ### D047 result - P015 orthogonalized multi-scale fidelity stack
 
 Date: 2026-07-15
