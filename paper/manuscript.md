@@ -1,18 +1,16 @@
 # A Governed Public-Data Benchmark of Quantum Machine Learning for Human-Rated Cislunar Trajectory-Correction Planning
 
-Status: Complete structural manuscript draft; scientific evidence is closed,
-but literature closeout, author metadata, target-journal formatting, and final
-internal review remain before submission.
+Status: Final experimental manuscript package draft; scientific evidence is
+closed. Author metadata, target-journal formatting, and independent review
+remain before submission.
 
 Release basis: `v0.3.0`, published under the strict D031-C negative-claim
 boundary. This manuscript does not authorize Gate 6, calibration or final-test
 access, new model fitting, or a new QML method.
 
-Historical registration markers retained for audit:
-
-- Status: D031-C claim-reviewed draft
-- Status: D027-C manuscript Results/Discussion draft; not release-ready
-- Status: D026-C manuscript synthesis ready
+<!-- Status: D031-C claim-reviewed draft -->
+<!-- Status: D027-C manuscript Results/Discussion draft; not release-ready -->
+<!-- Status: D026-C manuscript synthesis ready -->
 
 ## Abstract
 
@@ -33,7 +31,9 @@ QML advance. Two prospective post-Gate-5 exploratory tracks were also
 negative: Q01b reached mean NRMSE 0.6612 versus 0.006833 for C06, while the
 feasibility-only quantum kernel reached AUROC 0.7436, Brier score 0.1561, and
 recall 0.1089. A recall-first classical safety analysis produced a future
-protocol signal but not an advancing model result. These findings support a
+protocol signal but not an advancing model result. Sixteen subsequent
+development-only successor protocols (D034-D049) also produced no candidate
+that satisfied the strict matched-control rule. These findings support a
 benchmark-specific negative conclusion: the tested QML candidates did not
 outperform strong classical controls and no candidate qualified for a QML
 Gate 6 mission experiment from P001. They do not establish that all QML
@@ -110,11 +110,10 @@ for mission-owned data, certification, or operational validation. It is a
 public, development-only test of whether the registered QML candidates earned
 further authority.
 
-The repository contains 23 accepted extracted literature records. A later
-discovery refresh remains explicitly separate from the Gate 4 freeze and must
-be closed or scoped before submission if the paper claims an exhaustive
-systematic review. The refresh cannot change the frozen experiment or its
-outcomes.
+The paper uses a bounded evidence review rather than claiming an exhaustive
+systematic review. The repository contains 23 accepted extracted literature
+records; a post-acceptance discovery refresh remains archival, was not used to
+change the experiment, and does not alter the reported outcomes.
 
 ## 3. Materials and Methods
 
@@ -132,6 +131,10 @@ and final-test rows, mission-loop scenarios, hardware or GPU quantum runs,
 threshold application to real data, model release, and Gate 6 remain locked.
 Any result from the local simulator is a classical simulation result and is
 not evidence of quantum advantage.
+
+The D034-D049 successor branch is included as a closed development-only
+negative synthesis. It did not revise Gate 5, add a new selection rule, or
+open any locked evidence pathway.
 
 ### 3.2 Simulator and scenario construction
 
@@ -179,6 +182,12 @@ median-distance projected kernel. FQK used a quantum kernel only for the
 `independently_propagated_feasible` classification task. Both retained the
 same grouped development discipline, fold-local preprocessing, nested rungs,
 matched controls, and 20 selected seed indices. They could not revise Gate 5.
+
+The later D034-D049 branch tested sixteen prospectively bounded successor
+variants. Each used the same development-only scope and the accepted C06
+comparison, while the branch-specific protocol froze its candidate, matched
+classical control, threshold, and stopping rule before fitting. The complete
+summary is in `paper/results_tables/post_gate5_invention_branch_summary.csv`.
 
 The recall-first CSAFE-RF analysis is reported as a future protocol lesson.
 It was not used to rescue a prior QML result, change a threshold, or authorize
@@ -241,7 +250,18 @@ was inadequate for the frozen safety-filter interpretation and its controls
 were stronger. These are valid exploratory negatives for the exact P001
 feature map and benchmark, not universal QML impossibility results.
 
-### 4.4 Future safety-objective signal
+### 4.4 Successor QML branch D034-D049
+
+All sixteen D034-D049 campaigns completed as valid development-only negatives.
+The strongest raw C06 comparison was ORFRK-08-R2 (D046), with mean NRMSE
+0.0064363 versus 0.0068328 for C06, an apparent 5.80% improvement. Its
+matched TWO-RBF control reached 0.0067501, leaving only about 4.65% improvement
+over the matched classical alternative, below the preregistered 5% rule.
+Therefore the apparent gain did not establish a quantum-specific advantage.
+The full paired intervals, source evidence paths, and all sixteen outcomes are
+provided in the supplementary result table.
+
+### 4.5 Future safety-objective signal
 
 The recall-first CSAFE-RF audit selected `calibrated_logistic` with mean recall
 0.804253, false-negative rate 0.195747, and Brier score 0.142231. This is a
@@ -250,7 +270,7 @@ missed unsafe cases while retaining calibration constraints. It is not an
 advancing QML result, not a mission filter, and not a post-outcome rescue of
 D017 or Gate 5.
 
-### 4.5 Evidence accounting
+### 4.6 Evidence accounting
 
 The D006 campaign completed 871 of 871 authorized tasks with zero failures.
 The D011-R1 exploratory campaign read 39,000 development rows and zero
@@ -263,8 +283,10 @@ the result because it determines which claims the benchmark can support.
 The main result is a controlled negative benchmark. Q01 did not approach the
 physics-residual control, and Q01b did not recover the gap after changing the
 quantum readout while preserving the pipeline. FQK also failed to meet the
-safety-filter recall requirement. The results therefore narrow the space of
-credible next methods: a future candidate must be prospectively selected,
+safety-filter recall requirement. The D034-D049 branch shows that even a
+stronger apparent residual improvement can disappear under a matched classical
+control and a candidate-specific threshold. The results therefore narrow the
+space of credible next methods: a future candidate must be prospectively selected,
 beat the strongest controls, preserve grouped leakage protection, and satisfy
 the safety objective before mission-level claims are considered.
 
@@ -305,11 +327,11 @@ The quantum results are classical statevector simulations in a small-qubit,
 laptop-bounded resource envelope. They do not establish hardware behavior,
 quantum speedup, noise robustness, or a scalable quantum resource advantage.
 
-The current literature package contains 23 accepted extracted records, while a
-post-acceptance discovery refresh has pending full-text screens. The final
-submission must either complete that bounded review or state and defend a
-closed search scope. This limitation affects literature completeness, not the
-frozen Gate 5 outcomes.
+The literature package is a bounded evidence review with 23 accepted extracted
+records, not an exhaustive systematic review. A post-acceptance discovery
+refresh is preserved as archival coverage information and did not alter the
+frozen experiment or outcomes. This limits claims about literature
+completeness, not the benchmark results.
 
 ## 7. Data, Code, and Evidence Availability
 
@@ -326,11 +348,12 @@ not yet minted and requires a separate human decision.
 ## 8. Conclusion
 
 Under the frozen public-data development benchmark, the tested QML candidates
-did not outperform strong classical controls, and no QML candidate qualified
-for a Gate 6 mission experiment from P001. The result is a valid negative
-benchmark with useful future-design lessons. It is not evidence of quantum
-advantage, fuel savings, flight readiness, NASA approval, or a proven new QML
-invention.
+did not outperform strong classical controls, and no QML candidate from the
+Gate 5 or D034-D049 branches qualified for a Gate 6 mission experiment. The
+result is a valid negative benchmark with useful future-design lessons,
+including evidence that matched classical residual controls explain the
+strongest apparent successor gain. It is not evidence of quantum advantage,
+fuel savings, flight readiness, NASA approval, or a proven new QML invention.
 
 ## 9. Submission Readiness Checklist
 
@@ -340,8 +363,9 @@ invention.
 - [x] Simulator, data, model, limitation, and reproducibility records released.
 - [x] Source tag `v0.3.0` and non-draft GitHub Release published.
 - [x] Paper result tables and claim-boundary table committed.
-- [ ] Complete or formally close the bounded literature review and format references.
-- [ ] Select final main-text figures and supplementary figures from the registry.
+- [x] Formally close the bounded literature scope without claiming an exhaustive systematic review.
+- [x] Select final main-text and supplementary figure families from the registry.
+- [x] Freeze the D034-D049 successor branch as development-only negative evidence.
 - [ ] Add author names, affiliations, funding, conflicts, and contribution statements.
 - [ ] Select a target journal and apply its format, word, figure, and data rules.
 - [ ] Complete independent internal scientific and reproducibility review.
@@ -350,10 +374,11 @@ invention.
 ## Source Tables and Figure Evidence
 
 - `paper/results_tables/gate5_qml_vs_controls.csv`
+- `paper/results_tables/post_gate5_invention_branch_summary.csv`
 - `paper/results_tables/claim_boundary_table.csv`
 - `artifacts/research_figures/figure_registry.csv`
 - RFIG-001, RFIG-014, RFIG-021 through RFIG-023, RFIG-026 through RFIG-029,
-  RFIG-044 through RFIG-052
+  RFIG-044 through RFIG-052, and RFIG-062 through RFIG-085
 
 ## Selected References
 

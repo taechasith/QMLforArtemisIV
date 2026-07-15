@@ -36,3 +36,10 @@ QML benchmark, exploratory negatives, future-only safety-objective lesson, and
 no QML Gate 6 candidate from P001.
 
 RFIG-046 records the manuscript result map.
+
+## Supersession
+
+D055-C closes the experimental program and supersedes this historical draft
+state for current publication status. The current package is tracked in
+`paper/manuscript.md`, `docs/manuscript_submission_readiness.md`, and
+`docs/project_closure_d055.md`.

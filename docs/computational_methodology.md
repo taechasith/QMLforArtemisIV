@@ -1,6 +1,6 @@
 # Computational Methodology and Reference Hardware
 
-Version: 0.6.10
+Version: 0.6.11
 Hardware snapshot: 2026-07-11  
 Status: published computational-methodology supplement  
 Repository: `taechasith/QMLforArtemisIV`
@@ -453,6 +453,12 @@ and scientific failures because they require different responses.
 | 2026-07-14 | D017-C source-binding correction | The first D017 launch stopped before opening development data because the runner attempted to hash `source_binding.output_root` as a committed source blob | Treating a generated output directory as source would make clean-source verification impossible | Excluded the generated output root from committed source hashing while preserving all D017 scientific workload settings | Pre-data technical correction only. Development, calibration, final-test, hardware/GPU, and Gate 6 counters remained zero; future runners should separate source inputs from output destinations |
 | 2026-07-16 | D053-C Stage 1 numerical-audit freeze | D052-C requires a future DLA centralizer and orbital covariance audit, but a dense operator-space calculation or condition-number-squaring rank method would not fit the project reproducibility boundary | A numerical artifact, unclosed basis, or post-outcome tolerance choice could be mistaken for a physical symmetry mechanism and contaminate later QML design | Froze direct float64 economy SVD in bounded Pauli/DLA coefficient space, full-spectrum and three-threshold nullity checks, closure/resource stops, and the existing DOP853 default-versus-tightened replay | Method freeze only. The largest permitted coefficient matrix is 3,072 by 1,024 and one CPU-only audit runs at a time. No audit, dataset read, model fit, raw evidence, figure, hardware/GPU work, or Gate 6 activity occurred; a later decision must bind the unresolved representation and audit inputs before execution |
 | 2026-07-16 | D054-A P018 input-binding freeze | D053-C left the physical scope, audit representation, data strata, scales, paths, and figures deliberately unspecified | Filling those choices after inspecting audit outcomes would undermine the proposed mechanism test and could consume disproportionate local compute | Bound a CPU-only q=4 collective-spin representation, 255-element Pauli basis, fixed generator closure check, seven rotations, 36 development-only identities, `eps_a`, 20 m/s normalization, future output root, and RFIG-086 through RFIG-089; deterministic SRP is excluded | Binding and static methods-figure work only. No source manifest or data row was read; no DLA/SVD/DOP853 audit, dataset generation, model fit, calibration/final-test access, hardware/GPU work, or Gate 6 activity occurred. D055 must authorize one clean-source bounded audit before any future output is written |
+
+D055-C closes the active experimental program after D054-A without running the
+bounded DOP853/SVD audit. The publication package records the D034-D049
+successor branch as development-only negative evidence and preserves the
+reference workstation limits as a reproducibility boundary. No new data row,
+model fit, hardware/GPU job, or Gate 6 activity was introduced by closure.
 
 For RTC3 specifically, the qualified OEM predates the event by 15 hours 30
 minutes 41 seconds. A separate post-RTC3 trajectory product was not substituted

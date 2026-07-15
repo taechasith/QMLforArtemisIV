@@ -2853,3 +2853,29 @@ Development, calibration, and final-test reads remained zero. The correction is
 a package-safe sibling import fallback only; candidate equations, lambda
 values, folds, seeds, thresholds, controls, and resource limits are unchanged.
 This is a launcher failure, not scientific model evidence.
+
+### D055-C - Active experimental program closure and manuscript freeze
+
+Date: 2026-07-16
+Decision: **Accepted; close experimentation and prepare the manuscript**
+Parent: D054-A/P018 and D033-C
+Evidence: `docs/project_closure_d055.md` and
+`paper/results_tables/post_gate5_invention_branch_summary.csv`
+
+D055-C closes the active QML experimental program and declines execution of the
+D054-A/P018 DOP853/SVD audit. P018 remains future-only and cannot be used to
+delay the paper or to create a result after the fact. The final evidence is the
+accepted Gate 3 credibility result, the Gate 5 technical `FAIL`, the Q01b/FQK
+exploratory negatives, the sixteen D034-D049 development-only negatives, and
+the future-only recall-first safety lesson.
+
+The strongest apparent successor improvement was ORFRK-08-R2 at about 5.80%
+relative to C06, but its matched TWO-RBF control left only about 4.65%, below
+the frozen 5% classical-specific rule. No QML candidate earned Gate 6
+authority. No new trajectory, data read, model fit, threshold, calibration,
+final-test, hardware/GPU, mission-loop, or Gate 6 activity occurred under
+D055-C.
+
+Remaining work is publication administration and independent review only:
+author/journal metadata, bounded reference formatting, journal compliance,
+independent scientific/reproducibility review, and an optional archival DOI.

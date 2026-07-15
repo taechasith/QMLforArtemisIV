@@ -413,9 +413,19 @@ still requires direct SVD of the closed DLA coefficient matrix,
 full-spectrum/rank-stability records, and default-versus-tightened DOP853 replay
 before a fixed-context effect can be used for model design. RFIG-086 is a
 configuration-bound methods figure only; RFIG-087 through RFIG-089 have no data
-yet. D055 remains required before any bounded audit. Gate 6,
+yet. Before closure, D055 would have been required before any bounded audit;
+D055-C now declines that audit. Gate 6,
 calibration/final-test access, hardware/GPU work, and quantum-advantage claims
 remain unauthorized.
+
+D055-C now closes the active experimental program and declines the D054-A/P018
+audit. The project is a publication-package negative-result study: Gate 5 is a
+valid technical FAIL, Q01b and FQK are exploratory negatives, and D034-D049
+produced no candidate that satisfied the strict matched-control rule. The full
+successor branch is summarized in
+`paper/results_tables/post_gate5_invention_branch_summary.csv`. Remaining work
+is limited to manuscript metadata, bounded reference formatting, independent
+review, journal compliance, and optional archival DOI preparation.
 
 Canonical repository: https://github.com/taechasith/QMLforArtemisIV
 
@@ -479,6 +489,7 @@ through a dated deviation record.
 - docs/post_gate5_d052_symmetry_breaking_math_contract.md: theory-only Stage 1 contract for base covariance and learnable symmetry breaking.
 - docs/post_gate5_d053_symmetry_audit_freeze.md: accepted direct-SVD and DOP853 numerical-audit freeze with no execution authority.
 - docs/post_gate5_d054a_p018_binding_freeze.md: accepted P018 input-binding freeze with deterministic SRP excluded and no audit execution authority.
+- docs/project_closure_d055.md: accepted closure of active experimentation and manuscript publication freeze.
 - docs/post_gate5_d013_classical_first_protocol.md: planning-only classical-first residual and safety-filter path before QML invention.
 - docs/post_gate5_d014_classical_first_freeze.md: freeze proposal for CRES/CSAFE tracks before any implementation.
 - docs/post_gate5_d015_implementation_synthetic_validation.md: implementation and synthetic-validation authorization without data fitting.
@@ -501,7 +512,7 @@ through a dated deviation record.
 - docs/release_candidate_manifest.md: D032-C release-candidate manifest and post-acceptance action list.
 - docs/release_acceptance.md: D033-C accepted release package and claim boundary.
 - docs/release_notes_v0.3.0.md: accepted v0.3.0 release notes.
-- docs/manuscript_submission_readiness.md: structural manuscript status and remaining Q1 submission tasks.
+- docs/manuscript_submission_readiness.md: closed-experiment manuscript package and remaining submission tasks.
 - paper/manuscript.md: draft manuscript scaffold generated from the closed Gate 5/5X evidence.
 - docs/qml_invention_readiness_ledger.md: labels each result's useful invention signal and prohibited post-outcome use.
 - docs/post_gate5_implementation_freeze.md: D008 accepted implementation freeze defining exact Q01b/FQK methods, controls, stopping, compute, and failure-discussion rules.

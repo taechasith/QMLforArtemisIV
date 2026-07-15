@@ -653,3 +653,17 @@ audit outputs.
 **Claim boundary:** D054-A supplies a fair, bounded test design. It does not
 show a nontrivial centralizer, physical breaking, target relevance, prediction,
 QML invention, quantum advantage, or a Gate 6 candidate.
+
+## D055-C closure
+
+**Status:** Active experimentation closed; no new QML invention was accepted.
+
+**Useful invention signal:** The D034-D049 branch shows that the strongest
+apparent residual improvement must be compared with a matched classical
+residual control before it can be treated as quantum-specific. ORFRK-08-R2
+improved on C06 by about 5.80%, but its matched TWO-RBF control left only about
+4.65%, below the frozen 5% rule.
+
+**Claim boundary:** The repository contains a scientifically useful negative
+benchmark and future-design lessons, not a proven QML invention or quantum
+advantage. P018 is future-only and Gate 6 remains unauthorized.

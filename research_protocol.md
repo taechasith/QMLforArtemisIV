@@ -1,10 +1,11 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.66
+Version: 0.6.67
 Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK valid negative; D039 P007 EC-GFRK valid negative; D040 P008 CE-GFRK valid negative; D041 P009 complete valid negative after D041-C1; D042 P010 complete valid negative; D043 P011 complete valid negative; D044 P012 complete valid negative; D045 P013 complete valid negative; D046 P014 complete valid negative; D047 P015 complete valid negative; D048 P016 complete valid negative; D049 P017 complete valid negative; D050-C current QML invention branch closed without a qualifying candidate; D051-C/P018 Geometric QML feasibility discussion-only; D052-C Stage 1 symmetry-breaking mathematical contract complete; D053-C Stage 1 numerical-audit freeze complete with no execution; D054-A Stage 1 inputs bound with no execution; manuscript structural draft complete; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-16
-Recommended next action: keep P018 discussion-only pending D055. D054-A now binds the q=4 collective-spin representation, 255-element Pauli DLA basis, rotations, 36 development-only identities, `eps_a`, 20 m/s target scale, output paths, and RFIG-086 through RFIG-089. D055 may propose one clean-source DOP853/SVD audit only after a compute preflight; it may not activate SRP, fit a model, read calibration/final-test data, use hardware/GPU, reinterpret Gate 5, or open Gate 6.
+Closure status: D055-C closes active experimentation and freezes the manuscript package; P018 remains future-only and Gate 6 unauthorized.
+Recommended next action: no further experiment. D055-C closes active experimentation, declines the D054-A/P018 DOP853/SVD audit, and freezes the negative-result manuscript package. Finalize only author/journal metadata, reference formatting, independent review, and archival publication decisions. D054-A remains a future-only protocol; it may not activate SRP, fit a model, read calibration/final-test data, use hardware/GPU, reinterpret Gate 5, or open Gate 6.
 
 ## 1. Proposed title
 
@@ -1619,6 +1620,14 @@ rotations, `eps_a=1e-12 km/s^2`, and `y_scale=20 m/s` without changing the
 robust-correction target. RFIG-086 records this methods boundary, while
 RFIG-087 through RFIG-089 are reserved for future immutable audit evidence.
 Only a separate D055 decision may authorize a clean-source bounded audit.
+
+D055-C closes the active experimental program and declines that audit. The
+completed evidence remains the Gate 3 credibility result, the accepted Gate 5
+technical `FAIL`, the Q01b/FQK exploratory negatives, the D034-D049 successor
+branch negatives, and the future-only safety-objective lesson. The manuscript
+package is now the next work product. No new trajectory, DLA, SVD, model,
+threshold, calibration, final-test, hardware/GPU, mission-loop, or Gate 6
+activity is authorized.
 
 D041 had a technical stop before its endpoint. The unchanged launcher was
 terminated by the local one-hour execution allowance before it wrote an atomic
