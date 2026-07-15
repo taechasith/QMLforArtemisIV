@@ -2452,6 +2452,41 @@ the gate, and no eta is selected after outcomes. The full contract is in
 baseline, 5% thresholds, safety metrics, grouped folds, seeds, development
 scope, CPU-only resource boundary, and Gate 6 prohibition.
 
+### D042 result - P010 adaptive-gated error-conditioned fidelity-RBF kernel
+
+Date: 2026-07-15
+Decision: **Valid scientific negative; continue only through a new protocol**
+Evidence: `data/processed/reporting/post_gate5_d042_agefrk/campaign_result.json`
+
+AGEFRK-08-ADAPT scored mean pooled OOF NRMSE `0.006523834` versus C06
+`0.006832811`, with paired difference `-0.000308977` and 95% interval
+`[-0.000310404,-0.000307594]`. The interval is below zero, but the improvement
+was about 4.52%, below the frozen 5% rule. TWO-RBF-08-ADAPT scored `0.006738683`,
+so no classical-specific 5% superiority condition passed; regret and
+infeasible-selection conditions were preserved. All 39,000 development rows,
+300 channel audits, 300 projection audits, 100 gate audits, and figures
+RFIG-070/RFIG-071 completed with zero construction-time validation-outcome use,
+zero group overlap, zero locked-data reads, and zero hardware/GPU, mission-loop,
+or Gate 6 activity. D042 is a development-only negative. Its useful signal is
+that outcome-blind feasibility gating slightly improved D041 but did not meet
+the threshold or establish classical-specific superiority.
+
+### D043 - P011 cross-fitted residual stacking authorized
+
+Date: 2026-07-15
+Decision: **Accepted for one bounded development-only campaign**
+Authority: Assistant-selected continuation after the D042 valid negative
+
+D043 tests a training-only cross-fitted convex stack of the D041 fidelity and
+RBF-0.25 corrections. The mixture weight is fitted from inner grouped
+out-of-fold channel predictions and clipped to [0,1]. The matched control
+fits the same type of weight between RBF-0.25 and RBF-0.50 channels. Outer
+validation outcomes are evaluation-only; no weight is tuned on them. The full
+contract is in `configs/post_gate5_d043_sfrk.yaml` and
+`docs/post_gate5_d043_sfrk_protocol.md`. D043 preserves all frozen thresholds,
+safety metrics, grouped splits, seeds, development scope, CPU-only resource
+boundary, and Gate 6 prohibition.
+
 ### D037 prelaunch technical stop
 
 The first direct D037 launcher attempt stopped before `run()` and before any

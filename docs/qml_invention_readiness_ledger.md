@@ -310,3 +310,37 @@ RBF-0.25 and RBF-0.50 with the identical per-row eta. The gate is outcome-blind
 and is not tuned after validation outcomes. All frozen thresholds, safety
 metrics, grouped splits, seeds, development-only data scope, and CPU-only
 resource limits remain unchanged.
+
+## D042 P010 result label
+
+**Observed result:** AGEFRK-08-ADAPT scored mean pooled OOF NRMSE `0.006523834`
+versus C06 `0.006832811`, with paired difference `-0.000308977` and 95%
+interval `[-0.000310404,-0.000307594]`. The improvement was about 4.52%, below
+the frozen 5% rule. TWO-RBF-08-ADAPT scored `0.006738683`; safety and regret
+conditions were preserved.
+
+**Useful invention signal:** outcome-blind C06 feasibility gating slightly
+improved fixed D041 fusion but did not reach the threshold or establish a
+classical-specific gain. The next test should learn a mixture only from
+training-only cross-fitted residual evidence, rather than use a feasibility
+proxy.
+
+**Integrity label:** 39,000 development rows, 300 channel audits, 300
+projection audits, and 100 gate audits completed. Validation outcomes were not
+used in gate construction; group overlap, locked-data reads, hardware/GPU,
+mission-loop, and Gate 6 counters were zero. RFIG-070 and RFIG-071 are the
+reporting figures.
+
+**Prohibited use:** do not call D042 scientifically superior, claim NASA
+performance or quantum advantage, revise Gate 5, or authorize Gate 6.
+
+## D043 P011: cross-fitted residual stacking
+
+D043 is authorized as one new development-only protocol. It obtains inner
+grouped out-of-fold predictions for each residual channel on outer-training
+rows, fits a convex weight from those training-only predictions, and applies
+that fold/seed/q weight to outer validation predictions. The candidate stacks
+fidelity with RBF-0.25; the matched control stacks RBF-0.25 with RBF-0.50 using
+the same procedure. Outer validation outcomes cannot influence the weight.
+This is a test of train-only expert specialization, not a quantum advantage
+claim.

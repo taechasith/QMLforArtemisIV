@@ -1,4 +1,4 @@
-"""Generate paper-ready figures for the D042 AGEFRK campaign."""
+"""Generate paper-ready figures for the D043 SFRK campaign."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[1]
-RESULT_ROOT = ROOT / "data/processed/reporting/post_gate5_d042_agefrk"
+RESULT_ROOT = ROOT / "data/processed/reporting/post_gate5_d043_sfrk"
 FIGURE_ROOT = ROOT / "artifacts/research_figures"
 REGISTRY = FIGURE_ROOT / "figure_registry.csv"
 
@@ -43,14 +43,14 @@ def _summary_map() -> dict[str, dict[str, str]]:
 def _figure_comparison(summary: dict[str, dict[str, str]]) -> tuple[Path, Path]:
     models = [
         "C06",
-        "TWO-RBF-04-ADAPT",
-        "TWO-RBF-06-ADAPT",
-        "TWO-RBF-08-ADAPT",
-        "AGEFRK-04-ADAPT",
-        "AGEFRK-06-ADAPT",
-        "AGEFRK-08-ADAPT",
+        "TWO-RBF-04-CV",
+        "TWO-RBF-06-CV",
+        "TWO-RBF-08-CV",
+        "SFRK-04-CV",
+        "SFRK-06-CV",
+        "SFRK-08-CV",
     ]
-    labels = ["C06", "2RBF q4", "2RBF q6", "2RBF q8", "AGEFRK q4", "AGEFRK q6", "AGEFRK q8"]
+    labels = ["C06", "2RBF q4", "2RBF q6", "2RBF q8", "SFRK q4", "SFRK q6", "SFRK q8"]
     colors = [
         "#1b4965" if model == "C06" else "#e07a5f" if model.startswith("TWO-RBF") else "#2a9d8f"
         for model in models
@@ -74,7 +74,7 @@ def _figure_comparison(summary: dict[str, dict[str, str]]) -> tuple[Path, Path]:
             axis.text(
                 0.02,
                 0.04,
-                f"C06={float(summary['C06']['mean_nrmse']):.6f}; AGEFRK q8={float(summary['AGEFRK-08-ADAPT']['mean_nrmse']):.6f}",
+                f"C06={float(summary['C06']['mean_nrmse']):.6f}; SFRK q8={float(summary['SFRK-08-CV']['mean_nrmse']):.6f}",
                 transform=axis.transAxes,
                 fontsize=8,
             )
@@ -82,35 +82,36 @@ def _figure_comparison(summary: dict[str, dict[str, str]]) -> tuple[Path, Path]:
             for index, value in enumerate(values):
                 axis.text(value * 1.01, index, f"{value:.5g}", va="center", fontsize=7)
     fig.suptitle(
-        "D042 AGEFRK development result: outcome-blind C06-probability gating",
+        "D043 SFRK development result: cross-fitted residual stacking",
         fontsize=14,
         fontweight="bold",
     )
     fig.text(
         0.01,
         0.01,
-        "q=4/6/8; five grouped outer folds; four inner whole-group folds; 20 seeds; 39,000 development rows. Candidate and control share eta(x).",
+        "q=4/6/8; five grouped outer folds; four inner whole-group folds; 20 seeds; 39,000 development rows. Weights were fit on inner OOF training rows.",
         fontsize=9,
     )
     fig.subplots_adjust(bottom=0.18)
-    return _save(fig, "post_gate5_d042_agefrk_result_comparison")
+    return _save(fig, "post_gate5_d043_sfrk_result_comparison")
 
 
 def _figure_audit_resources(summary: dict[str, dict[str, str]]) -> tuple[Path, Path]:
     result = json.loads((RESULT_ROOT / "campaign_result.json").read_text(encoding="utf-8"))
     paired = _read_csv(RESULT_ROOT / "paired_comparison.csv")[0]
     channel_audit = _read_csv(RESULT_ROOT / "channel_audit.csv")
-    projection_audit = _read_csv(RESULT_ROOT / "projection_audit.csv")
-    gate_audit = _read_csv(RESULT_ROOT / "gate_audit.csv")
+    stack_audit = _read_csv(RESULT_ROOT / "stack_audit.csv")
     inner_audit = _read_csv(RESULT_ROOT / "inner_fold_audit.csv")
+    aggregate = [row for row in stack_audit if row["inner_fold"] == "aggregate"]
+    q8 = [row for row in aggregate if int(row["q"]) == 8]
     assert len(channel_audit) == 300
-    assert len(projection_audit) == 300
-    assert len(gate_audit) == 100
+    assert len(aggregate) == 300
+    assert len(q8) == 100
     assert len(inner_audit) == 400
     assert all(int(row["validation_outcomes_used"]) == 0 for row in channel_audit)
-    assert all(int(row["validation_outcomes_used"]) == 0 for row in projection_audit)
-    assert all(int(row["validation_outcomes_used"]) == 0 for row in gate_audit)
-    assert all(row["gate_source"] == "outer_fold_c06_feasibility_probability" for row in gate_audit)
+    assert all(int(row["validation_outcomes_used"]) == 0 for row in stack_audit)
+    assert all(int(row["group_intersection_count"]) == 0 for row in [row for row in stack_audit if row["inner_fold"] != "aggregate"])
+    assert all(row["weight_source"] == "inner_grouped_out_of_fold_training_predictions" for row in aggregate)
     assert all(row["channel_source"] == "same_cross_fitted_c06_residual" for row in channel_audit)
 
     per_seed = _read_csv(RESULT_ROOT / "per_seed_metrics.csv")
@@ -119,7 +120,7 @@ def _figure_audit_resources(summary: dict[str, dict[str, str]]) -> tuple[Path, P
         [
             float(row["nrmse"]) - c06_by_seed[row["seed_index"]]
             for row in per_seed
-            if row["model_id"] == "AGEFRK-08-ADAPT"
+            if row["model_id"] == "SFRK-08-CV"
         ]
     )
     runtime = result["runtime"]
@@ -130,18 +131,19 @@ def _figure_audit_resources(summary: dict[str, dict[str, str]]) -> tuple[Path, P
     axes[0].axhline(float(paired["lower_95"]), color="#bc4749", linestyle=":", label="95% paired interval")
     axes[0].axhline(float(paired["upper_95"]), color="#bc4749", linestyle=":")
     axes[0].set_xlim(0.5, 1.5)
-    axes[0].set_xticks([1], ["AGEFRK q8 minus C06"])
+    axes[0].set_xticks([1], ["SFRK q8 minus C06"])
     axes[0].set_ylabel("Seed-pooled NRMSE difference")
     axes[0].set_title("Primary paired endpoint")
     axes[0].legend(fontsize=8)
 
-    eta_values = np.asarray([float(row["eta_mean"]) for row in gate_audit], dtype=float)
-    axes[1].hist(eta_values, bins=12, color="#2a9d8f", edgecolor="#202020")
-    axes[1].axvline(0.25, color="#bc4749", linestyle="--", label="frozen bounds")
-    axes[1].axvline(0.75, color="#bc4749", linestyle="--")
-    axes[1].set_xlabel("Mean eta per fold-seed")
+    candidate_weights = [float(row["candidate_weight"]) for row in q8]
+    control_weights = [float(row["control_weight"]) for row in q8]
+    axes[1].hist(candidate_weights, bins=10, alpha=0.75, color="#2a9d8f", edgecolor="#202020", label="fidelity/RBF25")
+    axes[1].hist(control_weights, bins=10, alpha=0.65, color="#e07a5f", edgecolor="#202020", label="RBF25/RBF50")
+    axes[1].set_xlim(-0.02, 1.02)
+    axes[1].set_xlabel("Fitted convex weight (q=8)")
     axes[1].set_ylabel("Count")
-    axes[1].set_title("Outcome-blind gate audit")
+    axes[1].set_title("Training-only stack weights")
     axes[1].legend(fontsize=8)
     axes[1].grid(axis="y", alpha=0.25)
 
@@ -159,10 +161,10 @@ def _figure_audit_resources(summary: dict[str, dict[str, str]]) -> tuple[Path, P
     axes[2].set_xlabel("Observed value")
     axes[2].tick_params(axis="y", labelsize=8)
     axes[2].grid(axis="x", alpha=0.25)
-    fig.suptitle("D042 AGEFRK paired uncertainty, gate isolation, and compute boundary", fontsize=14, fontweight="bold")
-    fig.text(0.01, 0.01, "Development-only evidence; validation labels were used only for scoring. Calibration/final-test, hardware/GPU, mission, and Gate 6 counters were zero.", fontsize=9)
+    fig.suptitle("D043 SFRK paired uncertainty, weight isolation, and compute boundary", fontsize=14, fontweight="bold")
+    fig.text(0.01, 0.01, "Development-only evidence; outer validation labels were used only for scoring. Calibration/final-test, hardware/GPU, mission, and Gate 6 counters were zero.", fontsize=9)
     fig.subplots_adjust(wspace=0.48, bottom=0.18)
-    return _save(fig, "post_gate5_d042_agefrk_audit_resources")
+    return _save(fig, "post_gate5_d043_sfrk_audit_resources")
 
 
 def _update_registry(entries: list[dict[str, str]]) -> None:
@@ -186,36 +188,35 @@ def main() -> None:
     paths = [_figure_comparison(summary), _figure_audit_resources(summary)]
     source_data = ";".join(
         [
-            "data/processed/reporting/post_gate5_d042_agefrk/campaign_result.json",
-            "data/processed/reporting/post_gate5_d042_agefrk/summary.csv",
-            "data/processed/reporting/post_gate5_d042_agefrk/per_seed_metrics.csv",
-            "data/processed/reporting/post_gate5_d042_agefrk/paired_comparison.csv",
-            "data/processed/reporting/post_gate5_d042_agefrk/inner_fold_audit.csv",
-            "data/processed/reporting/post_gate5_d042_agefrk/projection_audit.csv",
-            "data/processed/reporting/post_gate5_d042_agefrk/channel_audit.csv",
-            "data/processed/reporting/post_gate5_d042_agefrk/gate_audit.csv",
+            "data/processed/reporting/post_gate5_d043_sfrk/campaign_result.json",
+            "data/processed/reporting/post_gate5_d043_sfrk/summary.csv",
+            "data/processed/reporting/post_gate5_d043_sfrk/per_seed_metrics.csv",
+            "data/processed/reporting/post_gate5_d043_sfrk/paired_comparison.csv",
+            "data/processed/reporting/post_gate5_d043_sfrk/inner_fold_audit.csv",
+            "data/processed/reporting/post_gate5_d043_sfrk/stack_audit.csv",
+            "data/processed/reporting/post_gate5_d043_sfrk/channel_audit.csv",
         ]
     )
-    generator = "scripts/make_post_gate5_d042_agefrk_figures.py"
+    generator = "scripts/make_post_gate5_d043_sfrk_figures.py"
     generator_hash = _sha256(ROOT / generator)
     definitions = [
         (
-            "RFIG-070",
-            "D042 AGEFRK result comparison",
-            "Results: development-only adaptive-gate evaluation",
-            "d042_agefrk_result_comparison",
+            "RFIG-072",
+            "D043 SFRK result comparison",
+            "Results: development-only cross-fitted stack",
+            "d043_sfrk_result_comparison",
             "development_only_negative",
-            "AGEFRK q=4/6/8 improved C06 in the declared development campaign, but q=8 stayed below the 5% rule and did not beat the identically gated two-RBF control by 5%.",
+            "SFRK q=4/6/8 and matched two-RBF stacks are compared with C06; the primary q=8 result is judged by the frozen threshold and control rule.",
             "Development-only evidence; no Gate 5 revision, NASA performance claim, mission claim, calibration/final-test result, hardware/GPU, Gate 6, or quantum advantage.",
         ),
         (
-            "RFIG-071",
-            "D042 AGEFRK paired audit and resources",
-            "Methods and Results: adaptive gate isolation and compute",
-            "d042_agefrk_audit_resources",
+            "RFIG-073",
+            "D043 SFRK paired audit and resources",
+            "Methods and Results: cross-fitted weight isolation and compute",
+            "d043_sfrk_audit_resources",
             "development_only_negative",
-            "The AGEFRK q=8 paired endpoint, outcome-blind eta distribution, and reference-laptop resource boundary are reported with zero construction-time validation-outcome use.",
-            "Development-only uncertainty, gate, integrity, and compute evidence; no NASA performance claim, mission claim, calibration/final-test result, hardware/GPU, Gate 5 revision, Gate 6, or quantum advantage.",
+            "The SFRK q=8 paired endpoint, training-only weight distributions, and reference-laptop resource boundary are reported with inner group separation audits.",
+            "Development-only uncertainty, stack, integrity, and compute evidence; no NASA performance claim, mission claim, calibration/final-test result, hardware/GPU, Gate 5 revision, Gate 6, or quantum advantage.",
         ),
     ]
     entries: list[dict[str, str]] = []
