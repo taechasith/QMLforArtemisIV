@@ -511,3 +511,31 @@ D049 is authorized as one new development-only protocol. The shared q=8
 RBF-0.25 gain remains fixed at `0.10`; only the unique second-stage gain is
 selected from `{0.05, 0.10, 0.15, 0.20}` using inner-training OOF residuals for
 both candidate and matched RBF control.
+
+## D049 P017 result label
+
+**Observed result:** SSORFRK-08 scored mean pooled OOF NRMSE `0.006566434`
+versus C06 `0.006832811`, with paired difference `-0.000266377` and 95%
+interval `[-0.000267666,-0.000265053]`. The improvement was about 3.90%, and
+SSO-TWO-RBF-08 scored `0.006746645`, leaving about 2.67% improvement over the
+matched classical control. Both candidate and control selected second-stage
+gain `0.05` in all 100 selection audits.
+
+**Useful invention signal:** stage-separated inner-OOF gain selection did not
+preserve the D046 fixed-gain endpoint. The repeated D034-D049 evidence does
+not identify a candidate that meets both frozen 5% thresholds. D047's
+multi-scale stack is harmful in this regime, while D048 and D049 select the
+smallest correction. No additional parameter-only search is justified.
+
+**Integrity label:** 39,000 development rows, 100 channel audits, 400
+shared-stage audits, 400 orthogonal audits, 100 selection audits, and zero
+validation-outcome use were recorded. Group overlap, locked-data reads,
+hardware/GPU, mission-loop, and Gate 6 counters were zero. RFIG-084 and
+RFIG-085 are the reporting figures.
+
+**Branch status:** D050-C closes the current invention branch without a
+qualifying QML candidate. A future protocol requires a materially new
+mechanism, independent reproduction, and an identical classical control.
+
+**Prohibited use:** do not call D049 scientifically superior, claim NASA
+performance or quantum advantage, revise Gate 5, or authorize Gate 6.

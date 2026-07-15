@@ -2553,6 +2553,46 @@ contract is in `configs/post_gate5_d045_msfrk.yaml` and
 grouped splits, seeds, data scope, CPU-only resource boundary, and Gate 6
 prohibition remain unchanged.
 
+### D049 result - P017 stage-separated q8 gain calibration
+
+Date: 2026-07-15
+Decision: **Valid scientific negative; close the current parameter-only invention branch**
+Evidence: `data/processed/reporting/post_gate5_d049_ssorfrk/campaign_result.json`
+
+SSORFRK-08 scored mean pooled OOF NRMSE `0.006566434` versus C06
+`0.006832811`, with paired difference `-0.000266377` and 95% interval
+`[-0.000267666,-0.000265053]`. The improvement was about 3.90%, below the
+frozen 5% rule. SSO-TWO-RBF-08 scored `0.006746645`, leaving about 2.67%
+candidate-over-control improvement, so the classical-specific 5% condition
+failed. Both candidate and control selected second-stage gain `0.05` in all
+100 selection audits. The 39,000-row development campaign completed with
+zero validation-outcome use, zero group overlap, zero locked-data reads, zero
+hardware/GPU, zero mission-loop activity, and zero Gate 6 activity. RFIG-084
+and RFIG-085 are the paper-ready result and audit/resource figures.
+
+### D050-C - post-Gate-5 QML invention branch closed
+
+Date: 2026-07-15
+Decision: **No qualifying invented QML candidate; no further parameter-only search authorized**
+Authority: Assistant-selected scientific closure after the D049 negative
+
+The cumulative D034-D049 record contains no candidate that beats both C06 and
+its matched classical control by the frozen 5% threshold. D046 is the best
+endpoint, but its 4.65% classical-specific improvement remains below the rule.
+D047 rejects the fixed multi-scale stack in this regime; D048 and D049 show
+that inner-OOF gain selection chooses the minimum correction and does not
+retain D046's fixed-gain result. These findings should be reported as useful
+mechanism-localization evidence, not as a universal impossibility result for
+QML.
+
+No additional in-pipeline fitting is authorized. A future protocol must first
+specify a materially new mechanism, an independent reproduction plan, and an
+identically budgeted classical control. Candidate future directions are
+physically grounded orbital-invariant features, an independent data regime, or
+an explicitly modeled hardware noise/data-loading study. Gate 6, calibration,
+final-test access, mission-loop work, and quantum-advantage claims remain
+unauthorized.
+
 ### D047 result - P015 orthogonalized multi-scale fidelity stack
 
 Date: 2026-07-15

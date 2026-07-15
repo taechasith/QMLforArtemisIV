@@ -1,10 +1,10 @@
 # OpenQFuel-Cislunar Research Protocol
 
-Version: 0.6.61
-Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK valid negative; D039 P007 EC-GFRK valid negative; D040 P008 CE-GFRK valid negative; D041 P009 complete valid negative after D041-C1; D042 P010 complete valid negative; D043 P011 complete valid negative; D044 P012 complete valid negative; D045 P013 complete valid negative; D046 P014 complete valid negative; D047 P015 complete valid negative; D048 P016 complete valid negative; D049 P017 stage-separated q8 gain calibration authorized; manuscript structural draft complete; Gate 6 unauthorized
+Version: 0.6.62
+Status: Gates 1-5 accepted; Gate 5 closed with technical outcome FAIL; D011-R1 development-only campaign complete with valid exploratory negatives; D012 future-protocol discussion opened; D013-C planning accepted; D014-C freeze proposal accepted; D015-C synthetic scaffolds implemented; D016-C/D016-C1 compute admissions PASS; D017-C complete; D018-C interpretation NO_ADVANCE; D019-C safety-objective discussion opened; D020-C recall-first safety freeze proposal accepted; D021-C synthetic validation PASS; D022-C clean-source synthetic compute preflight PASS; D023-C development-only recall-first audit complete; D024-C interpretation complete with NO_ADVANCE; D025-C Gate 5 closure complete with no QML Gate 6 candidate; D026-C manuscript synthesis ready; D027-C manuscript Results/Discussion draft ready; D028-C release-support cards ready; D029-C clean reproducibility audit STOP; D030-C clean reproducibility correction PASS; D031-C final claim/release review READY; D032-C release-candidate manifest READY; D033-C release package ACCEPTED and published; D034 P002 PRQK valid negative; D035 P003 CFQSR valid negative; D036 P004 TAP-QK valid negative; D037 P005 TSQR valid negative; D038 P006 GFRK valid negative; D039 P007 EC-GFRK valid negative; D040 P008 CE-GFRK valid negative; D041 P009 complete valid negative after D041-C1; D042 P010 complete valid negative; D043 P011 complete valid negative; D044 P012 complete valid negative; D045 P013 complete valid negative; D046 P014 complete valid negative; D047 P015 complete valid negative; D048 P016 complete valid negative; D049 P017 complete valid negative; D050-C current QML invention branch closed without a qualifying candidate; manuscript structural draft complete; Gate 6 unauthorized
 Prepared: 2026-07-10  
 Updated: 2026-07-15
-Recommended next action: execute one bounded D049 P017 campaign using a fixed shared q=8 RBF gain and a small predeclared training-only second-stage gain grid, and continue only through a newly recorded future protocol if the candidate is a valid negative. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
+Recommended next action: prepare the manuscript and reproducibility package from the completed development record; do not run another parameter-only QML search. Any future QML protocol must introduce a materially new, pre-registered mechanism and independent reproduction plan before execution. DOI minting, QML Gate 6 mission experiment, calibration/final-test access, hardware/GPU work, Gate 5 reinterpretation, public superiority claims, quantum-advantage claims, mission-loop work, and Gate 6 remain unauthorized
 
 ## 1. Proposed title
 
@@ -1524,6 +1524,33 @@ the predeclared grid `{0.05, 0.10, 0.15, 0.20}` using inner-training OOF
 residuals. Candidate and matched RBF control receive identical gain-selection
 budgets. This tests stage-specific calibration without reopening multi-scale
 stacking or whole-correction shrinkage selection.
+
+D049 is a valid scientific negative. SSORFRK-08 scored mean pooled OOF NRMSE
+`0.006566434` versus C06 `0.006832811`, with paired difference
+`-0.000266377` and 95% interval `[-0.000267666,-0.000265053]`. The improvement
+was about 3.90%, below the frozen 5% rule. The matched SSO-TWO-RBF-08 control
+scored `0.006746645`, leaving about 2.67% candidate-over-control improvement;
+the classical-specific 5% condition therefore failed. Both candidate and
+control selected the minimum second-stage gain `0.05` in all 100 selection
+audits. All 39,000 development rows, 100 channel audits, 400 shared-stage
+audits, 400 second-stage audits, 100 selection audits, and RFIG-084/RFIG-085
+completed with zero validation-outcome use, zero group overlap, zero locked-data
+reads, zero hardware/GPU, zero mission-loop activity, and zero Gate 6 activity.
+
+D050-C closes the current post-Gate-5 QML invention branch. Across D034-D049,
+no candidate satisfies both the frozen 5% improvement over C06 and the frozen
+5% improvement over its matched classical control. D046 remains the strongest
+development endpoint, but its 4.65% classical-specific improvement is still
+below the acceptance rule. D047 shows that the fixed multi-scale stack can
+harm performance, while D048 and D049 show that inner-OOF selection collapses
+to the smallest correction and does not preserve D046. These are useful
+negative and mechanism-localization results, not evidence that QML is
+universally ineffective. No further parameter-only fitting is scientifically
+justified in this pipeline. A future protocol may consider only a materially
+new mechanism, such as physically grounded orbital-invariant feature design,
+an independently reproduced data regime, or an explicitly modeled hardware
+noise/data-loading setting; each must be preregistered with an identical
+classical control before any run. Gate 6 remains unauthorized.
 
 D041 had a technical stop before its endpoint. The unchanged launcher was
 terminated by the local one-hour execution allowance before it wrote an atomic
