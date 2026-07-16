@@ -1,14 +1,15 @@
 \section{Discussion}
 \label{sec:discussion}
 
-The principal finding is a controlled negative benchmark. The Q01
+The principal finding is a controlled negative benchmark: the runs completed
+validly, but the tested performance hypotheses were rejected. The Q01
 fidelity-style quantum kernel was far behind the physics-residual control, and
 the Q01b projected feature map did not close the gap. The feasibility-only
-kernel did not meet the recall-sensitive safety interpretation. The successor
-branch demonstrates an additional failure mode that is important beyond this
-specific task: a candidate can improve a weak or incomplete comparator yet
-fail against a matched classical construction. That distinction is exactly why
-dequantization controls and branch-specific thresholds belong in the protocol.
+kernel did not meet its fixed multi-metric screening criteria. The successor
+branch demonstrates an additional failure mode that matters beyond this task: a
+candidate can improve over one baseline yet fail against a classical model with
+the same staged construction. That distinction is why matched dequantization
+controls and thresholds fixed before outcomes belong in the protocol.
 
 The result is scientifically useful because the negative conclusion is
 specific. It rules out a family of tested feature maps and successor
@@ -25,14 +26,16 @@ structure that a low-fidelity model can represent directly. C06's performance
 shows that, for this benchmark, the available physical residual structure is
 more informative than the tested quantum fidelity features. That observation
 does not establish a theorem about quantum circuits; it establishes a
-task-specific inductive-bias comparison that future proposals must beat fairly.
+task-specific comparison of inductive bias, the kinds of patterns each model is
+built to represent, that future proposals must beat fairly.
 
 The retained Q02/Q03 status also matters. Many reports collapse all
-non-advancing paths into a single ``failure'' category. Here, a task can run
-correctly but be ineligible for later computation under a rule frozen before
-results. Keeping \texttt{not\_reached\_under\_frozen\_eligibility} separate
-from a task failure makes the evidence ledger more truthful and prevents a
-later analyst from inventing a selection path that never existed.
+non-advancing paths into a single ``failure'' category. Here, the first-rung
+tasks ran correctly, but the candidates were ineligible for larger-rung
+computation under a rule frozen before results. Keeping
+\texttt{not\_reached\_under\_frozen\_eligibility} separate from a task failure
+makes the evidence ledger more truthful and prevents a later analyst from
+inventing a selection path that never existed.
 
 The paper's societal relevance is therefore not a claim of operational benefit.
 It is a reusable, human-centered research pattern for high-consequence AI:
@@ -73,16 +76,20 @@ competitive.
 \subsection{Safety objective as a distinct scientific question}
 
 The FQK and CSAFE-RF records demonstrate that predictive metrics must be tied
-to the intended decision. AUROC and Brier score summarize useful aspects of a
-classifier, but neither alone ensures that the model detects enough unsafe
-cases at a fixed threshold. The FQK result therefore remains negative under
-the study's safety-filter interpretation even though its discrimination score
-is above random. This guards against a common reporting error: promoting a
-model by the metric that is most favorable after the outcome is known.
+to both label meaning and intended action. In these executed analyses, the
+positive label is feasible. AUROC measures overall ranking, Brier score measures
+probability error, and recall measures how many actually feasible options are
+retained. Precision and the false-positive rate address the different risk of
+admitting an actually infeasible option. FQK remains negative under its frozen
+multi-metric rule even though its AUROC is above random, because its Brier score
+and feasible-case recall did not match the classical controls. This guards
+against promoting a model by whichever metric looks most favorable afterward.
 
-The higher-recall classical result is not a rescue or a replacement result. It
-identifies a future hypothesis: a safety screen should define a recall floor,
-false-negative constraint, calibration requirement, and action policy before
-the model is fitted. That hypothesis belongs to a separately authorized
-experiment, because using it to alter the Gate 5 rule after inspection would
-invalidate the original test.
+The higher-recall classical result is not a rescue or a safety result. It is a
+future design lesson: a screening protocol should define, before fitting, a
+minimum feasible-case recall for usefulness, a maximum infeasible-case
+false-positive rate for protection, a calibration requirement, and the action
+taken when the model abstains. Those quantities cannot be replaced by a single
+``safety'' score. Testing such a policy requires a separately authorized
+experiment; using it to alter Gate 5 after inspection would invalidate the
+original test.

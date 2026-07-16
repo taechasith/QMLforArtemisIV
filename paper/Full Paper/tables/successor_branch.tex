@@ -1,18 +1,13 @@
-{\scriptsize
+\begin{table}[!t]
+\caption{Closed D034--D049 successor branch. Candidate names are immutable protocol IDs; their definitions are preserved in the repository. Every row is a valid development-only negative. The C06 NRMSE was 0.006833 throughout. Lower NRMSE is better, and a negative paired difference favors the candidate over C06, but each branch also had to pass its matched-control and stopping rules.}
+\label{tab:successor-branch}
+\centering
+\scriptsize
 \setlength{\tabcolsep}{2pt}
-\begin{longtable}{@{}p{0.09\textwidth}p{0.24\textwidth}p{0.15\textwidth}p{0.17\textwidth}p{0.25\textwidth}@{}}
-\caption{Closed D034--D049 successor branch. Every row completed as a valid development-only negative. The C06 NRMSE was 0.006833 for each row. A negative paired difference favors the candidate over C06, but each branch also required its own frozen comparison and stopping rules.}\label{tab:successor-branch}\\
+\begin{tabular}{@{}p{0.09\textwidth}p{0.24\textwidth}p{0.15\textwidth}p{0.17\textwidth}p{0.25\textwidth}@{}}
 \toprule
-Decision & Candidate & Candidate NRMSE & Difference vs C06 & 95\% paired interval \\
+Decision & Candidate & \shortstack[l]{Candidate\\NRMSE} & \shortstack[l]{Difference\\vs C06} & \shortstack[l]{95\% paired\\interval} \\
 \midrule
-\endfirsthead
-\multicolumn{5}{c}{\tablename\ \thetable{} -- continued} \\
-\toprule
-Decision & Candidate & Candidate NRMSE & Difference vs C06 & 95\% paired interval \\
-\midrule
-\endhead
-\bottomrule
-\endfoot
 D034 & PRQK-08-N & 0.029326 & 0.022493 & [0.022486, 0.022500] \\
 D035 & CFQSR-08-N & 0.013463 & 0.006630 & [0.006627, 0.006632] \\
 D036 & TAPQK-08 & 0.010382 & 0.003549 & [0.003547, 0.003551] \\
@@ -29,5 +24,6 @@ D046 & ORFRK-08-R2 & 0.006436 & -0.000397 & [-0.000399, -0.000394] \\
 D047 & OMFRK-ALL & 0.006952 & 0.000119 & [0.000113, 0.000125] \\
 D048 & NSORFRK-08 & 0.006590 & -0.000243 & [-0.000244, -0.000242] \\
 D049 & SSORFRK-08 & 0.006566 & -0.000266 & [-0.000268, -0.000265] \\
-\end{longtable}
-}
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,16 +1,16 @@
 \begin{table}[t]
-\caption{Primary and exploratory QML endpoints from the frozen evidence package. All values are development-only. The feasibility endpoint uses the frozen 0.5 decision threshold.}
+\caption{Primary and exploratory QML endpoints from the frozen evidence package. All values are development-only. Lower NRMSE and Brier score are better; higher recall is better for retaining actually feasible plans. The feasibility endpoint uses the fixed 0.5 threshold.}
 \label{tab:gate5-results}
 \centering
 \footnotesize
-\begin{tabularx}{\textwidth}{@{}p{0.11\textwidth}p{0.31\textwidth}p{0.22\textwidth}X@{}}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.18\textwidth}>{\raggedright\arraybackslash}p{0.29\textwidth}Y@{}}
 \toprule
-Block & Candidate and endpoint & Value and comparator & Interpretation \\
+Stage & Model and metric & Development result and meaning \\
 \midrule
-Gate 5 & Q01 quantum kernel; mean NRMSE & 0.646614 vs C06: 0.008739 & Technical FAIL; no qualifying regime \\
-P001 & Q01b projected quantum kernel; mean NRMSE & 0.661207 vs C06: 0.006833 & Exploratory negative; 95.77x relative gap \\
-P001 & FQK feasibility kernel; recall at 0.5 & 0.108860; classical controls stronger & Exploratory negative; not a safety filter \\
-Future lesson & Calibrated logistic; recall / Brier & 0.804253 / 0.142231 & Protocol-design signal only \\
+Primary Gate 5 & Fidelity quantum kernel (Q01); mean NRMSE & Q01: 0.646614; physics-residual C06: 0.008739. Protocol FAIL; no predefined subgroup passed. \\
+Projected follow-up & Projected quantum kernel (Q01b; P001); mean NRMSE & Q01b: 0.661207; C06: 0.006833. Exploratory negative; about 97 times the C06 error. \\
+Feasibility follow-up & Feasibility-only quantum kernel (FQK; P001); recall at 0.5 & Recall: 0.108860. It retained only 10.9\% of actually feasible cases, and classical controls were stronger. \\
+Future lesson & Calibrated logistic model; feasible-case recall and Brier score & Recall: 0.804253; Brier: 0.142231. Protocol-design signal, not a safety result. \\
 \bottomrule
 \end{tabularx}
 \end{table}

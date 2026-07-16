@@ -4,7 +4,6 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{booktabs}
-\usepackage{longtable}
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{hyperref}
@@ -14,8 +13,8 @@
 
 \begin{document}
 
-\title{A Governed Public-Data Benchmark of Quantum Machine Learning for Human-Rated Cislunar Trajectory-Correction Planning}
-\titlerunning{A Governed QML Benchmark for Cislunar Trajectory Correction}
+\title{Putting Quantum AI Hype to the Test in Cislunar Space: A Governed Public-Data Benchmark for Human-Centered Trajectory-Correction Planning}
+\titlerunning{Putting Quantum AI Hype to the Test in Cislunar Space}
 
 \author{Taechasith Kangkhuntod}
 \authorrunning{T. Kangkhuntod}
@@ -23,29 +22,38 @@
 
 \maketitle
 
+\begin{center}
+\refstepcounter{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/implementation_framework_oneline_pen_labeled_alt.png}\\[0.4em]
+{\small Fig.~\thefigure. Labeled one-line pen illustration of the study workflow: public trajectory data and a frozen protocol enter an audited benchmark machine, model evidence separates into a reliable C06 classical-control path and a non-advancing QML-kernel path, and final authority remains with human mission review.}
+\label{fig:implementation-framework}
+\end{center}
+
 \begin{abstract}
-This research asks whether quantum-kernel models add predictive value to a
-public-data, human-rated cislunar trajectory-correction decision-support
-benchmark when compared fairly with physics-based controls. The
-study froze its source-bound simulator, grouped development splits, fold-local
-preprocessing, retention rules, and claim boundary before model outcomes were
-reported. The simulator credibility chain accepted 67 eligible public-data
-checks with zero failures. The preregistered Q01 fidelity-style quantum kernel
-had mean normalized root-mean-square error (NRMSE) 0.646614, compared with
-0.008739 for the C06 physics-residual control; no regime qualified for advance.
-The projected Q01b successor had NRMSE 0.661207 versus 0.006833 for C06. A
-feasibility-only quantum kernel reached recall 0.108860 at the frozen threshold,
-which was inadequate for its safety-filter interpretation. Sixteen further,
-prospectively bounded development-only candidates completed as valid negatives;
-the strongest apparent residual gain did not survive its matched classical
-control. The finding is not that QML is universally ineffective. It is that the
-tested QML representations did not justify additional complexity for this
-frozen task and control set. The societal contribution is a transparent method
-for preventing unsupported AI claims from being promoted into high-consequence
-human decision contexts: preserve source provenance, show negative outcomes,
-and keep crew-related requirements and human review separate from a model score.
-This study does not claim quantum advantage, propellant savings, mission-loop
-validity, flight readiness, hardware performance, or a new QML invention.
+This study tests whether quantum machine learning (QML) kernels improve a
+public-data benchmark for crewed Earth--Moon trajectory correction. The target
+is robust total correction delta-v: modeled velocity change after accounting
+for uncertainty. Related mission cases shared a data fold; preprocessing used
+only training rows; thresholds were fixed before outcomes; and calibration and
+final-test rows remained locked. The simulator chain passed 67 eligible checks;
+one event lacked eligible evidence and was classified neither pass nor failure. On development
+data, the primary fidelity kernel (Q01) produced mean normalized
+root-mean-square error (NRMSE) 0.646614, while the physics-residual classical
+control (C06) produced 0.008739. NRMSE divides root-mean-square error by the
+target standard deviation; lower is better. The projected-kernel
+follow-up (Q01b) produced 0.661207 versus 0.006833 for C06. The feasibility-only
+quantum kernel (FQK) retained 10.9\% of actually feasible cases at the fixed
+0.5 threshold. Sixteen bounded successors failed predeclared
+advancement criteria; the strongest apparent gain did not pass its matched
+classical-control threshold. This does not show that QML is universally
+ineffective; it shows that the tested representations did not justify quantum
+complexity for this frozen task. The societal contribution is a transparent
+safeguard against unsupported AI claims in high-consequence decisions:
+preserving provenance, reporting negative outcomes, and separating crew
+requirements and human authorization from model scores. This study makes no claim of
+quantum advantage, propellant savings, flight readiness, hardware performance,
+or a new QML invention.
 \keywords{Quantum machine learning \and human-centered AI \and decision support \and cislunar trajectory design \and reproducible benchmarking \and negative results}
 \end{abstract}
 

@@ -1,36 +1,46 @@
 \section{Introduction}
 
-Trajectory correction for a human-rated cislunar mission is a coupled decision
-problem. A correction-burn placement changes the trajectory while interacting
-with navigation uncertainty, maneuver execution, crew timelines,
-entry-interface constraints, and propellant objectives. Public Artemis
-trajectory-design research therefore treats robust correction cost and mission
-constraints together rather than as an unconstrained curve-fitting task
-\cite{woffinden2023}. A learning surrogate could be useful if it reduces the
-cost of screening scenarios while preserving the structure that makes a
-candidate decision safe and interpretable. That conditional statement is not
-evidence that any particular machine-learning model is useful.
+Cislunar space is the region in and around the Earth--Moon system. A
+trajectory-correction maneuver, or correction burn, deliberately changes a
+spacecraft's velocity to keep its path within mission constraints. The required
+change is summarized by delta-v (measured in m/s). Delta-v is not propellant
+mass, although it is a standard measure of maneuver effort and is related to
+fuel use through the vehicle and propulsion model.
+
+For a crew-carrying mission, correction planning is a coupled decision problem:
+burn timing and delta-v interact with navigation uncertainty, maneuver
+execution, crew timelines, entry conditions, and reserve constraints. Public
+Artemis trajectory-design research therefore treats robust correction cost,
+meaning correction delta-v evaluated with modeled uncertainty, together with
+mission constraints rather than as an unconstrained curve-fitting task
+\cite{woffinden2023}. A learning \emph{surrogate}, a fast predictive model that
+approximates a more expensive simulation, could help screen candidate scenarios.
+That possibility is a motivation for testing, not evidence that a particular
+machine-learning model is useful or safe.
 
 The paper adopts a human-centered decision-support framing. A model score is
 not the decision: a responsible reviewer needs to know which source data,
 physical assumptions, uncertainty boundary, and failure cases produced the
 score before deciding whether a model warrants further study. Crew-related
 requirements therefore remain separate from predictive performance, consistent
-with the intended-use and human-system boundaries in the applicable NASA
-standards \cite{nasa7009,nasa3001}. This work does not conduct a user study or
-measure usability, trust, workload, or operator performance. Its HCI-relevant
-contribution is the evidence design around a prospective decision-support
-artifact.
+with the intended-use and human-system boundaries in the applicable U.S.
+National Aeronautics and Space Administration (NASA) standards
+\cite{nasa7009,nasa3001}. This work does not conduct a user study or measure
+usability, trust, workload, or operator performance. From a human--computer
+interaction (HCI) perspective, its contribution is the evidence design around
+a possible future decision-support tool.
 
-QML offers feature maps and hypothesis spaces that are different from common
-classical models \cite{schuld2019,havlicek2019}. This motivates testing QML,
-but it does not resolve the application question. Encoding a classical feature
-vector into a quantum state introduces data-loading choices, kernel geometry,
-and resource costs. A circuit may be difficult to simulate while still being
-well approximated by a classical learner on the relevant data distribution
-\cite{huang2021,sweke2025}. Conversely, a favorable numerical result can be
-an artifact of an under-tuned comparator, a split that leaks mission-family
-information, post-outcome threshold selection, or omitted failures. These are
+Quantum machine learning (QML) uses quantum-state representations or quantum
+circuits inside a learning method. In a quantum-kernel model, a circuit maps
+each classical input to a quantum state and the overlap between two states is
+used as a similarity score. This offers feature maps different from common
+classical models \cite{schuld2019,havlicek2019}, but difference alone does not
+imply usefulness. Encoding data introduces loading choices, similarity
+geometry, and resource costs. A circuit may be difficult to simulate in general
+while still being approximated well by a classical learner on the tested data
+\cite{huang2021,sweke2025}. Conversely, a favorable result can arise from a
+weakly tuned comparator, related mission cases leaking across a data split,
+thresholds chosen after seeing outcomes, or omitted failures. These are
 benchmarking problems before they are quantum-computing problems.
 
 This paper documents a complete public-data experimental program for
@@ -45,12 +55,13 @@ fair QML comparisons \cite{bowles2024,schnabel2024}.
 
 The central research questions were deliberately narrow:
 \begin{enumerate}
-\item Can Q01 improve correction-cost prediction over physics-derived and
-classical controls under the frozen development protocol?
-\item If Q01 fails, does a prospectively specified projected quantum kernel
-improve the same task without changing the data-access or split discipline?
-\item Can a feasibility-only quantum kernel meet a fixed, recall-sensitive
-safety-filter interpretation?
+\item Can the primary fidelity-style quantum kernel (repository identifier
+Q01) improve correction-cost prediction over physics-derived and classical
+controls under the frozen development protocol?
+\item If Q01 fails, can the projected follow-up Q01b improve the same task
+without changing data access or data splits?
+\item Can the feasibility-only quantum kernel (FQK) meet its fixed screening
+criteria for identifying independently propagated feasible cases?
 \item Which conclusions remain valid when calibration, final-test,
 mission-loop, and hardware evidence stay locked?
 \end{enumerate}
@@ -63,10 +74,11 @@ and prohibited operational claims. Negative results are not treated as failed
 record keeping; they are the result when a hypothesis does not meet its
 predeclared standard.
 
-The paper makes five contributions:
+The paper makes six contributions:
 \begin{enumerate}
-\item A source-bound cislunar benchmark protocol with public inputs, grouped
-development folds, fold-local transformations, and retained numerical
+\item A source-bound cislunar benchmark protocol, meaning that inputs are tied
+to identified public files and recorded source versions, with grouped
+development folds, training-fold-only transformations, and retained numerical
 feasibility outcomes.
 \item A simulator credibility chain that reports its eligible scope and its
 source-ineligible exception rather than converting missing evidence into a
@@ -74,8 +86,8 @@ pass or failure.
 \item A preregistered QML comparison against physics-residual, random-feature,
 compressed-input, and classical kernel controls.
 \item A closed successor ledger containing exploratory and prospectively
-bounded negative candidates, including matched classical dequantization
-controls.
+bounded negative candidates, including classical controls that replace the
+quantum component while keeping the surrounding construction matched.
 \item A self-contained evidence and figure package that supports review of the
 negative conclusion without widening the study's scientific claim.
 \item A human-centered claim boundary that keeps model evidence, crew-related

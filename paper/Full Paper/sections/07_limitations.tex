@@ -15,13 +15,15 @@ is source-ineligible, and some generated scenario decisions do not have an
 independently feasible numerical reference. Those limitations remain in the
 dataset rather than being removed after model results are observed.
 
-Third, the quantum experiments are small-qubit classical statevector
-simulations within a laptop-bounded resource envelope. They do not report shot
-noise, gate noise, device connectivity, state-preparation latency,
-transpilation cost, hardware calibration, or end-to-end quantum runtime. They
-cannot demonstrate quantum speedup, hardware efficiency, or a practical
-quantum advantage. An alleged advantage would require all of those questions
-to be addressed against a fair classical resource baseline.
+Third, every quantum experiment is an exact classical statevector simulation
+with at most eight qubits, run within a laptop-bounded resource envelope. The
+runs therefore omit finite measurement sampling (shot noise), imperfect gates,
+device-connection limits, the time required to prepare an encoded state, and
+transpilation, which maps an abstract circuit to a particular processor. They
+report neither hardware calibration nor end-to-end quantum runtime and cannot
+demonstrate quantum speedup, hardware efficiency, or practical quantum
+advantage. Any such claim would require these costs to be measured against a
+fair classical resource baseline.
 
 Fourth, the methods are limited by their frozen design. The chosen
 preprocessing, feature maps, sample rungs, controls, and thresholds make the

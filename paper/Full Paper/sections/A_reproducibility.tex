@@ -3,7 +3,8 @@
 
 The paper package is structured so that a reviewer can trace every main-text
 number to a copied source table or figure. The Gate 5 CSV and the successor
-branch-summary CSV in \texttt{results\_tables/} provide the numerical values
+branch-summary CSV (comma-separated-value) files in
+\texttt{results\_tables/} provide the numerical values
 reported in Tables \ref{tab:gate5-results} and \ref{tab:successor-branch}.
 The copied figure registry records the title, evidence status, source data,
 generator, digest, and claim boundary for every figure included here. The
@@ -21,14 +22,17 @@ The following checklist summarizes the intended reading of the paper:
 \begin{enumerate}
 \item Treat Gate 3 as an eligible-scope simulator consistency result, not a
 mission validation result.
-\item Treat Gate 5 as a preregistered development benchmark FAIL for Q01,
-not a universal statement that QML cannot work.
-\item Treat Q01b, FQK, and D034--D049 as development-only negative evidence
-that cannot revise Gate 5 or open Gate 6.
-\item Treat the D046 result as evidence that a raw improvement over C06 must
-be tested against a matched classical control.
-\item Treat the recall-first analysis as future protocol-design evidence, not
-as a deployed safety filter.
+\item Treat Gate 5 as rejection of the Q01 fidelity-kernel hypothesis on this
+development benchmark, not a universal statement that QML cannot work.
+\item Treat the projected Q01b kernel, feasibility-only FQK classifier, and 16
+successors D034--D049 as development-only negative evidence that cannot revise
+Gate 5 or open Gate 6.
+\item Treat D046 as evidence that an apparent improvement over the C06
+physics-residual model must also be tested against a like-for-like classical
+control.
+\item Treat the recall-first analysis as a future lesson about retaining
+feasible plans while controlling infeasible admissions, not as a deployed
+safety filter.
 \item Do not infer quantum advantage, hardware performance, propellant saving,
 or flight readiness from any figure or table in this package.
 \end{enumerate}

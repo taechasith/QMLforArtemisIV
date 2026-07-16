@@ -12,20 +12,22 @@ are valuable precedents for surrogate modeling, low-fidelity references,
 cost--reachability endpoints, and retaining infeasible cases, not
 interchangeable baselines for a human-rated correction benchmark.
 
-Quantum feature-space methods express a classical input through an encoding
-and compare encoded states by a quantum-derived similarity
+Quantum feature-space methods encode a classical input as a quantum state and
+compare encoded states through a quantum-derived similarity, called a kernel,
 \cite{schuld2019,havlicek2019}. The method can be used in a kernel learner,
-but its predictive value depends on an alignment between the data geometry,
-the feature map, the measurement, and the task. Theoretical and numerical work
+but its predictive value depends on whether that similarity reflects differences
+that matter for the target being predicted. Theoretical and numerical work
 has made this caveat increasingly explicit: hard-to-simulate circuits do not
 automatically give a learning advantage, and the data distribution can make a
 classical approximation competitive \cite{huang2021,sweke2025}.
 
 The present work is particularly informed by three benchmarking lessons. First,
-kernel bandwidth and encoding scale are part of the effective inductive bias,
-not negligible implementation details \cite{shaydulin2022}. Second, a
+kernel bandwidth and encoding scale change the effective inductive bias, meaning
+the patterns that a model is structurally predisposed to represent; they are not
+negligible implementation details \cite{shaydulin2022}. Second, a
 quantum-kernel study should include appropriately strong classical
-counterparts, including random features where relevant
+counterparts, including random features that approximate a distance-based
+classical kernel where relevant
 \cite{otten2020,rahimi2007,sweke2025}. Third, a comparison should report more than its
 best run: model choice, split structure, seed variation, capacity, and
 post-outcome choices all affect what a claimed gain means
@@ -34,7 +36,8 @@ post-outcome choices all affect what a claimed gain means
 \subsection{Literature provenance of the frozen protocol}
 
 The literature set was used to shape the protocol, not to claim that every
-reviewed model was executed. Data re-uploading, encoding-dependent
+reviewed model was executed. Data re-uploading, which repeatedly inserts input
+features between circuit layers, encoding-dependent
 generalization, and initialization studies informed the need to freeze
 encoding, observables, initialization, and seed handling
 \cite{perez2020,caro2021,grant2019}. Quantum-agent work informed the need for
