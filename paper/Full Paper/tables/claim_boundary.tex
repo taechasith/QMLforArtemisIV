@@ -1,17 +1,19 @@
 \begin{table}[t]
-\caption{Claim boundary used throughout the manuscript. This table is derived from the committed claim-boundary record and does not add a new experimental result.}
+\caption{Claim boundary derived from the committed record; it adds no experimental result.}
 \label{tab:claim-boundary}
 \centering
-\footnotesize
+\scriptsize
+\renewcommand{\arraystretch}{0.90}
 \begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}X@{}}
 \toprule
 Evidence category & Permitted interpretation \\
 \midrule
-Gate 3: simulator credibility & Simulator agreement for eligible public-data checks, not flight validation. RTC3 lacked eligible post-event evidence, so it was not tested and is neither a pass nor a failure. \\
-Gate 5: development benchmark & Under the frozen development benchmark, the tested QML candidates did not outperform strong classical controls. \\
-Post-Gate follow-ups & Projected-kernel protocol P001 and successor decisions D034--D049 are development-only negatives. They do not revise Gate 5 or authorize Gate 6. \\
-Screening lesson & The recall-first classical analysis is a future protocol-design lesson, not a deployed safety filter or safety result. \\
-Prohibited claims & No quantum advantage, propellant saving, mission-loop validity, flight readiness, NASA approval, hardware behavior, final-test result, or QML invention claim. \\
+Gate 3 & Eligible simulator agreement only; RTC3 is not eligible and is neither pass nor failure. \\
+Gate 5 & Tested QML candidates did not beat strong classical controls in the frozen development benchmark. \\
+Post-Gate work & P001 and D034--D049 are development-only negatives; they cannot revise Gate 5 or authorize Gate 6. \\
+Screening lesson & Recall-first classical analysis informs a future protocol, not a deployed safety filter. \\
+Prohibited claims & No quantum advantage, saving, mission-loop validity, flight readiness, NASA approval, hardware behavior, final-test result, or QML invention. \\
 \bottomrule
 \end{tabularx}
+\renewcommand{\arraystretch}{1}
 \end{table}

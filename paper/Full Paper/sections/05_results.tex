@@ -26,41 +26,29 @@ controls, and development population. Here \texttt{FAIL} is a protocol decision
 meaning that the performance hypothesis was rejected. It is not a software
 crash and not a claim that every possible QML method fails.
 
-Figure \ref{fig:gate5-curves} shows the pooled development evidence over the
-authorized sample-size rungs and matched PCA dimensions. A curve shows how
-error changes as more training rows are used. Configurations that did not
-advance were stopped under the prespecified retention rule. Figure
-\ref{fig:gate5-seeds} reports the selected-model distribution over the 20
-frozen random seeds, and Fig. \ref{fig:gate5-trigger} places the pass condition
-next to the strongest classical and matched dequantization controls. The three
-figures should be read together: a model is not evaluated solely by a single
-aggregate mean, but by its retained trajectory through the precommitted
-decision rules.
+Figure \ref{fig:gate5-evidence} combines the pooled learning curves, the
+20-seed selected-model distribution, and the preregistered trigger controls.
+The panels show that a model was assessed by its retained path through the
+precommitted rules, not by one aggregate mean.
 
-\begin{figure}[t]
+\begin{figure}[!t]
 \centering
-\includegraphics[width=\textwidth]{figures/gate5_development_learning_curves.png}
-\caption{Gate 5 development learning curves and matched controls (RFIG-021).
-The evidence covers every authorized rung and matched PCA dimension. This is
-development model-selection evidence only.}
-\label{fig:gate5-curves}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.92\textwidth]{figures/gate5_selected_model_seed_summary.png}
-\caption{Twenty-seed summary of selected Gate 5 models (RFIG-022). Seed
-variation is reported as a stability diagnostic, not as final-test evidence.}
-\label{fig:gate5-seeds}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.92\textwidth]{figures/gate5_algorithm_trigger_regime_control.png}
-\caption{Preregistered algorithm-trigger regime controls (RFIG-023). A
-passing development trigger would have supported consideration of one further
-algorithm study, not quantum advantage or operational deployment.}
-\label{fig:gate5-trigger}
+\begin{tabular}{@{}c@{\hspace{0.02\textwidth}}c@{}}
+\includegraphics[width=0.47\textwidth]{figures/gate5_development_learning_curves.png} &
+\includegraphics[width=0.47\textwidth]{figures/gate5_selected_model_seed_summary.png} \\
+{\scriptsize (a) Learning curves} & {\scriptsize (b) Seed summary} \\
+\multicolumn{2}{c}{\fbox{\begin{minipage}{0.74\textwidth}
+\centering\small\textbf{No regime cell satisfied every preregistered condition.}\\[-1pt]
+\footnotesize Preregistered Gate 5 trigger: \textbf{FAIL}; calibration reads $= 0$; final-test reads $= 0$.
+\end{minipage}}} \\
+\multicolumn{2}{c}{\scriptsize (c) Algorithm-trigger controls}
+\end{tabular}
+\caption{Gate 5 development evidence. (a) Learning curves and matched controls
+(RFIG-021); (b) the 20-seed stability diagnostic (RFIG-022); and (c)
+preregistered trigger controls (RFIG-023). All panels are development-only;
+a passing trigger would have supported one further algorithm study, not
+quantum advantage or operational deployment.}
+\label{fig:gate5-evidence}
 \end{figure}
 
 Q02 and Q03 require a precise reading. They completed their authorized tasks,
@@ -72,40 +60,16 @@ failed experiment would overstate the evidence; treating it as an unreported
 potential success would ignore the protocol. The paper reports the actual
 decision state.
 
-\input{tables/gate5_results}
-
 \subsection{Post-Gate 5 exploratory tracks}
 
 Q01b tested whether changing the quantum readout while keeping the same
 development discipline could materially alter the result. It did not. Q01b
 attained mean NRMSE 0.661207, compared with 0.006833 for C06, so its error was
-about 97 times as large. Figure
-\ref{fig:q01b-curves} presents its learning curves
-against the source-matched controls, while Fig. \ref{fig:q01b-geometry}
-reports the projected-kernel geometry and dequantization diagnostics. These
-are useful negative data: for this projected feature map, the representation
-did not capture the residual structure better than the classical controls.
-They do not establish that projected quantum kernels cannot work on any other
-physical problem.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/post_gate5_d011_learning_curves.png}
-\caption{Projected-kernel follow-up Q01b and matched controls (decision D011
-under protocol P001; RFIG-026). The curves show development-only error as
-training sample size increases. They do not revise the Gate 5 decision.}
-\label{fig:q01b-curves}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/post_gate5_d011_kernel_diagnostics.png}
-\caption{Projected-kernel geometry and dequantization diagnostics (RFIG-027).
-Selected quantum-derived similarities are compared with the A02 classical RBF
-kernel on the same training-fold PCA rows and Nystr\"om landmarks. This tests
-whether a classical distance kernel explains the apparent geometry.}
-\label{fig:q01b-geometry}
-\end{figure}
+about 97 times as large. Figure \ref{fig:q01b-fqk}, panels (a)--(b), shows the
+learning curves, projected-kernel geometry, and dequantization diagnostics.
+For this projected map, the representation did not capture residual structure
+better than the classical controls; this does not rule out projected kernels on
+other physical problems.
 
 The FQK classification track separates discrimination from a safety-filter
 interpretation. It achieved AUROC 0.7436 and Brier score 0.1561, but recall at
@@ -114,18 +78,25 @@ the fixed threshold was only 0.1089. Because the positive label is
 10.9\% of actually feasible plans and rejected the remaining 89.1\%. That low
 utility prevents promotion to the proposed screening role. It does not by
 itself measure unsafe acceptance, which instead requires precision and
-false-positive analysis. The endpoint plot in Fig. \ref{fig:fqk} keeps these
-meanings separate. It is not valid to call FQK useful for safety merely because
-one metric is above chance or because a quantum feature map was evaluated.
+false-positive analysis. Panel (c) of Fig. \ref{fig:q01b-fqk} keeps these
+meanings separate. FQK cannot be called useful for safety merely because one
+metric is above chance or because a quantum feature map was evaluated.
 
-\begin{figure}[t]
+\begin{figure}[!t]
 \centering
-\includegraphics[width=\textwidth]{figures/post_gate5_d011_fqk_endpoints.png}
-\caption{Feasibility-only quantum-kernel (FQK) endpoints (RFIG-028). Brier
-score, AUROC, feasible-case recall, precision, and consequence metrics are
-compared with the strongest complete control. The fixed screening criteria did
-not pass.}
-\label{fig:fqk}
+\begin{tabular}{@{}c@{\hspace{0.02\textwidth}}c@{}}
+\includegraphics[width=0.47\textwidth]{figures/post_gate5_d011_learning_curves.png} &
+\includegraphics[width=0.47\textwidth]{figures/post_gate5_d011_kernel_diagnostics.png} \\
+{\scriptsize (a) Q01b learning curves} & {\scriptsize (b) Q01b geometry and dequantization} \\
+\multicolumn{2}{c}{\includegraphics[width=0.60\textwidth]{figures/post_gate5_d011_fqk_endpoints.png}} \\
+\multicolumn{2}{c}{\scriptsize (c) FQK screening endpoints}
+\end{tabular}
+\caption{Post-Gate 5 development-only diagnostics. (a) Q01b learning curves
+and matched controls (D011/P001; RFIG-026); (b) Q01b geometry compared with
+the A02 classical RBF kernel on matched training-fold PCA rows and Nystr\"om
+landmarks (RFIG-027); and (c) FQK Brier score, AUROC, recall, precision, and
+consequence metrics (RFIG-028). None revises the Gate 5 decision.}
+\label{fig:q01b-fqk}
 \end{figure}
 
 The recall-first classical feasibility analysis, tracked as CSAFE-RF in the
@@ -165,26 +136,6 @@ evidence standard for a quantum-specific candidate.
 
 \input{tables/successor_branch}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/post_gate5_d046_orfrk_result_comparison.png}
-\caption{D046 ORFRK result comparison (RFIG-078). Here $q=8$ means an
-eight-qubit statevector simulation. The candidate and classical control share
-the first RBF correction and differ only in the second-stage channel. Lower raw
-error than C06 is therefore not sufficient for a QML-specific claim.}
-\label{fig:orfrk-result}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/post_gate5_d046_orfrk_audit_resources.png}
-\caption{D046 paired audit and resource boundary (RFIG-079). The figure reports
-matched-seed error differences, checks that residual removal used training data
-only, data-integrity evidence, and reference-laptop resources. It contains no
-quantum-hardware or GPU result.}
-\label{fig:orfrk-audit}
-\end{figure}
-
 \subsection{Evidence accounting and closure}
 
 Evidence accounting confirms that the reported conclusion follows the
@@ -194,17 +145,25 @@ final-test data. The projected-kernel exploratory campaign (D011-R1) read
 39,000 development rows and zero locked rows. No hardware quantum job,
 mission-loop run, Gate 6 run, or final-test evaluation occurred.
 
-Figure \ref{fig:closure} summarizes the closure recommendation. It reports
-that no candidate is eligible for Gate 6; it does not represent an unexecuted
-Gate 6 experiment. Closure decision D055-C then ended active experimentation so
-that future protocol ideas could not be mistaken for completed evidence during
-publication preparation.
+Figure \ref{fig:closure-evidence} summarizes the D046 comparison, its paired
+audit, and the closure recommendation. No candidate is eligible for Gate 6;
+the figure does not represent an unexecuted Gate 6 experiment. Closure decision
+D055-C ended active experimentation so that future protocol ideas could not be
+mistaken for completed evidence during publication preparation.
 
-\begin{figure}[t]
+\begin{figure}[!t]
 \centering
-\includegraphics[width=\textwidth]{figures/post_gate5_d025_gate6_recommendation.png}
-\caption{Gate 5 closure and Gate 6 recommendation (RFIG-044). No QML candidate
-from the closed evidence branches is eligible for Gate 6. This is a closure
-recommendation, not a Gate 6 result.}
-\label{fig:closure}
+\begin{tabular}{@{}c@{\hspace{0.02\textwidth}}c@{}}
+\includegraphics[width=0.47\textwidth]{figures/post_gate5_d046_orfrk_result_comparison.png} &
+\includegraphics[width=0.47\textwidth]{figures/post_gate5_d046_orfrk_audit_resources.png} \\
+{\scriptsize (a) D046 result comparison} & {\scriptsize (b) Paired audit and resources} \\
+\multicolumn{2}{c}{\includegraphics[width=0.62\textwidth]{figures/post_gate5_d025_gate6_recommendation.png}} \\
+\multicolumn{2}{c}{\scriptsize (c) Closure and Gate 6 recommendation}
+\end{tabular}
+\caption{Closure evidence. (a) D046 ORFRK result comparison (RFIG-078): the
+$q=8$ statevector candidate and matched classical control share the first RBF
+correction and differ only in the second-stage channel. (b) Paired audit and
+resource boundary (RFIG-079), with no quantum-hardware or GPU result. (c) Gate
+5 closure (RFIG-044): no closed-branch candidate is eligible for Gate 6.}
+\label{fig:closure-evidence}
 \end{figure}

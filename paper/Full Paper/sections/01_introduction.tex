@@ -43,17 +43,47 @@ weakly tuned comparator, related mission cases leaking across a data split,
 thresholds chosen after seeing outcomes, or omitted failures. These are
 benchmarking problems before they are quantum-computing problems.
 
-This paper documents a complete public-data experimental program for
-trajectory-correction prediction and feasibility screening. The purpose was
-not to assert a priori that QML would win. Its purpose was to establish a
-scientifically usable decision process: define a bounded task, verify the
-simulator against eligible public endpoints, freeze the development protocol,
-compare QML with strong controls, record negative outcomes, and prohibit
-claims that the evidence cannot support. This stance is consistent with model
-and simulation credibility practice \cite{nasa7009} and with recent calls for
-fair QML comparisons \cite{bowles2024,schnabel2024}.
+\subsection{Problem statement}
 
-The central research questions were deliberately narrow:
+QML feature spaces can be mathematically distinct from classical feature
+spaces, but that distinction is not itself evidence of useful prediction.
+The literature has identified recurring risks of optimistic conclusions from
+weak classical comparators, information leakage across related examples,
+post-outcome model selection, or unreported negative outcomes
+\cite{bowles2024,schnabel2024}. In a crewed-spaceflight context, these risks
+create a knowledge gap: without a transparent, frozen comparison, a complex
+surrogate can appear promising before it has earned a bounded scientific
+claim. The problem addressed here is therefore both predictive and
+evidential---how to evaluate a QML surrogate fairly without allowing the
+evaluation process to manufacture a favorable conclusion.
+
+\subsection{Research objective}
+
+This paper documents a public-data experimental program for correction-cost
+prediction and feasibility screening. Its primary
+objective is to establish a governed, source-bound benchmark that evaluates
+QML representations against physics-based and matched classical controls under
+a frozen development protocol. The purpose was not to assert a priori that QML
+would win. It was to define a bounded task, verify the simulator against
+eligible public endpoints, preserve the data-access boundary, compare models
+fairly, retain negative outcomes, and prohibit claims that the evidence cannot
+support. This stance is consistent with model and simulation credibility
+practice \cite{nasa7009} and with recent calls for fair QML comparisons
+\cite{bowles2024,schnabel2024}.
+
+\subsection{Central research question}
+
+The study addresses one central research question:
+
+\begin{quote}
+\emph{To what extent can simulated quantum-kernel representations add
+empirical predictive value to a human-centered cislunar
+trajectory-correction decision-support benchmark when compared fairly with
+physics-based controls?}
+\end{quote}
+
+This central question is resolved through four pre-specified operational
+questions, not four independent study aims:
 \begin{enumerate}
 \item Can the primary fidelity-style quantum kernel (repository identifier
 Q01) improve correction-cost prediction over physics-derived and classical
@@ -66,11 +96,11 @@ criteria for identifying independently propagated feasible cases?
 mission-loop, and hardware evidence stay locked?
 \end{enumerate}
 
-The answer to the first three questions is negative for the tested models and
-settings. The fourth question is the paper's main methodological contribution.
-The work establishes a transparent evidence hierarchy that distinguishes
-simulator credibility, development-only model evidence, future-design lessons,
-and prohibited operational claims. Negative results are not treated as failed
+The first three sub-questions received negative answers for the tested models
+and settings. The fourth establishes the boundary of that conclusion. Together,
+they yield a transparent evidence hierarchy that distinguishes simulator
+credibility, development-only model evidence, future-design lessons, and
+prohibited operational claims. Negative results are not treated as failed
 record keeping; they are the result when a hypothesis does not meet its
 predeclared standard.
 

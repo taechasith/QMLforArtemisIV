@@ -3,114 +3,101 @@
 
 \subsection{Scenario construction and simulator credibility}
 
-The public pipeline generated correction scenarios at three frozen levels of
-physical detail. F0 uses central Earth point-mass gravity. F1 adds the Moon and
-Sun as third-body gravitational sources. F2 additionally includes Earth J2,
-the leading correction for Earth's equatorial bulge, and tighter numerical
-integration settings. Across these levels the implementation retained the
-configured maneuver model, mass depletion, event handling, crew-related
-constraints, uncertainty variables, and numerical feasibility checks. The
-intent was to predict benchmark-defined cost or feasibility outcomes, not to
-control a spacecraft. Source files and scenario construction were frozen before
-the model campaigns; later reports could summarize outputs but could not
-replace source evidence to make a comparison pass.
+The public pipeline froze three force-model levels: F0, central Earth
+point-mass gravity; F1, F0 plus Moon and Sun third-body gravity; and F2, F1
+plus Earth J2 (Earth's equatorial-bulge correction) and tighter integration.
+Each retained the configured maneuver, mass-depletion, event, crew-constraint,
+uncertainty, and numerical-feasibility settings. The target is benchmark cost
+or feasibility, not spacecraft control; sources and scenario construction were
+frozen before model campaigns.
 
-Simulator credibility was assessed in Gate 3 by comparing eligible Python
-trajectory endpoints with NASA's General Mission Analysis Tool (GMAT) under
-the same accepted force-model configurations. An endpoint is the simulated
-position and velocity at the end of a validation window. The diagnostic chain
-isolated a formatting problem in the file containing the Earth-J2 coefficient
-and confirmed the repaired format through degree-two, order-zero gravity
-comparisons. In the final accepted evidence, all 67 evaluable checks passed;
-the repaired endpoint set also passed the unchanged position and velocity
-limits. This supports the implementation only within the tested public scope;
-it does not validate a complete mission environment.
+Gate 3 compared eligible Python endpoints (position and velocity at a window
+end) with GMAT under the same force-model configuration. The
+diagnostic chain isolated an Earth-J2 coefficient-file formatting error and
+confirmed its repair with degree-two, order-zero gravity comparisons. All 67
+evaluable checks and the unchanged position and velocity limits passed. This
+supports only the tested public scope, not a complete mission environment.
 
-One record, the third return-trajectory-correction event (RTC3), is explicitly
-excluded from the claim. Its qualified public trajectory file was created
-before the event and therefore cannot show the event's reconstructed outcome
-under the frozen temporal-evidence rule. It is
-therefore classified as \texttt{not\_eligible}, rather than as a successful
-or failed endpoint. This distinction prevents an important category error:
-source eligibility is not a numerical outcome. The exclusion remains visible
-in the evidence package rather than being silently omitted.
+RTC3 is \texttt{not\_eligible}, not pass or fail: its qualified public
+trajectory file predates the event and cannot reconstruct its outcome under the
+frozen temporal-evidence rule. The visible exclusion distinguishes source
+eligibility from a numerical outcome.
 
 \subsection{Frozen development data and leakage control}
 
-Let $\mathcal{D}=\{(x_i,y_i,z_i,g_i)\}_{i=1}^{N}$ denote the frozen
-development dataset, where $N$ is the total number of development rows and $i$
-indexes one simulated candidate plan. The vector $x_i$ contains only the
-allowed scenario features. The target $y_i$ is robust total correction delta-v
-in m/s. The binary label $z_i$ equals one when an independent propagation marks
-the plan feasible and zero otherwise. Finally, $g_i$ identifies the related
-mission-design group. Whole groups, rather than individual rows, are assigned
-to one of five development folds. Consequently, related cases never appear on
-both the training and validation sides of the same comparison.
+Let $\mathcal{D}=\{(x_i,y_i,z_i,g_i)\}_{i=1}^{N}$ be the frozen development
+data: $x_i$ contains allowed features, $y_i$ is robust total correction delta-v
+in m/s, $z_i$ is the independently propagated feasibility label, and $g_i$ is
+the related mission-design group. Whole groups are assigned to one of five
+folds, so related cases cannot occur in both training and validation.
 
-All transformations are learned within the training partition of each fold.
-These include filling missing values, converting categories to numbers,
-rescaling features and targets, and principal-component analysis (PCA), a
-linear compression of correlated features, where configured. Fitting any of
-these steps to all rows would let information from the held-out validation
-fold influence training. Preventing that leakage makes the comparison
-interpretable.
-
-The development campaign uses nested, deterministically selected sample rungs
-of 128, 256, 512, and 1,024 training rows. Poorly performing configurations
-stop at an early rung under a rule fixed before results; selected configurations
-are then repeated with 20 frozen random seeds. These runs are not estimates of
-an operational mission distribution. They are a prespecified stress test of
-performance across group structure, sample size, and controlled randomness.
-Calibration and final-test data were never read by these campaigns.
+Imputation, category encoding, scaling, and configured principal-component
+analysis (PCA) are fit within each training fold only.
+Fitting them on all rows would leak held-out information. The deterministically
+selected 128, 256, 512, and 1,024-row rungs stop weak configurations under a
+predeclared rule; retained configurations use 20 frozen seeds. These are
+development stress tests, not operational-distribution estimates, and never
+read calibration or final-test data.
 
 \subsection{Task definitions and estimands}
 
-The primary endpoint is robust correction-cost prediction. For a fitted
-predictor $f$, normalized root-mean-square error (NRMSE) is
+The primary endpoint is robust correction-cost prediction. For predictor $f$,
+normalized root-mean-square error (NRMSE) is
 \begin{equation}
 \mathrm{NRMSE}(f) =
 \frac{1}{s_y}\sqrt{\frac{1}{n}\sum_{i=1}^{n}\left(f(x_i)-y_i\right)^2},
 \label{eq:nrmse}
 \end{equation}
-where $n$ is the number of held-out predictions, $f(x_i)$ is the predicted
-delta-v for row $i$, $y_i$ is its simulated target, and $s_y$ is the sample
-standard deviation of all frozen development targets. The numerator is the
-usual root-mean-square error in m/s; division by $s_y$ makes NRMSE unitless and
-comparable across folds. Zero is perfect and lower is better. For example,
-NRMSE 0.01 means that the root-mean-square prediction error is 1\% of the
-development target's standard deviation. The primary report pools predictions
-made while each fold was held out (pooled out-of-fold NRMSE). Separate fold and
-seed summaries are retained so that one favorable split or random run cannot
-hide instability. Feasibility-constrained regret, the extra correction cost
-caused by selecting a worse candidate plan, is reported as an interpretation
-metric rather than as a replacement for the frozen primary endpoint.
+Here $n$ is the held-out prediction count, $f(x_i)$ the predicted delta-v,
+$y_i$ its simulated target, and $s_y$ the frozen development target standard
+deviation. The numerator is root-mean-square error in m/s; division by $s_y$
+makes NRMSE unitless and comparable across folds. Zero is perfect and lower is
+better; 0.01 means error equal to 1\% of the target standard deviation. The
+report pools out-of-fold predictions and retains fold/seed summaries. The
+feasibility-constrained regret is interpretive, not a replacement endpoint.
 
-The classification track estimates $p_f(x)\in[0,1]$, the predicted probability
-that input $x$ is feasible under independent propagation. Its Brier score is
-the mean squared probability error,
+The classification track estimates $p_f(x)\in[0,1]$, the probability that $x$
+is feasible under independent propagation. Its Brier score is
 \begin{equation}
 \mathrm{Brier}=\frac{1}{n}\sum_{i=1}^{n}\left(p_f(x_i)-z_i\right)^2,
 \label{eq:brier}
 \end{equation}
-where $z_i\in\{0,1\}$ is the observed feasibility label; lower is better and
-zero is perfect. Area under the receiver-operating-characteristic curve
-(AUROC) measures ranking across all thresholds: 0.5 indicates chance-level
-ranking and 1.0 indicates perfect ranking. At the fixed threshold $t=0.5$,
-recall is
+where $z_i\in\{0,1\}$ is the observed label; lower is better and zero is
+perfect. AUROC measures ranking across thresholds (0.5 chance; 1.0 perfect).
+At fixed $t=0.5$, recall is
 \begin{equation}
 \mathrm{Recall}_{0.5}=\frac{\mathrm{TP}}{\mathrm{TP}+\mathrm{FN}}.
 \label{eq:recall}
 \end{equation}
-Here TP counts actually feasible plans correctly marked feasible, and FN counts
-actually feasible plans rejected by the classifier. Thus recall is the fraction
-of feasible options retained. Precision is the fraction of plans marked
-feasible that are actually feasible; an infeasible plan incorrectly admitted is
-a false positive. This label direction matters: low recall reduces screening
-utility, whereas unsafe acceptance must be assessed through precision,
-false-positive behavior, and independent propagation. No one metric establishes
+TP and FN are correctly retained and incorrectly rejected feasible plans, so
+recall is the retained feasible fraction. Precision is the fraction of admitted
+plans that are feasible; an infeasible admission is a false positive. Thus low
+recall reduces utility, while unsafe acceptance requires precision,
+false-positive, and independent-propagation analysis. No one metric establishes
 operational safety.
 
-The Q01 family is described generically by an encoded-state kernel
+\subsection{Quantum-kernel representation}
+
+Q01 is an exact classical statevector simulation, not a quantum-processor
+result. For $q\in\{4,6,8\}$ qubits, its feature state is in
+$\mathcal{H}_q=(\mathbb{C}^{2})^{\otimes q}\cong\mathbb{C}^{2^q}$ with the
+usual inner product. The implementation stores a pure statevector, so shots,
+hardware noise, and device-connectivity constraints do not affect the kernel.
+
+For frozen numeric vectors $x,x'\in\mathbb{R}^{d}$, the deterministic map
+applies $U_{\phi}(x)$ to the all-zero state:
+\begin{equation}
+|\psi_{\phi}(x)\rangle = U_{\phi}(x)|0^{\otimes q}\rangle,
+\qquad
+\rho_{\phi}(x)=|\psi_{\phi}(x)\rangle\langle\psi_{\phi}(x)|.
+\label{eq:feature-state}
+\end{equation}
+Here $\phi$ is the fixed circuit/encoding configuration,
+$|\psi_{\phi}(x)\rangle$ its statevector, and $\rho_{\phi}(x)$ equivalent
+density-operator notation; computation uses the statevector directly. The
+feature dimension, encoding, and circuit are preserved in committed trials.
+
+The corresponding fidelity-style kernel is
 \begin{equation}
 K_q(x,x')=
 \left|\left\langle 0^{\otimes q}\middle|
@@ -118,121 +105,79 @@ U_{\phi}(x)^{\dagger}U_{\phi}(x')
 \middle|0^{\otimes q}\right\rangle\right|^2,
 \label{eq:qkernel}
 \end{equation}
-where $x$ and $x'$ are two classical scenario vectors, $q\in\{4,6,8\}$ is the
-number of simulated qubits, $|0^{\otimes q}\rangle$ is the all-zero initial
-state, and $U_{\phi}(x)$ is the frozen circuit that encodes $x$. The symbol
-$\dagger$ denotes the conjugate transpose, which reverses the circuit for the
-overlap calculation. The squared overlap $K_q$ lies between zero and one: a
-larger value means that two inputs look more similar under this particular
-encoding. It is not a probability that either trajectory is feasible. The
-pairwise values form a Gram matrix, a table of every input-to-input similarity,
-which a kernel regressor converts into predictions. Exact features, PCA
-dimensions, circuit settings $\phi$, bandwidths (how quickly similarity changes)
-and regularization values (how strongly fitting is constrained) are preserved
-in committed configuration records. Equation \eqref{eq:qkernel} defines a classically simulated research
-representation, not a hardware implementation or quantum speedup.
+For pure states, this equals
+$\mathrm{Tr}[\rho_{\phi}(x)\rho_{\phi}(x')]$ \cite{schuld2019,havlicek2019};
+$\dagger$ is conjugate transpose. $K_q\in[0,1]$ measures encoded-state
+similarity, not feasibility probability. Pairwise values form the Gram matrix
+used by a kernel regressor. Exact features, PCA dimensions, $\phi$, bandwidths,
+and regularization are committed. Equation \eqref{eq:qkernel} defines a
+classically simulated representation, not hardware performance, speedup, or
+intrinsic task value.
 
 \subsection{Models and matched controls}
 
-The preregistered Q01 candidate is a fidelity-style quantum-kernel regressor
-for correction cost. Its principal comparator is the classical physics-residual
-model C06. If $b_{\mathrm{low}}(x)$ is a lower-fidelity physical estimate, C06
-learns a correction $r(x)$ to form
+Q01 is a fidelity-style correction-cost kernel regressor. Its main comparator
+is physics-residual C06, which adds learned correction $r(x)$ to a
+lower-fidelity physical estimate $b_{\mathrm{low}}(x)$:
 \begin{equation}
 \widehat{y}_{\mathrm{C06}}(x)=b_{\mathrm{low}}(x)+r(x).
 \label{eq:c06}
 \end{equation}
-This is a stronger comparator than a generic regressor because it starts from
-physical structure available in the benchmark and asks machine learning to
-predict only the remaining error, or residual. The comparison set also contains
-A01 random Fourier features, a finite classical approximation to a radial-basis
-function (RBF) kernel; an RBF kernel treats nearby feature vectors as more
-similar than distant ones. Compressed classical neural-network views and other
-frozen configurations were also included. These controls test whether a
-classical representation can explain an apparent quantum-feature effect
+Unlike a generic regressor, C06 begins with available physical structure and
+learns only residual error. Controls also include A01 random Fourier features,
+a finite classical approximation to a radial-basis-function (RBF) kernel,
+compressed neural views, and frozen alternatives. They test whether a classical
+representation explains an apparent quantum-feature effect
 \cite{steffen2025,xie2022,rahimi2007}.
 
-After the accepted Gate 5 result, exploratory protocol P001 defined two
-follow-ups without reopening the primary campaign. Q01b replaces whole-state
-overlap with projected features: it summarizes each simulated qubit through
-local measurement expectations and applies a distance-based kernel to those
-summaries. A deterministic Nystr\"om approximation limits the kernel to at most
-256 representative training rows, called landmarks. FQK, whose repository ID
-means \emph{feasibility-only quantum kernel}, applies the same projected-kernel
-idea only to the independently propagated feasibility label; here FQK does not
-mean ``fidelity quantum kernel.'' Both tracks retained groupwise splits,
-training-fold-only preprocessing, nested rungs, matched controls, and 20 seeds.
-They could produce new development-only evidence, but could not revise the
-decision already made for Q01.
+After Gate 5, P001 defined two follow-ups without reopening Q01. Q01b replaces
+whole-state overlap with local measurement expectations and a distance kernel;
+a deterministic Nystr\"om approximation uses at most 256 training landmarks.
+FQK means \emph{feasibility-only quantum kernel} and applies the same projected
+construction to independently propagated feasibility labels. Both retain
+groupwise splits, training-fold-only preprocessing, nested rungs, controls, and
+20 seeds; they create development-only evidence and cannot revise Q01.
 
-The 16 successor decisions D034--D049 tightened this discipline further. Each
-protocol froze its candidate, target, comparator, threshold, stopping rule, and
-source path before fitting. Their compact model names are immutable registry
-identifiers; the repository stores each complete construction. Several
-candidates produced a lower NRMSE than C06, but that alone was insufficient. A
-candidate also had to beat a matched classical alternative given the same
-inputs and stage structure. Such a control is often called a dequantization
-control because it tests whether the apparent benefit survives when the
-quantum-derived component is replaced by a classical one.
+Each D034--D049 protocol froze its candidate, target, comparator, threshold,
+stopping rule, and source path before fitting. Names are immutable registry
+keys. Lower NRMSE than C06 was insufficient: a candidate also had to beat a
+matched classical alternative with the same inputs and stages. This
+dequantization control asks whether benefit survives replacement of the
+quantum-derived component by a classical one.
 
 \subsection{Human-centered decision-support boundary}
 
-The reported model outputs are treated as evidence for a future screening tool,
-not as a command to change a trajectory. A human reviewer would need the model
-estimate, the applicable scenario group, its comparator result, its uncertainty
-record, and an explicit statement of whether the case is inside the authorized
-scope. The research package preserves those items as source records and figure
-provenance rather than reducing them to a single leaderboard value.
-
-This stance also defines the fallback: when a candidate is ineligible, poorly
-calibrated, source-ineligible, or outside the public benchmark boundary, the
-model is not promoted and the physical or numerical reference remains the
-decision basis. This is a design boundary for later human--AI interaction; it
-does not evaluate an interface or the behavior of mission personnel.
+Outputs are evidence for a future screening tool, not trajectory commands. A
+reviewer needs the estimate, scenario group, comparator, uncertainty record,
+and authorized scope; the package preserves these rather than a leaderboard
+alone. Ineligible, poorly calibrated, source-ineligible, or out-of-scope
+candidates are not promoted and the physical/numerical reference remains the
+decision basis. This is an HCI design boundary, not an interface study.
 
 \subsection{Statistical decision process}
 
-The preregistered Gate 5 trigger required every eligible fold and seed to
-complete, comparison with the strongest classical finalist and matched
-dequantization controls, paired uncertainty checks, and at least one qualifying
-regime. A \emph{regime} is a subgroup defined before outcomes, such as a
-fidelity level or uncertainty family; it is not a favorable subgroup discovered
-after inspection. A paired comparison subtracts model errors measured on the
-same folds and seeds. The paired 95\% bootstrap interval repeatedly resamples
-those matched differences to quantify uncertainty. A sign-permutation test
-also asks whether the observed direction could arise if positive and negative
-paired differences were exchangeable under no model advantage; multiplicity
-control limits false discoveries across repeated comparisons. The report does
-not add a post-outcome seed, model, split, or threshold to repair a weak result.
-Learning curves and all retained seed outcomes are shown because training fit
-or one favorable run is not adequate evidence of generalization
+The Gate 5 trigger required all eligible folds/seeds, the strongest classical
+finalist and matched dequantization controls, paired uncertainty checks, and at
+least one qualifying predeclared regime (for example, fidelity or uncertainty
+family). Paired errors use the same folds/seeds; 95\% bootstrap intervals
+resample their differences, sign-permutation tests assess direction under no
+advantage, and multiplicity control limits repeated-comparison false positives.
+No post-outcome seed, model, split, or threshold was added. Learning curves and
+retained seeds guard against conclusions from training fit or one favorable run
 \cite{peters2023,grant2019}.
 
-The distinction between task completion and eligibility is also retained. The
-primary development campaign (decision D006) completed all 871 authorized
-computational tasks with zero software or task failures. The variational
-quantum regressor Q02 and hybrid quantum-residual model Q03 were not carried to
-larger sample rungs because too few configurations met the frozen retention
-rule at the first rung. Their status is therefore
-\texttt{not\_reached\_under\_frozen\_eligibility}. It does not mean a
-failed experiment, a missing computation, or a favorable result withheld from
-the report.
+D006 completed 871 of 871 authorized tasks with zero software or task
+failures. Q02 and Q03 did not reach larger rungs because too few first-rung
+configurations met frozen retention; their status is
+\path{not_reached_under_frozen_eligibility}, not failed, missing, or
+withheld evidence.
 
 \subsection{Computational-resource and reproducibility boundary}
 
-The reference compute environment was a Windows laptop with a 13th Generation
-Intel Core i9-13900HX central processing unit (CPU), 32~GB random-access memory
-(RAM), and an NVIDIA GeForce RTX 4060 Laptop graphics processor (GPU). A
-statevector stores all $2^q$ complex amplitudes of a $q$-qubit state in
-classical memory. The experiment bounded this memory use and ran statevector
-tasks one at a time; the GPU and quantum hardware were not used for the
-reported QML evidence. The
-hardware description is included so that readers understand the throughput and
-resource constraints under which the public benchmark was executed. It is not
-a prescription that future studies use identical hardware.
-
-The source release contains configuration records, seeds, data cards, figure
-registry entries, machine-readable tables, and reporting scripts. Every figure
-used in this paper is copied with its corresponding registry entry into the
-paper package. These measures make the evidence auditable while preserving the
-lock on calibration and final-test data.
+The reference environment was a Windows laptop with a 13th Generation Intel
+Core i9-13900HX CPU, 32~GB RAM, and NVIDIA GeForce RTX 4060 Laptop GPU. A
+$q$-qubit statevector stores $2^q$ complex amplitudes; tasks ran one at a time
+within the memory bound. Neither GPU nor quantum hardware produced reported QML
+evidence. The specification explains throughput constraints, not a required
+future setup. The release supplies configurations, seeds, data cards, figure
+registry, tables, and scripts, preserving auditability and locked-row boundaries.

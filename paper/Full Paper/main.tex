@@ -3,6 +3,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{array}
@@ -10,6 +11,17 @@
 
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \hypersetup{hidelinks}
+
+% Keep all evidence figures and tables, while allowing compact, readable
+% placement in the single-column Springer proceedings layout.
+\setcounter{topnumber}{2}
+\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.90}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.70}
+\setlength{\textfloatsep}{12pt plus 2pt minus 4pt}
+\setlength{\floatsep}{10pt plus 2pt minus 4pt}
+\setlength{\intextsep}{10pt plus 2pt minus 4pt}
 
 \begin{document}
 
@@ -25,35 +37,30 @@
 \begin{center}
 \refstepcounter{figure}
 \centering
-\includegraphics[width=\textwidth]{figures/implementation_framework_oneline_pen_labeled_alt.png}\\[0.4em]
-{\small Fig.~\thefigure. Labeled one-line pen illustration of the study workflow: public trajectory data and a frozen protocol enter an audited benchmark machine, model evidence separates into a reliable C06 classical-control path and a non-advancing QML-kernel path, and final authority remains with human mission review.}
+\includegraphics[width=0.62\textwidth]{figures/implementation_framework_oneline_pen_labeled_alt.png}\\[0.2em]
+{\small Fig.~\thefigure. Simulated one-line illustration: public trajectory data and a frozen protocol are assessed against a physics-residual control and QML kernels; final authority remains with human review.}
 \label{fig:implementation-framework}
 \end{center}
 
 \begin{abstract}
-This study tests whether quantum machine learning (QML) kernels improve a
-public-data benchmark for crewed Earth--Moon trajectory correction. The target
-is robust total correction delta-v: modeled velocity change after accounting
-for uncertainty. Related mission cases shared a data fold; preprocessing used
-only training rows; thresholds were fixed before outcomes; and calibration and
-final-test rows remained locked. The simulator chain passed 67 eligible checks;
-one event lacked eligible evidence and was classified neither pass nor failure. On development
-data, the primary fidelity kernel (Q01) produced mean normalized
-root-mean-square error (NRMSE) 0.646614, while the physics-residual classical
-control (C06) produced 0.008739. NRMSE divides root-mean-square error by the
-target standard deviation; lower is better. The projected-kernel
-follow-up (Q01b) produced 0.661207 versus 0.006833 for C06. The feasibility-only
-quantum kernel (FQK) retained 10.9\% of actually feasible cases at the fixed
-0.5 threshold. Sixteen bounded successors failed predeclared
-advancement criteria; the strongest apparent gain did not pass its matched
-classical-control threshold. This does not show that QML is universally
-ineffective; it shows that the tested representations did not justify quantum
-complexity for this frozen task. The societal contribution is a transparent
-safeguard against unsupported AI claims in high-consequence decisions:
-preserving provenance, reporting negative outcomes, and separating crew
-requirements and human authorization from model scores. This study makes no claim of
-quantum advantage, propellant savings, flight readiness, hardware performance,
-or a new QML invention.
+This study evaluates simulated quantum machine-learning (QML) kernels for a
+public-data, crewed Earth--Moon trajectory correction benchmark. The target is
+robust total correction delta-v, or modeled velocity change under uncertainty.
+Related cases shared folds, preprocessing used training rows only, thresholds
+were fixed before outcomes, and calibration and final-test rows remained
+locked. The simulator passed 67 eligible checks; one source-ineligible event
+was neither pass nor failure. Q01 produced mean normalized root-mean-square
+error (NRMSE) 0.646614 versus 0.008739 for the physics-residual classical
+control C06; lower is better. Q01b produced 0.661207 versus 0.006833 for C06.
+The feasibility-only kernel (FQK) retained 10.9\% of actually feasible cases at
+the fixed 0.5 threshold. Sixteen bounded successors missed their predeclared
+advancement criteria, and the strongest raw improvement failed its matched
+classical control. Thus, the tested representations did not justify quantum
+complexity for this frozen task; this is not a universal claim about QML. The
+contribution is a transparent safeguard for high-consequence AI: provenance,
+negative-result reporting, and separation of crew requirements and human
+authorization from model scores. The study claims no quantum advantage,
+propellant saving, flight readiness, hardware performance, or QML invention.
 \keywords{Quantum machine learning \and human-centered AI \and decision support \and cislunar trajectory design \and reproducible benchmarking \and negative results}
 \end{abstract}
 
@@ -72,9 +79,6 @@ or a new QML invention.
 \subsubsection{\ackname}
 Reserved for an advisor contribution statement, pending advisor review.
 \end{credits}
-
-\input{sections/A_reproducibility}
-\input{sections/B_literature_audit}
 
 \bibliographystyle{splncs04}
 \bibliography{references}

@@ -16,68 +16,47 @@ Short identifiers are retained because they link the paper to immutable
 repository records. They are audit keys, not scientific concepts that a reader
 is expected to know in advance:
 \begin{description}
-\item[Gate.] A predefined authorization checkpoint. Gate 3 asks whether the
-simulator is credible within its public-data scope; Gate 5 evaluates models on
-development data; Gate 6 would be a separately authorized mission-level
-experiment and was never opened.
-\item[Decision and protocol IDs.] A label beginning with D identifies a
-governance decision or bounded campaign, while P identifies a prospective
-protocol. For example, D046 is the decision record for one successor test.
-These labels are not data samples or performance grades.
-\item[Model IDs.] C labels a classical candidate, Q labels a QML candidate,
-and A labels an analysis control. Thus C06 is the physics-residual classical
-control and Q01 is the primary quantum-kernel candidate.
-\item[Figure IDs.] RFIG identifies the repository's provenance record for a
-figure. It allows the plotted data and generating script to be found; it has no
-statistical meaning.
-\item[Development-only.] Development rows may be used to choose and compare
-models. Calibration rows would adjust a frozen model's output, and final-test
-rows would estimate performance only after all choices were fixed. This study
-read neither calibration nor final-test rows for the reported campaigns.
-\item[Fold, seed, and rung.] A fold is one group-preserving train/validation
-partition. A seed is a fixed random-number starting point used to repeat a
-model reproducibly. A rung is one sample-size stage in the prespecified
-128--1,024-row screening sequence.
+\item[Gate.] An authorization checkpoint: Gate 3 checks eligible simulator
+scope, Gate 5 evaluates development models, and Gate 6 was never opened.
+\item[Decision and protocol IDs.] D marks a governance decision or bounded
+campaign, P a prospective protocol; D046 is one successor-test record.
+\item[Model and figure IDs.] C, Q, and A identify classical, QML, and analysis
+controls; C06 is the physics-residual control and Q01 the primary kernel.
+RFIG is a figure-provenance key, not a statistical quantity.
+\item[Development-only.] Rows may select models; calibration would adjust a
+frozen output and final-test rows would estimate performance after choices are
+fixed. Neither was read by the reported campaigns.
+\item[Fold, seed, and rung.] A fold preserves related groups, a seed fixes a
+reproducible random start, and a rung is a 128--1,024-row sample stage.
 \end{description}
 
 \subsection{Human-centered decision-support stance}
 
-The proposed role of a model in this benchmark is limited to offline screening
-information for qualified human review. It is not an autonomous controller,
-an operational recommendation engine, or a replacement for mission analysis.
-For an HCI-oriented reading, the central design requirements are traceability,
-understandable scope, visible uncertainty, retained failures, and a clear
-fallback to physical analysis. The evidence package supports those requirements
-by showing the data boundary, simulator checks, controls, stopping decisions,
-and excluded evidence pathways together with the metrics.
+The model's role is offline screening information for qualified human review,
+not autonomous control, an operational recommendation, or a replacement for
+mission analysis. Its HCI contribution is evidence design: traceable scope,
+visible uncertainty and failures, and a fallback to physical analysis. No
+participants, interfaces, or measures of trust, workload, situation awareness,
+or decision quality were collected; the paper makes no empirical HCI claim.
 
-No human participants, operator interfaces, observational studies, or measures
-of trust, workload, situation awareness, or decision quality were collected.
-The paper therefore makes no empirical HCI performance claim. It instead
-describes how a high-consequence AI research artifact can be structured so that
-later human evaluation is not pre-empted by an unsupported model claim.
+The evidence boundary was defined before reporting. Gate 3 supports eligible
+simulator comparisons only; Gate 5 supports a frozen development decision;
+P001 and D034--D049 are development-only follow-ups that cannot revise Gate 5
+or authorize Gate 6. The recall-first classical analysis is a future
+protocol-design lesson, not a safety filter. Calibration and final-test rows,
+mission-loop scenarios, quantum-hardware or graphics-processor execution,
+operational threshold use, trained-model release, and Gate 6 remain outside the
+study. Accordingly, the paper claims no quantum advantage, propellant saving,
+mission-loop validity, flight readiness, NASA approval, hardware behavior,
+final-test result, or QML invention.
 
-The evidence boundary was defined before reporting. Gate 3 supports simulator
-credibility only for the eligible comparisons. Gate 5 supports a technical
-decision for a frozen development benchmark. The subsequent projected-kernel
-protocol (P001) and 16 bounded successor decisions (D034--D049) are
-development-only follow-ups; they cannot retroactively change the Gate 5
-decision. Calibration and final-test rows, mission-loop
-scenarios, quantum-hardware or graphics-processor execution, threshold application to real
-operations, trained-model release, and Gate 6 remain outside the study. Table
-\ref{tab:claim-boundary} summarizes the resulting language constraints.
+Figure \ref{fig:timeline} records authorization state, not a model metric. A
+later candidate may be informative but does not become preregistered evidence
+merely because it is reported after the primary negative result.
 
-\input{tables/claim_boundary}
-
-Figure \ref{fig:timeline} records the governance state rather than a model
-metric. It is included because a benchmark conclusion depends on which evidence
-was authorized when. A later candidate may be scientifically informative, but
-it does not become preregistered evidence merely because it is reported after a
-negative primary result.
-
-\begin{figure}[t]
+\begin{figure}[!t]
 \centering
-\includegraphics[width=\textwidth]{figures/gate_decision_timeline.png}
+\includegraphics[width=0.86\textwidth]{figures/gate_decision_timeline.png}
 \caption{Research governance through Gate 5 (RFIG-001). Gates 0--5 were
 closed by human decisions; the technical Gate 5 result is a benchmark-specific
 protocol FAIL, meaning its advancement hypothesis was rejected. Gate 6 remains

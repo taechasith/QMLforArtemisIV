@@ -9,9 +9,16 @@ Overleaf project without an external template dependency.
 
 - `main.tex`: complete manuscript source.
 - `references.bib`: bibliography used by the manuscript.
-- `tables/`: LaTeX tables included by `main.tex`.
+- `tables/`: source tables retained with the package; the manuscript typesets
+  its non-duplicative result table while the remaining tables support review.
 - `figures/`: the exact registered PNG figures used by `main.tex`.
 - `results_tables/`: copied frozen CSV evidence and the full figure registry.
+- `REVIEWER_RESPONSE_DRAFT.md`: a scoped draft response to the structural
+  revision comments; update its page and line references after a final
+  submission build.
+- `sections/A_reproducibility.tex` and `sections/B_literature_audit.tex`:
+  supplementary reviewer notes retained outside the 20-page proceedings
+  manuscript; their essential scope statements are reflected in the main text.
 - `QMLforArtemisIV_full_paper.pdf`: locally compiled final PDF.
 - `llncs.cls` and `splncs04.bst`: Springer proceedings style files.
 
