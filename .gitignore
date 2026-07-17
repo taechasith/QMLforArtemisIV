@@ -35,6 +35,11 @@ data/processed/reporting/*
 !data/processed/reporting/post_gate5_exploratory_protocol_matrix.csv
 !data/processed/reporting/post_gate5_exploratory_trial_manifest.csv
 !data/processed/reporting/post_gate5_future_research_discussion.csv
+!data/processed/reporting/post_gate5_compute_preflight.json
+!data/processed/reporting/post_gate5_compute_preflight_rerun.json
+!data/processed/reporting/post_gate5_d011_c1_fold_shape_preflight.json
+!data/processed/reporting/post_gate5_d011_c2_fold_shape_preflight.json
+!data/processed/reporting/post_gate5_d011_fold_shape_preflight.json
 !data/processed/reporting/post_gate5_d016_classical_preflight.json
 !data/processed/reporting/post_gate5_d016_c1_a02_preflight.json
 !data/processed/reporting/post_gate5_d017_classical_first/
@@ -279,6 +284,82 @@ artifacts/openqfuel_gate3a_handoff.zip
 .env
 .env.*
 !.env.example
+.envrc
+credentials.json
+secrets/
+private/
+*.pem
+*.key
+*.p12
+*.pfx
+*.token
+*.secret
+
+# Local analysis/runtime state.
+.cache/
+.hypothesis/
+.tox/
+.nox/
+.ipynb_checkpoints/
+coverage.xml
+.coverage.*
+*.tmp
+*.temp
+*.bak
+*.orig
+*.swp
+*~
+
+# Local AI/editor agent state.
+.agents/
+.codex/
+.aider*
+
+# Generated ML/model artifacts and bulky array dumps.
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.joblib
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.hdf5
+*.onnx
+*.keras
+checkpoints/
+model_artifacts/
+trained_models/
+wandb/
+mlruns/
+lightning_logs/
+
+# LaTeX build byproducts outside package-local build directories.
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.xcp
+
+# Local review/submission build products.
+paper/Full Paper/*submission*.pdf
+paper/Full Paper/*anonymous*.pdf
 
 # Personal workstation profile and local-only execution guidance.
 docs/local_compute_guide.md
@@ -286,5 +367,6 @@ docs/local_compute_guide.md
 # Editor and operating-system files.
 .DS_Store
 Thumbs.db
+desktop.ini
 .idea/
 .vscode/
