@@ -3,93 +3,102 @@
 
 The principal finding is a controlled negative benchmark: the runs completed
 validly, but the tested performance hypotheses were rejected. The Q01
-fidelity-style quantum kernel was far behind the physics-residual control, and
-the Q01b projected feature map did not close the gap. The feasibility-only
+fidelity-style quantum kernel was far behind the physics-residual control, the
+Q01b projected feature map did not close the gap, and the feasibility-only
 kernel did not meet its fixed multi-metric screening criteria. The successor
-branch demonstrates an additional failure mode that matters beyond this task: a
-candidate can improve over one baseline yet fail against a classical model with
-the same staged construction. That distinction is why matched dequantization
-controls and thresholds fixed before outcomes belong in the protocol.
+branch exposes a further failure mode: a candidate can improve over one
+baseline yet fail against a classical model with the same staged construction.
+This is why matched dequantization controls and thresholds fixed before
+outcomes belong in the protocol.
 
-The result is scientifically useful because the negative conclusion is
-specific. It rules out a family of tested feature maps and successor
-constructions under a particular public-data scenario generator, grouped
-development procedure, resource envelope, and comparator set. It does not
-rule out all QML, all cislunar machine learning, or all future quantum
-hardware. Such broad claims would require evidence absent here, including
-separate tasks, new preregistration, scalability studies, noise analysis,
-hardware measurements, and appropriate classical resource comparisons.
+The negative conclusion is deliberately narrow. It concerns the tested feature
+maps and successor constructions under this public-data scenario generator,
+grouped development procedure, resource envelope, and comparator set. It does
+not rule out all QML, all cislunar machine learning, or all future quantum
+hardware. Broader claims would require new tasks, preregistration, scaling and
+noise studies, hardware measurements, and appropriate classical resource
+comparisons.
 
-The physics-residual control is a key methodological result. A generic
-classical baseline is not sufficient when the prediction target contains
-structure that a low-fidelity model can represent directly. C06's performance
-shows that, for this benchmark, the available physical residual structure is
-more informative than the tested quantum fidelity features. That observation
-does not establish a theorem about quantum circuits; it establishes a
-task-specific comparison of inductive bias, the kinds of patterns each model is
-built to represent, that future proposals must beat fairly.
+\subsection{Human--AI interaction contribution for mission planning}
 
-The retained Q02/Q03 status also matters. Many reports collapse all
-non-advancing paths into a single ``failure'' category. Here, the first-rung
-tasks ran correctly, but the candidates were ineligible for larger-rung
-computation under a rule frozen before results. Keeping
-\texttt{not\_reached\_under\_frozen\_eligibility} separate from a task failure
-makes the evidence ledger more truthful and prevents a later analyst from
-inventing a selection path that never existed.
+For a human--AI interaction setting, this paper contributes an evidence design
+for decision support, not an autonomous navigation method or a user-tested
+interface. A model output should be considered only after a qualified analyst
+can inspect what was modeled, what data and conditions were in scope, which
+alternatives were tested, and why the result did or did not advance. This
+supports the goal of appropriate reliance on automation rather than either
+uncritical acceptance or blanket rejection \cite{lee2004}.
 
-The paper's societal relevance is therefore not a claim of operational benefit.
-It is a reusable, human-centered research pattern for high-consequence AI:
-include an eligible simulator-validation scope, freeze data transformations and
-groups, use a physics-aware control, compare against matched classical
-alternatives, retain null outcomes, and make the claim boundary checkable from
-source artifacts. This helps researchers, reviewers, and future decision-tool
-designers distinguish a reproducible negative result from evidence for
-automation. Its value is in reducing the risk that an exciting but unsupported
-model claim is presented as a safe decision-support capability.
+The protocol operationalizes that goal through four inspectable elements:
+an intended-use and source boundary; controls that can falsify a
+model-specific explanation; status records for valid negatives, ineligible
+paths, and source-ineligible events; and an explicit human-authorization
+boundary. These elements do not make an output more accurate. They make its
+evidential status reviewable before it is discussed as support for a planning
+decision. This framing is compatible with human--AI interaction guidance that
+treats a system's capabilities and limitations as design material rather than
+as details hidden behind a prediction \cite{amershi2019}.
 
-The HCI implication is deliberately limited. The present results do not show
-that a planner would understand, trust, reject, or use the evidence package
-well. They specify what a later human-centered evaluation should not omit:
-provenance, model scope, uncertainty, failure visibility, and a non-automated
-fallback. Testing those requirements with intended users remains future work.
+A future cislunar planning tool should therefore present a compact evidence
+record alongside any candidate correction: the model and data scope, relevant
+comparators, uncertainty and failure conditions, gate status, and the action
+that remains available to the human reviewer. It should not reduce Q01, Q01b,
+and FQK to a single red or green signal. In particular, Q02 and Q03 are
+\texttt{not\_reached\_under\_frozen\_eligibility}, not failed experiments:
+their first-rung tasks ran correctly, but they were ineligible for larger-rung
+computation under a rule fixed before results. Retaining that distinction makes
+the evidence ledger more truthful and prevents a later analyst from inventing
+a selection path that never existed.
+
+These are design implications, not empirical HCI findings. The present study
+did not observe planners, measure workload or situation awareness, or test
+whether an evidence display improves comprehension or calibrated reliance.
+Those questions require a separate evaluation with intended users and mission
+analysts. The contribution here is the auditable information that such an
+evaluation should make perceptible.
 
 \subsection{Implications for QML benchmarking}
 
-The QML literature has repeatedly shown that benchmark conclusions depend on
-which classical methods are made available to the comparison
-\cite{bowles2024,schnabel2024}. The D046 result gives a concrete trajectory
-application example. Comparing only with C06 would make the candidate's raw
-5.80\% difference look promising. The matched TWO-RBF alternative explains
-enough of that difference that the candidate fails the frozen 5\% rule. The
-interpretation changes because the question changes from ``is the candidate
-better than one baseline?'' to ``is its incremental mechanism still supported
-when a classical model is given the same residual construction?''
+The physics-residual control is a key methodological result. A generic
+classical baseline is insufficient when a low-fidelity model can directly
+represent part of the target structure. In this benchmark, that residual
+structure was more informative than the tested quantum fidelity features. This
+does not establish a theorem about quantum circuits; it is a task-specific
+comparison of inductive bias that future proposals must beat fairly.
 
-This contrast does not show that the matched control is the universally best
-classical model. It shows why a QML result needs multiple controls chosen to
-test the claimed mechanism. A fair comparison is not one that intentionally
-makes every model identical; it is one that removes alternative explanations
-for the purported QML contribution. In this benchmark, the alternative
-explanation was a classical residual representation, and it remained
-competitive.
+The QML literature has repeatedly shown that benchmark conclusions depend on
+which classical methods are available to the comparison
+\cite{bowles2024,schnabel2024}. D046 gives a concrete trajectory example.
+Compared only with C06, its raw 5.80\% reduction could appear promising. A
+matched TWO-RBF control explains enough of that difference that D046 fails the
+predeclared 5\% rule. The relevant question is therefore not ``is the
+candidate better than one baseline?'' but ``does its incremental mechanism
+remain supported when a classical model receives the same residual
+construction?''
+
+The matched control is not claimed to be a universally best classical model.
+It removes one credible alternative explanation for the purported QML effect.
+This is a transferable lesson for human-facing space AI: an appealing model
+description is not enough for an operator or reviewer to infer that the model
+adds decision-relevant value.
 
 \subsection{Safety objective as a distinct scientific question}
 
-The FQK and CSAFE-RF records demonstrate that predictive metrics must be tied
-to both label meaning and intended action. In these executed analyses, the
-positive label is feasible. AUROC measures overall ranking, Brier score measures
-probability error, and recall measures how many actually feasible options are
-retained. Precision and the false-positive rate address the different risk of
-admitting an actually infeasible option. FQK remains negative under its frozen
-multi-metric rule even though its AUROC is above random, because its Brier score
-and feasible-case recall did not match the classical controls. This guards
-against promoting a model by whichever metric looks most favorable afterward.
+The FQK and CSAFE-RF records show why predictive metrics must be connected to
+both label meaning and intended action. Here, the positive label is feasible.
+AUROC measures ranking, Brier score probability error, and recall the share of
+actually feasible options retained. Precision and false-positive rate address
+the separate risk of admitting an actually infeasible option. FQK remains
+negative under its frozen multi-metric rule even though its AUROC is above
+random, because its Brier score and feasible-case recall did not match the
+classical controls. Selecting only the most favorable metric after inspection
+would conceal this limitation.
 
 The higher-recall classical result is not a rescue or a safety result. It is a
-future design lesson: a screening protocol should define, before fitting, a
+future design lesson: a screening protocol should specify before fitting a
 minimum feasible-case recall for usefulness, a maximum infeasible-case
 false-positive rate for protection, a calibration requirement, and the action
-taken when the model abstains. Those quantities cannot be replaced by a single
+taken when the model abstains. Those quantities cannot be replaced by one
 ``safety'' score. Testing such a policy requires a separately authorized
 experiment; using it to alter Gate 5 after inspection would invalidate the
 original test.

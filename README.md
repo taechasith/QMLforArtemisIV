@@ -4,6 +4,26 @@ An open, flight-ephemeris-calibrated benchmark of classical and quantum machine
 learning for propellant-efficient, crew-constrained cislunar trajectory
 correction planning.
 
+## Abstract
+
+This paper evaluates whether simulated quantum machine-learning (QML) kernels
+add predictive value to a public-data benchmark for crewed Earth-Moon
+trajectory-correction planning. The target is robust total correction delta-v
+under uncertainty. The protocol froze data transformations, grouped development
+folds, decision thresholds, and the calibration/final-test boundary before
+outcomes. A physics-residual classical control and matched alternatives were
+evaluated under the same development-only conditions. The physics-residual
+control consistently outperformed the tested QML paths: Q01's mean normalized
+root-mean-square error (NRMSE) was 0.6466 versus 0.0087 for C06 (lower is
+better). The projected-kernel, feasibility-screening, and bounded successor
+studies also did not satisfy their prespecified advancement criteria. This is a
+valid, task-specific negative result, not evidence that QML cannot be useful
+elsewhere. For human-AI decision support in space, the contribution is an
+evidence design that makes model scope, null results, uncertainty, and human
+authorization visible rather than converting a model score into an automation
+recommendation. The study claims no quantum advantage, propellant saving,
+flight readiness, hardware performance, or QML invention.
+
 ## Status
 
 Decision Gate 1 was accepted on 2026-07-10, Gate 2 was accepted on 2026-07-11,

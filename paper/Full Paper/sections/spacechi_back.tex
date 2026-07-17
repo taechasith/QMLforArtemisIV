@@ -1,0 +1,172 @@
+% Concise closing sections for the 15-page SpaceCHI review manuscript.
+% The named manuscript retains the expanded exposition in sections 06--10.
+\section{Discussion}
+\label{sec:discussion}
+
+The principal finding is a controlled negative benchmark. The runs completed
+validly, but Q01 was far behind the physics-residual control, Q01b did not close
+the gap, FQK failed its multi-metric screening rule, and no bounded successor
+qualified for Gate 6. D046 illustrates why matched controls matter: its 5.80\%
+raw improvement over C06 fell to 4.65\% against a classical TWO-RBF model with
+the same staged construction, below the predeclared 5\% rule. The inference is
+narrow: these feature maps failed under this public-data generator, grouped
+development procedure, resource envelope, and comparator set. It does not rule
+out all QML or future quantum hardware.
+
+\subsection{Human--AI interaction contribution}
+
+The HCI contribution is an evidence design for decision support, not an
+autonomous navigator or a user-tested interface. Before acting on a model
+output, an analyst should be able to inspect intended use, data and model
+scope, comparators, uncertainty and failure conditions, gate status, and the
+action reserved for human authorization. This supports appropriate reliance
+on automation \cite{lee2004} and makes capabilities and limitations visible as
+recommended in human--AI interaction guidance \cite{amershi2019}.
+
+The ledger also preserves distinctions that a red/green model indicator would
+erase. Q02 and Q03 are
+\texttt{not\_reached\_under\_frozen\_eligibility}, not failed experiments:
+their first-rung tasks ran correctly, but too few configurations met a rule
+fixed before outcomes to authorize larger rungs. Valid negatives,
+source-ineligible cases, and unopened gates likewise carry different meanings.
+Displaying those states can prevent a reviewer from inferring a test or
+selection path that never occurred. Whether such a display improves
+comprehension, workload, situation awareness, or calibrated reliance remains a
+question for a separate study with intended users.
+
+\subsection{From benchmark evidence to mission practice}
+
+Table \ref{tab:evidence-display} turns the governance ledger into requirements
+for a future evidence display. They are design implications from this
+benchmark, not evaluated usability findings.
+
+The most defensible real-world use of this work is upstream of flight software.
+During concept development, an analyst might use a surrogate to prioritize
+which candidate correction scenarios receive expensive physical propagation.
+The benchmark shows what must accompany such a recommendation: the scenario
+and source boundary, comparator performance, uncertainty, numerical-failure
+status, and the authorization state. A candidate that passes this offline
+stage would still require locked-data evaluation, independent trajectory
+analysis, operational constraints, software assurance, and human review before
+it could inform a mission decision.
+
+For interface design, this suggests an evidence panel rather than a single
+confidence badge. The panel should separate predicted correction cost from
+feasibility, identify whether a result is development, calibration, or test
+evidence, expose the physical and learned comparators, and explain why an
+experiment stopped. It should also preserve a visible fallback to the
+validated propagation workflow. In this study, that design would show that
+Q01 and Q01b are valid negatives, Q02 and Q03 stopped under eligibility, FQK
+failed a multi-metric screening rule, and Gate 6 is unopened. These states lead
+to different review actions even though none authorizes deployment.
+
+The societal impact is therefore procedural rather than a claimed improvement
+in spacecraft performance. Public agencies, researchers, and reviewers gain a
+reproducible way to challenge high-visibility AI claims before scarce compute,
+engineering attention, or trust is committed to them. The same pattern can
+apply to other high-consequence decision-support domains, but its effect on
+human judgment must be tested rather than assumed.
+
+\begin{table}[!t]
+\caption{Proposed evidence-display requirements for future human review.}
+\label{tab:evidence-display}
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{0.96}
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}YY@{}}
+\toprule
+Field & Information shown & Misinterpretation constrained \\
+\midrule
+Scope & Sources, force model, uncertainty, and intended use & A development
+surrogate is mistaken for mission truth. \\
+Evidence stage & Development, calibration, final test, or unopened gate & A
+locked or unexecuted evaluation is assumed to have passed. \\
+Comparators & Physical residual and matched classical alternatives & A gain
+against one weak baseline is attributed to the quantum component. \\
+Outcome status & Valid negative, ineligible, source-ineligible, or failed task
+& Scientifically different stopping states collapse into one failure label. \\
+Authority & Human decision owner and validated propagation fallback &
+A prediction is treated as an autonomous command or replaces physical review. \\
+\bottomrule
+\end{tabularx}
+\renewcommand{\arraystretch}{1}
+\end{table}
+
+\subsection{Benchmark and safety implications}
+
+A generic classical baseline is inadequate when a low-fidelity physical model
+captures target structure directly. Here that residual structure was more
+informative than the tested quantum-fidelity features. The matched TWO-RBF
+control does not claim to be universally optimal; it removes one credible
+classical explanation for D046. The transferable question is whether a
+candidate's incremental mechanism remains supported when a classical model
+receives the same residual construction and resources.
+
+FQK and CSAFE-RF also show why metrics must be tied to label meaning and human
+action. AUROC measures ranking, Brier score probability error, recall the share
+of feasible options retained, and false-positive rate the separate risk of
+admitting infeasible options. FQK's above-random AUROC cannot offset its failed
+Brier and recall criteria. The higher-recall classical result is a future
+lesson, not a safety claim: a new protocol must freeze minimum feasible-case
+recall, maximum infeasible-case false positives, calibration, and abstention
+behavior before fitting.
+
+\section{Limitations and Threats to Validity}
+\label{sec:limitations}
+
+The evidence is public-data and development-only: calibration and final-test
+rows were not read, so final-test error, operational calibration, mission-loop
+behavior, propellant savings, and flight readiness cannot be estimated. Gate 3
+supports only eligible public endpoint comparisons; RTC3 is source-ineligible,
+and the generated scenarios are not mission-owned truth data. Retaining that
+case protects the source boundary but also leaves part of the desired
+validation coverage unresolved.
+
+Every quantum run used exact classical statevector simulation at no more than
+eight qubits on a laptop. Shot noise, gate and readout errors, device
+connectivity, state preparation, transpilation, hardware calibration, and
+end-to-end quantum runtime were not measured. Exact simulation removes one
+source of sampling variation but cannot establish speedup, hardware efficiency,
+or practical quantum advantage.
+
+Finally, frozen preprocessing, feature maps, rungs, controls, and thresholds
+make the comparison auditable while restricting inference to the tested
+design. The documented literature review is bounded rather than systematic,
+so it cannot prove that no related method exists. Alternative models or broader
+novelty claims require a new protocol rather than post-outcome modification of
+this one.
+
+\section{Future Research Boundary}
+
+Task-specific symmetry and residual structure remain hypotheses, not findings.
+A future geometric-QML study must first establish whether any nontrivial
+symmetry survives fixed Earth--Moon--Sun ephemerides, thrust constraints, and
+reference frames; equivariance alone would not imply advantage over classical
+equivariant models. It would then require a mathematical contract, symmetry
+audit, baseline reproduction, matched classical comparison, ablations, resource
+accounting, and explicit rejection criteria.
+
+D054-A/P018 records bindings for a possible dynamical-Lie-algebra audit, but
+closure decision D055-C declined execution. This paper therefore contains no
+DOP853 trajectory replay, SVD rank or nullspace result, new symmetry dataset,
+variational-circuit training, or geometric-QML performance claim. Any reopening
+must occur under a separately authorized protocol able to reject the hypothesis.
+
+\section{Data, Code, and Figure Availability}
+
+Governance records, machine-readable outputs, figure provenance, and source are
+available in \href{https://github.com/taechasith/QMLforArtemisIV}{the project
+repository} and \href{https://github.com/taechasith/QMLforArtemisIV/releases/tag/v0.3.0}{release
+v0.3.0}. Locked rows, mission-owned evidence, trained weights, and unexecuted
+future-protocol outputs are not included.
+
+\section{Conclusion}
+
+Under the frozen development benchmark, Q01, Q01b, FQK, and all 16 bounded
+successors failed their advancement criteria; none is eligible for Gate 6. The
+main contribution is a reproducible negative result and a human-centered claim
+structure showing what was tested, why it did not advance, and what remains
+subject to human authorization. Its societal value is accountable evaluation
+of AI evidence in high-consequence settings, not a deployed mission capability.
+The study establishes neither quantum advantage nor operational benefit.

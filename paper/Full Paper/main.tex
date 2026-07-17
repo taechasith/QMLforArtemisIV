@@ -23,62 +23,105 @@
 \setlength{\floatsep}{10pt plus 2pt minus 4pt}
 \setlength{\intextsep}{10pt plus 2pt minus 4pt}
 
+% main.tex builds the named manuscript. submission.tex defines
+% \spacechianonymous to produce the double-blind SpaceCHI review version.
+\newif\ifcameraready
+\ifdefined\spacechianonymous
+  \camerareadyfalse
+\else
+  \camerareadytrue
+\fi
+
+\ifcameraready
+  \hypersetup{
+    pdftitle={Putting Quantum AI Hype to the Test in Cislunar Space},
+    pdfauthor={Taechasith Kangkhuntod},
+    pdfsubject={SpaceCHI camera-ready manuscript}
+  }
+\else
+  \hypersetup{
+    pdftitle={Putting Quantum AI Hype to the Test in Cislunar Space},
+    pdfauthor={},
+    pdfsubject={Anonymous SpaceCHI review manuscript}
+  }
+\fi
+
 \begin{document}
 
 \title{Putting Quantum AI Hype to the Test in Cislunar Space: A Governed Public-Data Benchmark for Human-Centered Trajectory-Correction Planning}
 \titlerunning{Putting Quantum AI Hype to the Test in Cislunar Space}
 
-\author{Taechasith Kangkhuntod}
-\authorrunning{T. Kangkhuntod}
-\institute{University of the Thai Chamber of Commerce, Bangkok, Thailand}
+\ifcameraready
+  \author{Taechasith Kangkhuntod}
+  \authorrunning{T. Kangkhuntod}
+  \institute{University of the Thai Chamber of Commerce, Bangkok, Thailand}
+\else
+  \author{Anonymous Author}
+  \authorrunning{Anonymous}
+  \institute{Anonymous Institution}
+\fi
 
 \maketitle
 
 \begin{center}
 \refstepcounter{figure}
 \centering
-\includegraphics[width=0.62\textwidth]{figures/implementation_framework_oneline_pen_labeled_alt.png}\\[0.2em]
+\includegraphics[width=0.82\textwidth]{figures/implementation_framework_oneline_pen_labeled_alt.png}\\[0.2em]
 {\small Fig.~\thefigure. Simulated one-line illustration: public trajectory data and a frozen protocol are assessed against a physics-residual control and QML kernels; final authority remains with human review.}
 \label{fig:implementation-framework}
 \end{center}
 
 \begin{abstract}
-This study evaluates simulated quantum machine-learning (QML) kernels for a
-public-data, crewed Earth--Moon trajectory correction benchmark. The target is
-robust total correction delta-v, or modeled velocity change under uncertainty.
-Related cases shared folds, preprocessing used training rows only, thresholds
-were fixed before outcomes, and calibration and final-test rows remained
-locked. The simulator passed 67 eligible checks; one source-ineligible event
-was neither pass nor failure. Q01 produced mean normalized root-mean-square
-error (NRMSE) 0.646614 versus 0.008739 for the physics-residual classical
-control C06; lower is better. Q01b produced 0.661207 versus 0.006833 for C06.
-The feasibility-only kernel (FQK) retained 10.9\% of actually feasible cases at
-the fixed 0.5 threshold. Sixteen bounded successors missed their predeclared
-advancement criteria, and the strongest raw improvement failed its matched
-classical control. Thus, the tested representations did not justify quantum
-complexity for this frozen task; this is not a universal claim about QML. The
-contribution is a transparent safeguard for high-consequence AI: provenance,
-negative-result reporting, and separation of crew requirements and human
-authorization from model scores. The study claims no quantum advantage,
-propellant saving, flight readiness, hardware performance, or QML invention.
-\keywords{Quantum machine learning \and human-centered AI \and decision support \and cislunar trajectory design \and reproducible benchmarking \and negative results}
+This paper evaluates whether simulated quantum machine-learning (QML) kernels
+add predictive value to a public-data benchmark for crewed Earth--Moon
+trajectory-correction planning. The target is robust total correction delta-v
+under uncertainty. The protocol froze data transformations, grouped development
+folds, decision thresholds, and the calibration/final-test boundary before
+outcomes. A physics-residual classical control and matched alternatives were
+evaluated under the same development-only conditions. The physics-residual
+control consistently outperformed the tested QML paths: Q01's mean normalized
+root-mean-square error (NRMSE) was 0.6466 versus 0.0087 for C06 (lower is
+better). The projected-kernel, feasibility-screening, and bounded successor
+studies also did not satisfy their prespecified advancement criteria. This is a
+valid, task-specific negative result, not evidence that QML cannot be useful
+elsewhere. For human--AI decision support in space, the contribution is an
+evidence design that makes model scope, null results, uncertainty, and human
+authorization visible rather than converting a model score into an automation
+recommendation. The study claims no quantum advantage, propellant saving,
+flight readiness, hardware performance, or QML invention.
+\keywords{Quantum machine learning \and human--AI interaction \and trust in automation \and cislunar trajectory design \and reproducible benchmarking \and negative results}
 \end{abstract}
 
-\input{sections/01_introduction}
-\input{sections/02_scope}
-\input{sections/03_related_work}
+\ifcameraready
+  \input{sections/01_introduction}
+  \input{sections/02_scope}
+  \input{sections/03_related_work}
+\else
+  \input{sections/spacechi_front}
+\fi
 \input{sections/04_methods}
 \input{sections/05_results}
-\input{sections/06_discussion}
-\input{sections/07_limitations}
-\input{sections/08_future_boundary}
-\input{sections/09_availability}
-\input{sections/10_conclusion}
+\ifcameraready
+  \input{sections/06_discussion}
+  \input{sections/07_limitations}
+  \input{sections/08_future_boundary}
+  \input{sections/09_availability}
+  \input{sections/10_conclusion}
+\else
+  \input{sections/spacechi_back}
+\fi
 
+\ifcameraready
 \begin{credits}
 \subsubsection{\ackname}
-Reserved for an advisor contribution statement, pending advisor review.
+I gratefully acknowledge my girlfriend for generously making a computer
+available for me to run the experiments while my own computer was unavailable,
+and my friends for thoughtful discussions that broadened my perspective on this
+research and improved the manuscript.
 \end{credits}
+\else
+\clearpage
+\fi
 
 \bibliographystyle{splncs04}
 \bibliography{references}

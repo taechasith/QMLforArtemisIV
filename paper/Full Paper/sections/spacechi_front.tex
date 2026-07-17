@@ -1,0 +1,126 @@
+% Concise front section for the 15-page SpaceCHI review manuscript.
+% The named manuscript retains the expanded exposition in sections 01--03.
+\section{Introduction}
+
+Cislunar space is the Earth--Moon region. A trajectory-correction maneuver
+changes a spacecraft's velocity to keep its path within mission constraints;
+its effort is expressed as delta-v (m/s), which is related to but is not itself
+propellant mass. For a crew-carrying mission, correction planning couples burn
+timing and delta-v with navigation uncertainty, execution error, crew
+timelines, entry conditions, and reserves. Public Artemis trajectory-design
+research consequently evaluates robust correction cost under modeled
+uncertainty and constraints \cite{woffinden2023}. A learned surrogate could
+screen candidate scenarios faster than repeated high-fidelity simulation, but
+that possibility is a motivation for testing rather than evidence of mission
+utility.
+
+This paper treats such screening as human-centered decision support. A model
+score is not a decision: a qualified reviewer must be able to inspect the data,
+physical assumptions, uncertainty boundary, comparators, and failure cases
+before authorizing further study. Crew-related requirements therefore remain
+separate from predictive performance, consistent with NASA model-credibility
+and human-system standards \cite{nasa7009,nasa3001}. No user study, interface
+evaluation, or measurement of trust, workload, or operator performance was
+conducted.
+
+Quantum machine learning (QML) places quantum-state representations or
+circuits inside a learning method. A quantum kernel encodes each classical
+input as a quantum state and uses state overlap as a similarity measure
+\cite{schuld2019,havlicek2019}. A distinct feature space, however, does not
+establish useful prediction or quantum advantage. Data loading, encoding
+geometry, classical approximability, split leakage, weak comparators, and
+post-outcome selection can all produce misleading conclusions
+\cite{huang2021,sweke2025,bowles2024,schnabel2024}. These are evidence-design
+problems before they are quantum-computing problems.
+
+\subsection{Research question and contributions}
+
+The central question is: \emph{To what extent can simulated quantum-kernel
+representations add predictive value to a human-centered cislunar
+trajectory-correction benchmark when compared fairly with physics-based
+controls?} The frozen program tested a primary fidelity kernel (Q01), a
+projected follow-up (Q01b), a feasibility-only kernel (FQK), and bounded
+successors. It also asked what could be concluded while calibration,
+final-test, mission-loop, and hardware evidence remained locked. The tested
+models answered the performance questions negatively; the locked evidence
+defines the scope of that answer.
+
+The paper contributes five connected artifacts:
+\begin{enumerate}
+\item a source-bound benchmark with grouped folds and transformations fitted
+only on each training fold;
+\item a simulator-credibility chain that retains its source-ineligible
+exception rather than converting missing evidence into a pass or failure;
+\item matched physics-residual, random-feature, compressed-input, and
+classical-kernel controls;
+\item a complete ledger of the primary, exploratory, and bounded-successor
+outcomes, including valid negative results; and
+\item an evidence package that keeps model results, human authorization, and
+operational claims distinct.
+\end{enumerate}
+Together these artifacts make a rejected advancement hypothesis inspectable
+instead of treating a negative result as failed record keeping.
+
+\section{Scientific Scope and Claim Boundary}
+\label{sec:scope}
+
+This is an offline, public-data, development-only benchmark, not mission-design
+authority, flight certification, or quantum-hardware assessment. Repository
+identifiers are audit keys: a Gate is an authorization checkpoint; D and P
+identify decisions and prospective protocols; C, Q, and A identify classical,
+QML, and analysis controls; and RFIG identifies figure provenance. C06 is the
+physics-residual control, Q01 the primary kernel, and D046 a bounded successor.
+A fold keeps related cases together, a seed fixes a random start, and a rung is
+a 128--1,024-row sample stage. Development rows may select models; calibration
+would adjust a frozen output and final-test rows would estimate performance
+after all choices were fixed. Neither locked split was read.
+
+The intended role is offline screening information for qualified human review,
+with physical analysis as the fallback. Gate 3 supports only eligible simulator
+comparisons; Gate 5 supports a frozen development decision; later experiments
+cannot revise Gate 5 or authorize Gate 6. The recall-first classical analysis
+is a future design lesson, not a safety filter. Mission-loop use,
+quantum-hardware or GPU execution, operational thresholds, and trained-model
+release remain outside scope. The paper claims no quantum advantage,
+propellant saving, flight readiness, NASA approval, hardware behavior,
+final-test result, or QML invention.
+
+Figure \ref{fig:timeline} records authorization state rather than model
+performance.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.76\textwidth]{figures/gate_decision_timeline.png}
+\caption{Governance through Gate 5 (RFIG-001). Gates 0--5 were closed by
+human decisions; Gate 5 rejected a benchmark-specific advancement hypothesis,
+and Gate 6 was not opened.}
+\label{fig:timeline}
+\end{figure}
+
+\section{Related Work and Positioning}
+
+The benchmark is positioned against public Artemis correction-burn work, not
+as a replacement for mission-owned analysis. Woffinden et al. combine
+uncertainty, timing, entry, and crew-related constraints \cite{woffinden2023}.
+Classical learning studies of low-thrust guidance and cislunar transfers offer
+precedents for surrogate modeling and feasibility handling, but differ in
+dynamics, propulsion, objectives, and validation structure
+\cite{zavoli2020,sullivan2021,izzo2021,steffen2025,xie2022,zhang2025}.
+
+Quantum feature-space methods provide alternative similarities, but their
+value depends on whether that geometry reflects the target and remains useful
+against strong classical models \cite{schuld2019,havlicek2019,huang2021}.
+Encoding scale and bandwidth alter inductive bias \cite{shaydulin2022}; random
+features provide a relevant distance-kernel control \cite{rahimi2007}; and
+fair comparisons require explicit splits, seeds, capacities, and selection
+rules \cite{bowles2024,schnabel2024,pernot2020}. Data re-uploading,
+generalization, and initialization studies informed the frozen encoding,
+observable, and seed choices \cite{perez2020,caro2021,grant2019}. Adjacent
+quantum-agent and trajectory-optimization work informed controls and scope but
+was not reproduced here \cite{skolik2022,degrossi2025}.
+
+The repository records a bounded set of 23 accepted literature sources plus
+the random-Fourier source behind control A01. It distinguishes methodological
+influence from methods actually tested. A later archival search did not change
+the protocol or outcomes; this paper therefore makes a benchmark claim, not an
+exhaustive-review claim.
